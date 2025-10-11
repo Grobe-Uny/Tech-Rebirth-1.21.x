@@ -1,15 +1,16 @@
 package com.grobe.techrebirth.block.custom.entity;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.energy.ModEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.EntityCapability;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,7 +20,8 @@ import java.util.List;
 public class CableBlockEntity extends BlockEntity {
 
     // The energy storage for the cable
-    private final EnergyStorage energyStorage = new EnergyStorage(1000, 256, 256, 0);
+    private static final EnergyStorage energyStorage = new EnergyStorage(1000, 256, 256, 0);
+    private static final ModEnergyStorage energyHandler = new ModEnergyStorage(1000, 256,256,0);
 
     public CableBlockEntity(BlockPos pPos, BlockState pState) {
         super(ModBlockEntities.CABLE.get(), pPos, pState);
@@ -30,14 +32,14 @@ public class CableBlockEntity extends BlockEntity {
         if (pLevel.isClientSide()) {
             return;
         }
-
+        var receivable = energyStorage.canReceive();
         // Distribute energy to adjacent blocks
         List<EnergyStorage> consumers = new ArrayList<>();
         for (Direction direction : Direction.values()) {
             BlockEntity adjacentBlockEntity = pLevel.getBlockEntity(pPos.relative(direction));
             if (adjacentBlockEntity != null) {
-                adjacentBlockEntity.getCapability(Capabilities.ENERGY, direction.getOpposite()).ifPresent(energyStorage -> {
-                    if (energyStorage.canReceive()) {
+                adjacentBlockEntity.getCapability(Capabilities.EnergyStorage, direction.getOpposite()).ifPresent(energyStorage -> {
+                    if (receivable) {
                         consumers.add(energyStorage);
                     }
                 });

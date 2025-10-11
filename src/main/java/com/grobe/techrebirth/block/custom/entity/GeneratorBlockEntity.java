@@ -9,9 +9,9 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.ForgeHooks;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.extensions.IItemStackExtension;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -53,7 +53,7 @@ public class GeneratorBlockEntity extends BlockEntity {
         } else {
             // If there is no burn time left, try to burn a new item
             ItemStack fuel = pBlockEntity.itemHandler.getStackInSlot(0);
-            int burnTime = ForgeHooks.getBurnTime(fuel, RecipeType.SMELTING);
+            int burnTime = fuel.getBurnTime(RecipeType.SMELTING);
             if (burnTime > 0) {
                 pBlockEntity.itemHandler.extractItem(0, 1, false);
                 pBlockEntity.burnTime = burnTime;

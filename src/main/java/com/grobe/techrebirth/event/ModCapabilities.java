@@ -15,7 +15,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
-@EventBusSubscriber(modid = TechRebirth.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = TechRebirth.MODID)
 public class ModCapabilities {
 
 
