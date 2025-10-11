@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 35,
+  "experience": 10.0,
+  "group": "nickel",
+  "ingredient": {
+    "item": "techrebirth:nickel_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "techrebirth:nickel_ingot"
+  }
+}

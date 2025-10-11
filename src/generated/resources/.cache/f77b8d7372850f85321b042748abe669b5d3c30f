@@ -1,0 +1,4 @@
+// 1.21.1	2025-10-11T17:54:11.0955837	Tags for minecraft:block mod id techrebirth
+115fa1628b8cb8811697b3a875a7a91d9f5be364 data/minecraft/tags/block/mineable/pickaxe.json
+b927bad74908fcb0d6bd3a119b594877f63d3a36 data/minecraft/tags/block/needs_iron_tool.json
+18990f4ccab65c9f900a9462767ac023ee331c7f data/minecraft/tags/block/needs_stone_tool.json

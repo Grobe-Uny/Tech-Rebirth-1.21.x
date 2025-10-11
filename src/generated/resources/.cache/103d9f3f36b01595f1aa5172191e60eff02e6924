@@ -1,0 +1,8 @@
+// 1.21.1	2025-10-11T17:54:11.0925931	Registries
+7b0a0269413f329c8aa2b8371c07929de4f18aec data/techrebirth/enchantment/lightning_strike.json
+d9d2d9c95110c197a3de40213fe9d25f84e2c299 data/techrebirth/neoforge/biome_modifier/add_nickel_ore.json
+537241403adfe5d67b4a1c2b68a814b15ffd0949 data/techrebirth/neoforge/biome_modifier/add_tin_ore.json
+238e83e5695ce105af77055725b9ab3b39296533 data/techrebirth/worldgen/configured_feature/nickel_ore.json
+1ce25f023c36ca69d940e0dff848b1cb9a5359ce data/techrebirth/worldgen/configured_feature/tin_ore.json
+9c0aca9d69d546afaf054fbd46479fad067bb0ed data/techrebirth/worldgen/placed_feature/nickel_ore_placed.json
+92fd8ee5fe06078c959ffa09b7e4708deed5d9c4 data/techrebirth/worldgen/placed_feature/tin_ore_placed.json

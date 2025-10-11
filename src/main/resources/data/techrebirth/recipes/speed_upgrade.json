@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RGR",
+    "GIG",
+    "RGR"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "G": {
+      "item": "techrebirth:invar_gear"
+    },
+    "I": {
+      "item": "techrebirth:iron_gear"
+    }
+  },
+  "result": {
+    "item": "techrebirth:speed_upgrade"
+  }
+}

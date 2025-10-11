@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 30,
+  "experience": 9.0,
+  "group": "lead",
+  "ingredient": {
+    "item": "techrebirth:raw_lead"
+  },
+  "result": {
+    "count": 1,
+    "id": "techrebirth:lead_ingot"
+  }
+}

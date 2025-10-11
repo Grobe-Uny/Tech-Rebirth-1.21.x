@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 45,
+  "experience": 10.0,
+  "group": "nickel",
+  "ingredient": {
+    "item": "techrebirth:nickel_deepslate_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "techrebirth:nickel_ingot"
+  }
+}

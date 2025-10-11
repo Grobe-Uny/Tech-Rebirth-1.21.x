@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GRG",
+    "RIR",
+    "GRG"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "G": {
+      "item": "techrebirth:invar_gear"
+    },
+    "I": {
+      "item": "techrebirth:iron_gear"
+    }
+  },
+  "result": {
+    "item": "techrebirth:efficiency_upgrade"
+  }
+}

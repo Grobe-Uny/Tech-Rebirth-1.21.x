@@ -1,0 +1,33 @@
+{
+  "criteria": {
+    "has_tin": {
+      "conditions": {
+        "items": [
+          {
+            "items": "techrebirth:tin_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancements.techrebirth.rebirth_of_technology.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "techrebirth:tin_ingot"
+    },
+    "title": {
+      "translate": "advancements.techrebirth.rebirth_of_technology.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_tin"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

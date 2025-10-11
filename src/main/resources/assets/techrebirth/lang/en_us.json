@@ -9,5 +9,48 @@
   "techrebirth.configuration.items": "Item List",
   "techrebirth.configuration.logDirtBlock": "Log Dirt Block",
   "techrebirth.configuration.magicNumberIntroduction": "Magic Number Text",
-  "techrebirth.configuration.magicNumber": "Magic Number"
+  "techrebirth.configuration.magicNumber": "Magic Number",
+  "item.techrebirth.iron_powder": "Iron Powder",
+  "item.techrebirth.copper_powder": "Copper Powder",
+  "item.techrebirth.copper_gear": "Copper Gear",
+  "item.techrebirth.iron_gear": "Iron Gear",
+  "item.techrebirth.raw_tin": "Raw Tin",
+  "item.techrebirth.tin_ingot": "Tin Ingot",
+  "item.techrebirth.tin_powder": "Tin Powder",
+  "item.techrebirth.tin_gear": "Tin Gear",
+  "item.techrebirth.raw_nickel": "Raw Nickel",
+  "item.techrebirth.nickel_ingot": "Nickel Ingot",
+  "item.techrebirth.nickel_powder": "Nickel Powder",
+  "item.techrebirth.invar_ingot": "Invar Ingot",
+  "item.techrebirth.invar_gear": "Invar Gear",
+  "item.techrebirth.redstone_reception_coil": "Redstone Reception Coil",
+  "item.techrebirth.cooked_carrot" : "Cooked Carrot",
+  "item.techrebirth.raw_lead": "Raw Lead",
+  "item.techrebirth.lead_ingot": "Lead Ingot",
+  "item.techrebirth.lead_gear": "Lead Gear",
+  "item.techrebirth.speed_upgrade": "Speed Upgrade",
+  "item.techrebirth.efficiency_upgrade": "Efficiency Upgrade",
+
+  "block.techrebirth.machine_base": "Machine Base",
+  "block.techrebirth.tin_ore": "Tin Ore",
+  "block.techrebirth.tin_deepslate_ore": "Tin Deepslate Ore",
+  "block.techrebirth.nickel_deepslate_ore": "Nickel Deepslate Ore",
+  "block.techrebirth.nickel_ore": "Nickel Ore",
+  "block.techrebirth.invar_block": "Invar Block",
+  "block.techrebirth.electric_furnace": "Electric Furnace",
+  "block.techrebirth.creative_electric_furnace": "Creative Electric Furnace",
+
+  "creativetab.techrebirth.tech_rebirth_items": "Tech Rebirth Items",
+  "creativetab.techrebirth.tech_rebirth_blocks": "Tech Rebirth Blocks",
+  "creativetab.techrebirth.tech_rebirth_ores" : "Tech Rebirth Ores",
+
+
+  "enchantment.techrebirth.lightning_strike" : "Lightning Strike",
+
+
+  "tooltip.techrebirth.raw_tin" : "This ingot is really §sTin§l",
+
+  "config.jade.plugin_techrebirth.electric_furnace" : "Show Electric Furnace Info",
+  "advancements.techrebirth.rebirth_of_technology.description": "Welcome to the Rebirth of Technology!",
+  "advancements.techrebirth.rebirth_of_technology.title": "Rebirth of Technology"
 }

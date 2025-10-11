@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 70,
+  "experience": 8.0,
+  "group": "tin",
+  "ingredient": {
+    "item": "techrebirth:tin_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "techrebirth:tin_ingot"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "techrebirth:tin_gear"
+    },
+    "Y": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Z": {
+      "item": "minecraft:glass"
+    }
+  },
+  "pattern": [
+    "YZY",
+    "ZXZ",
+    "YZY"
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:machine_base"
+  }
+}

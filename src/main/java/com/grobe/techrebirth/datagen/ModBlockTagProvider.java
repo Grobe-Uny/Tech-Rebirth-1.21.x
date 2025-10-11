@@ -1,0 +1,43 @@
+package com.grobe.techrebirth.datagen;
+
+import com.grobe.techrebirth.TechRebirth;
+import com.grobe.techrebirth.block.ModBlocks;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.tags.BlockTags;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.Nullable;
+
+import javax.swing.text.html.HTML;
+import java.util.concurrent.CompletableFuture;
+
+public class ModBlockTagProvider extends BlockTagsProvider {
+    public ModBlockTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,  @Nullable ExistingFileHelper existingFileHelper) {
+        super(output, lookupProvider, TechRebirth.MODID, existingFileHelper);
+    }
+
+    @Override
+    protected void addTags(HolderLookup.Provider pProvider) {
+            tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                    .add(ModBlocks.MACHINE_BASE.get())
+                    .add(ModBlocks.ELECTRIC_FURNACE.get())
+                    .add(ModBlocks.NICKEL_DEEPSLATE_ORE.get())
+                    .add(ModBlocks.NICKEL_ORE.get())
+                    .add(ModBlocks.TIN_ORE.get())
+                    .add(ModBlocks.TIN_DEEPSLATE_ORE.get())
+                    .add(ModBlocks.INVAR_BLOCK.get())
+                    .add(ModBlocks.FURINATOR.get());
+            tag(BlockTags.NEEDS_STONE_TOOL)
+                    .add(ModBlocks.NICKEL_ORE.get())
+                    .add(ModBlocks.TIN_ORE.get());
+            tag(BlockTags.NEEDS_IRON_TOOL)
+                    .add(ModBlocks.TIN_DEEPSLATE_ORE.get())
+                    .add(ModBlocks.NICKEL_DEEPSLATE_ORE.get())
+                    .add(ModBlocks.INVAR_BLOCK.get())
+                    .add(ModBlocks.ELECTRIC_FURNACE.get())
+                    .add(ModBlocks.MACHINE_BASE.get());
+
+        }
+}
