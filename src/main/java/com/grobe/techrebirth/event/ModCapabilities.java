@@ -2,7 +2,9 @@ package com.grobe.techrebirth.event;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.block.custom.entity.CableBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.ElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.GeneratorBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -74,6 +76,33 @@ public class ModCapabilities {
                 ENERGY,
                 ModBlockEntities.CREATIVE_ELECTRIC_FURNACE.get(),
                 (ElectricFurnaceBlockEntity be, Direction side) -> {
+                    if (be == null) return null;
+                    return be.getEnergyStorage();
+                }
+        );
+
+        event.registerBlockEntity(
+                ITEM_HANDLER,
+                ModBlockEntities.GENERATOR.get(),
+                (GeneratorBlockEntity be, Direction side) -> {
+                    if (be == null) return null;
+                    return be.getItemHandler();
+                }
+        );
+
+        event.registerBlockEntity(
+                ENERGY,
+                ModBlockEntities.GENERATOR.get(),
+                (GeneratorBlockEntity be, Direction side) -> {
+                    if (be == null) return null;
+                    return be.getEnergyStorage();
+                }
+        );
+
+        event.registerBlockEntity(
+                ENERGY,
+                ModBlockEntities.CABLE.get(),
+                (CableBlockEntity be, Direction side) -> {
                     if (be == null) return null;
                     return be.getEnergyStorage();
                 }
