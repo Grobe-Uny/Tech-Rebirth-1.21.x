@@ -1,0 +1,13 @@
+{
+  "itemGroup.techrebirth": "Example Mod Tab",
+  "block.techrebirth.example_block": "Example Block",
+  "item.techrebirth.example_item": "Example Item",
+
+  "techrebirth.configuration.title": "Tech Rebirth Configs",
+  "techrebirth.configuration.section.techrebirth.common.toml": "Tech Rebirth Configs",
+  "techrebirth.configuration.section.techrebirth.common.toml.title": "Tech Rebirth Configs",
+  "techrebirth.configuration.items": "Item List",
+  "techrebirth.configuration.logDirtBlock": "Log Dirt Block",
+  "techrebirth.configuration.magicNumberIntroduction": "Magic Number Text",
+  "techrebirth.configuration.magicNumber": "Magic Number"
+}
