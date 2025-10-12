@@ -1,4 +1,5 @@
 {
+  "parent": "techrebirth:beggining_of_machinery",
   "criteria": {
     "has_generator": {
       "conditions": {

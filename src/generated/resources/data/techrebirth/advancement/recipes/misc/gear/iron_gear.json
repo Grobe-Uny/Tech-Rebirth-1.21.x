@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_invar": {
+    "has_iron": {
       "conditions": {
         "items": [
           {
-            "items": "techrebirth:invar_ingot"
+            "items": "minecraft:iron_ingot"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "techrebirth:invar_gear"
+        "recipe": "techrebirth:gear/iron_gear"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_invar"
+      "has_iron"
     ]
   ],
   "rewards": {
     "recipes": [
-      "techrebirth:invar_gear"
+      "techrebirth:gear/iron_gear"
     ]
   }
 }

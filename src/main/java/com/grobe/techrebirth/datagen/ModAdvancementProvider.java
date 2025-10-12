@@ -52,6 +52,7 @@ public class ModAdvancementProvider extends AdvancementProvider {
                     AdvancementType.TASK,
                     true,true,false
             ).addCriterion("has_machine_base", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.MACHINE_BASE))
+                    .parent(root)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "beggining_of_machinery"), existingFileHelper);
             AdvancementHolder generating_electricity = builder.display(
                             ModBlocks.GENERATOR.get(),
@@ -61,6 +62,7 @@ public class ModAdvancementProvider extends AdvancementProvider {
                             AdvancementType.TASK,
                             true,true,false
                     ).addCriterion("has_generator", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.GENERATOR))
+                    .parent(beginning)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "sparks_of_electricity"), existingFileHelper);
         }
     }

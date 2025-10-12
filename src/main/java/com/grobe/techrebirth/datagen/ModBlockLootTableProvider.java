@@ -24,6 +24,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.ENERGY_BANK.get());
         dropSelf(ModBlocks.GENERATOR.get());
         dropSelf(ModBlocks.ENERGY_CABLE.get());
+        dropSelf(ModBlocks.ELECTRIC_CRUSHER.get());
 
         add(ModBlocks.CREATIVE_ELECTRIC_FURNACE.get(), block -> LootTable.lootTable());
 

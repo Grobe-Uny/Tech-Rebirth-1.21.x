@@ -42,6 +42,10 @@ public class ModBlockEntities {
             "energy_bank", () -> BlockEntityType.Builder.of(EnergyBankBlockEntity::new, ModBlocks.ENERGY_BANK.get())
     );
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.grobe.techrebirth.block.custom.entity.ElectricCrusherBlockEntity>> ELECTRIC_CRUSHER = register(
+            "electric_crusher", () -> BlockEntityType.Builder.of(com.grobe.techrebirth.block.custom.entity.ElectricCrusherBlockEntity::new, ModBlocks.ELECTRIC_CRUSHER.get())
+    );
+
     private static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> register(String name, Supplier<BlockEntityType.Builder<T>> builder) {
         return BLOCK_ENTITIES.register(name,()-> builder.get().build(null));
     }

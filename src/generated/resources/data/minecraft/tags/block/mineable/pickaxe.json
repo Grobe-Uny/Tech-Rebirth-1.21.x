@@ -9,6 +9,7 @@
     "techrebirth:invar_block",
     "techrebirth:energy_bank",
     "techrebirth:generator",
-    "techrebirth:energy_cable"
+    "techrebirth:energy_cable",
+    "techrebirth:electric_crusher"
   ]
 }

@@ -6,6 +6,7 @@
     "techrebirth:electric_furnace",
     "techrebirth:machine_base",
     "techrebirth:energy_bank",
-    "techrebirth:generator"
+    "techrebirth:generator",
+    "techrebirth:electric_crusher"
   ]
 }

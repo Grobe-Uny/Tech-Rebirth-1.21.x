@@ -1,0 +1,6 @@
+{
+  "type": "techrebirth:crushing",
+  "ingredient": { "item": "techrebirth:nickel_ingot" },
+  "result": { "item": "techrebirth:nickel_powder", "count": 2 },
+  "time": 72
+}

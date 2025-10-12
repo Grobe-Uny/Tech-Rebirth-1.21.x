@@ -46,6 +46,9 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.MACHINE_BASE);
                         output.accept(ModBlocks.ELECTRIC_FURNACE);
                         output.accept(ModBlocks.CREATIVE_ELECTRIC_FURNACE);
+                        output.accept(ModBlocks.GENERATOR);
+                        output.accept(ModBlocks.ELECTRIC_CRUSHER);
+                        output.accept(ModBlocks.ENERGY_BANK);
 
                     })
                     .build());

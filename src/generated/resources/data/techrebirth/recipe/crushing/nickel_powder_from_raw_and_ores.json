@@ -1,0 +1,19 @@
+{
+  "type": "techrebirth:crushing",
+  "ingredient": [
+    {
+      "item": "techrebirth:raw_nickel"
+    },
+    {
+      "item": "techrebirth:nickel_ore"
+    },
+    {
+      "item": "techrebirth:nickel_deepslate_ore"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "techrebirth:nickel_powder"
+  },
+  "time": 100
+}

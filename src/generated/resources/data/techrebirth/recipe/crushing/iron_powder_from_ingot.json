@@ -1,10 +1,11 @@
 {
-  "type": "minecraft:stonecutting",
+  "type": "techrebirth:crushing",
   "ingredient": {
     "item": "minecraft:iron_ingot"
   },
   "result": {
     "count": 1,
     "id": "techrebirth:iron_powder"
-  }
+  },
+  "time": 100
 }

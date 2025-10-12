@@ -4,6 +4,7 @@ import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.block.custom.entity.EnergyCableBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.ElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.ElectricCrusherBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.GeneratorBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.bank.EnergyBankBlockEntity;
 import net.minecraft.core.Direction;
@@ -76,6 +77,24 @@ public class ModCapabilities {
                 ENERGY,
                 ModBlockEntities.CREATIVE_ELECTRIC_FURNACE.get(),
                 (ElectricFurnaceBlockEntity be, Direction side) -> {
+                    if (be == null) return null;
+                    return be.getEnergyStorage();
+                }
+        );
+
+        // Electric Crusher capabilities
+        event.registerBlockEntity(
+                ITEM_HANDLER,
+                ModBlockEntities.ELECTRIC_CRUSHER.get(),
+                (ElectricCrusherBlockEntity be, Direction side) -> {
+                    if (be == null) return null;
+                    return be.getItemHandler();
+                }
+        );
+        event.registerBlockEntity(
+                ENERGY,
+                ModBlockEntities.ELECTRIC_CRUSHER.get(),
+                (ElectricCrusherBlockEntity be, Direction side) -> {
                     if (be == null) return null;
                     return be.getEnergyStorage();
                 }

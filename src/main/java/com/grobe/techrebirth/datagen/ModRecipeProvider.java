@@ -5,15 +5,18 @@ import com.grobe.techrebirth.item.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
+import static com.grobe.techrebirth.recipe.CrushingRecipeBuilder.crushing;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
     public ModRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pRegistries) {
@@ -30,13 +33,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 /*ModBlocks.NICKEL_ORE, ModBlocks.NICKEL_DEEPSLATE_ORE*/);
         List<ItemLike> POWDER_SMELTABLES = List.of(ModItems.COPPER_POWDER,
                 ModItems.IRON_POWDER, ModItems.TIN_POWDER, ModItems.NICKEL_POWDER);
+        List<ItemLike> CRUSHABLE_IRON = List.of(Items.RAW_IRON,
+                Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE);
 
 
-        buildGearRecipe(ModItems.COPPER_GEAR, Items.COPPER_INGOT,"has_copper", Items.COPPER_INGOT, recipeOutput);
-        buildGearRecipe(ModItems.IRON_GEAR, Items.IRON_INGOT,"has_iron", Items.IRON_INGOT, recipeOutput);
+        buildGearRecipe(ModItems.COPPER_GEAR, Items.COPPER_INGOT,"has_copper", Items.COPPER_INGOT, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/copper_gear"));
+        buildGearRecipe(ModItems.IRON_GEAR, Items.IRON_INGOT,"has_iron", Items.IRON_INGOT, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/iron_gear"));
 
-        buildGearRecipe(ModItems.TIN_GEAR, ModItems.TIN_INGOT, "has_tin", ModItems.TIN_INGOT,recipeOutput);
-        buildGearRecipe(ModItems.INVAR_GEAR, ModItems.INVAR_INGOT, "has_invar", ModItems.INVAR_INGOT,recipeOutput);
+        buildGearRecipe(ModItems.TIN_GEAR, ModItems.TIN_INGOT, "has_tin", ModItems.TIN_INGOT,recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/tin_gear"));
+        buildGearRecipe(ModItems.INVAR_GEAR, ModItems.INVAR_INGOT, "has_invar", ModItems.INVAR_INGOT,recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/invar_gear"));
 
         buildBlocksFromIngotsRecipe(ModBlocks.INVAR_BLOCK.asItem(), ModItems.INVAR_INGOT.asItem(), "has_invar", ModItems.INVAR_INGOT.asItem(), recipeOutput);
         buildIngotsFromBlocksRecipe(ModItems.INVAR_INGOT.asItem(), 9, ModBlocks.INVAR_BLOCK, "has_invar", ModBlocks.INVAR_BLOCK, recipeOutput, "invar_ingot_from_invar_block");
@@ -82,20 +87,19 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.INVAR_INGOT, 3).requires(Items.IRON_INGOT.asItem(), 2).requires(ModItems.NICKEL_INGOT.asItem(), 1).unlockedBy("has_iron",has(Items.IRON_INGOT.asItem())).save(recipeOutput, "techrebirth:invar_ingot_from_nickel_and_iron_ingots");
 
-        buildStonecuttingRecipe(Items.COPPER_INGOT.asItem(), RecipeCategory.MISC, ModItems.COPPER_POWDER, 1, "has_copper", Items.COPPER_INGOT.asItem(), recipeOutput, "copper_powder_from_ingot");
-        buildStonecuttingRecipe(Items.IRON_INGOT.asItem(), RecipeCategory.MISC, ModItems.IRON_POWDER, 1, "has_iron", Items.IRON_INGOT.asItem(), recipeOutput, "iron_powder_from_ingot");
-        buildStonecuttingRecipe(ModItems.TIN_INGOT.asItem(), RecipeCategory.MISC, ModItems.TIN_POWDER, 1, "has_tin", ModItems.TIN_INGOT.asItem(), recipeOutput, "tin_powder_from_ingot");
-        buildStonecuttingRecipe(ModItems.NICKEL_INGOT.asItem(), RecipeCategory.MISC, ModItems.NICKEL_POWDER, 1, "has_nickel", ModItems.NICKEL_INGOT.asItem(), recipeOutput,"nickel_powder_from_ingot");
+        //custom mod recipes
+        crushing(Ingredient.of(Items.IRON_INGOT.asItem()), new ItemStack(ModItems.IRON_POWDER.get() , 1)).time(100)
+                .unlockedBy("has_electrical_crusher", has(ModBlocks.ELECTRIC_CRUSHER)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/iron_powder_from_ingot"));
+        buildCrushingRecipes(Ingredient.of(Items.RAW_IRON, Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE), new ItemStack(ModItems.IRON_POWDER.get(),2),100,"has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/iron_powder_from_raw_and_ores"));
 
-        buildStonecuttingRecipe(Blocks.COPPER_ORE.asItem(), RecipeCategory.MISC, ModItems.COPPER_POWDER,2, "has_copper_ore", Blocks.COPPER_ORE.asItem(), recipeOutput, "copper_powder_from_ore");
-        buildStonecuttingRecipe(Blocks.DEEPSLATE_COPPER_ORE.asItem(), RecipeCategory.MISC, ModItems.COPPER_POWDER,3, "has_deepslate_copper_ore", Blocks.DEEPSLATE_COPPER_ORE.asItem(), recipeOutput, "copper_powder_from_deepslate");
-        buildStonecuttingRecipe(Blocks.IRON_ORE.asItem(), RecipeCategory.MISC, ModItems.IRON_POWDER,2, "has_iron_ore", Blocks.IRON_ORE.asItem(), recipeOutput, "iron_powder_from_ore");
-        buildStonecuttingRecipe(Blocks.DEEPSLATE_IRON_ORE.asItem(), RecipeCategory.MISC, ModItems.IRON_POWDER,3, "has_deepslate_iron_ore", Blocks.DEEPSLATE_IRON_ORE.asItem(), recipeOutput, "iron_powder_from_deepslate");
+        buildCrushingRecipes(Ingredient.of(Items.RAW_COPPER, Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE), new ItemStack(ModItems.COPPER_POWDER.get(),2),100,"has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/copper_powder_from_raw_and_ores"));
+        buildCrushingRecipes(Ingredient.of(Items.COPPER_INGOT), new ItemStack(ModItems.COPPER_POWDER.get(),1),100,"has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/copper_powder_from_ingot"));
 
-        buildStonecuttingRecipe(ModBlocks.TIN_ORE.asItem(), RecipeCategory.MISC, ModItems.TIN_POWDER, 2, "has_tin_ore", ModBlocks.TIN_ORE.asItem(), recipeOutput, "tin_powder_from_ore");
-        buildStonecuttingRecipe(ModBlocks.TIN_ORE.asItem(), RecipeCategory.MISC, ModItems.TIN_POWDER, 3, "has_deepslate_tin_ore", ModBlocks.TIN_DEEPSLATE_ORE.asItem(), recipeOutput,"tin_powder_from_deepslate");
-        buildStonecuttingRecipe(ModBlocks.NICKEL_ORE.asItem(), RecipeCategory.MISC, ModItems.NICKEL_POWDER, 2, "has_nickel_ore", ModBlocks.NICKEL_ORE.asItem(), recipeOutput, "nickel_powder_from_ore");
-        buildStonecuttingRecipe(ModBlocks.NICKEL_DEEPSLATE_ORE.asItem(), RecipeCategory.MISC, ModItems.NICKEL_POWDER, 3, "has_deepslate_nickel_ore", ModBlocks.NICKEL_DEEPSLATE_ORE.asItem(), recipeOutput,"nickel_powder_from_deepslate");
+        buildCrushingRecipes(Ingredient.of(ModItems.NICKEL_INGOT), new ItemStack(ModItems.NICKEL_POWDER.get(),1),100,"has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/nickel_powder_from_ingot"));
+        buildCrushingRecipes(Ingredient.of(ModItems.RAW_NICKEL, ModBlocks.NICKEL_ORE, ModBlocks.NICKEL_DEEPSLATE_ORE), new ItemStack(ModItems.NICKEL_POWDER.get(),2),100,"has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/nickel_powder_from_raw_and_ores"));
+
+        buildCrushingRecipes(Ingredient.of(ModItems.TIN_INGOT), new ItemStack(ModItems.TIN_POWDER.get(),1),100,"has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/tin_powder_from_ingot"));
+        buildCrushingRecipes(Ingredient.of(ModItems.RAW_TIN, ModBlocks.TIN_ORE, ModBlocks.TIN_DEEPSLATE_ORE), new ItemStack(ModItems.TIN_POWDER.get(),2),100,"has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/tin_powder_from_raw_and_ores"));
 
 
         oreSmelting(recipeOutput, TIN_SMELTABLES, RecipeCategory.MISC, ModItems.TIN_INGOT, 8f, 70, "tin");
@@ -116,13 +120,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(criteria, has(Criteria))
                 .save(recipeoutput, "techrebirth:" + resourceLocation);
     }
-    public static void buildGearRecipe(ItemLike outputGear, ItemLike inputItem, String Criteria, ItemLike criteria, RecipeOutput recipeOutput){
+    public static void buildGearRecipe(ItemLike outputGear, ItemLike inputItem, String Criteria, ItemLike criteria, RecipeOutput recipeOutput, ResourceLocation resourceLocation){
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, outputGear.asItem())
                 .pattern(" X ")
                 .pattern("X X")
                 .pattern(" X ")
                 .define('X', inputItem.asItem())
-                .unlockedBy(Criteria, has(criteria)).save(recipeOutput);
+                .unlockedBy(Criteria, has(criteria)).save(recipeOutput, resourceLocation);
     }
     public static void buildBlocksFromIngotsRecipe(ItemLike outputBlock, ItemLike inputItem, String Criteria, ItemLike criteria, RecipeOutput recipeOutput){
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, outputBlock.asItem())
@@ -146,5 +150,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 ExpirienceReward,
                 CookingTime
         ).unlockedBy(Criteria, has(criteria)).save(recipeOutput);
+    }
+    public static void buildCrushingRecipes(Ingredient ingredient, ItemStack output, int length, String Criteria, ItemLike criteria, RecipeOutput rOutput, ResourceLocation resourceLocation){
+        crushing(ingredient, output).time(length).unlockedBy(Criteria, has(criteria)).save(rOutput,  resourceLocation);
     }
 }

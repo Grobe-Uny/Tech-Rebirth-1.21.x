@@ -1,0 +1,6 @@
+{
+  "type": "techrebirth:crushing",
+  "ingredient": { "item": "techrebirth:tin_ingot" },
+  "result": { "item": "techrebirth:tin_powder", "count": 2 },
+  "time": 72
+}

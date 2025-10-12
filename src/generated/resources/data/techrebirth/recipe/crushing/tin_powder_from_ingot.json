@@ -1,10 +1,11 @@
 {
-  "type": "minecraft:stonecutting",
+  "type": "techrebirth:crushing",
   "ingredient": {
     "item": "techrebirth:tin_ingot"
   },
   "result": {
     "count": 1,
     "id": "techrebirth:tin_powder"
-  }
+  },
+  "time": 100
 }

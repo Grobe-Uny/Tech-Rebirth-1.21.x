@@ -31,7 +31,9 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                     .add(ModBlocks.INVAR_BLOCK.get())
                     .add(ModBlocks.ENERGY_BANK.get())
                     .add(ModBlocks.GENERATOR.get())
-                    .add(ModBlocks.ENERGY_CABLE.get());
+                    .add(ModBlocks.ENERGY_CABLE.get())
+                    .add(ModBlocks.ELECTRIC_CRUSHER.get());
+
             tag(BlockTags.NEEDS_STONE_TOOL)
                     .add(ModBlocks.NICKEL_ORE.get())
                     .add(ModBlocks.TIN_ORE.get())
@@ -43,6 +45,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                     .add(ModBlocks.ELECTRIC_FURNACE.get())
                     .add(ModBlocks.MACHINE_BASE.get())
                     .add(ModBlocks.ENERGY_BANK.get())
-                    .add(ModBlocks.GENERATOR.get());
+                    .add(ModBlocks.GENERATOR.get())
+                    .add(ModBlocks.ELECTRIC_CRUSHER.get());
         }
 }

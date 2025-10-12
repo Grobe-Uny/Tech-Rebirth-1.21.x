@@ -1,4 +1,5 @@
 {
+  "parent": "techrebirth:tech_rebirth_start",
   "criteria": {
     "has_machine_base": {
       "conditions": {

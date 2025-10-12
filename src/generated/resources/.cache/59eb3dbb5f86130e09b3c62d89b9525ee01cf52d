@@ -1,5 +1,6 @@
-// 1.21.1	2025-10-12T17:13:13.2319044	Loot Tables
+// 1.21.1	2025-10-12T23:40:20.4969814	Loot Tables
 388e60989fb33c249d0f56037fad3f1662326de9 data/techrebirth/loot_table/blocks/creative_electric_furnace.json
+1f309806c478ff9014de0737e8a3c7ca65caced0 data/techrebirth/loot_table/blocks/electric_crusher.json
 383650aca5420661078aa8591806be9b64b3dbe1 data/techrebirth/loot_table/blocks/electric_furnace.json
 9ed8868aeb15bb56f12802a785393125137a9fbd data/techrebirth/loot_table/blocks/energy_bank.json
 403316b0cfd254831aa76084752fdf70a41762e6 data/techrebirth/loot_table/blocks/energy_cable.json

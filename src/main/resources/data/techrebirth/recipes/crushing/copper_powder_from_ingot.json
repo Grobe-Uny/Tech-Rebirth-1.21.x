@@ -1,0 +1,6 @@
+{
+  "type": "techrebirth:crushing",
+  "ingredient": { "item": "minecraft:copper_ingot" },
+  "result": { "item": "techrebirth:copper_powder", "count": 2 },
+  "time": 72
+}

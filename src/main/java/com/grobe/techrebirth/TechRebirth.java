@@ -51,6 +51,7 @@ public class TechRebirth {
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        com.grobe.techrebirth.recipe.ModRecipeTypes.register(modEventBus);
 
 
         ModEnchantmentEffects.register(modEventBus);
@@ -95,6 +96,7 @@ public class TechRebirth {
         {
             event.register(ModMenuTypes.ELECTRIC_FURNACE_MENU.get(), ElectricFurnaceScreen::new);
             event.register(ModMenuTypes.GENERATOR_MENU.get(), GeneratorScreen::new);
+            event.register(ModMenuTypes.ELECTRIC_CRUSHER_MENU.get(), com.grobe.techrebirth.gui.electric_crusher.ElectricCrusherScreen::new);
         }
     }
 }

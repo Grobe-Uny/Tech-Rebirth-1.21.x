@@ -1,0 +1,19 @@
+{
+  "type": "techrebirth:crushing",
+  "ingredient": [
+    {
+      "item": "techrebirth:raw_tin"
+    },
+    {
+      "item": "techrebirth:tin_ore"
+    },
+    {
+      "item": "techrebirth:tin_deepslate_ore"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "techrebirth:tin_powder"
+  },
+  "time": 100
+}

@@ -26,7 +26,9 @@ public class JEITechRebirthPlugin implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
-        registration.addRecipeCategories(new ElectricFurnaceRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+        var gui = registration.getJeiHelpers().getGuiHelper();
+        registration.addRecipeCategories(new ElectricFurnaceRecipeCategory(gui));
+        registration.addRecipeCategories(new ElectricCrusherRecipeCategory(gui));
     }
 
     @Override
@@ -36,10 +38,17 @@ public class JEITechRebirthPlugin implements IModPlugin {
                 .map(holder -> holder.value())
                 .toList();
         registration.addRecipes(ElectricFurnaceRecipeCategory.TYPE, smeltingRecipes);
+
+        // Crusher recipes
+        var crushing = recipeManager.getAllRecipesFor(com.grobe.techrebirth.recipe.ModRecipeTypes.CRUSHING_TYPE.get()).stream()
+                .map(holder -> holder.value())
+                .toList();
+        registration.addRecipes(ElectricCrusherRecipeCategory.TYPE, crushing);
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELECTRIC_FURNACE.get()), ElectricFurnaceRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELECTRIC_CRUSHER.get()), ElectricCrusherRecipeCategory.TYPE);
     }
 }

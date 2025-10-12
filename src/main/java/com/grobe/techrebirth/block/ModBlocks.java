@@ -77,6 +77,13 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
             ));
+
+    public static final DeferredBlock<Block> ELECTRIC_CRUSHER = registerBlock("electric_crusher",
+            () -> new com.grobe.techrebirth.block.custom.ElectricCrusherBlock(BlockBehaviour.Properties.of()
+                    .strength(3.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+            ));
     public static final DeferredBlock<Block> CREATIVE_ELECTRIC_FURNACE = registerBlock("creative_electric_furnace",
             () -> new com.grobe.techrebirth.block.custom.CreativeElectricFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.ELECTRIC_FURNACE.get())));
 
