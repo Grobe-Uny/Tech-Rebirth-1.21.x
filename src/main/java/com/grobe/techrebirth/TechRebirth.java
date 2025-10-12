@@ -5,6 +5,7 @@ import com.grobe.techrebirth.block.ModBlocks;
 import com.grobe.techrebirth.enchantment.ModEnchantmentEffects;
 import com.grobe.techrebirth.gui.ModMenuTypes;
 import com.grobe.techrebirth.gui.electric_furnace.ElectricFurnaceScreen;
+import com.grobe.techrebirth.gui.generator.GeneratorScreen;
 import com.grobe.techrebirth.item.ModItems;
 import net.neoforged.fml.common.EventBusSubscriber;
 import org.slf4j.Logger;
@@ -93,6 +94,7 @@ public class TechRebirth {
         public static void onRegisterMenuScreens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event)
         {
             event.register(ModMenuTypes.ELECTRIC_FURNACE_MENU.get(), ElectricFurnaceScreen::new);
+            event.register(ModMenuTypes.GENERATOR_MENU.get(), GeneratorScreen::new);
         }
     }
 }

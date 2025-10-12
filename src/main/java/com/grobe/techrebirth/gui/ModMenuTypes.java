@@ -17,6 +17,9 @@ public class ModMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<ElectricFurnaceMenu>> ELECTRIC_FURNACE_MENU =
             MENUS.register("electric_furnace_menu", () -> IMenuTypeExtension.create((windowId, inv, buf) -> new ElectricFurnaceMenu(windowId, inv, buf)));
 
+    public static final DeferredHolder<MenuType<?>, MenuType<com.grobe.techrebirth.gui.generator.GeneratorMenu>> GENERATOR_MENU =
+            MENUS.register("generator_menu", () -> IMenuTypeExtension.create((windowId, inv, buf) -> new com.grobe.techrebirth.gui.generator.GeneratorMenu(windowId, inv, buf)));
+
     public static void register(IEventBus eventBus) {
         MENUS.register(eventBus);
     }

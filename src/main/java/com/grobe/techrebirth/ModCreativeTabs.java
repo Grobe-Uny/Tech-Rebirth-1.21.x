@@ -32,6 +32,8 @@ public class ModCreativeTabs {
                         output.accept(ModItems.INVAR_GEAR);
                         output.accept(ModItems.COOKED_CARROT);
                         output.accept(ModItems.LEAD_GEAR);
+                        output.accept(ModItems.EFFICIENCY_UPGRADE);
+                        output.accept(ModItems.SPEED_UPGRADE);
 
                     })
                     .build());

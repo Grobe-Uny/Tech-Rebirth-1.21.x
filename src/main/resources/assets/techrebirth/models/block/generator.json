@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "techrebirth:block/machine/generator/generator_bottom",
+    "east": "techrebirth:block/machine/generator/generator_side",
+    "north": "techrebirth:block/machine/generator/generator_front",
+    "particle": "techrebirth:block/machine/generator/generator_bottom",
+    "south": "techrebirth:block/machine/generator/generator_side",
+    "up": "techrebirth:block/machine/generator/generator_top",
+    "west": "techrebirth:block/machine/generator/generator_side"
+  }
+}

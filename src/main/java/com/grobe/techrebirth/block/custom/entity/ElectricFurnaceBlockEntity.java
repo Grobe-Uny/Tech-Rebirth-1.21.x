@@ -198,9 +198,25 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
         ItemStack result = recipe.get().value().getResultItem(null);
         ItemStackHandler handler = getItemHandler();
 
+        // Consume input and place output
         handler.extractItem(INPUT_SLOT, 1, false);
         handler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
                 handler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
+
+        // Award experience for smelting, similar to vanilla logic
+        if (this.level != null && !this.level.isClientSide()) {
+            float xpPerItem = recipe.get().value().getExperience();
+            int produced = result.getCount();
+            int totalXp = (int) Math.floor(xpPerItem * produced);
+            // Handle fractional part probabilistically
+            if (totalXp < xpPerItem * produced && this.level.random.nextFloat() < ((xpPerItem * produced) - totalXp)) {
+                totalXp++;
+            }
+            if (totalXp > 0 && this.level instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+                net.minecraft.world.entity.ExperienceOrb.award(serverLevel,
+                        net.minecraft.world.phys.Vec3.atCenterOf(this.worldPosition), totalXp);
+            }
+        }
 
         resetProgress();
     }

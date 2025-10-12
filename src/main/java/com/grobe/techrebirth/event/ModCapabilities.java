@@ -2,15 +2,15 @@ package com.grobe.techrebirth.event;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlockEntities;
-import com.grobe.techrebirth.block.custom.entity.CableBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.EnergyCableBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.ElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.GeneratorBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.bank.EnergyBankBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.BlockCapability;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -102,9 +102,18 @@ public class ModCapabilities {
         event.registerBlockEntity(
                 ENERGY,
                 ModBlockEntities.CABLE.get(),
-                (CableBlockEntity be, Direction side) -> {
+                (EnergyCableBlockEntity be, Direction side) -> {
                     if (be == null) return null;
                     return be.getEnergyStorage();
+                }
+        );
+
+        event.registerBlockEntity(
+                ENERGY,
+                ModBlockEntities.ENERGY_BANK.get(),
+                (EnergyBankBlockEntity be, Direction side) -> {
+                    if (be == null) return null;
+                    return be.getExposedEnergyStorage();
                 }
         );
     }

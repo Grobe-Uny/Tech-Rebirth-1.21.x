@@ -7,6 +7,8 @@
     "techrebirth:tin_ore",
     "techrebirth:tin_deepslate_ore",
     "techrebirth:invar_block",
-    "techrebirth:furinator"
+    "techrebirth:energy_bank",
+    "techrebirth:generator",
+    "techrebirth:energy_cable"
   ]
 }

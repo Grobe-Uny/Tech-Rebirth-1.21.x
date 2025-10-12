@@ -5,6 +5,7 @@ import com.grobe.techrebirth.block.ModBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -28,16 +29,20 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                     .add(ModBlocks.TIN_ORE.get())
                     .add(ModBlocks.TIN_DEEPSLATE_ORE.get())
                     .add(ModBlocks.INVAR_BLOCK.get())
-                    .add(ModBlocks.FURINATOR.get());
+                    .add(ModBlocks.ENERGY_BANK.get())
+                    .add(ModBlocks.GENERATOR.get())
+                    .add(ModBlocks.ENERGY_CABLE.get());
             tag(BlockTags.NEEDS_STONE_TOOL)
                     .add(ModBlocks.NICKEL_ORE.get())
-                    .add(ModBlocks.TIN_ORE.get());
+                    .add(ModBlocks.TIN_ORE.get())
+                    .add(ModBlocks.ENERGY_CABLE.get());
             tag(BlockTags.NEEDS_IRON_TOOL)
                     .add(ModBlocks.TIN_DEEPSLATE_ORE.get())
                     .add(ModBlocks.NICKEL_DEEPSLATE_ORE.get())
                     .add(ModBlocks.INVAR_BLOCK.get())
                     .add(ModBlocks.ELECTRIC_FURNACE.get())
-                    .add(ModBlocks.MACHINE_BASE.get());
-
+                    .add(ModBlocks.MACHINE_BASE.get())
+                    .add(ModBlocks.ENERGY_BANK.get())
+                    .add(ModBlocks.GENERATOR.get());
         }
 }

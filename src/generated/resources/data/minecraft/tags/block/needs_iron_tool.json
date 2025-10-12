@@ -4,6 +4,8 @@
     "techrebirth:nickel_deepslate_ore",
     "techrebirth:invar_block",
     "techrebirth:electric_furnace",
-    "techrebirth:machine_base"
+    "techrebirth:machine_base",
+    "techrebirth:energy_bank",
+    "techrebirth:generator"
   ]
 }

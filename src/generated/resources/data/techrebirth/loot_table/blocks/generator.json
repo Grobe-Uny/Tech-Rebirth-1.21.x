@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "techrebirth:furinator"
+          "name": "techrebirth:generator"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "techrebirth:blocks/furinator"
+  "random_sequence": "techrebirth:blocks/generator"
 }

@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.datagen;
 
 import com.grobe.techrebirth.TechRebirth;
+import com.grobe.techrebirth.block.ModBlocks;
 import com.grobe.techrebirth.item.ModItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -43,6 +44,24 @@ public class ModAdvancementProvider extends AdvancementProvider {
                                     true,true,false
                             ).addCriterion("has_tin", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.TIN_INGOT))
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "tech_rebirth_start"), existingFileHelper);
+            AdvancementHolder beginning = builder.display(
+                    ModBlocks.MACHINE_BASE.get(),
+                    Component.translatable("advancements.techrebirth.basing_machines.title"),
+                    Component.translatable("advancements.techrebirth.basing_machines.description"),
+                    ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
+                    AdvancementType.TASK,
+                    true,true,false
+            ).addCriterion("has_machine_base", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.MACHINE_BASE))
+                    .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "beggining_of_machinery"), existingFileHelper);
+            AdvancementHolder generating_electricity = builder.display(
+                            ModBlocks.GENERATOR.get(),
+                            Component.translatable("advancements.techrebirth.first_sparks.title"),
+                            Component.translatable("advancements.techrebirth.first_sparks.description"),
+                            ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
+                            AdvancementType.TASK,
+                            true,true,false
+                    ).addCriterion("has_generator", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.GENERATOR))
+                    .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "sparks_of_electricity"), existingFileHelper);
         }
     }
 }

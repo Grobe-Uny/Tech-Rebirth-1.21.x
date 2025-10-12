@@ -1,10 +1,11 @@
 package com.grobe.techrebirth.block;
 
 import com.grobe.techrebirth.TechRebirth;
-import com.grobe.techrebirth.block.custom.entity.CableBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.EnergyCableBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.CreativeElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.ElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.GeneratorBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.bank.EnergyBankBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -33,8 +34,12 @@ public class ModBlockEntities {
             "generator", () -> BlockEntityType.Builder.of(GeneratorBlockEntity::new, ModBlocks.GENERATOR.get())
     );
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CableBlockEntity>> CABLE = register(
-            "cable", () -> BlockEntityType.Builder.of(CableBlockEntity::new, ModBlocks.CABLE.get())
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EnergyCableBlockEntity>> CABLE = register(
+            "cable", () -> BlockEntityType.Builder.of(EnergyCableBlockEntity::new, ModBlocks.ENERGY_CABLE.get())
+    );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EnergyBankBlockEntity>> ENERGY_BANK = register(
+            "energy_bank", () -> BlockEntityType.Builder.of(EnergyBankBlockEntity::new, ModBlocks.ENERGY_BANK.get())
     );
 
     private static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> register(String name, Supplier<BlockEntityType.Builder<T>> builder) {

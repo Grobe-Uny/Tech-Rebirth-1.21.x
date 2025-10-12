@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "I": {
+      "item": "techrebirth:invar_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "IRI",
+    "RGR",
+    "IRI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:speed_upgrade"
+  }
+}

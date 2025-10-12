@@ -19,9 +19,11 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
     @Override
     protected void generate() {
         dropSelf(ModBlocks.MACHINE_BASE.get());
-        dropSelf(ModBlocks.FURINATOR.get());
         dropSelf(ModBlocks.INVAR_BLOCK.get());
         dropSelf(ModBlocks.ELECTRIC_FURNACE.get());
+        dropSelf(ModBlocks.ENERGY_BANK.get());
+        dropSelf(ModBlocks.GENERATOR.get());
+        dropSelf(ModBlocks.ENERGY_CABLE.get());
 
         add(ModBlocks.CREATIVE_ELECTRIC_FURNACE.get(), block -> LootTable.lootTable());
 

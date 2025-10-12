@@ -64,6 +64,21 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('X', Items.GOLD_INGOT.asItem())
                 .define('Y', Items.REDSTONE.asItem())
                 .unlockedBy("has_gold", has(Items.GOLD_INGOT)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GENERATOR.get())
+                        .pattern("III").pattern("GMG").pattern("XFX").define('M', ModBlocks.MACHINE_BASE.get()).define('X', ModItems.REDSTONE_RECEPTION_COIL.get()).define('F', Items.FURNACE.asItem()).define('G', ModItems.IRON_GEAR.get()).define('I', ModItems.INVAR_INGOT.get())
+                .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE)).save(recipeOutput);
+
+        //upgrades
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EFFICIENCY_UPGRADE.get())
+                .pattern("IRI").pattern("RDR").pattern("IRI")
+                .define('I', ModItems.INVAR_INGOT.asItem())
+                .define('R', Items.REDSTONE.asItem()).define('D', Items.DIAMOND.asItem())
+                .unlockedBy("has_invar", has(ModItems.INVAR_INGOT)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SPEED_UPGRADE.get())
+                .pattern("IRI").pattern("RGR").pattern("IRI")
+                .define('I', ModItems.INVAR_INGOT.asItem())
+                .define('R', Items.REDSTONE.asItem()).define('G', Items.GOLD_INGOT)
+                .unlockedBy("has_invar", has(ModItems.INVAR_INGOT)).save(recipeOutput);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.INVAR_INGOT, 3).requires(Items.IRON_INGOT.asItem(), 2).requires(ModItems.NICKEL_INGOT.asItem(), 1).unlockedBy("has_iron",has(Items.IRON_INGOT.asItem())).save(recipeOutput, "techrebirth:invar_ingot_from_nickel_and_iron_ingots");
 

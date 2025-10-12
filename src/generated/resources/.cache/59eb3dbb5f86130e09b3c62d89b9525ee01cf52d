@@ -1,7 +1,9 @@
-// 1.21.1	2025-10-11T17:54:11.0846147	Loot Tables
+// 1.21.1	2025-10-12T17:13:13.2319044	Loot Tables
 388e60989fb33c249d0f56037fad3f1662326de9 data/techrebirth/loot_table/blocks/creative_electric_furnace.json
 383650aca5420661078aa8591806be9b64b3dbe1 data/techrebirth/loot_table/blocks/electric_furnace.json
-787dcedcd423a6de3d4bd8a591854eca94e7aa64 data/techrebirth/loot_table/blocks/furinator.json
+9ed8868aeb15bb56f12802a785393125137a9fbd data/techrebirth/loot_table/blocks/energy_bank.json
+403316b0cfd254831aa76084752fdf70a41762e6 data/techrebirth/loot_table/blocks/energy_cable.json
+3de72cfbc65a2d2c6e57a2a4b4adb333ede12837 data/techrebirth/loot_table/blocks/generator.json
 57c75cb0616b77a1eb666b13907621d2c4aad590 data/techrebirth/loot_table/blocks/invar_block.json
 f19d78cea33a22c88551c6f20f712e84f092c4b9 data/techrebirth/loot_table/blocks/machine_base.json
 523bd9ce45ee54ade9f31556f9877e6b3543b66b data/techrebirth/loot_table/blocks/nickel_deepslate_ore.json

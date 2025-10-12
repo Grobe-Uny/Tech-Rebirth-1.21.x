@@ -1,7 +1,4 @@
 {
-  "itemGroup.techrebirth": "Example Mod Tab",
-  "block.techrebirth.example_block": "Example Block",
-  "item.techrebirth.example_item": "Example Item",
 
   "techrebirth.configuration.title": "Tech Rebirth Configs",
   "techrebirth.configuration.section.techrebirth.common.toml": "Tech Rebirth Configs",
@@ -39,6 +36,9 @@
   "block.techrebirth.invar_block": "Invar Block",
   "block.techrebirth.electric_furnace": "Electric Furnace",
   "block.techrebirth.creative_electric_furnace": "Creative Electric Furnace",
+  "block.techrebirth.generator": "Generator",
+  "block.techrebirth.energy_cable": "Energy Cable",
+  "block.techrebirth.energy_bank": "Energy Bank",
 
   "creativetab.techrebirth.tech_rebirth_items": "Tech Rebirth Items",
   "creativetab.techrebirth.tech_rebirth_blocks": "Tech Rebirth Blocks",
@@ -51,6 +51,11 @@
   "tooltip.techrebirth.raw_tin" : "This ingot is really §sTin§l",
 
   "config.jade.plugin_techrebirth.electric_furnace" : "Show Electric Furnace Info",
+
   "advancements.techrebirth.rebirth_of_technology.description": "Welcome to the Rebirth of Technology!",
-  "advancements.techrebirth.rebirth_of_technology.title": "Rebirth of Technology"
+  "advancements.techrebirth.rebirth_of_technology.title": "Rebirth of Technology",
+  "advancements.techrebirth.basing_machines.title" : "Basing Machines",
+  "advancements.techrebirth.basing_machines.description" : "Creating Base for Machines!",
+  "advancements.techrebirth.first_sparks.title" : "First Sparks",
+  "advancements.techrebirth.first_sparks.description" : "Get Generator for first sparks of electricity!!"
 }

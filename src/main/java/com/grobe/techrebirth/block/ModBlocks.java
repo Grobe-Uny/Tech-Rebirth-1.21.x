@@ -1,7 +1,8 @@
 package com.grobe.techrebirth.block;
 
 import com.grobe.techrebirth.TechRebirth;
-import com.grobe.techrebirth.block.custom.cable.CableBlock;
+import com.grobe.techrebirth.block.custom.cable.EnergyCableBlock;
+import com.grobe.techrebirth.block.custom.bank.EnergyBankBlock;
 import com.grobe.techrebirth.block.custom.ElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.generator.GeneratorBlock;
 import com.grobe.techrebirth.item.ModItems;
@@ -9,7 +10,6 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -70,13 +70,6 @@ public class ModBlocks {
 
     /// Block Entities
 
-    public static final DeferredBlock<Block> FURINATOR = registerBlock("furinator",
-            () -> new Block(BlockBehaviour.Properties.of()
-                    .strength(3.25f)
-                    .requiresCorrectToolForDrops()
-                    .sound(SoundType.METAL)
-            ));
-
 
     public static final DeferredBlock<Block> ELECTRIC_FURNACE = registerBlock("electric_furnace",
             () -> new ElectricFurnaceBlock(BlockBehaviour.Properties.of()
@@ -94,9 +87,16 @@ public class ModBlocks {
                     .sound(SoundType.METAL)
             ));
 
-    public static final DeferredBlock<Block> CABLE = registerBlock("cable",
-            () -> new CableBlock(BlockBehaviour.Properties.of()
+    public static final DeferredBlock<Block> ENERGY_CABLE = registerBlock("energy_cable",
+            () -> new EnergyCableBlock(BlockBehaviour.Properties.of()
                     .strength(0.5f)
+                    .sound(SoundType.METAL)
+            ));
+
+    public static final DeferredBlock<Block> ENERGY_BANK = registerBlock("energy_bank",
+            () -> new EnergyBankBlock(BlockBehaviour.Properties.of()
+                    .strength(3.0f)
+                    .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
             ));
 

@@ -1,10 +1,13 @@
 package com.grobe.techrebirth.block.custom.cable;
 
-import com.grobe.techrebirth.block.custom.entity.CableBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.EnergyCableBlockEntity;
+import com.grobe.techrebirth.event.ModCapabilities;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -20,7 +23,11 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class CableBlock extends BaseEntityBlock {
+public class EnergyCableBlock extends BaseEntityBlock {
+
+    public static final MapCodec<EnergyCableBlock> CODEC = simpleCodec(EnergyCableBlock::new);
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() { return CODEC; }
 
     // Boolean properties for each direction to determine if the cable should connect
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
@@ -30,7 +37,7 @@ public class CableBlock extends BaseEntityBlock {
     public static final BooleanProperty UP = BooleanProperty.create("up");
     public static final BooleanProperty DOWN = BooleanProperty.create("down");
 
-    public CableBlock(Properties properties) {
+    public EnergyCableBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(NORTH, false)
@@ -61,15 +68,31 @@ public class CableBlock extends BaseEntityBlock {
 
     // This method is called when a neighboring block changes
     @Override
-    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, Level pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
-        return pState.setValue(getProperty(pFacing), shouldConnectTo(pLevel, pCurrentPos, pFacing));
+    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
+        return pState.setValue(getProperty(pFacing), shouldConnectTo((Level) pLevel, pCurrentPos, pFacing));
     }
 
     // This method determines if the cable should connect to a block in a given direction
     private boolean shouldConnectTo(Level level, BlockPos pos, Direction direction) {
         BlockPos neighborPos = pos.relative(direction);
         BlockState neighborState = level.getBlockState(neighborPos);
-        return neighborState.getBlock() instanceof CableBlock || level.getBlockEntity(neighborPos) != null;
+        if (neighborState.getBlock() instanceof EnergyCableBlock) return true;
+        BlockEntity be = level.getBlockEntity(neighborPos);
+        if (be == null) return false;
+        // Check if a neighbor exposes energy capability on the facing side
+        return level.getCapability(ModCapabilities.ELECTRIC_FURNACE_ENERGY, neighborPos, neighborState, be, direction.getOpposite()) != null;
+    }
+
+    private boolean shouldConnectTo(LevelAccessor level, BlockPos pos, Direction direction) {
+        BlockPos neighborPos = pos.relative(direction);
+        BlockState neighborState = level.getBlockState(neighborPos);
+        if (neighborState.getBlock() instanceof EnergyCableBlock) return true;
+        if (level instanceof Level realLevel) {
+            BlockEntity be = realLevel.getBlockEntity(neighborPos);
+            if (be == null) return false;
+            return realLevel.getCapability(ModCapabilities.ELECTRIC_FURNACE_ENERGY, neighborPos, neighborState, be, direction.getOpposite()) != null;
+        }
+        return false;
     }
 
     // This method returns the correct BooleanProperty for a given direction
@@ -117,13 +140,13 @@ public class CableBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new CableBlockEntity(pPos, pState);
+        return new EnergyCableBlockEntity(pPos, pState);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         return createTickerHelper(pBlockEntityType, com.grobe.techrebirth.block.ModBlockEntities.CABLE.get(),
-                CableBlockEntity::tick);
+                EnergyCableBlockEntity::tick);
     }
 }

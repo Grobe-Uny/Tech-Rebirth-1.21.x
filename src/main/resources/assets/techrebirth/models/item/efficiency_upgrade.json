@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "techrebirth:item/efficiency_upgrade"
+    "layer0": "techrebirth:item/upgrade/efficiency_upgrade"
   }
 }

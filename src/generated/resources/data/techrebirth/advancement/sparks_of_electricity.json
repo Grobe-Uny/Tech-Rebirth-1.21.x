@@ -1,0 +1,59 @@
+{
+  "criteria": {
+    "has_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "techrebirth:generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_machine_base": {
+      "conditions": {
+        "items": [
+          {
+            "items": "techrebirth:machine_base"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_tin": {
+      "conditions": {
+        "items": [
+          {
+            "items": "techrebirth:tin_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancements.techrebirth.first_sparks.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "techrebirth:generator"
+    },
+    "title": {
+      "translate": "advancements.techrebirth.first_sparks.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_tin"
+    ],
+    [
+      "has_machine_base"
+    ],
+    [
+      "has_generator"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
