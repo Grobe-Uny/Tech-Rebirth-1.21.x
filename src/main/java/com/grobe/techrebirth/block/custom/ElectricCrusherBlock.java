@@ -137,7 +137,6 @@ public class ElectricCrusherBlock extends BaseEntityBlock {
             popResource(level, pos, stack);
         } else {
             super.spawnAfterBreak(state, level, pos, tool, dropExperience);
-            return;
         }
     }
 }

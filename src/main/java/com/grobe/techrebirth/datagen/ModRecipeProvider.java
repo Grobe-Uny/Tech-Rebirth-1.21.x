@@ -2,21 +2,28 @@ package com.grobe.techrebirth.datagen;
 
 import com.grobe.techrebirth.block.ModBlocks;
 import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.recipe.GeneratorFuelRecipe;
+import com.grobe.techrebirth.recipe.GeneratorFuelRecipeBuilder;
+import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 import static com.grobe.techrebirth.recipe.CrushingRecipeBuilder.crushing;
+import static com.grobe.techrebirth.recipe.GeneratorFuelRecipeBuilder.fuel;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
     public ModRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pRegistries) {
@@ -35,14 +42,26 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 ModItems.IRON_POWDER, ModItems.TIN_POWDER, ModItems.NICKEL_POWDER);
         List<ItemLike> CRUSHABLE_IRON = List.of(Items.RAW_IRON,
                 Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE);
+        Ingredient lowLevelFuels = Ingredient.fromValues(Stream.of(
+                new Ingredient.ItemValue(new ItemStack(Items.BAMBOO)),
+                new Ingredient.ItemValue(new ItemStack(Blocks.SCAFFOLDING.asItem())),
+                new Ingredient.TagValue(ItemTags.WOOL_CARPETS),
+                new Ingredient.TagValue(ItemTags.WOOL)
+        ));
+        Ingredient coalFuels = Ingredient.fromValues(Stream.of(
+           new Ingredient.ItemValue(new ItemStack(Items.COAL)),
+           new Ingredient.ItemValue(new ItemStack(Items.CHARCOAL))
+        ));
 
 
+        //region gear recipes
         buildGearRecipe(ModItems.COPPER_GEAR, Items.COPPER_INGOT,"has_copper", Items.COPPER_INGOT, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/copper_gear"));
         buildGearRecipe(ModItems.IRON_GEAR, Items.IRON_INGOT,"has_iron", Items.IRON_INGOT, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/iron_gear"));
 
         buildGearRecipe(ModItems.TIN_GEAR, ModItems.TIN_INGOT, "has_tin", ModItems.TIN_INGOT,recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/tin_gear"));
         buildGearRecipe(ModItems.INVAR_GEAR, ModItems.INVAR_INGOT, "has_invar", ModItems.INVAR_INGOT,recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/invar_gear"));
-        buildGearRecipe(ModItems.LEAD_GEAR, ModItems.INVAR_INGOT, "has_lead", ModItems.LEAD_INGOT,recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/lead_gear"));
+        buildGearRecipe(ModItems.LEAD_GEAR, ModItems.LEAD_INGOT, "has_lead", ModItems.LEAD_INGOT,recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/lead_gear"));
+        //endregion
 
         buildBlocksFromIngotsRecipe(ModBlocks.INVAR_BLOCK.asItem(), ModItems.INVAR_INGOT.asItem(), "has_invar", ModItems.INVAR_INGOT.asItem(), recipeOutput);
         buildIngotsFromBlocksRecipe(ModItems.INVAR_INGOT.asItem(), 9, ModBlocks.INVAR_BLOCK, "has_invar", ModBlocks.INVAR_BLOCK, recipeOutput, "invar_ingot_from_invar_block");
@@ -74,7 +93,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                         .pattern("III").pattern("GMG").pattern("XFX").define('M', ModBlocks.MACHINE_BASE.get()).define('X', ModItems.REDSTONE_RECEPTION_COIL.get()).define('F', Items.FURNACE.asItem()).define('G', ModItems.IRON_GEAR.get()).define('I', ModItems.INVAR_INGOT.get())
                 .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE)).save(recipeOutput);
 
-        //upgrades
+        //region upgrades
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EFFICIENCY_UPGRADE.get())
                 .pattern("IRI").pattern("RDR").pattern("IRI")
                 .define('I', ModItems.INVAR_INGOT.asItem())
@@ -85,10 +104,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('I', ModItems.INVAR_INGOT.asItem())
                 .define('R', Items.REDSTONE.asItem()).define('G', Items.GOLD_INGOT)
                 .unlockedBy("has_invar", has(ModItems.INVAR_INGOT)).save(recipeOutput);
+        //endregion
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.INVAR_INGOT, 3).requires(Items.IRON_INGOT.asItem(), 2).requires(ModItems.NICKEL_INGOT.asItem(), 1).unlockedBy("has_iron",has(Items.IRON_INGOT.asItem())).save(recipeOutput, "techrebirth:invar_ingot_from_nickel_and_iron_ingots");
 
-        //custom mod recipes
+        //region custom mod recipes
         crushing(Ingredient.of(Items.IRON_INGOT.asItem()), new ItemStack(ModItems.IRON_POWDER.get() , 1)).time(100)
                 .unlockedBy("has_electrical_crusher", has(ModBlocks.ELECTRIC_CRUSHER)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/iron_powder_from_ingot"));
         buildCrushingRecipes(Ingredient.of(Items.RAW_IRON, Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE), new ItemStack(ModItems.IRON_POWDER.get(),2),100,"has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/iron_powder_from_raw_and_ores"));
@@ -104,6 +124,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         //new recipes using custom mod recipes
         buildCrushingRecipes(Ingredient.of(Blocks.COBBLESTONE), new ItemStack(Blocks.GRAVEL.asItem(), 1), 80, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/gravel_from_cobblestone"));
         buildCrushingRecipes(Ingredient.of(Blocks.GRAVEL), new ItemStack(Blocks.SAND.asItem(), 1), 70, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/sand_from_gravel"));
+        //endregion
+
+        //region generator fuels
+        addGeneratorFuels(lowLevelFuels, 80, 20, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "generator_fuel/low_level_fuels"));
+        addGeneratorFuels(coalFuels, 1600, 120, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "generator_fuel/coal_fuels"));
+        addGeneratorFuels(Ingredient.of(new ItemStack(Items.LAVA_BUCKET)), 25000, 400, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "generator_fuel/lava_bucket"));
+        //endregion
 
         oreSmelting(recipeOutput, TIN_SMELTABLES, RecipeCategory.MISC, ModItems.TIN_INGOT, 8f, 70, "tin");
         oreBlasting(recipeOutput, TIN_SMELTABLES, RecipeCategory.MISC, ModItems.TIN_INGOT, 8f, 90, "tin");
@@ -156,5 +183,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
     public static void buildCrushingRecipes(Ingredient ingredient, ItemStack output, int length, String Criteria, ItemLike criteria, RecipeOutput rOutput, ResourceLocation resourceLocation){
         crushing(ingredient, output).time(length).unlockedBy(Criteria, has(criteria)).save(rOutput,  resourceLocation);
+    }
+    public static void addGeneratorFuels(Ingredient ingredient, int burnTime, int powerPerTick, RecipeOutput recipeOutput, ResourceLocation resourceLocation){
+        fuel(ingredient, burnTime, powerPerTick).unlockedBy("has_generator", has(ModBlocks.GENERATOR.get())).save(recipeOutput, resourceLocation);
     }
 }

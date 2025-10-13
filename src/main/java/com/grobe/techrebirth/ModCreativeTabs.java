@@ -62,6 +62,8 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.TIN_DEEPSLATE_ORE);
                         output.accept(ModBlocks.NICKEL_ORE);
                         output.accept(ModBlocks.NICKEL_DEEPSLATE_ORE);
+                        output.accept(ModBlocks.LEAD_ORE);
+                        output.accept(ModBlocks.LEAD_DEEPSLATE_ORE);
                         output.accept(ModBlocks.INVAR_BLOCK);
                         output.accept(ModItems.RAW_TIN);
                         output.accept(ModItems.TIN_INGOT);
@@ -71,8 +73,6 @@ public class ModCreativeTabs {
                         output.accept(ModItems.INVAR_INGOT);
                         output.accept(ModItems.LEAD_INGOT);
                         output.accept(ModItems.RAW_LEAD);
-                        output.accept(ModBlocks.LEAD_ORE);
-                        output.accept(ModBlocks.LEAD_DEEPSLATE_ORE);
                     })
                     .build());
 

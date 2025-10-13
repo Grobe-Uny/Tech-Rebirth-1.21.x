@@ -1,0 +1,13 @@
+{
+  "type": "techrebirth:generator_fuel",
+  "burn_time": 1600,
+  "ingredient": [
+    {
+      "item": "minecraft:coal"
+    },
+    {
+      "item": "minecraft:charcoal"
+    }
+  ],
+  "power_per_tick": 120
+}

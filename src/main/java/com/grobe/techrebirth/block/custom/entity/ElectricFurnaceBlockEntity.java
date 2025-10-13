@@ -10,9 +10,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -21,11 +23,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
@@ -42,6 +46,36 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
             ElectricFurnaceBlockEntity.this.setChanged();
         }
     };
+
+    public boolean isItemValid(int slot, ItemStack stack){
+        return switch (slot){
+            case INPUT_SLOT -> isSmeltable(stack);
+            case OUTPUT_SLOT -> false; // only output
+            case UPGRADE_SLOT_1, UPGRADE_SLOT_2 -> isValidUpgradeForThisMachine(stack);
+            default -> false;
+        };
+    }
+
+    private boolean isSmeltable(ItemStack stack) {
+        if (stack.isEmpty() || this.level == null) return false;
+        var opt = this.level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(stack), this.level);
+        return opt.isPresent();
+    }
+
+    private boolean isValidUpgradeForThisMachine(ItemStack stack) {
+        Item item = stack.getItem();
+        return item == ModItems.SPEED_UPGRADE.get() ||item == ModItems.EFFICIENCY_UPGRADE.get();
+    }
+
+    public int drainPendingXpRandomRounded() {
+        if(this.level == null) return 0;
+        int whole = (int) Math.floor(this.pendingXp);
+        float fractional = this.pendingXp - whole;
+        if(fractional > 0 && this.level.random.nextFloat() < fractional) whole++;
+        this.pendingXp -= whole;
+        return whole;
+    }
+
     private class ModEnergyStorage extends EnergyStorage {
         public ModEnergyStorage(int capacity, int maxReceive, int maxExtract, int energy) {
             super(capacity, maxReceive, maxExtract, energy);
@@ -71,6 +105,7 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
     public final ModEnergyStorage energyHandler = new ModEnergyStorage(20000, 512, 512, 0);
     private int progress = 0;
     private int maxProgress = 72;
+    private float pendingXp;
 
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
@@ -88,8 +123,10 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
             @Override
             public int get(int index) {
                 return switch (index) {
-                    case 0 -> ElectricFurnaceBlockEntity.this.progress;
-                    case 1 -> ElectricFurnaceBlockEntity.this.maxProgress;
+                    case 0 -> ElectricFurnaceBlockEntity.this.progress;                    // cook progress
+                    case 1 -> ElectricFurnaceBlockEntity.this.maxProgress;                 // max progress
+                    case 2 -> ElectricFurnaceBlockEntity.this.getEnergyStorage().getEnergyStored(); // energy stored
+                    case 3 -> ElectricFurnaceBlockEntity.this.getEnergyStorage().getMaxEnergyStored(); // max energy
                     default -> 0;
                 };
             }
@@ -99,12 +136,14 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
                 switch (index) {
                     case 0 -> ElectricFurnaceBlockEntity.this.progress = value;
                     case 1 -> ElectricFurnaceBlockEntity.this.maxProgress = value;
+                    case 2 -> ElectricFurnaceBlockEntity.this.energyHandler.setEnergy(value); // client mirror
+                    case 3 -> { /* no-op: max energy is static; client-side mirror only */ }
                 }
             }
 
             @Override
             public int getCount() {
-                return 2;
+                return 4;
             }
         };
     }
@@ -149,11 +188,16 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
         return new ElectricFurnaceMenu(containerId, playerInventory, this, this.data);
     }
 
+    public ContainerData getContainerData() {
+        return this.data;
+    }
+
 
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         tag.put("inventory", getItemHandler().serializeNBT(provider));
         tag.putInt("electric_furnace.progress", progress);
         tag.putInt("electric_furnace.energy", getEnergyStorage().getEnergyStored());
+        tag.putFloat("pendingXp", pendingXp);
         super.saveAdditional(tag, provider);
     }
 
@@ -163,6 +207,8 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
         getItemHandler().deserializeNBT(provider, tag.getCompound("inventory"));
         progress = tag.getInt("electric_furnace.progress");
         this.energyHandler.setEnergy(tag.getInt("electric_furnace.energy"));
+        pendingXp = tag.getFloat("pendingXp");
+        super.loadAdditional(tag, provider);
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
@@ -203,20 +249,9 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
         handler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
                 handler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
 
-        // Award experience for smelting, similar to vanilla logic
-        if (this.level != null && !this.level.isClientSide()) {
-            float xpPerItem = recipe.get().value().getExperience();
-            int produced = result.getCount();
-            int totalXp = (int) Math.floor(xpPerItem * produced);
-            // Handle fractional part probabilistically
-            if (totalXp < xpPerItem * produced && this.level.random.nextFloat() < ((xpPerItem * produced) - totalXp)) {
-                totalXp++;
-            }
-            if (totalXp > 0 && this.level instanceof net.minecraft.server.level.ServerLevel serverLevel) {
-                net.minecraft.world.entity.ExperienceOrb.award(serverLevel,
-                        net.minecraft.world.phys.Vec3.atCenterOf(this.worldPosition), totalXp);
-            }
-        }
+        float xpPerItem = recipe.get().value().getExperience();
+        int produced = result.getCount();
+        pendingXp += xpPerItem * produced;
 
         resetProgress();
     }
@@ -256,8 +291,7 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
     }
 
     private Optional<RecipeHolder<SmeltingRecipe>> getCurrentRecipe() {
-        net.minecraft.world.item.crafting.SingleRecipeInput input =
-                new net.minecraft.world.item.crafting.SingleRecipeInput(getItemHandler().getStackInSlot(INPUT_SLOT));
+        SingleRecipeInput input = new SingleRecipeInput(getItemHandler().getStackInSlot(INPUT_SLOT));
         return this.level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, input, level);
     }
 

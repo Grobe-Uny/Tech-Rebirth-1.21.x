@@ -5,8 +5,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.Level;
 
-import java.util.logging.Level;
 
 public class GeneratorFuelRecipe implements Recipe<SingleRecipeInput> {
 
@@ -24,10 +24,12 @@ public class GeneratorFuelRecipe implements Recipe<SingleRecipeInput> {
     public int burnTime() {return burnTime;}
     public int powerPerTick() {return powerPerTick;}
 
+
     @Override
-    public boolean matches(SingleRecipeInput input, Level level){
+    public boolean matches(SingleRecipeInput input, Level level) {
         return ingredient.test(input.item());
     }
+
     public ItemStack assemble(SingleRecipeInput container, HolderLookup.Provider provider){
         return ItemStack.EMPTY;
     }

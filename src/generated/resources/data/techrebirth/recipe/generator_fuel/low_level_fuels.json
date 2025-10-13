@@ -1,0 +1,19 @@
+{
+  "type": "techrebirth:generator_fuel",
+  "burn_time": 80,
+  "ingredient": [
+    {
+      "item": "minecraft:bamboo"
+    },
+    {
+      "item": "minecraft:scaffolding"
+    },
+    {
+      "tag": "minecraft:wool_carpets"
+    },
+    {
+      "tag": "minecraft:wool"
+    }
+  ],
+  "power_per_tick": 20
+}

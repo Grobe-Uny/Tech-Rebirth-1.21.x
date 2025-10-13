@@ -9,12 +9,15 @@ import com.grobe.techrebirth.block.custom.entity.GeneratorBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.bank.EnergyBankBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.BlockCapability;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 
 @EventBusSubscriber(modid = TechRebirth.MODID)
 public class ModCapabilities {
@@ -135,6 +138,24 @@ public class ModCapabilities {
                     return be.getExposedEnergyStorage();
                 }
         );
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.ELECTRIC_FURNACE.get(),
+                (be, side) -> {
+                    if (!(be instanceof ElectricFurnaceBlockEntity f)) return null;
+                    var base = f.getItemHandler();
+                    if (side == net.minecraft.core.Direction.DOWN) {
+                        // expose output slot only, extractable
+                        return new RangedWrapper(base, 1, 2) {
+                            @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) { return stack; }
+                        };
+                    } else {
+                        // expose input slot only, insertable
+                        return new RangedWrapper(base, 0, 1) {
+                            @Override public ItemStack extractItem(int slot, int amount, boolean simulate) { return ItemStack.EMPTY; }
+                        };
+                    }
+                });
+
+
     }
 
 

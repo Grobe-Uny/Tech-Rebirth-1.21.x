@@ -1,7 +1,8 @@
 {
  "variants":{
-   "": {
-     "model" : "techrebirth:block/generator"
-   }
+   "facing=north": { "model": "techrebirth:block/generator" },
+   "facing=south": { "model": "techrebirth:block/generator", "y": 180 },
+   "facing=west":  { "model": "techrebirth:block/generator", "y": 270 },
+   "facing=east":  { "model": "techrebirth:block/generator", "y": 90 }
  }
 }
