@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "techrebirth:block/machine/machine_side",
+    "down": "techrebirth:block/machine/machine_bottom",
+    "up": "techrebirth:block/machine/machine_top",
+    "north": "techrebirth:block/machine/crusher/crusher_front_active",
+    "south": "techrebirth:block/machine/machine_side",
+    "east": "techrebirth:block/machine/machine_side",
+    "west": "techrebirth:block/machine/machine_side"
+  }
+}

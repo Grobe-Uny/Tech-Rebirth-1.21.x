@@ -155,8 +155,69 @@ public class ModCapabilities {
                     }
                 });
 
+        // Electric Furnace energy capability for other mods
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.ELECTRIC_FURNACE.get(),
+                (be, side) -> {
+                    if (!(be instanceof ElectricFurnaceBlockEntity f)) return null;
+                    return f.getEnergyStorage();
+                }
+        );
+
+        // Creative Electric Furnace
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.CREATIVE_ELECTRIC_FURNACE.get(),
+                (be, side) -> {
+                    if (!(be instanceof ElectricFurnaceBlockEntity f)) return null;
+                    return f.getEnergyStorage();
+                }
+        );
+
+        // Electric Crusher
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.ELECTRIC_CRUSHER.get(),
+                (be, side) -> {
+                    if (!(be instanceof ElectricCrusherBlockEntity c)) return null;
+                    return c.getEnergyStorage();
+                }
+        );
+
+        // Generator
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.GENERATOR.get(),
+                (be, side) -> {
+                    if (!(be instanceof GeneratorBlockEntity g)) return null;
+                    return g.getEnergyStorage();
+                }
+        );
+
+        // Cables (if they expose an internal buffer to pull/push)
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.CABLE.get(),
+                (be, side) -> {
+                    if (!(be instanceof EnergyCableBlockEntity cable)) return null;
+                    return cable.getEnergyStorage();
+                }
+        );
+
+        // Energy Bank (batteries)
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.ENERGY_BANK.get(),
+                (be, side) -> {
+                    if (!(be instanceof EnergyBankBlockEntity bank)) return null;
+                    return bank.getExposedEnergyStorage(); // your wrapper that respects side I/O
+                }
+        );
+
 
     }
+
 
 
 }

@@ -142,7 +142,18 @@ public class ElectricCrusherBlockEntity extends BlockEntity implements MenuProvi
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
-        if (hasRecipe()) {
+        // Determine if we should be working this tick
+        boolean shouldWork = hasRecipe();
+
+        // Toggle the block's LIT property to reflect working state
+        boolean wasLit = state.hasProperty(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT)
+                && state.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT);
+        if (state.hasProperty(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT) && wasLit != shouldWork) {
+            level.setBlock(pos, state.setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT, shouldWork), 3);
+            state = level.getBlockState(pos); // refresh local state
+        }
+
+        if (shouldWork) {
             int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.get());
             int efficiencyUpgrades = getUpgradeCount(ModItems.EFFICIENCY_UPGRADE.get());
 

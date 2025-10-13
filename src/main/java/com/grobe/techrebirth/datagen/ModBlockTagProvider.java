@@ -3,9 +3,12 @@ package com.grobe.techrebirth.datagen;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlocks;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -21,6 +24,11 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
+        tag(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("c", "ores/lead")))
+                .add(ModBlocks.LEAD_ORE.get())
+                .add(ModBlocks.LEAD_DEEPSLATE_ORE.get());
+
+
             tag(BlockTags.MINEABLE_WITH_PICKAXE)
                     .add(ModBlocks.MACHINE_BASE.get())
                     .add(ModBlocks.ELECTRIC_FURNACE.get())
