@@ -155,7 +155,7 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu {
         if (sourceStack.isEmpty()) sourceSlot.set(ItemStack.EMPTY); else sourceSlot.setChanged();
         sourceSlot.onTake(playerIn, sourceStack);
         return copyOfSourceStack;
-        
+
     }
 
     @Override
