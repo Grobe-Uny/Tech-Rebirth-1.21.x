@@ -15,6 +15,17 @@ public class ModRecipeTypes {
 
     public static final ResourceLocation CRUSHING_ID = ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "crushing");
 
+    public static final ResourceLocation GENERATOR_FUEL_ID = ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "generator_fuel");
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<GeneratorFuelRecipe>> GENERATOR_FUEL_TYPE =
+            TYPES.register("generator_fuel", () -> new RecipeType<GeneratorFuelRecipe>() {
+                public String toString() { return GENERATOR_FUEL_ID.toString(); }
+            });
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<GeneratorFuelRecipe>> GENERATOR_FUEL_SERIALIZER =
+            SERIALIZERS.register("generator_fuel", GeneratorFuelRecipe.Serializer::new);
+
+
     public static final DeferredHolder<RecipeType<?>, RecipeType<CrushingRecipe>> CRUSHING_TYPE =
             TYPES.register("crushing", () -> new RecipeType<CrushingRecipe>() {
                 public String toString() { return CRUSHING_ID.toString(); }

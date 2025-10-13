@@ -25,6 +25,8 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                     .add(ModBlocks.MACHINE_BASE.get())
                     .add(ModBlocks.ELECTRIC_FURNACE.get())
                     .add(ModBlocks.NICKEL_DEEPSLATE_ORE.get())
+                    .add(ModBlocks.LEAD_DEEPSLATE_ORE.get())
+                    .add(ModBlocks.LEAD_ORE.get())
                     .add(ModBlocks.NICKEL_ORE.get())
                     .add(ModBlocks.TIN_ORE.get())
                     .add(ModBlocks.TIN_DEEPSLATE_ORE.get())
@@ -36,11 +38,13 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
             tag(BlockTags.NEEDS_STONE_TOOL)
                     .add(ModBlocks.NICKEL_ORE.get())
+                    .add(ModBlocks.LEAD_ORE.get())
                     .add(ModBlocks.TIN_ORE.get())
                     .add(ModBlocks.ENERGY_CABLE.get());
             tag(BlockTags.NEEDS_IRON_TOOL)
                     .add(ModBlocks.TIN_DEEPSLATE_ORE.get())
                     .add(ModBlocks.NICKEL_DEEPSLATE_ORE.get())
+                    .add(ModBlocks.LEAD_DEEPSLATE_ORE.get())
                     .add(ModBlocks.INVAR_BLOCK.get())
                     .add(ModBlocks.ELECTRIC_FURNACE.get())
                     .add(ModBlocks.MACHINE_BASE.get())

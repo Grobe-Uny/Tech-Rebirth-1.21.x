@@ -25,13 +25,13 @@ public class ModCreativeTabs {
                         output.accept(ModItems.IRON_GEAR);
                         output.accept(ModItems.COPPER_GEAR);
                         output.accept(ModItems.TIN_GEAR);
+                        output.accept(ModItems.INVAR_GEAR);
+                        output.accept(ModItems.LEAD_GEAR);
                         output.accept(ModItems.IRON_POWDER);
                         output.accept(ModItems.COPPER_POWDER);
                         output.accept(ModItems.TIN_POWDER);
                         output.accept(ModItems.REDSTONE_RECEPTION_COIL);
-                        output.accept(ModItems.INVAR_GEAR);
                         output.accept(ModItems.COOKED_CARROT);
-                        output.accept(ModItems.LEAD_GEAR);
                         output.accept(ModItems.EFFICIENCY_UPGRADE);
                         output.accept(ModItems.SPEED_UPGRADE);
 
@@ -63,7 +63,6 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.NICKEL_ORE);
                         output.accept(ModBlocks.NICKEL_DEEPSLATE_ORE);
                         output.accept(ModBlocks.INVAR_BLOCK);
-
                         output.accept(ModItems.RAW_TIN);
                         output.accept(ModItems.TIN_INGOT);
                         output.accept(ModItems.RAW_NICKEL);
@@ -72,6 +71,8 @@ public class ModCreativeTabs {
                         output.accept(ModItems.INVAR_INGOT);
                         output.accept(ModItems.LEAD_INGOT);
                         output.accept(ModItems.RAW_LEAD);
+                        output.accept(ModBlocks.LEAD_ORE);
+                        output.accept(ModBlocks.LEAD_DEEPSLATE_ORE);
                     })
                     .build());
 

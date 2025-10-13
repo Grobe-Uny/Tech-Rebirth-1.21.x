@@ -33,6 +33,10 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         add(ModBlocks.NICKEL_DEEPSLATE_ORE.get(),
                 block -> createOreDrop(ModBlocks.NICKEL_DEEPSLATE_ORE.get(), ModItems.RAW_NICKEL.get()));
 
+        add(ModBlocks.LEAD_ORE.get(),
+                block -> createOreDrop(ModBlocks.LEAD_ORE.get(), ModItems.RAW_LEAD.get()));
+        add(ModBlocks.LEAD_DEEPSLATE_ORE.get(),
+                block -> createOreDrop(ModBlocks.LEAD_DEEPSLATE_ORE.get(), ModItems.RAW_LEAD.get()));
         add(ModBlocks.TIN_ORE.get(),
                 block -> createOreDrop(ModBlocks.TIN_ORE.get(), ModItems.RAW_TIN.get()));
         add(ModBlocks.TIN_DEEPSLATE_ORE.get(),

@@ -29,8 +29,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 ModBlocks.TIN_ORE, ModBlocks.TIN_DEEPSLATE_ORE);
         List<ItemLike> NICKEL_SMELTABLES = List.of(ModItems.RAW_NICKEL,
                 ModBlocks.NICKEL_ORE, ModBlocks.NICKEL_DEEPSLATE_ORE);
-        List<ItemLike> LEAD_SMELTABLES = List.of(ModItems.RAW_LEAD
-                /*ModBlocks.NICKEL_ORE, ModBlocks.NICKEL_DEEPSLATE_ORE*/);
+        List<ItemLike> LEAD_SMELTABLES = List.of(ModItems.RAW_LEAD,
+                ModBlocks.LEAD_ORE, ModBlocks.LEAD_DEEPSLATE_ORE);
         List<ItemLike> POWDER_SMELTABLES = List.of(ModItems.COPPER_POWDER,
                 ModItems.IRON_POWDER, ModItems.TIN_POWDER, ModItems.NICKEL_POWDER);
         List<ItemLike> CRUSHABLE_IRON = List.of(Items.RAW_IRON,
@@ -42,6 +42,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         buildGearRecipe(ModItems.TIN_GEAR, ModItems.TIN_INGOT, "has_tin", ModItems.TIN_INGOT,recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/tin_gear"));
         buildGearRecipe(ModItems.INVAR_GEAR, ModItems.INVAR_INGOT, "has_invar", ModItems.INVAR_INGOT,recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/invar_gear"));
+        buildGearRecipe(ModItems.LEAD_GEAR, ModItems.INVAR_INGOT, "has_lead", ModItems.LEAD_INGOT,recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/lead_gear"));
 
         buildBlocksFromIngotsRecipe(ModBlocks.INVAR_BLOCK.asItem(), ModItems.INVAR_INGOT.asItem(), "has_invar", ModItems.INVAR_INGOT.asItem(), recipeOutput);
         buildIngotsFromBlocksRecipe(ModItems.INVAR_INGOT.asItem(), 9, ModBlocks.INVAR_BLOCK, "has_invar", ModBlocks.INVAR_BLOCK, recipeOutput, "invar_ingot_from_invar_block");
@@ -100,7 +101,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         buildCrushingRecipes(Ingredient.of(ModItems.TIN_INGOT), new ItemStack(ModItems.TIN_POWDER.get(),1),100,"has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/tin_powder_from_ingot"));
         buildCrushingRecipes(Ingredient.of(ModItems.RAW_TIN, ModBlocks.TIN_ORE, ModBlocks.TIN_DEEPSLATE_ORE), new ItemStack(ModItems.TIN_POWDER.get(),2),100,"has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/tin_powder_from_raw_and_ores"));
-
+        //new recipes using custom mod recipes
+        buildCrushingRecipes(Ingredient.of(Blocks.COBBLESTONE), new ItemStack(Blocks.GRAVEL.asItem(), 1), 80, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/gravel_from_cobblestone"));
+        buildCrushingRecipes(Ingredient.of(Blocks.GRAVEL), new ItemStack(Blocks.SAND.asItem(), 1), 70, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/sand_from_gravel"));
 
         oreSmelting(recipeOutput, TIN_SMELTABLES, RecipeCategory.MISC, ModItems.TIN_INGOT, 8f, 70, "tin");
         oreBlasting(recipeOutput, TIN_SMELTABLES, RecipeCategory.MISC, ModItems.TIN_INGOT, 8f, 90, "tin");

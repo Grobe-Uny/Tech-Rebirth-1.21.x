@@ -63,7 +63,7 @@ public class ElectricCrusherBlockEntity extends BlockEntity implements MenuProvi
         }
     }
 
-    public final ModEnergyStorage energyHandler = new ModEnergyStorage(20000, 256, 256, 0);
+    public final ModEnergyStorage energyHandler = new ModEnergyStorage(20000, 512, 512, 0);
     private int progress = 0;
     private int maxProgress = 72;
 

@@ -53,7 +53,7 @@ public class GeneratorBlockEntity extends BlockEntity implements MenuProvider {
         }
     }
 
-    private final ModEnergy energyStorage = new ModEnergy(20000, 256, 256, 0);
+    private final ModEnergy energyStorage = new ModEnergy(20000, 512, 512, 0);
 
     // Generation configuration and client mirrors
     private int genPerTick = 40;
