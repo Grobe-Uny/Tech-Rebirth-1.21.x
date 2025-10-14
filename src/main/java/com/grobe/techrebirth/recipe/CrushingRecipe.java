@@ -3,8 +3,12 @@ package com.grobe.techrebirth.recipe;
 import com.grobe.techrebirth.TechRebirth;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -35,7 +39,7 @@ public class CrushingRecipe implements Recipe<SingleRecipeInput> {
     }
 
     @Override
-    public ItemStack assemble(SingleRecipeInput container, net.minecraft.core.HolderLookup.Provider provider) {
+    public ItemStack assemble(SingleRecipeInput container, HolderLookup.Provider provider) {
         return result.copy();
     }
 
@@ -43,7 +47,7 @@ public class CrushingRecipe implements Recipe<SingleRecipeInput> {
     public boolean canCraftInDimensions(int width, int height) { return true; }
 
     @Override
-    public ItemStack getResultItem(net.minecraft.core.HolderLookup.Provider provider) { return result; }
+    public ItemStack getResultItem(HolderLookup.Provider provider) { return result; }
 
 
     @Override
@@ -63,18 +67,18 @@ public class CrushingRecipe implements Recipe<SingleRecipeInput> {
         @Override
         public com.mojang.serialization.MapCodec<CrushingRecipe> codec() {
             return RecordCodecBuilder.mapCodec(instance -> instance.group(
-                    net.minecraft.world.item.crafting.Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(r -> r.ingredient),
-                    net.minecraft.world.item.ItemStack.CODEC.fieldOf("result").forGetter(r -> r.result),
-                    com.mojang.serialization.Codec.INT.optionalFieldOf("time", 72).forGetter(r -> r.time)
+                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(r -> r.ingredient),
+                    ItemStack.CODEC.fieldOf("result").forGetter(r -> r.result),
+                    Codec.INT.optionalFieldOf("time", 72).forGetter(r -> r.time)
             ).apply(instance, CrushingRecipe::new));
         }
 
         @Override
-        public net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, CrushingRecipe> streamCodec() {
-            return net.minecraft.network.codec.StreamCodec.composite(
-                    net.minecraft.world.item.crafting.Ingredient.CONTENTS_STREAM_CODEC, (CrushingRecipe r) -> r.ingredient,
-                    net.minecraft.world.item.ItemStack.STREAM_CODEC, (CrushingRecipe r) -> r.result,
-                    net.minecraft.network.codec.ByteBufCodecs.VAR_INT, (CrushingRecipe r) -> r.time,
+        public StreamCodec<RegistryFriendlyByteBuf, CrushingRecipe> streamCodec() {
+            return StreamCodec.composite(
+                    Ingredient.CONTENTS_STREAM_CODEC, (CrushingRecipe r) -> r.ingredient,
+                    ItemStack.STREAM_CODEC, (CrushingRecipe r) -> r.result,
+                    ByteBufCodecs.VAR_INT, (CrushingRecipe r) -> r.time,
                     CrushingRecipe::new
             );
         }

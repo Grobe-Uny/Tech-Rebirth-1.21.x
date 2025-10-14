@@ -162,7 +162,7 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         pendingXp = tag.getFloat("pendingXp");
         super.loadAdditional(tag, provider);
     }
-    
+
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (hasRecipe()) {
             Optional<RecipeHolder<SmeltingRecipe>> recipeOpt = getCurrentRecipe();

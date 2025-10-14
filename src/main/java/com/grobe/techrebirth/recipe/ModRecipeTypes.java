@@ -17,6 +17,8 @@ public class ModRecipeTypes {
 
     public static final ResourceLocation GENERATOR_FUEL_ID = ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "generator_fuel");
 
+    public static final ResourceLocation ALLOY_SMELTER_ID = ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloy_smelting");
+
     public static final DeferredHolder<RecipeType<?>, RecipeType<GeneratorFuelRecipe>> GENERATOR_FUEL_TYPE =
             TYPES.register("generator_fuel", () -> new RecipeType<GeneratorFuelRecipe>() {
                 public String toString() { return GENERATOR_FUEL_ID.toString(); }
@@ -24,6 +26,14 @@ public class ModRecipeTypes {
 
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<GeneratorFuelRecipe>> GENERATOR_FUEL_SERIALIZER =
             SERIALIZERS.register("generator_fuel", GeneratorFuelRecipe.Serializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<AlloySmeltingRecipe>> ALLOY_SMELTING_TYPE =
+            TYPES.register("alloy_smelting", () -> new RecipeType<AlloySmeltingRecipe>() {
+                public String toString() { return ALLOY_SMELTER_ID.toString(); }
+            });
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<AlloySmeltingRecipe>> ALLOY_SMELTING_SERIALIZER =
+            SERIALIZERS.register("alloy_smelting", AlloySmeltingRecipe.Serializer::new);
 
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<CrushingRecipe>> CRUSHING_TYPE =
