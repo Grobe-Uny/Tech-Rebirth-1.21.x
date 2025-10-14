@@ -28,42 +28,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ElectricCrusherBlockEntity extends BlockEntity implements MenuProvider {
+public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implements MenuProvider {
     protected final ContainerData data;
-    private final ItemStackHandler itemHandler = new ItemStackHandler(4) {
-        @Override
-        protected void onContentsChanged(int slot) {
-            ElectricCrusherBlockEntity.this.setChanged();
-        }
-    };
 
-    private class ModEnergyStorage extends EnergyStorage {
-        public ModEnergyStorage(int capacity, int maxReceive, int maxExtract, int energy) {
-            super(capacity, maxReceive, maxExtract, energy);
-        }
-        public void setEnergy(int energy) {
-            this.energy = Math.min(energy, this.capacity);
-            ElectricCrusherBlockEntity.this.setChanged();
-        }
-        @Override
-        public int receiveEnergy(int maxReceive, boolean simulate) {
-            int received = super.receiveEnergy(maxReceive, simulate);
-            if (!simulate && received > 0) {
-                ElectricCrusherBlockEntity.this.setChanged();
-            }
-            return received;
-        }
-        @Override
-        public int extractEnergy(int maxExtract, boolean simulate) {
-            int extracted = super.extractEnergy(maxExtract, simulate);
-            if (!simulate && extracted > 0) {
-                ElectricCrusherBlockEntity.this.setChanged();
-            }
-            return extracted;
-        }
-    }
-
-    public final ModEnergyStorage energyHandler = new ModEnergyStorage(20000, 512, 512, 0);
     private int progress = 0;
     private int maxProgress = 72;
 
@@ -77,7 +44,7 @@ public class ElectricCrusherBlockEntity extends BlockEntity implements MenuProvi
     }
 
     protected ElectricCrusherBlockEntity(BlockEntityType<? extends ElectricCrusherBlockEntity> type, BlockPos pos, BlockState state) {
-        super(type, pos, state);
+        super(type, pos, state, 4, 20000, 512, 512, 0);
         this.data = new ContainerData() {
             @Override
             public int get(int index) {
@@ -103,8 +70,28 @@ public class ElectricCrusherBlockEntity extends BlockEntity implements MenuProvi
         };
     }
 
-    public ItemStackHandler getItemHandler() { return itemHandler; }
-    public EnergyStorage getEnergyStorage() { return energyHandler; }
+    // Validation for ItemStackHandler in BaseMachine
+    @Override
+    protected boolean isItemValid(int slot, ItemStack stack) {
+        return switch (slot) {
+            case INPUT_SLOT -> isCrushable(stack);
+            case OUTPUT_SLOT -> false; // output only
+            case UPGRADE_SLOT_1, UPGRADE_SLOT_2 -> isValidUpgradeForThisMachine(stack);
+            default -> false;
+        };
+    }
+
+    private boolean isValidUpgradeForThisMachine(ItemStack stack) {
+        var item = stack.getItem();
+        return item == ModItems.SPEED_UPGRADE.get() || item == ModItems.EFFICIENCY_UPGRADE.get();
+    }
+
+    private boolean isCrushable(ItemStack stack) {
+        if (stack.isEmpty() || this.level == null) return false;
+        var input = new net.minecraft.world.item.crafting.SingleRecipeInput(stack);
+        var opt = this.level.getRecipeManager().getRecipeFor(com.grobe.techrebirth.recipe.ModRecipeTypes.CRUSHING_TYPE.get(), input, this.level);
+        return opt.isPresent();
+    }
 
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(4);
@@ -138,7 +125,7 @@ public class ElectricCrusherBlockEntity extends BlockEntity implements MenuProvi
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         getItemHandler().deserializeNBT(provider, tag.getCompound("inventory"));
         progress = tag.getInt("electric_crusher.progress");
-        this.energyHandler.setEnergy(tag.getInt("electric_crusher.energy"));
+        this.setEnergyStored(tag.getInt("electric_crusher.energy"));
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {

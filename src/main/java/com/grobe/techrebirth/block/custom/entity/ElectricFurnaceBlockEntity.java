@@ -37,16 +37,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import com.grobe.techrebirth.util.ModTags;
 
-public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvider {
+public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implements MenuProvider {
 
     protected final ContainerData data;
-    private final ItemStackHandler itemHandler = new ItemStackHandler(4) {
-        @Override
-        protected void onContentsChanged(int slot) {
-            // Mark the block entity as dirty so data is saved
-            ElectricFurnaceBlockEntity.this.setChanged();
-        }
-    };
 
     public boolean isItemValid(int slot, ItemStack stack){
         return switch (slot){
@@ -128,7 +121,7 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
     }
 
     protected ElectricFurnaceBlockEntity(BlockEntityType<? extends ElectricFurnaceBlockEntity> type, BlockPos pos, BlockState state) {
-        super(type, pos, state);
+        super(type, pos, state, 4, 20000, 512, 512, 0);
 
         this.data = new ContainerData() {
             @Override
@@ -147,7 +140,7 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
                 switch (index) {
                     case 0 -> ElectricFurnaceBlockEntity.this.progress = value;
                     case 1 -> ElectricFurnaceBlockEntity.this.maxProgress = value;
-                    case 2 -> ElectricFurnaceBlockEntity.this.energyHandler.setEnergy(value); // client mirror
+                    case 2 -> ElectricFurnaceBlockEntity.this.setEnergyStored(value); // client mirror
                     case 3 -> { /* no-op: max energy is static; client-side mirror only */ }
                 }
             }
@@ -159,25 +152,6 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
         };
     }
 
-    // Dohvat inventara preko BlockCapability
-    public ItemStackHandler getItemHandler() {
-        return itemHandler;
-    }
-
-    // Dohvat energije preko BlockCapability
-    public EnergyStorage getEnergyStorage() {
-        return energyHandler;
-    }
-
-    // Helper for subclasses (e.g., creative variant) to set energy directly and mark dirty
-    protected void setEnergyStored(int energy) {
-        this.energyHandler.setEnergy(energy);
-    }
-
-    // Convenience: fill to maximum capacity each tick if desired (creative machines)
-    protected void fillEnergyToMax() {
-        this.energyHandler.setEnergy(this.energyHandler.getMaxEnergyStored());
-    }
 
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(4);
@@ -217,7 +191,7 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         getItemHandler().deserializeNBT(provider, tag.getCompound("inventory"));
         progress = tag.getInt("electric_furnace.progress");
-        this.energyHandler.setEnergy(tag.getInt("electric_furnace.energy"));
+        this.setEnergyStored(tag.getInt("electric_furnace.energy"));
         pendingXp = tag.getFloat("pendingXp");
         super.loadAdditional(tag, provider);
     }

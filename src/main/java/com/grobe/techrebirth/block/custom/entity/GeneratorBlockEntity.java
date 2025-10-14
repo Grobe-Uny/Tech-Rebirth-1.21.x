@@ -28,38 +28,9 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.Optional;
 
-public class GeneratorBlockEntity extends BlockEntity implements MenuProvider {
+public class GeneratorBlockEntity extends BaseMachineBlockEntity implements MenuProvider {
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
-        @Override
-        protected void onContentsChanged(int slot) {
-            setChanged();
-        }
-    };
 
-    private class ModEnergy extends EnergyStorage {
-        public ModEnergy(int capacity, int maxReceive, int maxExtract, int energy) {
-            super(capacity, maxReceive, maxExtract, energy);
-        }
-        public void setEnergy(int energy) {
-            this.energy = Math.min(energy, this.capacity);
-            GeneratorBlockEntity.this.setChanged();
-        }
-        @Override
-        public int receiveEnergy(int maxReceive, boolean simulate) {
-            int received = super.receiveEnergy(maxReceive, simulate);
-            if (!simulate && received > 0) GeneratorBlockEntity.this.setChanged();
-            return received;
-        }
-        @Override
-        public int extractEnergy(int maxExtract, boolean simulate) {
-            int extracted = super.extractEnergy(maxExtract, simulate);
-            if (!simulate && extracted > 0) GeneratorBlockEntity.this.setChanged();
-            return extracted;
-        }
-    }
-
-    private final ModEnergy energyStorage = new ModEnergy(20000, 512, 512, 0);
 
     // Generation configuration and client mirrors
     private int genPerTick = 40;
@@ -74,8 +45,8 @@ public class GeneratorBlockEntity extends BlockEntity implements MenuProvider {
             return switch (index) {
                 case 0 -> GeneratorBlockEntity.this.burnTime; // remaining burn time
                 case 1 -> GeneratorBlockEntity.this.maxBurnTime; // max burn time
-                case 2 -> GeneratorBlockEntity.this.energyStorage.getEnergyStored(); // energy stored
-                case 3 -> GeneratorBlockEntity.this.energyStorage.getMaxEnergyStored(); // max energy
+                case 2 -> GeneratorBlockEntity.this.getEnergyStorage().getEnergyStored(); // energy stored
+                case 3 -> GeneratorBlockEntity.this.getEnergyStorage().getMaxEnergyStored(); // max energy
                 case 4 -> GeneratorBlockEntity.this.genPerTick; // generation rate
                 default -> 0;
             };
@@ -86,7 +57,7 @@ public class GeneratorBlockEntity extends BlockEntity implements MenuProvider {
             switch (index) {
                 case 0 -> GeneratorBlockEntity.this.burnTime = value;
                 case 1 -> GeneratorBlockEntity.this.maxBurnTime = value;
-                case 2 -> GeneratorBlockEntity.this.energyStorage.setEnergy(value);
+                case 2 -> GeneratorBlockEntity.this.setEnergyStored(value);
                 case 3 -> GeneratorBlockEntity.this.clientMaxEnergyMirror = value; // client-side mirror
                 case 4 -> GeneratorBlockEntity.this.genPerTick = value;
             }
@@ -99,7 +70,7 @@ public class GeneratorBlockEntity extends BlockEntity implements MenuProvider {
     };
 
     public GeneratorBlockEntity(BlockPos pPos, BlockState pState) {
-        super(ModBlockEntities.GENERATOR.get(), pPos, pState);
+        super(ModBlockEntities.GENERATOR.get(), pPos, pState, 1, 20000, 512, 512, 0);
     }
 
     @Override
@@ -112,15 +83,27 @@ public class GeneratorBlockEntity extends BlockEntity implements MenuProvider {
         return new com.grobe.techrebirth.gui.generator.GeneratorMenu(containerId, playerInventory, this, this.data);
     }
 
+    @Override
+    protected boolean isItemValid(int slot, ItemStack stack) {
+        if (slot != 0) return false; // single fuel slot
+        if (stack.isEmpty() || this.level == null) return false;
+        // Accept if custom generator fuel recipe exists or if vanilla burn time > 0
+        SingleRecipeInput input = new SingleRecipeInput(stack);
+        Optional<RecipeHolder<GeneratorFuelRecipe>> opt = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.GENERATOR_FUEL_TYPE.get(), input, this.level);
+        if (opt.isPresent()) return true;
+        int burn = stack.getBurnTime(RecipeType.SMELTING);
+        return burn > 0;
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, GeneratorBlockEntity be) {
         if (level.isClientSide()) return;
 
         // Burn fuel and generate energy only if there is room to store it
-        boolean hasRoomForEnergy = be.energyStorage.getEnergyStored() < be.energyStorage.getMaxEnergyStored();
+        boolean hasRoomForEnergy = be.getEnergyStorage().getEnergyStored() < be.getEnergyStorage().getMaxEnergyStored();
         if (be.burnTime > 0) {
             if (hasRoomForEnergy) {
                 be.burnTime--;
-                be.energyStorage.receiveEnergy(be.genPerTick, false);
+                be.getEnergyStorage().receiveEnergy(be.genPerTick, false);
                 if(be.burnTime == 0){
                     be.genPerTick = 40;
                     be.maxBurnTime = 0;
@@ -132,14 +115,14 @@ public class GeneratorBlockEntity extends BlockEntity implements MenuProvider {
         } else {
             // Only start new fuel if there is room for energy
             if (hasRoomForEnergy) {
-                ItemStack fuel = be.itemHandler.getStackInSlot(0);
+                ItemStack fuel = be.getItemHandler().getStackInSlot(0);
                 if (!fuel.isEmpty()){
                     //1) Check if there is a recipe for the fuel
                     SingleRecipeInput input = new SingleRecipeInput(fuel);
                     Optional<RecipeHolder<GeneratorFuelRecipe>> opt =level.getRecipeManager().getRecipeFor(ModRecipeTypes.GENERATOR_FUEL_TYPE.get(),input, level);
                     if(opt.isPresent()){
                         GeneratorFuelRecipe recipe = opt.get().value();
-                        be.itemHandler.extractItem(0, 1, false);
+                        be.getItemHandler().extractItem(0, 1, false);
                         be.burnTime = recipe.burnTime();
                         be.maxBurnTime = recipe.burnTime();
                         be.genPerTick = recipe.powerPerTick();
@@ -148,7 +131,7 @@ public class GeneratorBlockEntity extends BlockEntity implements MenuProvider {
                         //2) Fallback to vanilla smelting
                         int burn = fuel.getBurnTime(RecipeType.SMELTING);
                         if (burn > 0) {
-                            be.itemHandler.extractItem(0, 1, false);
+                            be.getItemHandler().extractItem(0, 1, false);
                             be.burnTime = burn;
                             be.maxBurnTime = burn;
                             setChanged(level, pos, state);
@@ -160,45 +143,42 @@ public class GeneratorBlockEntity extends BlockEntity implements MenuProvider {
         }
 
         // Push energy to adjacent receivers
-        if (be.energyStorage.getEnergyStored() > 0) {
+        if (be.getEnergyStorage().getEnergyStored() > 0) {
             for (Direction dir : Direction.values()) {
-                if (be.energyStorage.getEnergyStored() <= 0) break;
+                if (be.getEnergyStorage().getEnergyStored() <= 0) break;
                 BlockPos nPos = pos.relative(dir);
                 BlockState nState = level.getBlockState(nPos);
                 BlockEntity nBe = level.getBlockEntity(nPos);
                 if (nBe == null) continue;
                 EnergyStorage target = level.getCapability(ModCapabilities.ELECTRIC_FURNACE_ENERGY, nPos, nState, nBe, dir.getOpposite());
                 if (target == null || !target.canReceive()) continue;
-                int toSend = Math.min(256, be.energyStorage.getEnergyStored());
+                int toSend = Math.min(256, be.getEnergyStorage().getEnergyStored());
                 if (toSend <= 0) continue;
                 int received = target.receiveEnergy(toSend, false);
-                if (received > 0) be.energyStorage.extractEnergy(received, false);
+                if (received > 0) be.getEnergyStorage().extractEnergy(received, false);
             }
         }
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        tag.put("inventory", itemHandler.serializeNBT(provider));
+        tag.put("inventory", getItemHandler().serializeNBT(provider));
         tag.putInt("burnTime", burnTime);
         tag.putInt("maxBurnTime", maxBurnTime);
-        tag.putInt("energy", energyStorage.getEnergyStored());
+        tag.putInt("energy", getEnergyStorage().getEnergyStored());
         tag.putInt("genPerTick", genPerTick);
         super.saveAdditional(tag, provider);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        itemHandler.deserializeNBT(provider, tag.getCompound("inventory"));
+        getItemHandler().deserializeNBT(provider, tag.getCompound("inventory"));
         burnTime = tag.getInt("burnTime");
         maxBurnTime = tag.getInt("maxBurnTime");
-        energyStorage.setEnergy(tag.getInt("energy"));
+        setEnergyStored(tag.getInt("energy"));
         genPerTick = tag.contains("genPerTick") ? tag.getInt("genPerTick") : 40;
         super.loadAdditional(tag, provider);
     }
-
-    public ItemStackHandler getItemHandler() { return itemHandler; }
-    public EnergyStorage getEnergyStorage() { return energyStorage; }
 
     // --- Added getters for Jade tooltip and other integrations ---
     // Expose current generation rate in RF per tick
@@ -208,5 +188,5 @@ public class GeneratorBlockEntity extends BlockEntity implements MenuProvider {
     // Expose max burn time (ticks) of the current fuel
     public int getMaxBurnTime() { return maxBurnTime; }
     // Convenience: current fuel stack in the single fuel slot
-    public ItemStack getFuelStack() { return itemHandler.getStackInSlot(0); }
+    public ItemStack getFuelStack() { return getItemHandler().getStackInSlot(0); }
 }
