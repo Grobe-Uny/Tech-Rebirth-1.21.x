@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.block;
 
 import com.grobe.techrebirth.TechRebirth;
+import com.grobe.techrebirth.block.custom.alloy.AlloySmelterBlock;
 import com.grobe.techrebirth.block.custom.cable.EnergyCableBlock;
 import com.grobe.techrebirth.block.custom.bank.EnergyBankBlock;
 import com.grobe.techrebirth.block.custom.ElectricFurnaceBlock;
@@ -88,6 +89,12 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> ELECTRIC_FURNACE = registerBlock("electric_furnace",
             () -> new ElectricFurnaceBlock(BlockBehaviour.Properties.of()
+                    .strength(3.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+            ));
+    public static final DeferredBlock<Block> ALLOY_SMELTER = registerBlock("alloy_smelter",
+            ()-> new AlloySmelterBlock(BlockBehaviour.Properties.of()
                     .strength(3.0f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)

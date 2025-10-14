@@ -1,10 +1,8 @@
 package com.grobe.techrebirth.block;
 
 import com.grobe.techrebirth.TechRebirth;
-import com.grobe.techrebirth.block.custom.entity.EnergyCableBlockEntity;
-import com.grobe.techrebirth.block.custom.entity.CreativeElectricFurnaceBlockEntity;
-import com.grobe.techrebirth.block.custom.entity.ElectricFurnaceBlockEntity;
-import com.grobe.techrebirth.block.custom.entity.GeneratorBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.*;
+import com.grobe.techrebirth.block.custom.entity.alloy.AlloySmelterBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.bank.EnergyBankBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -42,8 +40,11 @@ public class ModBlockEntities {
             "energy_bank", () -> BlockEntityType.Builder.of(EnergyBankBlockEntity::new, ModBlocks.ENERGY_BANK.get())
     );
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<com.grobe.techrebirth.block.custom.entity.ElectricCrusherBlockEntity>> ELECTRIC_CRUSHER = register(
-            "electric_crusher", () -> BlockEntityType.Builder.of(com.grobe.techrebirth.block.custom.entity.ElectricCrusherBlockEntity::new, ModBlocks.ELECTRIC_CRUSHER.get())
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ElectricCrusherBlockEntity>> ELECTRIC_CRUSHER = register(
+            "electric_crusher", () -> BlockEntityType.Builder.of(ElectricCrusherBlockEntity::new, ModBlocks.ELECTRIC_CRUSHER.get())
+    );
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AlloySmelterBlockEntity>> ALLOY_SMELTER = register(
+            "alloy_smelter", () -> BlockEntityType.Builder.of(AlloySmelterBlockEntity::new, ModBlocks.ALLOY_SMELTER.get())
     );
 
     private static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> register(String name, Supplier<BlockEntityType.Builder<T>> builder) {

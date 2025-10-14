@@ -2,7 +2,9 @@ package com.grobe.techrebirth.block.custom.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,6 +21,11 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
 
     protected final ItemStackHandler itemHandler;
     protected final DirtyEnergyStorage energyHandler;
+
+    protected int progress = 0;
+    protected int maxProgress = 100;
+
+    protected ContainerData data;
 
     protected BaseMachineBlockEntity(
             BlockEntityType<?> type,
@@ -52,6 +59,17 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         return energyHandler;
     }
 
+    public int getProgress() {
+        return progress;
+    }
+
+    public int getMaxProgress() {
+        return maxProgress;
+    }
+    public float getProgressPercent() {
+        return maxProgress > 0 ? (float) progress / maxProgress : 0;
+    }
+
     protected void setEnergyStored(int energy) {
         this.energyHandler.setEnergy(energy);
     }
@@ -61,6 +79,9 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     }
 
     protected abstract boolean isItemValid(int slot, ItemStack stack);
+    public ContainerData getContainerData() {
+        return data;
+    }
 
     protected class DirtyEnergyStorage extends EnergyStorage {
         public DirtyEnergyStorage(int capacity, int maxReceive, int maxExtract, int energy) {
