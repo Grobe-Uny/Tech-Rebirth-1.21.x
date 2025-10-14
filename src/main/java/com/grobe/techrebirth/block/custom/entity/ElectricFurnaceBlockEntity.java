@@ -5,16 +5,13 @@ import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.gui.electric_furnace.ElectricFurnaceMenu;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
-import com.grobe.techrebirth.event.ModCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -26,11 +23,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,33 +64,6 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         return whole;
     }
 
-    private class ModEnergyStorage extends EnergyStorage {
-        public ModEnergyStorage(int capacity, int maxReceive, int maxExtract, int energy) {
-            super(capacity, maxReceive, maxExtract, energy);
-        }
-        public void setEnergy(int energy) {
-            this.energy = Math.min(energy, this.capacity);
-            ElectricFurnaceBlockEntity.this.setChanged();
-        }
-        @Override
-        public int receiveEnergy(int maxReceive, boolean simulate) {
-            int received = super.receiveEnergy(maxReceive, simulate);
-            if (!simulate && received > 0) {
-                ElectricFurnaceBlockEntity.this.setChanged();
-            }
-            return received;
-        }
-        @Override
-        public int extractEnergy(int maxExtract, boolean simulate) {
-            int extracted = super.extractEnergy(maxExtract, simulate);
-            if (!simulate && extracted > 0) {
-                ElectricFurnaceBlockEntity.this.setChanged();
-            }
-            return extracted;
-        }
-    }
-
-    public final ModEnergyStorage energyHandler = new ModEnergyStorage(20000, 512, 512, 0);
     private int progress = 0;
     private int maxProgress = 72;
     private float pendingXp;
@@ -195,33 +162,7 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         pendingXp = tag.getFloat("pendingXp");
         super.loadAdditional(tag, provider);
     }
-
-//    public void tick(Level level, BlockPos pos, BlockState state) {
-//        if (hasRecipe()) {
-//            int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.get());
-//            int efficiencyUpgrades = getUpgradeCount(ModItems.EFFICIENCY_UPGRADE.get());
-//
-//            float speedMultiplier = 1 + (0.5f * speedUpgrades);
-//            this.maxProgress = (int) (72 / speedMultiplier);
-//            if (this.maxProgress < 1) this.maxProgress = 1;
-//
-//            float energyConsumptionMultiplier = (float) Math.pow(0.75, efficiencyUpgrades);
-//            float energySpeedPenalty = 1 + (0.5f * speedUpgrades);
-//            int energyToConsume = (int) (128 * energySpeedPenalty * energyConsumptionMultiplier);
-//
-//            getEnergyStorage().extractEnergy(energyToConsume, false);
-//            increaseCraftingProgress();
-//
-//            setChanged(level, pos, state);
-//
-//            if (progress >= maxProgress) {
-//                craftItem();
-//            }
-//        } else {
-//            resetProgress();
-//        }
-//    }
-
+    
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (hasRecipe()) {
             Optional<RecipeHolder<SmeltingRecipe>> recipeOpt = getCurrentRecipe();
