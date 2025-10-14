@@ -2,19 +2,14 @@ package com.grobe.techrebirth.datagen;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlocks;
+import com.grobe.techrebirth.util.ModTags;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.text.html.HTML;
 import java.util.concurrent.CompletableFuture;
 
 public class ModBlockTagProvider extends BlockTagsProvider {
@@ -24,40 +19,43 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
-        tag(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("c", "ores/lead")))
+        // Lead ore tags in both common and neoforge namespaces via Dual helper
+        for (var tagKey : ModTags.Blocks.ORES_LEAD_D.both()) {
+            tag(tagKey)
                 .add(ModBlocks.LEAD_ORE.get())
                 .add(ModBlocks.LEAD_DEEPSLATE_ORE.get());
-
-
-            tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                    .add(ModBlocks.MACHINE_BASE.get())
-                    .add(ModBlocks.ELECTRIC_FURNACE.get())
-                    .add(ModBlocks.NICKEL_DEEPSLATE_ORE.get())
-                    .add(ModBlocks.LEAD_DEEPSLATE_ORE.get())
-                    .add(ModBlocks.LEAD_ORE.get())
-                    .add(ModBlocks.NICKEL_ORE.get())
-                    .add(ModBlocks.TIN_ORE.get())
-                    .add(ModBlocks.TIN_DEEPSLATE_ORE.get())
-                    .add(ModBlocks.INVAR_BLOCK.get())
-                    .add(ModBlocks.ENERGY_BANK.get())
-                    .add(ModBlocks.GENERATOR.get())
-                    .add(ModBlocks.ENERGY_CABLE.get())
-                    .add(ModBlocks.ELECTRIC_CRUSHER.get());
-
-            tag(BlockTags.NEEDS_STONE_TOOL)
-                    .add(ModBlocks.NICKEL_ORE.get())
-                    .add(ModBlocks.LEAD_ORE.get())
-                    .add(ModBlocks.TIN_ORE.get())
-                    .add(ModBlocks.ENERGY_CABLE.get());
-            tag(BlockTags.NEEDS_IRON_TOOL)
-                    .add(ModBlocks.TIN_DEEPSLATE_ORE.get())
-                    .add(ModBlocks.NICKEL_DEEPSLATE_ORE.get())
-                    .add(ModBlocks.LEAD_DEEPSLATE_ORE.get())
-                    .add(ModBlocks.INVAR_BLOCK.get())
-                    .add(ModBlocks.ELECTRIC_FURNACE.get())
-                    .add(ModBlocks.MACHINE_BASE.get())
-                    .add(ModBlocks.ENERGY_BANK.get())
-                    .add(ModBlocks.GENERATOR.get())
-                    .add(ModBlocks.ELECTRIC_CRUSHER.get());
         }
+
+        // Mining tool and tier requirements
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(ModBlocks.MACHINE_BASE.get())
+                .add(ModBlocks.ELECTRIC_FURNACE.get())
+                .add(ModBlocks.NICKEL_DEEPSLATE_ORE.get())
+                .add(ModBlocks.LEAD_DEEPSLATE_ORE.get())
+                .add(ModBlocks.LEAD_ORE.get())
+                .add(ModBlocks.NICKEL_ORE.get())
+                .add(ModBlocks.TIN_ORE.get())
+                .add(ModBlocks.TIN_DEEPSLATE_ORE.get())
+                .add(ModBlocks.INVAR_BLOCK.get())
+                .add(ModBlocks.ENERGY_BANK.get())
+                .add(ModBlocks.GENERATOR.get())
+                .add(ModBlocks.ENERGY_CABLE.get())
+                .add(ModBlocks.ELECTRIC_CRUSHER.get());
+
+        tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(ModBlocks.NICKEL_ORE.get())
+                .add(ModBlocks.LEAD_ORE.get())
+                .add(ModBlocks.TIN_ORE.get())
+                .add(ModBlocks.ENERGY_CABLE.get());
+        tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(ModBlocks.TIN_DEEPSLATE_ORE.get())
+                .add(ModBlocks.NICKEL_DEEPSLATE_ORE.get())
+                .add(ModBlocks.LEAD_DEEPSLATE_ORE.get())
+                .add(ModBlocks.INVAR_BLOCK.get())
+                .add(ModBlocks.ELECTRIC_FURNACE.get())
+                .add(ModBlocks.MACHINE_BASE.get())
+                .add(ModBlocks.ENERGY_BANK.get())
+                .add(ModBlocks.GENERATOR.get())
+                .add(ModBlocks.ELECTRIC_CRUSHER.get());
+    }
 }

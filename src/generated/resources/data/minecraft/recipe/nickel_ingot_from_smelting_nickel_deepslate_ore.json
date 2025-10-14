@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smelting",
   "category": "misc",
-  "cookingtime": 35,
+  "cookingtime": 333,
   "experience": 10.0,
   "group": "nickel",
   "ingredient": {

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "techrebirth:invar_ingot"
+            "items": "#neoforge:ingots/invar"
           }
         ]
       },

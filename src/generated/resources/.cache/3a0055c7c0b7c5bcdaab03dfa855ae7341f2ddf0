@@ -1,2 +1,15 @@
-// 1.21.1	2025-10-13T22:20:26.7681566	Tags for minecraft:item mod id techrebirth
+// 1.21.1	2025-10-14T19:59:50.3370137	Tags for minecraft:item mod id techrebirth
+ba2f91334bb2f80a46dca317b05a7852e5d3a09b data/c/tags/item/ingots.json
+993680dd13691865eec028ea586e03d322e3e717 data/c/tags/item/ingots/invar.json
 d72968fe141b03f19c3270ebcd9b5039704bd1e8 data/c/tags/item/ingots/lead.json
+7820546f8e1cdcd8a4489a90b70fcf52a39effb7 data/c/tags/item/ingots/nickel.json
+1e0f21958907f617c6ccba882442f05a54746c7d data/c/tags/item/ingots/tin.json
+8dc349eb0b763d9db009580f128f2548d86736db data/c/tags/item/techrebirth/furnace_fast.json
+9fe1923c5c6a30ea7b9219acf50467c3992ea011 data/c/tags/item/techrebirth/furnace_heavy.json
+8934ad35f662e90faaba506b73b8fb14978a4610 data/neoforge/tags/item/ingots.json
+993680dd13691865eec028ea586e03d322e3e717 data/neoforge/tags/item/ingots/invar.json
+d72968fe141b03f19c3270ebcd9b5039704bd1e8 data/neoforge/tags/item/ingots/lead.json
+7820546f8e1cdcd8a4489a90b70fcf52a39effb7 data/neoforge/tags/item/ingots/nickel.json
+1e0f21958907f617c6ccba882442f05a54746c7d data/neoforge/tags/item/ingots/tin.json
+8dc349eb0b763d9db009580f128f2548d86736db data/neoforge/tags/item/techrebirth/furnace_fast.json
+9fe1923c5c6a30ea7b9219acf50467c3992ea011 data/neoforge/tags/item/techrebirth/furnace_heavy.json

@@ -1,0 +1,13 @@
+{
+  "values": [
+    "techrebirth:raw_tin",
+    "techrebirth:raw_nickel",
+    "techrebirth:raw_lead",
+    "techrebirth:tin_ore",
+    "techrebirth:tin_deepslate_ore",
+    "techrebirth:nickel_ore",
+    "techrebirth:nickel_deepslate_ore",
+    "techrebirth:lead_ore",
+    "techrebirth:lead_deepslate_ore"
+  ]
+}

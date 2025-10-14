@@ -35,6 +35,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import com.grobe.techrebirth.util.ModTags;
 
 public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvider {
 
@@ -106,6 +107,16 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
     private int progress = 0;
     private int maxProgress = 72;
     private float pendingXp;
+    private ItemStack lastInput = ItemStack.EMPTY;
+    private static final int DEFAULT_VANILLA_COOK = 200; // fallback if recipe lacks time
+    private static final float MACHINE_SPEED_FACTOR = 0.18f; // 200 * 0.18 = 36 ticks (~1.8 s)
+    private static final float HEAVY_TIME_MULT = 1.30f; // heavy items take ~1.3x time (~+~2s over light)
+    private static final float HEAVY_RF_MULT = 1.15f;   // heavy items draw modestly more RF/t
+
+    private static int getRecipeCookTime(SmeltingRecipe r) {
+        int t = r.getCookingTime();
+        return t > 0 ? t : DEFAULT_VANILLA_COOK;
+    }
 
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
@@ -211,27 +222,66 @@ public class ElectricFurnaceBlockEntity extends BlockEntity implements MenuProvi
         super.loadAdditional(tag, provider);
     }
 
+//    public void tick(Level level, BlockPos pos, BlockState state) {
+//        if (hasRecipe()) {
+//            int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.get());
+//            int efficiencyUpgrades = getUpgradeCount(ModItems.EFFICIENCY_UPGRADE.get());
+//
+//            float speedMultiplier = 1 + (0.5f * speedUpgrades);
+//            this.maxProgress = (int) (72 / speedMultiplier);
+//            if (this.maxProgress < 1) this.maxProgress = 1;
+//
+//            float energyConsumptionMultiplier = (float) Math.pow(0.75, efficiencyUpgrades);
+//            float energySpeedPenalty = 1 + (0.5f * speedUpgrades);
+//            int energyToConsume = (int) (128 * energySpeedPenalty * energyConsumptionMultiplier);
+//
+//            getEnergyStorage().extractEnergy(energyToConsume, false);
+//            increaseCraftingProgress();
+//
+//            setChanged(level, pos, state);
+//
+//            if (progress >= maxProgress) {
+//                craftItem();
+//            }
+//        } else {
+//            resetProgress();
+//        }
+//    }
+
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (hasRecipe()) {
+            Optional<RecipeHolder<SmeltingRecipe>> recipeOpt = getCurrentRecipe();
+            if (recipeOpt.isEmpty()) { resetProgress(); return; }
+            SmeltingRecipe recipe = recipeOpt.get().value();
+
+            ItemStack in = getItemHandler().getStackInSlot(INPUT_SLOT);
+            boolean inputChanged = !ItemStack.isSameItemSameComponents(in, lastInput);
+            if (inputChanged && progress > 0) progress = 0; // avoid partial mismatches
+            lastInput = in.copy();
+
             int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.get());
             int efficiencyUpgrades = getUpgradeCount(ModItems.EFFICIENCY_UPGRADE.get());
 
-            float speedMultiplier = 1 + (0.5f * speedUpgrades);
-            this.maxProgress = (int) (72 / speedMultiplier);
-            if (this.maxProgress < 1) this.maxProgress = 1;
+            // Category: heavy items (raws/ores) take longer and draw more RF/t
+            boolean isHeavy = in.is(ModTags.Items.FURNACE_HEAVY_D.neoforge()) || in.is(ModTags.Items.FURNACE_HEAVY_D.common());
 
+            // Per‑recipe base time mapped through machine speed and category multiplier
+            int vanillaCook = Math.max(1, getRecipeCookTime(recipe));
+            float categoryTimeMult = isHeavy ? HEAVY_TIME_MULT : 1.0f;
+            int baseCook = Math.max(1, Math.round(vanillaCook * MACHINE_SPEED_FACTOR * categoryTimeMult));
+            float speedMultiplier = 1 + (0.5f * speedUpgrades);
+            this.maxProgress = Math.max(1, (int) (baseCook / speedMultiplier));
+
+            // RF/t baseline with category multiplier, then apply upgrades
             float energyConsumptionMultiplier = (float) Math.pow(0.75, efficiencyUpgrades);
             float energySpeedPenalty = 1 + (0.5f * speedUpgrades);
-            int energyToConsume = (int) (128 * energySpeedPenalty * energyConsumptionMultiplier);
+            float baseRfPerTick = 128f * (isHeavy ? HEAVY_RF_MULT : 1.0f);
+            int energyToConsume = Math.max(1, Math.round(baseRfPerTick * energySpeedPenalty * energyConsumptionMultiplier));
 
             getEnergyStorage().extractEnergy(energyToConsume, false);
             increaseCraftingProgress();
-
             setChanged(level, pos, state);
-
-            if (progress >= maxProgress) {
-                craftItem();
-            }
+            if (progress >= maxProgress) craftItem();
         } else {
             resetProgress();
         }

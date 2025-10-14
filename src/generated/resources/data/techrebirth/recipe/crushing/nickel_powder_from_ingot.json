@@ -1,7 +1,7 @@
 {
   "type": "techrebirth:crushing",
   "ingredient": {
-    "item": "techrebirth:nickel_ingot"
+    "tag": "neoforge:ingots/nickel"
   },
   "result": {
     "count": 1,

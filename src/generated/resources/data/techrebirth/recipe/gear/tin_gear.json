@@ -2,9 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "X": {
-      "item": "techrebirth:tin_ingot"
-    }
+    "X": [
+      {
+        "tag": "neoforge:ingots/tin"
+      },
+      {
+        "tag": "c:ingots/tin"
+      }
+    ]
   },
   "pattern": [
     " X ",

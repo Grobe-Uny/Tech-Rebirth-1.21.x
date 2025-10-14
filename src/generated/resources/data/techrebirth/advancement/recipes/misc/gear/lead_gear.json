@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "techrebirth:lead_ingot"
+            "items": "#neoforge:ingots/lead"
           }
         ]
       },

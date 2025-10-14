@@ -1,0 +1,112 @@
+package com.grobe.techrebirth.util;
+
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+
+/**
+ * Centralized tag keys to keep datagen and runtime references neat and consistent.
+ * Define tags once here and reuse across providers and recipes.
+ */
+public final class ModTags {
+    private ModTags() {}
+
+    public static final class Items {
+        private static TagKey<Item> tag(String ns, String path) {
+            return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ns, path));
+        }
+
+        /**
+         * Pair of item TagKeys for the same logical tag in both namespaces.
+         * neoforge = primary namespace on NeoForge; common = "c" namespace mirror.
+         */
+        public static final class Dual {
+            private final TagKey<Item> neoforge;
+            private final TagKey<Item> common;
+
+            private Dual(TagKey<Item> neoforge, TagKey<Item> common) {
+                this.neoforge = neoforge;
+                this.common = common;
+            }
+            public TagKey<Item> neoforge() { return neoforge; }
+            public TagKey<Item> common() { return common; }
+            public TagKey<Item>[] both() { @SuppressWarnings("unchecked") TagKey<Item>[] arr = new TagKey[]{ neoforge, common }; return arr; }
+        }
+
+        /**
+         * Create a pair of item tags for neoforge:<path> and c:<path>.
+         * Example: dual("ingots/lead") -> neoforge:ingots/lead and c:ingots/lead
+         */
+        public static Dual dual(String path) {
+            return new Dual(tag("neoforge", path), tag("c", path));
+        }
+
+        // Duals for common categories so you can easily add to both namespaces
+        public static final Dual INGOTS_D = dual("ingots");
+        public static final Dual INGOTS_LEAD_D = dual("ingots/lead");
+        public static final Dual INGOTS_NICKEL_D = dual("ingots/nickel");
+        public static final Dual INGOTS_TIN_D = dual("ingots/tin");
+        public static final Dual INGOTS_IRON_D = dual("ingots/iron");
+        public static final Dual INGOTS_COPPER_D = dual("ingots/copper");
+        public static final Dual INGOTS_INVAR_D = dual("ingots/invar");
+        public static final Dual RAW_MATERIALS_LEAD_D = dual("raw_materials/lead");
+        public static final Dual ORES_LEAD_ITEMS_D = dual("ores/lead");
+        // Furnace behavior categories (TechRebirth-specific)
+        public static final Dual FURNACE_FAST_D = dual("techrebirth/furnace_fast");
+        public static final Dual FURNACE_HEAVY_D = dual("techrebirth/furnace_heavy");
+
+        // Canonical tags used in recipes (prefer neoforge on NeoForge)
+        public static final TagKey<Item> INGOTS = tag("neoforge", "ingots");
+        public static final TagKey<Item> INGOTS_LEAD = tag("neoforge", "ingots/lead");
+        public static final TagKey<Item> INGOTS_NICKEL = tag("neoforge", "ingots/nickel");
+        public static final TagKey<Item> INGOTS_TIN = tag("neoforge", "ingots/tin");
+        public static final TagKey<Item> INGOTS_IRON = tag("neoforge", "ingots/iron");
+        public static final TagKey<Item> INGOTS_COPPER = tag("neoforge", "ingots/copper");
+        public static final TagKey<Item> INGOTS_INVAR = tag("neoforge", "ingots/invar");
+        public static final TagKey<Item> RAW_MATERIALS_LEAD = tag("neoforge", "raw_materials/lead");
+        public static final TagKey<Item> ORES_LEAD_ITEMS = tag("neoforge", "ores/lead");
+
+        // Common (c:) mirrors for compatibility when generating tags
+        public static final TagKey<Item> C_INGOTS = tag("c", "ingots");
+        public static final TagKey<Item> C_INGOTS_LEAD = tag("c", "ingots/lead");
+        public static final TagKey<Item> C_RAW_MATERIALS_LEAD = tag("c", "raw_materials/lead");
+        public static final TagKey<Item> C_ORES_LEAD_ITEMS = tag("c", "ores/lead");
+    }
+
+    public static final class Blocks {
+        private static TagKey<Block> tag(String ns, String path) {
+            return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ns, path));
+        }
+
+        /**
+         * Pair of block TagKeys for the same logical tag in both namespaces.
+         */
+        public static final class Dual {
+            private final TagKey<Block> neoforge;
+            private final TagKey<Block> common;
+            private Dual(TagKey<Block> neoforge, TagKey<Block> common) {
+                this.neoforge = neoforge;
+                this.common = common;
+            }
+            public TagKey<Block> neoforge() { return neoforge; }
+            public TagKey<Block> common() { return common; }
+            public TagKey<Block>[] both() { @SuppressWarnings("unchecked") TagKey<Block>[] arr = new TagKey[]{ neoforge, common }; return arr; }
+        }
+
+        /**
+         * Create a pair of block tags for neoforge:<path> and c:<path>.
+         * Example: dual("ores/lead") -> neoforge:ores/lead and c:ores/lead
+         */
+        public static Dual dual(String path) {
+            return new Dual(tag("neoforge", path), tag("c", path));
+        }
+
+        // Duals for common block categories
+        public static final Dual ORES_LEAD_D = dual("ores/lead");
+
+        public static final TagKey<Block> ORES_LEAD = tag("neoforge", "ores/lead");
+        public static final TagKey<Block> C_ORES_LEAD = tag("c", "ores/lead");
+    }
+}

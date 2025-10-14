@@ -1,7 +1,7 @@
 {
   "type": "techrebirth:crushing",
   "ingredient": {
-    "item": "techrebirth:tin_ingot"
+    "tag": "neoforge:ingots/tin"
   },
   "result": {
     "count": 1,

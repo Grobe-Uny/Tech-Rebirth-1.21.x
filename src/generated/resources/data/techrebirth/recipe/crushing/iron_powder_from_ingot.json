@@ -1,7 +1,7 @@
 {
   "type": "techrebirth:crushing",
   "ingredient": {
-    "item": "minecraft:iron_ingot"
+    "tag": "neoforge:ingots/iron"
   },
   "result": {
     "count": 1,

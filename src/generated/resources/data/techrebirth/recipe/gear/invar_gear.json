@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "X": {
-      "item": "techrebirth:invar_ingot"
+      "tag": "neoforge:ingots/invar"
     }
   },
   "pattern": [

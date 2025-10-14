@@ -9,7 +9,7 @@
       "item": "techrebirth:iron_gear"
     },
     "I": {
-      "item": "techrebirth:invar_ingot"
+      "tag": "neoforge:ingots/invar"
     },
     "M": {
       "item": "techrebirth:machine_base"

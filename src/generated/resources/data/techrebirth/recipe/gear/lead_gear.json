@@ -2,9 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "X": {
-      "item": "techrebirth:lead_ingot"
-    }
+    "X": [
+      {
+        "tag": "neoforge:ingots/lead"
+      },
+      {
+        "tag": "c:ingots/lead"
+      }
+    ]
   },
   "pattern": [
     " X ",
