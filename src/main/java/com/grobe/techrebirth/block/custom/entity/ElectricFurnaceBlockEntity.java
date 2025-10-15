@@ -88,7 +88,7 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
     }
 
     protected ElectricFurnaceBlockEntity(BlockEntityType<? extends ElectricFurnaceBlockEntity> type, BlockPos pos, BlockState state) {
-        super(type, pos, state, 4, 20000, 512, 512, 0);
+        super(type, pos, state, 4, 20000, 512, 512, 0, 4);
 
         this.data = new ContainerData() {
             @Override
@@ -162,7 +162,7 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         pendingXp = tag.getFloat("pendingXp");
         super.loadAdditional(tag, provider);
     }
-
+    @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (hasRecipe()) {
             Optional<RecipeHolder<SmeltingRecipe>> recipeOpt = getCurrentRecipe();

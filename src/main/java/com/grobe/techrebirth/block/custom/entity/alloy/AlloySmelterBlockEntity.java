@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.block.custom.entity.alloy;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.block.custom.alloy.AlloySmelterBlock;
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.gui.alloy_smelter.AlloySmelterMenu;
 import com.grobe.techrebirth.item.ModItems;
@@ -48,7 +49,10 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         this (ModBlockEntities.ALLOY_SMELTER.get(), pos, state);
     }
     protected AlloySmelterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-        super(type, pos, state, 6, 50000, 1024, 1024, 0);
+        super(type, pos, state, 6, 50000, 1024, 1024, 0, 4);
+    }
+    public ContainerData getContainerData(){
+        return super.getContainerData();
     }
 
     @Override
@@ -215,9 +219,51 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return new AlloySmelterMenu(containerId, playerInventory, this, this.data);
+        return new AlloySmelterMenu(containerId, playerInventory, this, this.getContainerData());
     }
 
+    public void tick(Level level, BlockPos pos, BlockState state) {
+        if (level.isClientSide) return;
+
+        // Ažuriraj cached recipe ako je potrebno
+        if (!recipeCacheValid) {
+            getCurrentRecipe();
+        }
+
+        if (canProcess()) {
+            // Postavi LIT stanje ako već nije
+            if (!state.getValue(AlloySmelterBlock.LIT)) {
+                level.setBlock(pos, state.setValue(AlloySmelterBlock.LIT, true), 3);
+            }
+
+            // Potroši energy i napravi progress
+            int energyCost = getEnergyCostPerTick();
+            if (getEnergyStorage().getEnergyStored() >= energyCost) {
+                getEnergyStorage().extractEnergy(energyCost, false);
+                increaseProgress();
+                setChanged();
+
+                if (getProgress() >= getMaxProgress()) {
+                    finishProcessing();
+                    resetProgress();
+                }
+            }
+        } else {
+            // Reset progress i ugasi ako ne može procesirati
+            resetProgress();
+            if (state.getValue(AlloySmelterBlock.LIT)) {
+                level.setBlock(pos, state.setValue(AlloySmelterBlock.LIT, false), 3);
+            }
+        }
+    }
+    protected void increaseProgress() {
+        // progress field je u base klasi
+        progress++;
+    }
+
+    protected void resetProgress() {
+        progress = 0;
+    }
 
     public void drops (){
         SimpleContainer inventory = new SimpleContainer(6);

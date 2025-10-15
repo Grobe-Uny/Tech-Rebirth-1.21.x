@@ -1,0 +1,19 @@
+{
+  "type": "techrebirth:alloy_smelting",
+  "cookingTime": 100,
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "techrebirth:nickel_ingot"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "id": "techrebirth:invar_ingot"
+  }
+}

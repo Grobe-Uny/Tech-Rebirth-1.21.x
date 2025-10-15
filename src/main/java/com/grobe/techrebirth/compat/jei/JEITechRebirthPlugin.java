@@ -2,6 +2,7 @@ package com.grobe.techrebirth.compat.jei;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlocks;
+import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.recipe.RecipeType;
@@ -29,6 +30,7 @@ public class JEITechRebirthPlugin implements IModPlugin {
         var gui = registration.getJeiHelpers().getGuiHelper();
         registration.addRecipeCategories(new ElectricFurnaceRecipeCategory(gui));
         registration.addRecipeCategories(new ElectricCrusherRecipeCategory(gui));
+        registration.addRecipeCategories(new AlloySmelterRecipeCategory(gui));
     }
 
     @Override
@@ -40,15 +42,21 @@ public class JEITechRebirthPlugin implements IModPlugin {
         registration.addRecipes(ElectricFurnaceRecipeCategory.TYPE, smeltingRecipes);
 
         // Crusher recipes
-        var crushing = recipeManager.getAllRecipesFor(com.grobe.techrebirth.recipe.ModRecipeTypes.CRUSHING_TYPE.get()).stream()
+        var crushing = recipeManager.getAllRecipesFor(ModRecipeTypes.CRUSHING_TYPE.get()).stream()
                 .map(holder -> holder.value())
                 .toList();
         registration.addRecipes(ElectricCrusherRecipeCategory.TYPE, crushing);
+        // Alloy recipes
+        var alloying = recipeManager.getAllRecipesFor(ModRecipeTypes.ALLOY_SMELTING_TYPE.get()).stream()
+                .map(holder -> holder.value())
+                .toList();
+        registration.addRecipes(AlloySmelterRecipeCategory.TYPE, alloying);
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELECTRIC_FURNACE.get()), ElectricFurnaceRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELECTRIC_CRUSHER.get()), ElectricCrusherRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ALLOY_SMELTER.get()),    AlloySmelterRecipeCategory.TYPE);
     }
 }

@@ -70,7 +70,7 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
     };
 
     public GeneratorBlockEntity(BlockPos pPos, BlockState pState) {
-        super(ModBlockEntities.GENERATOR.get(), pPos, pState, 1, 20000, 512, 512, 0);
+        super(ModBlockEntities.GENERATOR.get(), pPos, pState, 1, 20000, 512, 512, 0, 4);
     }
 
     @Override

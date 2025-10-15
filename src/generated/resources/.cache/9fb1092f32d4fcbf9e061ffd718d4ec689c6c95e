@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-14T19:59:50.3370137	Recipes
+// 1.21.1	2025-10-15T02:50:28.0085038	Recipes
 60456172ebb8ee4319f165b37c6f4a8150138748 data/minecraft/advancement/recipes/misc/lead_ingot_from_blasting_lead_deepslate_ore.json
 ce5a5c14ab0ea3d1710fe65ba87932bf5c8c6a2e data/minecraft/advancement/recipes/misc/lead_ingot_from_blasting_lead_ore.json
 089b38199fead08416771db442ba45476e59f6c6 data/minecraft/advancement/recipes/misc/lead_ingot_from_blasting_raw_lead.json
@@ -50,6 +50,7 @@ bc329a08e94d6ddb6d21b3da322b7c4a25d43dec data/techrebirth/advancement/recipes/mi
 e924ee5bfa2da6bce29fed8cba3689123c324ab0 data/techrebirth/advancement/recipes/misc/machine_base.json
 016b804510773d5067983c5127a7bf673538494e data/techrebirth/advancement/recipes/misc/redstone_reception_coil.json
 bf6b5cb868d16e39da482bcf4018d61db2afa3d0 data/techrebirth/advancement/recipes/misc/speed_upgrade.json
+5e7ba73e3146d5fb5db657e82bc24ddfa3040955 data/techrebirth/recipe/alloys/invar_alloy.json
 9502931723616de5cd8ff776c80ba6a4e7c80eb6 data/techrebirth/recipe/cooked_carrot.json
 7120d7337fd67390d25032b7f0f49171b6d2eb06 data/techrebirth/recipe/crushing/copper_powder_from_ingot.json
 76363cdc9c294ef156522957afc41898c3d97b7a data/techrebirth/recipe/crushing/copper_powder_from_raw_and_ores.json

@@ -27,6 +27,36 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
 
     protected ContainerData data;
 
+    protected ContainerData createContainerData(int size) {
+        return new ContainerData() {
+            @Override
+            public int get(int index) {
+                return switch (index) {
+                    case 0 -> progress;
+                    case 1 -> maxProgress;
+                    case 2 -> energyHandler.getEnergyStored();
+                    case 3 -> energyHandler.getMaxEnergyStored();
+                    default -> 0;
+                };
+            }
+
+            @Override
+            public void set(int index, int value) {
+                switch (index) {
+                    case 0 -> progress = value;
+                    case 1 -> maxProgress = value;
+                    case 2 -> energyHandler.setEnergy(value);
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return size;
+            }
+        };
+    }
+
+
     protected BaseMachineBlockEntity(
             BlockEntityType<?> type,
             BlockPos pos,
@@ -35,9 +65,11 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
             int energyCapacity,
             int maxReceive,
             int maxExtract,
-            int initialEnergy
+            int initialEnergy,
+            int dataSize
     ) {
         super(type, pos, state);
+        this.data = createContainerData(dataSize);
         this.itemHandler = new ItemStackHandler(inventorySize) {
             @Override
             protected void onContentsChanged(int slot) {
@@ -107,5 +139,9 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
             }
             return extracted;
         }
+    }
+
+    public void tick(Level level, BlockPos pos, BlockState state) {
+        if (level.isClientSide) return;
     }
 }

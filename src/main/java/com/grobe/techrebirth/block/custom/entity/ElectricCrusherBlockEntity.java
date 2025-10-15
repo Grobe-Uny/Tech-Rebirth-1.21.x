@@ -18,15 +18,10 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implements MenuProvider {
     protected final ContainerData data;
@@ -44,7 +39,7 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
     }
 
     protected ElectricCrusherBlockEntity(BlockEntityType<? extends ElectricCrusherBlockEntity> type, BlockPos pos, BlockState state) {
-        super(type, pos, state, 4, 20000, 512, 512, 0);
+        super(type, pos, state, 4, 20000, 512, 512, 0, 4);
         this.data = new ContainerData() {
             @Override
             public int get(int index) {

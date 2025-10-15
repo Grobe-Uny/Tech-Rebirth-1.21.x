@@ -32,6 +32,7 @@ public class AlloySmelterMenu extends AbstractContainerMenu {
         } else {
             this.data = data;
         }
+        
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);

@@ -46,8 +46,10 @@ public class AlloySmelterBlock extends BaseEntityBlock {
     public InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (!pLevel.isClientSide()){
             BlockEntity entity = pLevel.getBlockEntity(pPos);
+            System.out.println("DEBUG: BlockEntity found: " + entity);
             if (entity instanceof AlloySmelterBlockEntity){
-                ((ServerPlayer) pPlayer).openMenu((AlloySmelterBlockEntity)entity, pPos);
+                System.out.println("DEBUG: Opening menu...");
+                pPlayer.openMenu((AlloySmelterBlockEntity)entity, pPos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
@@ -79,7 +81,7 @@ public class AlloySmelterBlock extends BaseEntityBlock {
         if(pLevel.isClientSide()){
             return null;
         }
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.ELECTRIC_FURNACE.get(),
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.ALLOY_SMELTER.get(),
                 (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
     }
 

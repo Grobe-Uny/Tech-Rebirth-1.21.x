@@ -49,6 +49,7 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.GENERATOR);
                         output.accept(ModBlocks.ELECTRIC_CRUSHER);
                         output.accept(ModBlocks.ENERGY_BANK);
+                        output.accept(ModBlocks.ALLOY_SMELTER);
 
                     })
                     .build());

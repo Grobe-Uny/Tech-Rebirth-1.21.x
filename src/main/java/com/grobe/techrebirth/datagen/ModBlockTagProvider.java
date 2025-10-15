@@ -40,6 +40,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.ENERGY_BANK.get())
                 .add(ModBlocks.GENERATOR.get())
                 .add(ModBlocks.ENERGY_CABLE.get())
+                .add(ModBlocks.ALLOY_SMELTER.get())
                 .add(ModBlocks.ELECTRIC_CRUSHER.get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
@@ -56,6 +57,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.MACHINE_BASE.get())
                 .add(ModBlocks.ENERGY_BANK.get())
                 .add(ModBlocks.GENERATOR.get())
+                .add(ModBlocks.ALLOY_SMELTER.get())
                 .add(ModBlocks.ELECTRIC_CRUSHER.get());
     }
 }

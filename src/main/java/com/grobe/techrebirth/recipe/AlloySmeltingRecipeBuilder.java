@@ -1,6 +1,9 @@
 package com.grobe.techrebirth.recipe;
 
+import com.grobe.techrebirth.util.ModTags;
 import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -12,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 
 public class AlloySmeltingRecipeBuilder implements RecipeBuilder {
     protected final NonNullList<Ingredient> ingredients;
@@ -26,7 +30,7 @@ public class AlloySmeltingRecipeBuilder implements RecipeBuilder {
         this.result = result;
     }
 
-    public static AlloySmeltingRecipeBuilder AlloySmelting(NonNullList<Ingredient> ingredient, ItemStack result) {
+    public static AlloySmeltingRecipeBuilder alloySmelting(NonNullList<Ingredient> ingredient, ItemStack result) {
         return new AlloySmeltingRecipeBuilder(ingredient, result);
     }
 
@@ -39,6 +43,17 @@ public class AlloySmeltingRecipeBuilder implements RecipeBuilder {
     public AlloySmeltingRecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
         this.criteria.put(name, criterion);
         return this;
+    }
+
+    public AlloySmeltingRecipeBuilder unlockedBy(String name, ModTags.Items.Dual dualTags) {
+
+        this.criteria.put(name, createCriterionFromDual(dualTags));
+        return this;
+    }
+    private Criterion<?> createCriterionFromDual(ModTags.Items.Dual dualTags){
+        return InventoryChangeTrigger.TriggerInstance.hasItems(
+                ItemPredicate.Builder.item().of(dualTags.neoforge()).build()
+        );
     }
 
     @Override

@@ -74,7 +74,7 @@ public class AlloySmeltingRecipe implements Recipe<MultiItemRecipeInput> {
     public ItemStack getResultItem(HolderLookup.Provider provider) {
         return result;
     }
-
+    public ItemStack getResult() { return result; }
     @Override
     public RecipeSerializer<?> getSerializer() {
         return ModRecipeTypes.ALLOY_SMELTING_SERIALIZER.get();
