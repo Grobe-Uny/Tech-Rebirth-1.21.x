@@ -1,10 +1,8 @@
 package com.grobe.techrebirth.gui.alloy_smelter;
 
-import com.grobe.techrebirth.block.custom.entity.ElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.alloy.AlloySmelterBlockEntity;
 import com.grobe.techrebirth.gui.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
