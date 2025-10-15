@@ -10,6 +10,8 @@ import com.grobe.techrebirth.gui.electric_crusher.ElectricCrusherScreen;
 import com.grobe.techrebirth.gui.electric_furnace.ElectricFurnaceScreen;
 import com.grobe.techrebirth.gui.generator.GeneratorScreen;
 import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.recipe.ModRecipeTypes;
+import com.grobe.techrebirth.util.ModDataComponents;
 import net.neoforged.fml.common.EventBusSubscriber;
 import org.slf4j.Logger;
 
@@ -54,7 +56,8 @@ public class TechRebirth {
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
-        com.grobe.techrebirth.recipe.ModRecipeTypes.register(modEventBus);
+        ModDataComponents.DATA_COMPONENTS.register(modEventBus);
+        ModRecipeTypes.register(modEventBus);
 
 
         ModEnchantmentEffects.register(modEventBus);

@@ -6,6 +6,7 @@ import com.grobe.techrebirth.gui.electric_furnace.ElectricFurnaceMenu;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -25,7 +26,9 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.wrapper.RangedWrapper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -34,6 +37,11 @@ import com.grobe.techrebirth.util.ModTags;
 public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implements MenuProvider {
 
     protected final ContainerData data;
+
+    @Override
+    protected String getEnergyTagName() {
+        return "electric_furnace_energy";
+    }
 
     public boolean isItemValid(int slot, ItemStack stack){
         return switch (slot){
@@ -119,7 +127,6 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         };
     }
 
-
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(4);
         ItemStackHandler handler = getItemHandler();
@@ -146,21 +153,23 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
 
 
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        tag.put("inventory", getItemHandler().serializeNBT(provider));
-        tag.putInt("electric_furnace.progress", progress);
-        tag.putInt("electric_furnace.energy", getEnergyStorage().getEnergyStored());
-        tag.putFloat("pendingXp", pendingXp);
+        //tag.put("inventory", getItemHandler().serializeNBT(provider));
+        //tag.putInt("electric_furnace.progress", progress);
+        //tag.putInt("electric_furnace.energy", getEnergyStorage().getEnergyStored());
         super.saveAdditional(tag, provider);
+        tag.putFloat("pendingXp", pendingXp);
+
     }
 
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        getItemHandler().deserializeNBT(provider, tag.getCompound("inventory"));
-        progress = tag.getInt("electric_furnace.progress");
-        this.setEnergyStored(tag.getInt("electric_furnace.energy"));
-        pendingXp = tag.getFloat("pendingXp");
+        //getItemHandler().deserializeNBT(provider, tag.getCompound("inventory"));
+        //progress = tag.getInt("electric_furnace.progress");
+        //this.setEnergyStored(tag.getInt("electric_furnace.energy"));
         super.loadAdditional(tag, provider);
+        pendingXp = tag.getFloat("pendingXp");
+
     }
     @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
@@ -270,5 +279,28 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         ItemStackHandler handler = getItemHandler();
         return handler.getStackInSlot(OUTPUT_SLOT).getCount() + count <=
                 handler.getStackInSlot(OUTPUT_SLOT).getMaxStackSize();
+    }
+    // OVERRIDE za side-based handling ako želiš custom logiku
+    @Override
+    public IItemHandler getSidedItemHandler(Direction side) {
+        ItemStackHandler baseHandler =  getItemHandler();
+
+        if (side == Direction.DOWN) {
+            // Donja strana - samo output slot (slot 1), može se extractati
+            return new RangedWrapper(baseHandler, 1, 2) {
+                @Override
+                public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+                    return stack; // Ne može se insertati
+                }
+            };
+        } else {
+            // Ostale strane - samo input slot (slot 0), može se insertati
+            return new RangedWrapper(baseHandler, 0, 1) {
+                @Override
+                public ItemStack extractItem(int slot, int amount, boolean simulate) {
+                    return ItemStack.EMPTY; // Ne može se extractati
+                }
+            };
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.grobe.techrebirth.block.custom.cable;
 
+import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.EnergyCableBlockEntity;
 import com.grobe.techrebirth.event.ModCapabilities;
 import com.mojang.serialization.MapCodec;
@@ -80,7 +81,8 @@ public class EnergyCableBlock extends BaseEntityBlock {
         BlockEntity be = level.getBlockEntity(neighborPos);
         if (be == null) return false;
         // Check if a neighbor exposes energy capability on the facing side
-        return level.getCapability(ModCapabilities.ELECTRIC_FURNACE_ENERGY, neighborPos, neighborState, be, direction.getOpposite()) != null;
+       // return level.getCapability(ModCapabilities.ELECTRIC_FURNACE_ENERGY, neighborPos, neighborState, be, direction.getOpposite()) != null;
+        return false;
     }
 
     private boolean shouldConnectTo(LevelAccessor level, BlockPos pos, Direction direction) {
@@ -90,7 +92,7 @@ public class EnergyCableBlock extends BaseEntityBlock {
         if (level instanceof Level realLevel) {
             BlockEntity be = realLevel.getBlockEntity(neighborPos);
             if (be == null) return false;
-            return realLevel.getCapability(ModCapabilities.ELECTRIC_FURNACE_ENERGY, neighborPos, neighborState, be, direction.getOpposite()) != null;
+            //return realLevel.getCapability(ModCapabilities.ELECTRIC_FURNACE_ENERGY, neighborPos, neighborState, be, direction.getOpposite()) != null;
         }
         return false;
     }

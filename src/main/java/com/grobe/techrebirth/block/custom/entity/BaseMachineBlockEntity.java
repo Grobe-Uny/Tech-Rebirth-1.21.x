@@ -1,7 +1,13 @@
 package com.grobe.techrebirth.block.custom.entity;
 
+import com.grobe.techrebirth.util.ModDataComponents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -9,7 +15,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+
+import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * A reusable base for powered machines that provides:
@@ -24,6 +36,8 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
 
     protected int progress = 0;
     protected int maxProgress = 100;
+
+    protected abstract String getEnergyTagName();
 
     protected ContainerData data;
 
@@ -83,14 +97,6 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         this.energyHandler = new DirtyEnergyStorage(energyCapacity, maxReceive, maxExtract, initialEnergy);
     }
 
-    public ItemStackHandler getItemHandler() {
-        return itemHandler;
-    }
-
-    public EnergyStorage getEnergyStorage() {
-        return energyHandler;
-    }
-
     public int getProgress() {
         return progress;
     }
@@ -143,5 +149,97 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
 
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide) return;
+    }
+
+
+    public IEnergyStorage getEnergyStorage() {
+        return energyHandler;
+    }
+
+    public ItemStackHandler getItemHandler() {
+        return itemHandler;
+    }
+
+    // Dodaj metodu za IItemHandler (za capabilityje)
+    public IItemHandler getItemHandlerCapability() {
+        return itemHandler;
+    }
+
+    // Dodaj fluid support (opcionalno)
+    public IFluidHandler getFluidHandler() {
+        return null; // Po defaultu nema fluid support
+    }
+
+    // Metoda za side-based item handling (override-aj u podklasama po potrebi)
+    public IItemHandler getSidedItemHandler(Direction side) {
+        return getItemHandler(); // Default: vraća isti handler sa svih strana
+    }
+
+    // DODAJ OBAVEZNO: Eksplicitno spremanje prije uništavanja
+    @Override
+    public void setRemoved() {
+        if (level != null && !level.isClientSide) {
+            // 1. Dropaj sve iteme
+            SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
+            for (int i = 0; i < itemHandler.getSlots(); i++) {
+                inventory.setItem(i, itemHandler.getStackInSlot(i));
+            }
+            Containers.dropContents(level, worldPosition, inventory);
+
+            // 2. OBAVEZNO: Spremi stanje PRIJE nego što se entity ukloni
+            setChanged(); // Ovo triggera saveAdditional()
+        }
+        super.setRemoved();
+    }
+
+    // DODAJ OBAVEZNO: Ova metoda se poziva kada se chunk savea ili blok strga
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        CompoundTag tag = super.getUpdateTag(provider);
+        saveAdditional(tag, provider); // OBAVEZNO: spremi podatke
+        return tag;
+    }
+    // DODAJ OBAVEZNO: Ova metoda se poziva kada se blok postavi iz NBT-a
+    @Override
+    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider provider) {
+        loadAdditional(tag, provider); // OBAVEZNO: učitaj podatke
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider){
+        super.saveAdditional(tag, provider);
+        tag.put(getEnergyTagName(), energyHandler.serializeNBT(provider));
+        System.out.println("💾 " + this.getClass().getSimpleName() + " at " + worldPosition +
+                " - SAVING Energy: " + energyHandler.getEnergyStored() +
+                " under tag: " + getEnergyTagName());
+
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider){
+        super.loadAdditional(tag, provider);
+        String energyTag = getEnergyTagName();
+        if (tag.contains(energyTag)) {
+            energyHandler.deserializeNBT(provider, tag.get(energyTag));
+            System.out.println("📂 " + this.getClass().getSimpleName() + " at " + worldPosition +
+                    " - LOADED Energy: " + energyHandler.getEnergyStored() +
+                    " from tag: " + energyTag);
+        } else {
+            System.out.println("❌ " + this.getClass().getSimpleName() + " at " + worldPosition +
+                    " - NO ENERGY TAG FOUND: " + energyTag);
+        }
+
+    }
+
+    public void saveEnergyToItem(ItemStack stack) {
+        int energy = this.getEnergyStorage().getEnergyStored();
+        stack.set(ModDataComponents.STORED_ENERGY.get(), energy);
+    }
+
+    public void loadEnergyFromItem(ItemStack stack) {
+        Integer stored = stack.get(ModDataComponents.STORED_ENERGY.get());
+        if (stored != null) {
+            this.setEnergyStored(stored);
+        }
     }
 }

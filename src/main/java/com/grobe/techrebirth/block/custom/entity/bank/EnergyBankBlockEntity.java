@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.block.custom.entity.bank;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.event.ModCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -38,16 +39,19 @@ public class EnergyBankBlockEntity extends BlockEntity {
         public ModEnergy(int capacity, int maxReceive, int maxExtract, int energy) {
             super(capacity, maxReceive, maxExtract, energy);
         }
+
         public void setEnergy(int energy) {
             this.energy = Math.min(energy, this.capacity);
             EnergyBankBlockEntity.this.setChanged();
         }
+
         @Override
         public int receiveEnergy(int maxReceive, boolean simulate) {
             int received = super.receiveEnergy(maxReceive, simulate);
             if (!simulate && received > 0) EnergyBankBlockEntity.this.setChanged();
             return received;
         }
+
         @Override
         public int extractEnergy(int maxExtract, boolean simulate) {
             int extracted = super.extractEnergy(maxExtract, simulate);
@@ -61,6 +65,7 @@ public class EnergyBankBlockEntity extends BlockEntity {
         public NetworkEnergyStorage() {
             super(BASE_CAPACITY, MAX_IO, MAX_IO, 0);
         }
+
         @Override
         public int getEnergyStored() {
             List<EnergyBankBlockEntity> cluster = getCluster();
@@ -70,15 +75,22 @@ public class EnergyBankBlockEntity extends BlockEntity {
             }
             return sum;
         }
+
         @Override
         public int getMaxEnergyStored() {
             List<EnergyBankBlockEntity> cluster = getCluster();
             return cluster.size() * BASE_CAPACITY;
         }
+
         @Override
-        public boolean canExtract() { return true; }
+        public boolean canExtract() {
+            return true;
+        }
+
         @Override
-        public boolean canReceive() { return true; }
+        public boolean canReceive() {
+            return true;
+        }
 
         @Override
         public int receiveEnergy(int maxReceive, boolean simulate) {
@@ -190,8 +202,8 @@ public class EnergyBankBlockEntity extends BlockEntity {
             BlockPos nPos = pos.relative(dir);
             BlockState nState = level.getBlockState(nPos);
             BlockEntity nBe = level.getBlockEntity(nPos);
-            if (nBe == null) continue;
-            net.neoforged.neoforge.energy.EnergyStorage target = level.getCapability(com.grobe.techrebirth.event.ModCapabilities.ELECTRIC_FURNACE_ENERGY, nPos, nState, nBe, dir.getOpposite());
+            /*if (nBe == null) continue;
+            net.neoforged.neoforge.energy.EnergyStorage target = level.getCapability(ModCapabilities.ELECTRIC_FURNACE_ENERGY, nPos, nState, nBe, dir.getOpposite());
             if (target == null || !target.canReceive()) continue;
             int toSend = Math.min(MAX_IO, network.getEnergyStored());
             if (toSend <= 0) continue;
@@ -199,6 +211,7 @@ public class EnergyBankBlockEntity extends BlockEntity {
             if (received > 0) {
                 network.extractEnergy(received, false);
             }
+        }*/
         }
     }
 }

@@ -6,7 +6,6 @@ import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.gui.alloy_smelter.AlloySmelterMenu;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.recipe.AlloySmeltingRecipe;
-import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.recipe.MultiItemRecipeInput;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -26,12 +25,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     private static final int INPUT_SLOT_1 = 0;
@@ -45,6 +42,8 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     private Optional<RecipeHolder<AlloySmeltingRecipe>> cachedRecipe = Optional.empty();
     private boolean recipeCacheValid = false;
 
+    private final Map<Integer, Integer> consumedInputs = new HashMap<>();
+
     public AlloySmelterBlockEntity(BlockPos pos, BlockState state){
         this (ModBlockEntities.ALLOY_SMELTER.get(), pos, state);
     }
@@ -53,6 +52,11 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     }
     public ContainerData getContainerData(){
         return super.getContainerData();
+    }
+
+    @Override
+    protected String getEnergyTagName() {
+        return "alloy_smelter_energy";
     }
 
     @Override
@@ -74,9 +78,9 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         if(!hasRecipe()) return false;
 
         ItemStack result = getCurrentRecipe().get().value().getResultItem(null);
-
         int energyCost = getEnergyCostPerTick();
 
+        // Jednostavna provjera - može li se output staviti i ima li dovoljno energije
         return canInsertOutput(result) &&
                 getEnergyStorage().getEnergyStored() >= energyCost;
     }
@@ -143,58 +147,85 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         AlloySmeltingRecipe recipe = recipeOpt.get().value();
         ItemStack result = recipe.getResultItem(null);
 
-        // CONSUME INPUTS BASED ON ACTUAL RECIPE - OVO JE KLJUČNO!
-        consumeInputsBasedOnRecipe(recipe);
+        // POTROŠI INPUTE - jednostavna implementacija
+        consumeInputsForRecipe(recipe);
 
         // Produce output
         ItemStack output = getItemHandler().getStackInSlot(OUTPUT_SLOT);
         if (output.isEmpty()) {
             getItemHandler().setStackInSlot(OUTPUT_SLOT, result.copy());
-        } else {
+        } else if (ItemStack.isSameItemSameComponents(output, result)) {
             output.grow(result.getCount());
         }
 
         recipeCacheValid = false;
+        setChanged(); // OBAVEZNO: označi da se promijenilo
     }
-    private void consumeInputsBasedOnRecipe(AlloySmeltingRecipe recipe) {
-        // Mapiraj koje ingredient-e trebamo potrošiti
-        Map<Ingredient, Integer> ingredientsToConsume = new HashMap<>();
-        for (Ingredient ingredient : recipe.getIngredients()) {
-            ingredientsToConsume.put(ingredient, ingredientsToConsume.getOrDefault(ingredient, 0) + 1);
-        }
+    private void consumeInputsForRecipe(AlloySmeltingRecipe recipe) {
+        // Napravi kopiju potrebnih ingredienta
+        List<Ingredient> ingredientsToConsume = new ArrayList<>(recipe.getIngredients());
 
-        // Potroši iteme iz slotova
+        // Za svaki input slot, pokušaj potrošiti item koji odgovara nekom ingredientu
         for (int slot : new int[]{INPUT_SLOT_1, INPUT_SLOT_2, INPUT_SLOT_3}) {
             ItemStack stack = getItemHandler().getStackInSlot(slot);
-            if (stack.isEmpty()) continue;
+            if (stack.isEmpty() || ingredientsToConsume.isEmpty()) continue;
 
-            // Pronađi ingredient koji odgovara ovom itemu i potroši ga
-            for (Iterator<Map.Entry<Ingredient, Integer>> it = ingredientsToConsume.entrySet().iterator(); it.hasNext();) {
-                Map.Entry<Ingredient, Integer> entry = it.next();
-                Ingredient ingredient = entry.getKey();
-                int countNeeded = entry.getValue();
-
+            // Pronađi ingredient koji odgovara ovom itemu
+            for (Iterator<Ingredient> iterator = ingredientsToConsume.iterator(); iterator.hasNext();) {
+                Ingredient ingredient = iterator.next();
                 if (ingredient.test(stack)) {
-                    int consumed = Math.min(countNeeded, stack.getCount());
-                    stack.shrink(consumed);
+                    // Potroši 1 item iz ovog stacka
+                    stack.shrink(1);
                     getItemHandler().setStackInSlot(slot, stack);
 
-                    countNeeded -= consumed;
-                    if (countNeeded <= 0) {
-                        it.remove(); // Svi ovi ingredienti su potrošeni
-                    } else {
-                        entry.setValue(countNeeded);
-                    }
+                    // Ukloni ovaj ingredient iz liste za potrošnju
+                    iterator.remove();
                     break;
                 }
             }
-
-            // Ako smo potrošili sve ingredient-e, prekini
-            if (ingredientsToConsume.isEmpty()) {
-                break;
-            }
         }
     }
+
+//    private void consumeInputsBasedOnRecipe(AlloySmeltingRecipe recipe) {
+//        // Mapiraj koje ingredient-e trebamo potrošiti
+//        Map<Ingredient, Integer> ingredientsToConsume = new HashMap<>();
+//        for (Ingredient ingredient : recipe.getIngredients()) {
+//            ingredientsToConsume.put(ingredient, ingredientsToConsume.getOrDefault(ingredient, 0) + 1);
+//        }
+//
+//        // Potroši iteme iz slotova
+//        for (int slot : new int[]{INPUT_SLOT_1, INPUT_SLOT_2, INPUT_SLOT_3}) {
+//            ItemStack stack = getItemHandler().getStackInSlot(slot);
+//            if (stack.isEmpty()) continue;
+//
+//            // Pronađi ingredient koji odgovara ovom itemu i potroši ga
+//            for (Iterator<Map.Entry<Ingredient, Integer>> it = ingredientsToConsume.entrySet().iterator(); it.hasNext();) {
+//                Map.Entry<Ingredient, Integer> entry = it.next();
+//                Ingredient ingredient = entry.getKey();
+//                int countNeeded = entry.getValue();
+//
+//                if (ingredient.test(stack)) {
+//                    ItemStackHandler handler = getItemHandler();
+//                    int consumed = Math.min(countNeeded, stack.getCount());
+//                    stack.shrink(consumed);
+//                    handler.setStackInSlot(slot, stack);
+//
+//                    countNeeded -= consumed;
+//                    if (countNeeded <= 0) {
+//                        it.remove(); // Svi ovi ingredienti su potrošeni
+//                    } else {
+//                        entry.setValue(countNeeded);
+//                    }
+//                    break;
+//                }
+//            }
+//
+//            // Ako smo potrošili sve ingredient-e, prekini
+//            if (ingredientsToConsume.isEmpty()) {
+//                break;
+//            }
+//        }
+//    }
 
     private boolean canInsertOutput(ItemStack result){
         ItemStack output = getItemHandler().getStackInSlot(OUTPUT_SLOT);
@@ -228,6 +259,7 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         // Ažuriraj cached recipe ako je potrebno
         if (!recipeCacheValid) {
             getCurrentRecipe();
+            setChanged();
         }
 
         if (canProcess()) {
@@ -259,10 +291,12 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     protected void increaseProgress() {
         // progress field je u base klasi
         progress++;
+        setChanged();
     }
 
     protected void resetProgress() {
         progress = 0;
+        setChanged();
     }
 
     public void drops (){

@@ -65,6 +65,11 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
         };
     }
 
+    @Override
+    protected String getEnergyTagName() {
+        return "electric_crusher_energy";
+    }
+
     // Validation for ItemStackHandler in BaseMachine
     @Override
     protected boolean isItemValid(int slot, ItemStack stack) {
@@ -90,7 +95,7 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
 
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(4);
-        ItemStackHandler handler = getItemHandler();
+        ItemStackHandler handler =getItemHandler();
         for (int i = 0; i < 4; i++) {
             inventory.setItem(i, handler.getStackInSlot(i));
         }
@@ -110,6 +115,7 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+
         tag.put("inventory", getItemHandler().serializeNBT(provider));
         tag.putInt("electric_crusher.progress", progress);
         tag.putInt("electric_crusher.energy", getEnergyStorage().getEnergyStored());

@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.EnergyStorage;
+import org.jetbrains.annotations.Range;
 
 public class EnergyCableBlockEntity extends BlockEntity {
 
@@ -52,12 +53,12 @@ public class EnergyCableBlockEntity extends BlockEntity {
                 BlockState nState = level.getBlockState(nPos);
                 BlockEntity nBe = level.getBlockEntity(nPos);
                 if (nBe == null) continue;
-                EnergyStorage target = level.getCapability(ModCapabilities.ELECTRIC_FURNACE_ENERGY, nPos, nState, nBe, dir.getOpposite());
+                /*EnergyStorage target = level.getCapability(ModCapabilities.ALL_MACHINES, nPos, nState, nBe, dir.getOpposite());
                 if (target == null || !target.canReceive()) continue;
                 int toSend = Math.min(256, be.energyStorage.getEnergyStored());
                 if (toSend <= 0) continue;
                 int received = target.receiveEnergy(toSend, false);
-                if (received > 0) be.energyStorage.extractEnergy(received, false);
+                if (received > 0) be.energyStorage.extractEnergy(received, false);*/
             }
         }
     }

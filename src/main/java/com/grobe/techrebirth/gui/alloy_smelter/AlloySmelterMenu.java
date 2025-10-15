@@ -46,8 +46,8 @@ public class AlloySmelterMenu extends AbstractContainerMenu {
             }
         });
 
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 3, 134, 60));
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 3, 153, 60));
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 4, 134, 60));
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 5, 153, 60));
 
         addDataSlots(this.data);
     }

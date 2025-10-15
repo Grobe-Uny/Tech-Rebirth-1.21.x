@@ -1,5 +1,6 @@
 package com.grobe.techrebirth.block.custom.entity;
 
+import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.event.ModCapabilities;
 import com.grobe.techrebirth.recipe.GeneratorFuelRecipe;
@@ -23,7 +24,9 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.Optional;
@@ -81,6 +84,11 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
         return new com.grobe.techrebirth.gui.generator.GeneratorMenu(containerId, playerInventory, this, this.data);
+    }
+
+    @Override
+    protected String getEnergyTagName() {
+        return "generator_energy";
     }
 
     @Override
@@ -147,16 +155,47 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
             for (Direction dir : Direction.values()) {
                 if (be.getEnergyStorage().getEnergyStored() <= 0) break;
                 BlockPos nPos = pos.relative(dir);
-                BlockState nState = level.getBlockState(nPos);
-                BlockEntity nBe = level.getBlockEntity(nPos);
-                if (nBe == null) continue;
-                EnergyStorage target = level.getCapability(ModCapabilities.ELECTRIC_FURNACE_ENERGY, nPos, nState, nBe, dir.getOpposite());
-                if (target == null || !target.canReceive()) continue;
-                int toSend = Math.min(256, be.getEnergyStorage().getEnergyStored());
-                if (toSend <= 0) continue;
-                int received = target.receiveEnergy(toSend, false);
-                if (received > 0) be.getEnergyStorage().extractEnergy(received, false);
+                IEnergyStorage neighborEnergy = level.getCapability(
+                        Capabilities.EnergyStorage.BLOCK,
+                        nPos,
+                        level.getBlockState(nPos),
+                        level.getBlockEntity(nPos),
+                        dir.getOpposite()
+                );
+
+                // Provjeri može li susjed primiti energiju
+                if (neighborEnergy != null && neighborEnergy.canReceive()) {
+                    int availableEnergy = be.getEnergyStorage().getEnergyStored();
+                    int maxSend = Math.min(availableEnergy, 256); // Limit po ticku
+
+                    if (maxSend > 0) {
+                        int received = neighborEnergy.receiveEnergy(maxSend, false);
+                        if (received > 0) {
+                            be.getEnergyStorage().extractEnergy(received, false);
+                            setChanged(level, pos, state); // Oznaki promjenu
+                        }
+                    }
+                }
             }
+        }
+        // DODAJ: Debug logging
+        if (level.getGameTime() % 100 == 0) { // Log svakih 5 sekundi
+            int energySent = 0;
+            for (Direction dir : Direction.values()) {
+                BlockPos neighborPos = pos.relative(dir);
+                IEnergyStorage neighborEnergy = level.getCapability(
+                        Capabilities.EnergyStorage.BLOCK,
+                        neighborPos,
+                        level.getBlockState(neighborPos),
+                        level.getBlockEntity(neighborPos),
+                        dir.getOpposite()
+                );
+                if (neighborEnergy != null && neighborEnergy.canReceive()) {
+                    energySent++;
+                }
+            }
+            TechRebirth.LOGGER.debug("Generator at {}: Energy = {}/{}, Sending to {} neighbors",
+                    pos, be.getEnergyStorage().getEnergyStored(), be.getEnergyStorage().getMaxEnergyStored(), energySent);
         }
     }
 

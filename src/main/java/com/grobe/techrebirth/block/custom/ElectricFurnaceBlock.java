@@ -2,10 +2,12 @@ package com.grobe.techrebirth.block.custom;
 
 import com.grobe.techrebirth.block.custom.entity.ElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.util.ModDataComponents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
@@ -110,7 +112,14 @@ public class ElectricFurnaceBlock extends BaseEntityBlock {
         if (!level.isClientSide()) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof ElectricFurnaceBlockEntity furnace) {
-                CustomData data = stack.get(DataComponents.BLOCK_ENTITY_DATA);
+                // 🔹 Pokušaj dohvatiti spremljenu energiju iz DataComponent sustava
+                Integer storedEnergy = stack.get(ModDataComponents.STORED_ENERGY);
+
+                if (storedEnergy != null && storedEnergy > 0) {
+                    furnace.getEnergyStorage().receiveEnergy(storedEnergy, false);
+                    furnace.setChanged();
+                }
+                /*CustomData data = stack.get(DataComponents.BLOCK_ENTITY_DATA);
                 if (data != null) {
                     CompoundTag tag = data.copyTag();
                     if (tag.contains("electric_furnace.energy")) {
@@ -121,7 +130,7 @@ public class ElectricFurnaceBlock extends BaseEntityBlock {
                         }
                         furnace.setChanged();
                     }
-                }
+                }*/
             }
         }
     }
@@ -132,6 +141,13 @@ public class ElectricFurnaceBlock extends BaseEntityBlock {
         if (!level.isClientSide() && state.getBlock() != newState.getBlock()) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof ElectricFurnaceBlockEntity furnace) {
+                // 🔹 Spremi energiju u DataComponent itema
+                int energy = furnace.getEnergyStorage().getEnergyStored();
+                ItemStack stack = new ItemStack(state.getBlock().asItem());
+                stack.set(ModDataComponents.STORED_ENERGY, energy);
+
+                // 🔹 Dropaj item s pohranjenom energijom
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
                 furnace.drops();
                 if(level instanceof ServerLevel serverLevel){
                     int xp = furnace.drainPendingXpRandomRounded();
@@ -145,7 +161,7 @@ public class ElectricFurnaceBlock extends BaseEntityBlock {
     }
 
     // When the block is broken by a player, drop a stack that preserves the BE's energy in BlockEntityTag
-    @Override
+   /* @Override
     public void spawnAfterBreak(BlockState state, ServerLevel level, BlockPos pos, ItemStack tool, boolean dropExperience) {
         BlockEntity be = level.getBlockEntity(pos);
         if (be instanceof ElectricFurnaceBlockEntity furnace) {
@@ -163,5 +179,5 @@ public class ElectricFurnaceBlock extends BaseEntityBlock {
             return;
         }
         // Do not call super to avoid default loot (which would drop another bare block)
-    }
+    }*/
 }
