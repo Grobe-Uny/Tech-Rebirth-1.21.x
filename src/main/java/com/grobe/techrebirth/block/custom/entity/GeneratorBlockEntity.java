@@ -2,30 +2,27 @@ package com.grobe.techrebirth.block.custom.entity;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlockEntities;
-import com.grobe.techrebirth.event.ModCapabilities;
 import com.grobe.techrebirth.recipe.GeneratorFuelRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Containers;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
@@ -37,7 +34,7 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
 
     // Generation configuration and client mirrors
     private int genPerTick = 40;
-    private int clientMaxEnergyMirror = 20000; // used client-side when syncing via ContainerData
+    private int clientMaxEnergyMirror = 50000; // used client-side when syncing via ContainerData
 
     private int burnTime = 0;
     private int maxBurnTime = 0;
@@ -73,7 +70,7 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
     };
 
     public GeneratorBlockEntity(BlockPos pPos, BlockState pState) {
-        super(ModBlockEntities.GENERATOR.get(), pPos, pState, 1, 20000, 512, 512, 0, 4);
+        super(ModBlockEntities.GENERATOR.get(), pPos, pState, 1, 50000, 1024, 1024, 0, 4);
     }
 
     @Override
@@ -198,10 +195,18 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
                     pos, be.getEnergyStorage().getEnergyStored(), be.getEnergyStorage().getMaxEnergyStored(), energySent);
         }
     }
+    public void drops() {
+        SimpleContainer inventory = new SimpleContainer(1);
+//        ItemStackHandler handler = getItemHandler();
+//        for (int i = 0; i < 4; i++) {
+//            inventory.setItem(i, handler.getStackInSlot(i));
+//        }
+        Containers.dropContents(this.level, this.worldPosition, inventory);
+    }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        tag.put("inventory", getItemHandler().serializeNBT(provider));
+        //tag.put("inventory", getItemHandler().serializeNBT(provider));
         tag.putInt("burnTime", burnTime);
         tag.putInt("maxBurnTime", maxBurnTime);
         tag.putInt("energy", getEnergyStorage().getEnergyStored());
@@ -211,7 +216,7 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        getItemHandler().deserializeNBT(provider, tag.getCompound("inventory"));
+        //getItemHandler().deserializeNBT(provider, tag.getCompound("inventory"));
         burnTime = tag.getInt("burnTime");
         maxBurnTime = tag.getInt("maxBurnTime");
         setEnergyStored(tag.getInt("energy"));

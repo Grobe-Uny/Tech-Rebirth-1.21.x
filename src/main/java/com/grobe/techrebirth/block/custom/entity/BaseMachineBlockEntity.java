@@ -38,6 +38,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     protected int maxProgress = 100;
 
     protected abstract String getEnergyTagName();
+    protected abstract String getInventoryTagName();
 
     protected ContainerData data;
 
@@ -108,7 +109,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         return maxProgress > 0 ? (float) progress / maxProgress : 0;
     }
 
-    protected void setEnergyStored(int energy) {
+    public void setEnergyStored(int energy) {
         this.energyHandler.setEnergy(energy);
     }
 
@@ -209,6 +210,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider){
         super.saveAdditional(tag, provider);
         tag.put(getEnergyTagName(), energyHandler.serializeNBT(provider));
+        tag.put(getInventoryTagName(), getItemHandler().serializeNBT(provider));
         System.out.println("💾 " + this.getClass().getSimpleName() + " at " + worldPosition +
                 " - SAVING Energy: " + energyHandler.getEnergyStored() +
                 " under tag: " + getEnergyTagName());
@@ -219,6 +221,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider){
         super.loadAdditional(tag, provider);
         String energyTag = getEnergyTagName();
+        String inventoryTag = getInventoryTagName();
         if (tag.contains(energyTag)) {
             energyHandler.deserializeNBT(provider, tag.get(energyTag));
             System.out.println("📂 " + this.getClass().getSimpleName() + " at " + worldPosition +
@@ -228,18 +231,11 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
             System.out.println("❌ " + this.getClass().getSimpleName() + " at " + worldPosition +
                     " - NO ENERGY TAG FOUND: " + energyTag);
         }
-
-    }
-
-    public void saveEnergyToItem(ItemStack stack) {
-        int energy = this.getEnergyStorage().getEnergyStored();
-        stack.set(ModDataComponents.STORED_ENERGY.get(), energy);
-    }
-
-    public void loadEnergyFromItem(ItemStack stack) {
-        Integer stored = stack.get(ModDataComponents.STORED_ENERGY.get());
-        if (stored != null) {
-            this.setEnergyStored(stored);
+        if(tag.contains(inventoryTag))
+        {
+            getItemHandler().deserializeNBT(provider, tag.getCompound(inventoryTag));
         }
+
     }
+
 }
