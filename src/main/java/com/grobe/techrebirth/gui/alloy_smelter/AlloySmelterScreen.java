@@ -42,6 +42,7 @@ public class AlloySmelterScreen extends AbstractContainerScreen<AlloySmelterMenu
 
 
         renderEnergyBar(guiGraphics, x, y);
+        renderProgressBar(guiGraphics, x,y);
     }
 
 
@@ -49,6 +50,11 @@ public class AlloySmelterScreen extends AbstractContainerScreen<AlloySmelterMenu
     private static final int ENERGY_BAR_Y = 18; // relative to GUI y
     private static final int ENERGY_BAR_WIDTH = 10;
     private static final int ENERGY_BAR_HEIGHT = 50;
+
+    private static final int PROGRESS_BAR_X = 104;
+    private static final int PROGRESS_BAR_Y = 60;
+    private static final int PROGRESS_BAR_WIDTH = 8;
+    private static final int PROGRESS_BAR_HEIGHT = 16;
 
     private void renderEnergyBar(GuiGraphics guiGraphics, int x, int y) {
         int ex = x + ENERGY_BAR_X;
@@ -66,6 +72,36 @@ public class AlloySmelterScreen extends AbstractContainerScreen<AlloySmelterMenu
             int color = 0xFFCC2B2B; // red
             guiGraphics.fill(ex, fy, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, color);
         }
+    }
+    private void renderProgressBar(GuiGraphics guiGraphics, int x, int y) {
+        int progress = menu.getProgress();
+        int maxProgress = menu.getMaxProgress();
+
+        int px = x + PROGRESS_BAR_X;
+        int py = y + PROGRESS_BAR_Y;
+
+        // Iscrtaj pozadinu progress bara (tamno siva) - UVIJEK VIDLJIVA
+        int bgBorder = 0xFF404040;
+        guiGraphics.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1, bgBorder);
+
+        int bg = 0xFF202020;
+        guiGraphics.fill(px, py, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, bg);
+
+        // Iscrtaj puni dio progress bara (plavi) - OD DOlJE PREMA GORE
+        if (maxProgress > 0 && progress > 0) {
+            int progressHeight = menu.getProgressScaled(PROGRESS_BAR_HEIGHT);
+            if (progressHeight > 0) {
+                int fillY = py + (PROGRESS_BAR_HEIGHT - progressHeight); // Počni od dna
+                int color = 0xFF2B93CC; // Plava boja
+                guiGraphics.fill(px, fillY, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, color);
+            }
+        }
+        // Iscrtaj border (svijetlo sivi)
+        int border = 0xFF606060;
+        guiGraphics.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py, border); // gornji border
+        guiGraphics.fill(px - 1, py + PROGRESS_BAR_HEIGHT, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1, border); // donji border
+        guiGraphics.fill(px - 1, py, px, py + PROGRESS_BAR_HEIGHT, border); // lijevi border
+        guiGraphics.fill(px + PROGRESS_BAR_WIDTH, py, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT, border);
     }
 
     @Override
@@ -85,6 +121,32 @@ public class AlloySmelterScreen extends AbstractContainerScreen<AlloySmelterMenu
                     net.minecraft.network.chat.Component.literal(energy + " / " + max + " RF"),
                     mouseX, mouseY);
         }
+
+        // Tooltip za PROGRESS BAR - UVIJEK aktivan
+        int px = x + PROGRESS_BAR_X;
+        int py = y + PROGRESS_BAR_Y;
+        if (mouseX >= px && mouseX < px + PROGRESS_BAR_WIDTH && mouseY >= py && mouseY < py + PROGRESS_BAR_HEIGHT) {
+            int progress = menu.getProgress();
+            int maxProgress = menu.getMaxProgress();
+
+            if (maxProgress > 0) {
+                float percent = (float) progress / maxProgress * 100;
+                int secondsLeft = (maxProgress - progress) / 20;
+
+                String status = progress > 0 ?
+                        String.format("Progress: %d/%d (%.1f%%) - %ds left", progress, maxProgress, percent, secondsLeft) :
+                        "Ready to process";
+
+                guiGraphics.renderTooltip(this.font,
+                        Component.literal(status),
+                        mouseX, mouseY);
+            } else {
+                guiGraphics.renderTooltip(this.font,
+                        Component.literal("No active recipe"),
+                        mouseX, mouseY);
+            }
+        }
+
 
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

@@ -2,6 +2,7 @@ package com.grobe.techrebirth.block.custom.entity;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.gui.generator.GeneratorMenu;
 import com.grobe.techrebirth.recipe.GeneratorFuelRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
@@ -24,7 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.Optional;
 
@@ -80,12 +80,17 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
 
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return new com.grobe.techrebirth.gui.generator.GeneratorMenu(containerId, playerInventory, this, this.data);
+        return new GeneratorMenu(containerId, playerInventory, this, this.data);
     }
 
     @Override
     protected String getEnergyTagName() {
         return "generator_energy";
+    }
+
+    @Override
+    protected String getInventoryTagName() {
+        return "generator_inventory";
     }
 
     @Override
@@ -140,9 +145,8 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
                             be.burnTime = burn;
                             be.maxBurnTime = burn;
                             setChanged(level, pos, state);
-                    }
+                        }
                 }
-
                 }
             }
         }
@@ -196,30 +200,26 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
         }
     }
     public void drops() {
-        SimpleContainer inventory = new SimpleContainer(1);
-//        ItemStackHandler handler = getItemHandler();
-//        for (int i = 0; i < 4; i++) {
-//            inventory.setItem(i, handler.getStackInSlot(i));
-//        }
+        if(level != null || level.isClientSide) return;
+        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
+        for(int i = 0; i < itemHandler.getSlots(); i++){
+            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        }
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        //tag.put("inventory", getItemHandler().serializeNBT(provider));
         tag.putInt("burnTime", burnTime);
         tag.putInt("maxBurnTime", maxBurnTime);
-        tag.putInt("energy", getEnergyStorage().getEnergyStored());
         tag.putInt("genPerTick", genPerTick);
         super.saveAdditional(tag, provider);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        //getItemHandler().deserializeNBT(provider, tag.getCompound("inventory"));
         burnTime = tag.getInt("burnTime");
         maxBurnTime = tag.getInt("maxBurnTime");
-        setEnergyStored(tag.getInt("energy"));
         genPerTick = tag.contains("genPerTick") ? tag.getInt("genPerTick") : 40;
         super.loadAdditional(tag, provider);
     }

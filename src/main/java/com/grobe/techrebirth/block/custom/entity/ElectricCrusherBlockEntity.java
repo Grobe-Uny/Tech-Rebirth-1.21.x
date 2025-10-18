@@ -4,6 +4,8 @@ import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.gui.electric_crusher.ElectricCrusherMenu;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
+import com.grobe.techrebirth.recipe.CrushingRecipe;
+import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -17,9 +19,12 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,6 +75,9 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
         return "electric_crusher_energy";
     }
 
+    @Override
+    protected String getInventoryTagName(){return "electric_crusher_inventory";}
+
     // Validation for ItemStackHandler in BaseMachine
     @Override
     protected boolean isItemValid(int slot, ItemStack stack) {
@@ -89,7 +97,7 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
     private boolean isCrushable(ItemStack stack) {
         if (stack.isEmpty() || this.level == null) return false;
         var input = new net.minecraft.world.item.crafting.SingleRecipeInput(stack);
-        var opt = this.level.getRecipeManager().getRecipeFor(com.grobe.techrebirth.recipe.ModRecipeTypes.CRUSHING_TYPE.get(), input, this.level);
+        var opt = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.CRUSHING_TYPE.get(), input, this.level);
         return opt.isPresent();
     }
 
@@ -115,18 +123,12 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-
-        tag.put("inventory", getItemHandler().serializeNBT(provider));
-        tag.putInt("electric_crusher.progress", progress);
-        tag.putInt("electric_crusher.energy", getEnergyStorage().getEnergyStored());
         super.saveAdditional(tag, provider);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        getItemHandler().deserializeNBT(provider, tag.getCompound("inventory"));
-        progress = tag.getInt("electric_crusher.progress");
-        this.setEnergyStored(tag.getInt("electric_crusher.energy"));
+        super.loadAdditional(tag, provider);
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
@@ -134,10 +136,10 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
         boolean shouldWork = hasRecipe();
 
         // Toggle the block's LIT property to reflect working state
-        boolean wasLit = state.hasProperty(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT)
-                && state.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT);
-        if (state.hasProperty(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT) && wasLit != shouldWork) {
-            level.setBlock(pos, state.setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT, shouldWork), 3);
+        boolean wasLit = state.hasProperty(BlockStateProperties.LIT)
+                && state.getValue(BlockStateProperties.LIT);
+        if (state.hasProperty(BlockStateProperties.LIT) && wasLit != shouldWork) {
+            level.setBlock(pos, state.setValue(BlockStateProperties.LIT, shouldWork), 3);
             state = level.getBlockState(pos); // refresh local state
         }
 
@@ -209,9 +211,9 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
         return output.getCount() + result.getCount() <= output.getMaxStackSize();
     }
 
-    private java.util.Optional<net.minecraft.world.item.crafting.RecipeHolder<com.grobe.techrebirth.recipe.CrushingRecipe>> getCurrentRecipe() {
-        net.minecraft.world.item.crafting.SingleRecipeInput input = new net.minecraft.world.item.crafting.SingleRecipeInput(getItemHandler().getStackInSlot(INPUT_SLOT));
-        return this.level.getRecipeManager().getRecipeFor(com.grobe.techrebirth.recipe.ModRecipeTypes.CRUSHING_TYPE.get(), input, level);
+    private java.util.Optional<RecipeHolder<CrushingRecipe>> getCurrentRecipe() {
+        SingleRecipeInput input = new SingleRecipeInput(getItemHandler().getStackInSlot(INPUT_SLOT));
+        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.CRUSHING_TYPE.get(), input, level);
     }
 
     private int getUpgradeCount(Item upgradeItem) {

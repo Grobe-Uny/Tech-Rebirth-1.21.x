@@ -139,11 +139,12 @@ public class AlloySmelterMenu extends AbstractContainerMenu {
         return data.get(3); // Maksimalna energy
     }
 
-    public float getProgressScaled() {
+    public int getProgressScaled(int height) {
         // 💡 Izračunaj postotak progressa za progress bar
         int progress = getProgress();
         int maxProgress = getMaxProgress();
-        return maxProgress > 0 ? (float) progress / maxProgress : 0;
+        //return maxProgress > 0 ? (float) progress / maxProgress : 0;
+        return maxProgress > 0 ? (progress * height) / maxProgress : 0;
     }
 
     public int getEnergyScaled(int height) {

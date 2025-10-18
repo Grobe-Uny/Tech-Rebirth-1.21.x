@@ -1,13 +1,10 @@
 package com.grobe.techrebirth.block.custom.entity;
 
-import com.grobe.techrebirth.util.ModDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -19,9 +16,6 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-
-import javax.annotation.Nullable;
-import java.util.Optional;
 
 /**
  * A reusable base for powered machines that provides:
@@ -38,6 +32,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     protected int maxProgress = 100;
 
     protected abstract String getEnergyTagName();
+
     protected abstract String getInventoryTagName();
 
     protected ContainerData data;
@@ -90,6 +85,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
             protected void onContentsChanged(int slot) {
                 BaseMachineBlockEntity.this.setChanged();
             }
+
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return BaseMachineBlockEntity.this.isItemValid(slot, stack);
@@ -105,6 +101,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     public int getMaxProgress() {
         return maxProgress;
     }
+
     public float getProgressPercent() {
         return maxProgress > 0 ? (float) progress / maxProgress : 0;
     }
@@ -118,6 +115,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     }
 
     protected abstract boolean isItemValid(int slot, ItemStack stack);
+
     public ContainerData getContainerData() {
         return data;
     }
@@ -126,10 +124,12 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         public DirtyEnergyStorage(int capacity, int maxReceive, int maxExtract, int energy) {
             super(capacity, maxReceive, maxExtract, energy);
         }
+
         public void setEnergy(int energy) {
             this.energy = Math.min(energy, this.capacity);
             BaseMachineBlockEntity.this.setChanged();
         }
+
         @Override
         public int receiveEnergy(int maxReceive, boolean simulate) {
             int received = super.receiveEnergy(maxReceive, simulate);
@@ -138,6 +138,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
             }
             return received;
         }
+
         @Override
         public int extractEnergy(int maxExtract, boolean simulate) {
             int extracted = super.extractEnergy(maxExtract, simulate);
@@ -181,11 +182,11 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     public void setRemoved() {
         if (level != null && !level.isClientSide) {
             // 1. Dropaj sve iteme
-            SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
-            for (int i = 0; i < itemHandler.getSlots(); i++) {
-                inventory.setItem(i, itemHandler.getStackInSlot(i));
-            }
-            Containers.dropContents(level, worldPosition, inventory);
+//            SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
+//            for (int i = 0; i < itemHandler.getSlots(); i++) {
+//                inventory.setItem(i, itemHandler.getStackInSlot(i));
+//            }
+//            Containers.dropContents(level, worldPosition, inventory);
 
             // 2. OBAVEZNO: Spremi stanje PRIJE nego što se entity ukloni
             setChanged(); // Ovo triggera saveAdditional()
@@ -200,6 +201,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         saveAdditional(tag, provider); // OBAVEZNO: spremi podatke
         return tag;
     }
+
     // DODAJ OBAVEZNO: Ova metoda se poziva kada se blok postavi iz NBT-a
     @Override
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider provider) {
@@ -207,35 +209,32 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider){
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.saveAdditional(tag, provider);
         tag.put(getEnergyTagName(), energyHandler.serializeNBT(provider));
         tag.put(getInventoryTagName(), getItemHandler().serializeNBT(provider));
-        System.out.println("💾 " + this.getClass().getSimpleName() + " at " + worldPosition +
-                " - SAVING Energy: " + energyHandler.getEnergyStored() +
-                " under tag: " + getEnergyTagName());
+//        System.out.println("💾 " + this.getClass().getSimpleName() + " at " + worldPosition +
+//                " - SAVING Energy: " + energyHandler.getEnergyStored() +
+//                " under tag: " + getEnergyTagName());
 
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider){
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
         String energyTag = getEnergyTagName();
         String inventoryTag = getInventoryTagName();
         if (tag.contains(energyTag)) {
             energyHandler.deserializeNBT(provider, tag.get(energyTag));
-            System.out.println("📂 " + this.getClass().getSimpleName() + " at " + worldPosition +
-                    " - LOADED Energy: " + energyHandler.getEnergyStored() +
-                    " from tag: " + energyTag);
-        } else {
-            System.out.println("❌ " + this.getClass().getSimpleName() + " at " + worldPosition +
-                    " - NO ENERGY TAG FOUND: " + energyTag);
+//            System.out.println("📂 " + this.getClass().getSimpleName() + " at " + worldPosition +
+//                    " - LOADED Energy: " + energyHandler.getEnergyStored() +
+//                    " from tag: " + energyTag);
+//        } else {
+//            System.out.println("❌ " + this.getClass().getSimpleName() + " at " + worldPosition +
+//                        " - NO ENERGY TAG FOUND: " + energyTag);
         }
-        if(tag.contains(inventoryTag))
-        {
-            getItemHandler().deserializeNBT(provider, tag.getCompound(inventoryTag));
-        }
-
+            if (tag.contains(inventoryTag)) {
+                getItemHandler().deserializeNBT(provider, tag.getCompound(inventoryTag));
+            }
     }
-
 }

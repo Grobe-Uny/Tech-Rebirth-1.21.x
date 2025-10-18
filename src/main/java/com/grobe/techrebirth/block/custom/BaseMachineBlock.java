@@ -1,7 +1,6 @@
 package com.grobe.techrebirth.block.custom;
 
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
-import com.grobe.techrebirth.util.ModDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,7 +26,6 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class BaseMachineBlock extends BaseEntityBlock implements EntityBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -148,12 +146,16 @@ public abstract class BaseMachineBlock extends BaseEntityBlock implements Entity
                 int energy = tag.getInt("StoredEnergy");
                 int maxEnergy = getMaxEnergyForTier(); // Ovu metodu trebaš dodati
 
+                energy = Math.max(0, energy);
+                maxEnergy = Math.max(1, maxEnergy);
+
                 tooltip.add(Component.literal("Stored Energy: " + energy + "/" + maxEnergy + " RF")
                         .withStyle(ChatFormatting.BLUE));
 
                 // Progress bar...
-                float percent = (float) energy / maxEnergy;
+                float percent = Math.max(0f,Math.min(1f, (float)energy/maxEnergy));
                 int bars = (int) (percent * 10);
+                bars = Math.max(0, Math.min(10,bars));
                 String progressBar = "█".repeat(bars) + "▒".repeat(10 - bars);
 
                 tooltip.add(Component.literal("[" + progressBar + "]")
@@ -169,19 +171,6 @@ public abstract class BaseMachineBlock extends BaseEntityBlock implements Entity
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-//        if (!level.isClientSide() && state.getBlock() != newState.getBlock()) {
-//            BlockEntity be = level.getBlockEntity(pos);
-//            if (be instanceof BaseMachineBlockEntity machine) {
-//                // Spremi energiju
-//                int energy = machine.getEnergyStorage().getEnergyStored();
-//                ItemStack stack = new ItemStack(state.getBlock().asItem());
-//                stack.set(ModDataComponents.STORED_ENERGY, energy);
-//                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
-//
-//                // Pozovi specifične drops
-//                handleMachineSpecificDrops(machine, level, pos);
-//            }
-//        }
         super.onRemove(state, level, pos, newState, isMoving);
     }
 

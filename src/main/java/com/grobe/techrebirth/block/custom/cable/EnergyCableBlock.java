@@ -1,8 +1,6 @@
 package com.grobe.techrebirth.block.custom.cable;
 
-import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.EnergyCableBlockEntity;
-import com.grobe.techrebirth.event.ModCapabilities;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

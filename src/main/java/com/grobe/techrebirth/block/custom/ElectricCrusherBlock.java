@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.block.custom;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.ElectricCrusherBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -27,13 +28,10 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.component.DataComponents;
 
-public class ElectricCrusherBlock extends BaseEntityBlock {
-    public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
+public class ElectricCrusherBlock extends BaseMachineBlock {
 
     public ElectricCrusherBlock(Properties props) {
-        super(props);
-        this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false).setValue(FACING, Direction.NORTH));
+        super(props, 20000);
     }
 
     @Override
@@ -47,11 +45,6 @@ public class ElectricCrusherBlock extends BaseEntityBlock {
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
-    }
-
-    @Override
-    public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
     }
 
     @Nullable
@@ -73,27 +66,6 @@ public class ElectricCrusherBlock extends BaseEntityBlock {
         if (level.isClientSide()) return null;
         return createTickerHelper(type, ModBlockEntities.ELECTRIC_CRUSHER.get(),
                 (lvl, pos, st, be) -> be.tick(lvl, pos, st));
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(LIT, FACING);
-    }
-
-    @Nullable
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-    }
-
-    @Override
-    public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
@@ -124,6 +96,13 @@ public class ElectricCrusherBlock extends BaseEntityBlock {
             }
         }
         super.onRemove(state, level, pos, newState, isMoving);
+    }
+
+    @Override
+    protected void handleMachineSpecificDrops(BaseMachineBlockEntity machine, Level level, BlockPos pos) {
+        if (machine instanceof ElectricCrusherBlockEntity crusher){
+            crusher.drops();
+        }
     }
 
     @Override

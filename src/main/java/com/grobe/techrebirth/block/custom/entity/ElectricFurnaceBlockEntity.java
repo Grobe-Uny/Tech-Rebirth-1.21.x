@@ -1,4 +1,3 @@
-
 package com.grobe.techrebirth.block.custom.entity;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
@@ -41,6 +40,10 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
     @Override
     protected String getEnergyTagName() {
         return "electric_furnace_energy";
+    }
+    @Override
+    protected String getInventoryTagName(){
+        return "electric_furnace_inventory";
     }
 
     public boolean isItemValid(int slot, ItemStack stack){
