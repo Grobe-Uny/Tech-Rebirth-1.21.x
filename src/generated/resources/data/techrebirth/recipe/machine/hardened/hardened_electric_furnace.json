@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "techrebirth:electric_furnace"
+    },
+    "G": {
+      "item": "techrebirth:invar_gear"
+    },
+    "I": {
+      "tag": "c:ingots/invar"
+    }
+  },
+  "pattern": [
+    "IGI",
+    " B ",
+    "I I"
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:hardened_electric_furnace"
+  }
+}

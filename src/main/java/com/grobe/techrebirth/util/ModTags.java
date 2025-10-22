@@ -48,9 +48,8 @@ public final class ModTags {
         public static final Dual INGOTS_LEAD_D = dual("ingots/lead");
         public static final Dual INGOTS_NICKEL_D = dual("ingots/nickel");
         public static final Dual INGOTS_TIN_D = dual("ingots/tin");
-        public static final Dual INGOTS_IRON_D = dual("ingots/iron");
-        public static final Dual INGOTS_COPPER_D = dual("ingots/copper");
         public static final Dual INGOTS_INVAR_D = dual("ingots/invar");
+        public static final Dual INGOTS_STEEL_D = dual("ingots/steel");
         public static final Dual RAW_MATERIALS_LEAD_D = dual("raw_materials/lead");
         public static final Dual ORES_LEAD_ITEMS_D = dual("ores/lead");
         // Furnace behavior categories (TechRebirth-specific)

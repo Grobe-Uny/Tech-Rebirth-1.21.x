@@ -1,4 +1,4 @@
-package com.grobe.techrebirth.block.custom.entity;
+package com.grobe.techrebirth.block.custom.entity.furnace;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
 import net.minecraft.core.BlockPos;

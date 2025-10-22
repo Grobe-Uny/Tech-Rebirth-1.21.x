@@ -183,13 +183,14 @@ public class EnergyBankBlockEntity extends BlockEntity {
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        tag.putInt("energy", localEnergy.getEnergyStored());
+        tag.putInt("bank_energy", localEnergy.getEnergyStored());
         super.saveAdditional(tag, provider);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        localEnergy.setEnergy(tag.getInt("energy"));
+        super.loadAdditional(tag,provider);
+        localEnergy.setEnergy(tag.getInt("bank_energy"));
     }
 
     // Server-side tick to distribute energy from the bank network to neighbors
@@ -202,16 +203,6 @@ public class EnergyBankBlockEntity extends BlockEntity {
             BlockPos nPos = pos.relative(dir);
             BlockState nState = level.getBlockState(nPos);
             BlockEntity nBe = level.getBlockEntity(nPos);
-            /*if (nBe == null) continue;
-            net.neoforged.neoforge.energy.EnergyStorage target = level.getCapability(ModCapabilities.ELECTRIC_FURNACE_ENERGY, nPos, nState, nBe, dir.getOpposite());
-            if (target == null || !target.canReceive()) continue;
-            int toSend = Math.min(MAX_IO, network.getEnergyStored());
-            if (toSend <= 0) continue;
-            int received = target.receiveEnergy(toSend, false);
-            if (received > 0) {
-                network.extractEnergy(received, false);
-            }
-        }*/
         }
     }
 }

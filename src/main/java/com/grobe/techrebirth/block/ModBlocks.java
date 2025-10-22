@@ -1,22 +1,38 @@
 package com.grobe.techrebirth.block;
 
 import com.grobe.techrebirth.TechRebirth;
+import com.grobe.techrebirth.block.custom.BaseMachineBlock;
+import com.grobe.techrebirth.block.custom.CreativeElectricFurnaceBlock;
+import com.grobe.techrebirth.block.custom.ElectricCrusherBlock;
 import com.grobe.techrebirth.block.custom.alloy.AlloySmelterBlock;
+import com.grobe.techrebirth.block.custom.alloy.HardenedAlloySmelterBlock;
 import com.grobe.techrebirth.block.custom.cable.EnergyCableBlock;
 import com.grobe.techrebirth.block.custom.bank.EnergyBankBlock;
-import com.grobe.techrebirth.block.custom.ElectricFurnaceBlock;
+import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.furnace.ElectricFurnaceBlock;
+import com.grobe.techrebirth.block.custom.furnace.HardenedElectricFurnaceBlock;
+import com.grobe.techrebirth.block.custom.furnace.ReinforcedElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.generator.GeneratorBlock;
 import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.util.MachineTier;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
@@ -93,21 +109,31 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
             ));
+
+    public static final DeferredBlock<Block> HARDENED_ELECTRIC_FURNACE = registerBlock("hardened_electric_furnace",
+            () -> new HardenedElectricFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.ELECTRIC_FURNACE.get())));
+    public static final DeferredBlock<Block> REINFORCED_ELECTRIC_FURNACE = registerBlock("reinforced_electric_furnace",
+            () -> new ReinforcedElectricFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.ELECTRIC_FURNACE.get())));
+
     public static final DeferredBlock<Block> ALLOY_SMELTER = registerBlock("alloy_smelter",
             ()-> new AlloySmelterBlock(BlockBehaviour.Properties.of()
                     .strength(3.0f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
             ));
+    public static final DeferredBlock<Block> HARDENED_ALLOY_SMELTER = registerBlock("hardened_alloy_smelter",
+            ()-> new HardenedAlloySmelterBlock(BlockBehaviour.Properties.ofFullCopy(ALLOY_SMELTER.get())
+            ));
 
     public static final DeferredBlock<Block> ELECTRIC_CRUSHER = registerBlock("electric_crusher",
-            () -> new com.grobe.techrebirth.block.custom.ElectricCrusherBlock(BlockBehaviour.Properties.of()
+            () -> new ElectricCrusherBlock(BlockBehaviour.Properties.of()
                     .strength(3.0f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
             ));
     public static final DeferredBlock<Block> CREATIVE_ELECTRIC_FURNACE = registerBlock("creative_electric_furnace",
-            () -> new com.grobe.techrebirth.block.custom.CreativeElectricFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.ELECTRIC_FURNACE.get())));
+            () -> new CreativeElectricFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.ELECTRIC_FURNACE.get())));
+
 
     public static final DeferredBlock<Block> GENERATOR = registerBlock("generator",
             () -> new GeneratorBlock(BlockBehaviour.Properties.of()
@@ -120,6 +146,7 @@ public class ModBlocks {
             () -> new EnergyCableBlock(BlockBehaviour.Properties.of()
                     .strength(0.5f)
                     .sound(SoundType.METAL)
+                    .noOcclusion()
             ));
 
     public static final DeferredBlock<Block> ENERGY_BANK = registerBlock("energy_bank",

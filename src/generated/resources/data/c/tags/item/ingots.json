@@ -3,6 +3,7 @@
     "#c:ingots/lead",
     "#c:ingots/tin",
     "#c:ingots/nickel",
-    "#c:ingots/invar"
+    "#c:ingots/invar",
+    "#c:ingots/steel"
   ]
 }

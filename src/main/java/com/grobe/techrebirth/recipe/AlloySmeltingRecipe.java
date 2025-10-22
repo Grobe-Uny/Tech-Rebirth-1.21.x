@@ -26,38 +26,7 @@ public class AlloySmeltingRecipe implements Recipe<MultiItemRecipeInput> {
 
     @Override
     public boolean matches(MultiItemRecipeInput input, Level level) {
-//        // Prebroji potrebne ingrediente
-//        Map<Ingredient, Integer> requiredIngredients = new HashMap<>();
-//        for (Ingredient ingredient : ingredients) {
-//            requiredIngredients.put(ingredient, requiredIngredients.getOrDefault(ingredient, 0) + 1);
-//        }
-//
-//        // Prebroji dostupne iteme
-//        Map<Ingredient, Integer> availableItems = new HashMap<>();
-//        for (int i = 0; i < input.size(); i++) {
-//            ItemStack stack = input.getItem(i);
-//            if (stack.isEmpty()) continue;
-//
-//            for (Ingredient ingredient : ingredients) {
-//                if (ingredient.test(stack)) {
-//                    availableItems.put(ingredient, availableItems.getOrDefault(ingredient, 0) + stack.getCount());
-//                    break;
-//                }
-//            }
-//        }
-//
-//        // Provjeri ima li dovoljno svakog ingredienta
-//        for (Map.Entry<Ingredient, Integer> entry : requiredIngredients.entrySet()) {
-//            Ingredient ingredient = entry.getKey();
-//            int requiredCount = entry.getValue();
-//            int availableCount = availableItems.getOrDefault(ingredient, 0);
-//
-//            if (availableCount < requiredCount) {
-//                return false;
-//            }
-//        }
-//
-//        return true;
+
         // Prebroji potrebne ingrediente
         Map<Ingredient, Integer> requiredIngredients = new HashMap<>();
         for (Ingredient ingredient : ingredients) {

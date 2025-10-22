@@ -27,6 +27,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.TIN_GEAR);
                         output.accept(ModItems.INVAR_GEAR);
                         output.accept(ModItems.LEAD_GEAR);
+                        output.accept(ModItems.STEEL_GEAR);
                         output.accept(ModItems.IRON_POWDER);
                         output.accept(ModItems.COPPER_POWDER);
                         output.accept(ModItems.TIN_POWDER);
@@ -34,6 +35,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.COOKED_CARROT);
                         output.accept(ModItems.EFFICIENCY_UPGRADE);
                         output.accept(ModItems.SPEED_UPGRADE);
+
 
                     })
                     .build());
@@ -45,18 +47,30 @@ public class ModCreativeTabs {
                     .displayItems((itemDisplayParameters, output)-> {
                         output.accept(ModBlocks.MACHINE_BASE);
                         output.accept(ModBlocks.ELECTRIC_FURNACE);
+                        output.accept(ModBlocks.HARDENED_ELECTRIC_FURNACE);
+                        output.accept(ModBlocks.REINFORCED_ELECTRIC_FURNACE);
                         output.accept(ModBlocks.CREATIVE_ELECTRIC_FURNACE);
                         output.accept(ModBlocks.GENERATOR);
                         output.accept(ModBlocks.ELECTRIC_CRUSHER);
                         output.accept(ModBlocks.ENERGY_BANK);
                         output.accept(ModBlocks.ALLOY_SMELTER);
+                        output.accept(ModBlocks.HARDENED_ALLOY_SMELTER);
 
                     })
+                    .build());
+    public static final Supplier<CreativeModeTab> TECH_REBIRTH_CABLES = CREATIVE_MODE_TAB.register("tech_rebirth_cables",
+            ()-> CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(ModBlocks.ENERGY_CABLE.get()))
+                    .withTabsBefore(ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "tech_rebirth_blocks"))
+                    .title(Component.translatable("creativetab.techrebirth.tech_rebirth_cables"))
+                    .displayItems((itemDisplayParameters, output) ->{
+                    output.accept(ModBlocks.ENERGY_CABLE);
+    })
                     .build());
     public static final Supplier<CreativeModeTab> TECH_REBIRTH_ORES = CREATIVE_MODE_TAB.register("tech_rebirth_ores",
             () -> CreativeModeTab.builder()
                     .icon(() -> new ItemStack(ModItems.LEAD_INGOT.get()))
-                    .withTabsBefore(ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "tech_rebirth_blocks"))
+                    .withTabsBefore(ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "tech_rebirth_cables"))
                     .title(Component.translatable("creativetab.techrebirth.tech_rebirth_ores"))
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModBlocks.TIN_ORE);
@@ -72,6 +86,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.NICKEL_INGOT);
                         output.accept(ModItems.NICKEL_POWDER);
                         output.accept(ModItems.INVAR_INGOT);
+                        output.accept(ModItems.STEEL_INGOT);
                         output.accept(ModItems.LEAD_INGOT);
                         output.accept(ModItems.RAW_LEAD);
                     })

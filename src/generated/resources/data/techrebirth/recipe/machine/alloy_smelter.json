@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "techrebirth:redstone_reception_coil"
+    },
+    "G": {
+      "item": "techrebirth:iron_gear"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "M": {
+      "item": "techrebirth:machine_base"
+    },
+    "X": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "pattern": [
+    "III",
+    "GMG",
+    "XFX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:alloy_smelter"
+  }
+}

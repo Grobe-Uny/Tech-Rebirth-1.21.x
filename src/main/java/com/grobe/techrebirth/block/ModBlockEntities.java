@@ -3,7 +3,13 @@ package com.grobe.techrebirth.block;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.custom.entity.*;
 import com.grobe.techrebirth.block.custom.entity.alloy.AlloySmelterBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.alloy.HardenedAlloySmelterBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.bank.EnergyBankBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.crusher.ElectricCrusherBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.furnace.CreativeElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.furnace.HardenedElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.furnace.ReinforcedElectricFurnaceBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -23,6 +29,12 @@ public class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ElectricFurnaceBlockEntity>> ELECTRIC_FURNACE = register(
             "electric_furnace", () -> BlockEntityType.Builder.of(ElectricFurnaceBlockEntity::new, ModBlocks.ELECTRIC_FURNACE.get())
     );
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<HardenedElectricFurnaceBlockEntity>> HARDENED_ELECTRIC_FURNACE = register(
+            "hardened_electric_furnace", () -> BlockEntityType.Builder.of(HardenedElectricFurnaceBlockEntity::new, ModBlocks.HARDENED_ELECTRIC_FURNACE.get())
+    );
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ReinforcedElectricFurnaceBlockEntity>> REINFORCED_ELECTRIC_FURNACE = register(
+            "reinforced_electric_furnace", () -> BlockEntityType.Builder.of(ReinforcedElectricFurnaceBlockEntity::new, ModBlocks.REINFORCED_ELECTRIC_FURNACE.get())
+    );
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CreativeElectricFurnaceBlockEntity>> CREATIVE_ELECTRIC_FURNACE = register(
             "creative_electric_furnace", () -> BlockEntityType.Builder.of(CreativeElectricFurnaceBlockEntity::new,ModBlocks.CREATIVE_ELECTRIC_FURNACE.get())
@@ -32,8 +44,8 @@ public class ModBlockEntities {
             "generator", () -> BlockEntityType.Builder.of(GeneratorBlockEntity::new, ModBlocks.GENERATOR.get())
     );
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EnergyCableBlockEntity>> CABLE = register(
-            "cable", () -> BlockEntityType.Builder.of(EnergyCableBlockEntity::new, ModBlocks.ENERGY_CABLE.get())
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EnergyCableBlockEntity>> ENERGY_CABLE = register(
+            "energy_cable", () -> BlockEntityType.Builder.of(EnergyCableBlockEntity::new, ModBlocks.ENERGY_CABLE.get())
     );
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EnergyBankBlockEntity>> ENERGY_BANK = register(
@@ -45,6 +57,9 @@ public class ModBlockEntities {
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AlloySmelterBlockEntity>> ALLOY_SMELTER = register(
             "alloy_smelter", () -> BlockEntityType.Builder.of(AlloySmelterBlockEntity::new, ModBlocks.ALLOY_SMELTER.get())
+    );
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<HardenedAlloySmelterBlockEntity>> HARDENED_ALLOY_SMELTER = register(
+            "hardened_alloy_smelter", () -> BlockEntityType.Builder.of(HardenedAlloySmelterBlockEntity::new, ModBlocks.HARDENED_ALLOY_SMELTER.get())
     );
 
     private static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> register(String name, Supplier<BlockEntityType.Builder<T>> builder) {

@@ -1,5 +1,6 @@
 package com.grobe.techrebirth.block.custom.entity;
 
+import com.grobe.techrebirth.util.MachineTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -36,6 +37,8 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     protected abstract String getInventoryTagName();
 
     protected ContainerData data;
+
+    protected MachineTier machineTier = MachineTier.BASIC;
 
     protected ContainerData createContainerData(int size) {
         return new ContainerData() {
@@ -92,6 +95,27 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
             }
         };
         this.energyHandler = new DirtyEnergyStorage(energyCapacity, maxReceive, maxExtract, initialEnergy);
+    }
+    protected BaseMachineBlockEntity(
+            BlockEntityType<?> type,
+            BlockPos pos,
+            BlockState state,
+            int inventorySize,
+            MachineTier tier,
+            int dataSize
+    ) {
+        this(type, pos, state, inventorySize,
+                tier.energyCapacity,           // capacity iz tiera
+                tier.energyInput,      // maxReceive
+                tier.energyInput,      // maxExtract
+                0,                             // initialEnergy
+                dataSize);
+        this.machineTier = tier;
+    }
+
+    // DODAJTE OVO ⬇️
+    public MachineTier getTier() {
+        return machineTier != null ? machineTier : MachineTier.BASIC;
     }
 
     public int getProgress() {

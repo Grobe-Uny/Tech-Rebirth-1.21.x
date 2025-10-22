@@ -2,24 +2,13 @@ package com.grobe.techrebirth.block.custom.alloy;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.block.custom.BaseMachineBlock;
-import com.grobe.techrebirth.block.custom.ElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
-import com.grobe.techrebirth.block.custom.entity.ElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.alloy.AlloySmelterBlockEntity;
+import com.grobe.techrebirth.util.MachineTier;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -27,18 +16,13 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class AlloySmelterBlock extends BaseMachineBlock {
 
     public AlloySmelterBlock(BlockBehaviour.Properties pProperties) {
-        super(pProperties, 50000);
+        super(pProperties, MachineTier.BASIC);
 
     }
 

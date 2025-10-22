@@ -3,6 +3,7 @@
     "#neoforge:ingots/lead",
     "#neoforge:ingots/tin",
     "#neoforge:ingots/nickel",
-    "#neoforge:ingots/invar"
+    "#neoforge:ingots/invar",
+    "#neoforge:ingots/steel"
   ]
 }

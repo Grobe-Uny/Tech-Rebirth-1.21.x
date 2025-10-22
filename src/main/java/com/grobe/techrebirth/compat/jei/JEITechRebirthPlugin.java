@@ -9,6 +9,7 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -20,9 +21,18 @@ import java.util.Objects;
 
 @JeiPlugin
 public class JEITechRebirthPlugin implements IModPlugin {
+    private static IJeiRuntime jeiRuntime;
+
     @Override
     public ResourceLocation getPluginUid() {
         return ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "jei_plugin");
+    }
+    @Override
+    public void onRuntimeAvailable(IJeiRuntime runtime){
+        jeiRuntime = runtime;
+    }
+    public static IJeiRuntime getJeiRuntime(){
+        return  jeiRuntime;
     }
 
     @Override

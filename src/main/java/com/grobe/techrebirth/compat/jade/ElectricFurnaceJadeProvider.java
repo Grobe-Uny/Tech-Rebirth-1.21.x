@@ -1,11 +1,10 @@
 package com.grobe.techrebirth.compat.jade;
 
 import com.grobe.techrebirth.TechRebirth;
-import com.grobe.techrebirth.block.custom.entity.ElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -16,8 +15,6 @@ import snownee.jade.api.ITooltip;
 import snownee.jade.api.IServerDataProvider;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.config.IPluginConfig;
-
-import java.util.Optional;
 
 /**
  * Jade provider for the Electric Furnace block.

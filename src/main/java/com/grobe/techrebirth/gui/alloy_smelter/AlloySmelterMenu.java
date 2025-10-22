@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.gui.alloy_smelter;
 
 import com.grobe.techrebirth.block.custom.entity.alloy.AlloySmelterBlockEntity;
+import com.grobe.techrebirth.gui.BaseMachineMenu;
 import com.grobe.techrebirth.gui.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -11,7 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-public class AlloySmelterMenu extends AbstractContainerMenu {
+public class AlloySmelterMenu extends BaseMachineMenu {
     public final AlloySmelterBlockEntity blockEntity;
     private final Level level;
     final ContainerData data;
@@ -20,7 +21,7 @@ public class AlloySmelterMenu extends AbstractContainerMenu {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
     public AlloySmelterMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data){
-        super(ModMenuTypes.ALLOY_SMELTER_MENU.get(), pContainerId);
+        super(ModMenuTypes.ALLOY_SMELTER_MENU.get(), pContainerId, entity);
         checkContainerSize(inv, 4);
         blockEntity = ((AlloySmelterBlockEntity) entity);
         this.level = inv.player.level();
@@ -52,19 +53,6 @@ public class AlloySmelterMenu extends AbstractContainerMenu {
         addDataSlots(this.data);
     }
 
-    private void addPlayerInventory(Inventory playerInventory){
-        for (int i = 0; i < 3; ++i){
-            for (int l = 0; l < 9; ++l){
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
-            }
-        }
-    }
-
-    private void addPlayerHotbar(Inventory playerInventory){
-        for (int i = 0; i < 9; ++i){
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-        }
-    }
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
@@ -109,17 +97,6 @@ public class AlloySmelterMenu extends AbstractContainerMenu {
         }
 
         return itemstack;
-    }
-
-    // 💡 PROVJERA MOŽE LI PLAYER KORISTITI MENU
-    @Override
-    public boolean stillValid(Player player) {
-        // 💡 Provjeri je li player unutar 8 blokova i ima li pristup
-        return stillValid(
-                ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player,
-                blockEntity.getBlockState().getBlock()
-        );
     }
 
     // 💡 GETTERI ZA GUI RENDERING

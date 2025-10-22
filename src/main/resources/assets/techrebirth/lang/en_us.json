@@ -20,6 +20,8 @@
   "item.techrebirth.nickel_powder": "Nickel Powder",
   "item.techrebirth.invar_ingot": "Invar Ingot",
   "item.techrebirth.invar_gear": "Invar Gear",
+  "item.techrebirth.steel_ingot": "Steel Ingot",
+  "item.techrebirth.steel_gear": "Steel Gear",
   "item.techrebirth.redstone_reception_coil": "Redstone Reception Coil",
   "item.techrebirth.cooked_carrot" : "Cooked Carrot",
   "item.techrebirth.raw_lead": "Raw Lead",
@@ -39,6 +41,9 @@
   "block.techrebirth.electric_furnace": "Electric Furnace",
   "block.techrebirth.alloy_smelter": "Alloy Smelter",
   "block.techrebirth.creative_electric_furnace": "Creative Electric Furnace",
+  "block.techrebirth.hardened_electric_furnace": "Hardened Electric Furnace",
+  "block.techrebirth.reinforced_electric_furnace": "Reinforced Electric Furnace",
+  "block.techrebirth.hardened_alloy_smelter": "Hardened Alloy Smelter",
   "block.techrebirth.electric_crusher": "Electric Crusher",
   "block.techrebirth.generator": "Generator",
   "block.techrebirth.energy_cable": "Energy Cable",
@@ -46,6 +51,7 @@
 
   "creativetab.techrebirth.tech_rebirth_items": "Tech Rebirth Items",
   "creativetab.techrebirth.tech_rebirth_blocks": "Tech Rebirth Blocks",
+  "creativetab.techrebirth.tech_rebirth_cables": "Tech Rebirth Cables",
   "creativetab.techrebirth.tech_rebirth_ores" : "Tech Rebirth Ores",
 
 

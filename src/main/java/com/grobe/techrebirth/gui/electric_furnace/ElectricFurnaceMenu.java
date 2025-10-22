@@ -1,7 +1,6 @@
 package com.grobe.techrebirth.gui.electric_furnace;
 
-import com.grobe.techrebirth.block.ModBlocks;
-import com.grobe.techrebirth.block.custom.entity.ElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.gui.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.ExperienceOrb;

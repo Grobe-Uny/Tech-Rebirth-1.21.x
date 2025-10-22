@@ -1,11 +1,13 @@
-package com.grobe.techrebirth.block.custom.entity;
+package com.grobe.techrebirth.block.custom.entity.crusher;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.gui.electric_crusher.ElectricCrusherMenu;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
 import com.grobe.techrebirth.recipe.CrushingRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
+import com.grobe.techrebirth.util.MachineTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -44,7 +46,7 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
     }
 
     protected ElectricCrusherBlockEntity(BlockEntityType<? extends ElectricCrusherBlockEntity> type, BlockPos pos, BlockState state) {
-        super(type, pos, state, 4, 20000, 512, 512, 0, 4);
+        super(type, pos, state, 4, MachineTier.BASIC, 4);
         this.data = new ContainerData() {
             @Override
             public int get(int index) {

@@ -1,8 +1,8 @@
 {
   "type": "techrebirth:generator_fuel",
-  "burn_time": 25000,
+  "burn_time": 5000,
   "ingredient": {
     "item": "minecraft:lava_bucket"
   },
-  "power_per_tick": 400
+  "power_per_tick": 25
 }

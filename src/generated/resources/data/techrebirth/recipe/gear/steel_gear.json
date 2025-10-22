@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": [
+      {
+        "tag": "neoforge:ingots/steel"
+      },
+      {
+        "tag": "c:ingots/steel"
+      }
+    ]
+  },
+  "pattern": [
+    " X ",
+    "X X",
+    " X "
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:steel_gear"
+  }
+}

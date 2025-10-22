@@ -3,6 +3,7 @@ package com.grobe.techrebirth.datagen;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlocks;
 import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.util.MachineTier;
 import com.grobe.techrebirth.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -10,6 +11,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -62,6 +64,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
        buildGearRecipe(ModItems.IRON_GEAR, Items.IRON_INGOT, "has_iron", Items.IRON_INGOT, recipeOutput,ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/iron_gear"));
        buildGearRecipeModed(ModItems.TIN_GEAR, ModTags.Items.INGOTS_TIN_D, "has_tin", ModTags.Items.INGOTS_TIN_D, recipeOutput,ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/tin_gear"));
        buildGearRecipeModed(ModItems.LEAD_GEAR, ModTags.Items.INGOTS_LEAD_D, "has_lead", ModTags.Items.INGOTS_LEAD_D, recipeOutput,ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/lead_gear"));
+       buildGearRecipeModed(ModItems.STEEL_GEAR, ModTags.Items.INGOTS_STEEL_D, "has_steel", ModTags.Items.INGOTS_STEEL_D, recipeOutput,ResourceLocation.fromNamespaceAndPath("techrebirth", "gear/steel_gear"));
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.INVAR_GEAR)
                 .pattern(" X ").pattern("X X").pattern(" X ")
                 .define('X', ModTags.Items.INGOTS_INVAR)
@@ -73,6 +76,23 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildBlocksFromIngotsRecipe(ModBlocks.INVAR_BLOCK.asItem(), ModItems.INVAR_INGOT.asItem(), "has_invar", ModItems.INVAR_INGOT.asItem(), recipeOutput);
         buildIngotsFromBlocksRecipe(ModItems.INVAR_INGOT.asItem(), 9, ModBlocks.INVAR_BLOCK, "has_invar", ModBlocks.INVAR_BLOCK, recipeOutput, "invar_ingot_from_invar_block");
 
+        //region hardened machines
+
+        buildHardenedMachines(ModBlocks.HARDENED_ELECTRIC_FURNACE.asItem(), ModBlocks.ELECTRIC_FURNACE.asItem(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/hardened/hardened_electric_furnace"));
+        buildHardenedMachines(ModBlocks.HARDENED_ALLOY_SMELTER.asItem(), ModBlocks.ALLOY_SMELTER.asItem(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/hardened/hardened_alloy_smelter"));
+        //endregion
+
+        //region reinforced machines
+
+        buildReinforcedMachines(ModBlocks.REINFORCED_ELECTRIC_FURNACE.asItem(), ModBlocks.HARDENED_ELECTRIC_FURNACE.asItem(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/reinforced/reinforced_electric_furnace"));
+
+        //endregion
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ENERGY_CABLE.get())
+                .pattern("XXX").pattern("XYX").pattern("XXX")
+                .define('X', Items.CLAY_BALL).define('Y', ModItems.REDSTONE_RECEPTION_COIL.get())
+                .unlockedBy("has_redstone_reception_coil", has(ModItems.REDSTONE_RECEPTION_COIL.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "cable/energy_cable"));
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MACHINE_BASE.get())
                 .pattern("YZY")
                 .pattern("ZXZ")
@@ -102,8 +122,24 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('X', ModItems.REDSTONE_RECEPTION_COIL.get())
                 .define('F', Items.FURNACE.asItem())
                 .define('G', ModItems.IRON_GEAR.get())
-                .define('I', ModTags.Items.INGOTS_INVAR)
+                .define('I', Items.IRON_INGOT.asItem())
                 .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ELECTRIC_CRUSHER.get())
+                .pattern(" I ").pattern("GMG").pattern("XSX")
+                .define('M', ModBlocks.MACHINE_BASE.get())
+                .define('X', ModItems.REDSTONE_RECEPTION_COIL.get())
+                .define('S', Items.STONECUTTER.asItem())
+                .define('G', ModItems.IRON_GEAR.get())
+                .define('I', ModTags.Items.INGOTS_INVAR_D.common())
+                .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/electric_crusher"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ALLOY_SMELTER.get())
+                .pattern("III").pattern("GMG").pattern("XFX")
+                .define('M', ModBlocks.MACHINE_BASE.get())
+                .define('X', Items.FURNACE.asItem())
+                .define('F', ModItems.REDSTONE_RECEPTION_COIL.get())
+                .define('G', ModItems.IRON_GEAR.get())
+                .define('I', Items.IRON_INGOT.asItem())
+                .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/alloy_smelter"));
 
         //region upgrades
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EFFICIENCY_UPGRADE.get())
@@ -117,12 +153,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('R', Items.REDSTONE.asItem()).define('G', Items.GOLD_INGOT)
                 .unlockedBy("has_invar", has(ModTags.Items.INGOTS_INVAR)).save(recipeOutput);
         //endregion
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.INVAR_INGOT, 3)
-                .requires(Ingredient.of(ModTags.Items.INGOTS_IRON), 2)
-                .requires(Ingredient.of(ModTags.Items.INGOTS_NICKEL))
-                .unlockedBy("has_iron", has(ModTags.Items.INGOTS_IRON))
-                .save(recipeOutput, "techrebirth:invar_ingot_from_nickel_and_iron_ingots");
 
         //region custom mod recipes
         crushing(Ingredient.of(ModTags.Items.INGOTS_IRON), new ItemStack(ModItems.IRON_POWDER.get(), 1)).time(100)
@@ -143,15 +173,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         //endregion
 
         //region generator fuels
-        addGeneratorFuels(lowLevelFuels, 80, 20, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "generator_fuel/low_level_fuels"));
-        addGeneratorFuels(coalFuels, 1600, 120, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "generator_fuel/coal_fuels"));
-        addGeneratorFuels(Ingredient.of(new ItemStack(Items.LAVA_BUCKET)), 25000, 400, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "generator_fuel/lava_bucket"));
+        addGeneratorFuels(lowLevelFuels, 80, 2, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "generator_fuel/low_level_fuels"));
+        addGeneratorFuels(coalFuels, 1600, 20, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "generator_fuel/coal_fuels"));
+        addGeneratorFuels(Ingredient.of(new ItemStack(Items.LAVA_BUCKET)), 5000, 25, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "generator_fuel/lava_bucket"));
         //endregion
 
         //region alloy recipes
         var invarReq = createIngredients(Items.IRON_INGOT, Items.IRON_INGOT, ModItems.NICKEL_INGOT.asItem());
-        buildAlloyRecipes(invarReq, new ItemStack(ModItems.INVAR_INGOT.get(), 3), 100, "has_nickel", ModTags.Items.INGOTS_NICKEL_D, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/invar_alloy"));
-
+        buildAlloyRecipesD(invarReq, new ItemStack(ModItems.INVAR_INGOT.get(), 3), 100, "has_nickel", ModTags.Items.INGOTS_NICKEL_D, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/invar_alloy"));
+        var steelReq = createIngredients(ModItems.IRON_POWDER, Items.COAL);
+        buildAlloyRecipes(steelReq, new ItemStack(ModItems.STEEL_INGOT.get()), 200, "has_iron_powder", ModItems.IRON_POWDER.get(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/steel_alloy"));
         //endregion
 
         // Smelting and blasting
@@ -228,8 +259,33 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     public static void addGeneratorFuels(Ingredient ingredient, int burnTime, int powerPerTick, RecipeOutput recipeOutput, ResourceLocation resourceLocation){
         fuel(ingredient, burnTime, powerPerTick).unlockedBy("has_generator", has(ModBlocks.GENERATOR.get())).save(recipeOutput, resourceLocation);
     }
-    public static void buildAlloyRecipes(NonNullList<Ingredient> ingredients, ItemStack output, int ticks, String Criteria, ModTags.Items.Dual criteria, RecipeOutput recipeOutput, ResourceLocation resourceLocation){
+    public static void buildAlloyRecipesD(NonNullList<Ingredient> ingredients, ItemStack output, int ticks, String Criteria, ModTags.Items.Dual criteria, RecipeOutput recipeOutput, ResourceLocation resourceLocation){
         alloySmelting(ingredients, output).time(ticks).unlockedBy(Criteria, has(criteria.neoforge())).save(recipeOutput, resourceLocation);
+    }
+    public static void buildAlloyRecipes(NonNullList<Ingredient> ingredients, ItemStack output, int ticks, String Criteria, Item criteria, RecipeOutput recipeOutput, ResourceLocation resourceLocation){
+        alloySmelting(ingredients, output).time(ticks).unlockedBy(Criteria, has(criteria)).save(recipeOutput, resourceLocation);
+    }
+    public static void buildHardenedMachines(ItemLike hardenedMachine, ItemLike baseMachine, RecipeOutput recipeOutput, ResourceLocation resourceLocation){
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, hardenedMachine)
+                .pattern("IGI")
+                .pattern(" B ")
+                .pattern("I I")
+                .define('I', ModTags.Items.INGOTS_INVAR_D.common())
+                .define('G', ModItems.INVAR_GEAR)
+                .define('B', baseMachine.asItem())
+                .unlockedBy("has_invar_gear", has(hardenedMachine))
+                .save(recipeOutput, resourceLocation);
+    }
+    public static void buildReinforcedMachines(ItemLike reinforcedMachine, ItemLike hardenedMachine, RecipeOutput recipeOutput, ResourceLocation resourceLocation){
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, reinforcedMachine)
+                .pattern("IGI")
+                .pattern(" B ")
+                .pattern("I I")
+                .define('I', ModTags.Items.INGOTS_STEEL_D.common())
+                .define('G', ModItems.STEEL_GEAR)
+                .define('B', hardenedMachine.asItem())
+                .unlockedBy("has_steel_gear", has(hardenedMachine))
+                .save(recipeOutput, resourceLocation);
     }
     private static NonNullList<Ingredient> createIngredients(ItemLike... items){
         NonNullList<Ingredient>ingredients = NonNullList.create();

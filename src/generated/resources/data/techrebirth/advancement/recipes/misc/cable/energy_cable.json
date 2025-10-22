@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron": {
+    "has_redstone_reception_coil": {
       "conditions": {
         "items": [
           {
-            "items": "#neoforge:ingots/iron"
+            "items": "techrebirth:redstone_reception_coil"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "techrebirth:invar_ingot_from_nickel_and_iron_ingots"
+        "recipe": "techrebirth:cable/energy_cable"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_iron"
+      "has_redstone_reception_coil"
     ]
   ],
   "rewards": {
     "recipes": [
-      "techrebirth:invar_ingot_from_nickel_and_iron_ingots"
+      "techrebirth:cable/energy_cable"
     ]
   }
 }

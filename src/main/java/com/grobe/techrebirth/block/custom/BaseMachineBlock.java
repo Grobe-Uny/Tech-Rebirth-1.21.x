@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.block.custom;
 
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
+import com.grobe.techrebirth.util.MachineTier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,6 +38,11 @@ public abstract class BaseMachineBlock extends BaseEntityBlock implements Entity
     public BaseMachineBlock(Properties properties, int maxEnergy) {
         super(properties);
         this.maxEnergy = maxEnergy;
+        this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false).setValue(FACING, Direction.NORTH));
+    }
+    public BaseMachineBlock(Properties properties, MachineTier tier) {
+        super(properties);
+        this.maxEnergy = tier.energyCapacity;
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false).setValue(FACING, Direction.NORTH));
     }
 

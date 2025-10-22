@@ -74,6 +74,13 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
 
+
+    //steel
+    public static final DeferredItem<Item> STEEL_INGOT = ITEMS.register("steel_ingot",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> STEEL_GEAR = ITEMS.register("steel_gear",
+            () -> new Item(new Item.Properties()));
+
     //miscellaneous items
     public static final DeferredItem<Item> REDSTONE_RECEPTION_COIL = ITEMS.register("redstone_reception_coil",
             ()-> new Item(new Item.Properties()));

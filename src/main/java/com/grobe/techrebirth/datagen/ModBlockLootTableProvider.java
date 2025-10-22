@@ -8,6 +8,7 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.neoforged.fml.common.Mod;
 
 import java.util.Set;
 
@@ -26,6 +27,9 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.ENERGY_CABLE.get());
         dropSelf(ModBlocks.ELECTRIC_CRUSHER.get());
         dropSelf(ModBlocks.ALLOY_SMELTER.get());
+        dropSelf(ModBlocks.HARDENED_ALLOY_SMELTER.get());
+        dropSelf(ModBlocks.HARDENED_ELECTRIC_FURNACE.get());
+        dropSelf(ModBlocks.REINFORCED_ELECTRIC_FURNACE.get());
 
         add(ModBlocks.CREATIVE_ELECTRIC_FURNACE.get(), block -> LootTable.lootTable());
 

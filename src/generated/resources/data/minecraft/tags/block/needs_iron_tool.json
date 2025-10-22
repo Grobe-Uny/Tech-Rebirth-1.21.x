@@ -9,6 +9,9 @@
     "techrebirth:energy_bank",
     "techrebirth:generator",
     "techrebirth:alloy_smelter",
-    "techrebirth:electric_crusher"
+    "techrebirth:hardened_alloy_smelter",
+    "techrebirth:electric_crusher",
+    "techrebirth:hardened_electric_furnace",
+    "techrebirth:reinforced_electric_furnace"
   ]
 }

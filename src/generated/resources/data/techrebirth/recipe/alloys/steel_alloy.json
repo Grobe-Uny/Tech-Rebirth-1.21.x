@@ -1,0 +1,15 @@
+{
+  "type": "techrebirth:alloy_smelting",
+  "ingredients": [
+    {
+      "item": "techrebirth:iron_powder"
+    },
+    {
+      "item": "minecraft:coal"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:steel_ingot"
+  }
+}

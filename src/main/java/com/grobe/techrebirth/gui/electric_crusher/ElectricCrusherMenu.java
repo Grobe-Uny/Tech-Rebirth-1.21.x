@@ -1,7 +1,7 @@
 package com.grobe.techrebirth.gui.electric_crusher;
 
 import com.grobe.techrebirth.gui.ModMenuTypes;
-import com.grobe.techrebirth.block.custom.entity.ElectricCrusherBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.crusher.ElectricCrusherBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

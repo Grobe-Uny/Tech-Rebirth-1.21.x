@@ -1,8 +1,10 @@
-package com.grobe.techrebirth.block.custom;
+package com.grobe.techrebirth.block.custom.furnace;
 
+import com.grobe.techrebirth.block.custom.BaseMachineBlock;
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
-import com.grobe.techrebirth.block.custom.entity.ElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.util.MachineTier;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,7 +27,10 @@ import net.minecraft.world.item.ItemStack;
 public class ElectricFurnaceBlock extends BaseMachineBlock {
 
     public ElectricFurnaceBlock(Properties pProperties) {
-        super(pProperties, 20000);
+        super(pProperties, MachineTier.BASIC);
+    }
+    public ElectricFurnaceBlock(Properties pProperties, MachineTier tier) {
+        super(pProperties, tier);
     }
 
     @Override

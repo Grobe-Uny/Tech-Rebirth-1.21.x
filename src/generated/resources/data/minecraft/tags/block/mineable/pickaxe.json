@@ -13,6 +13,9 @@
     "techrebirth:generator",
     "techrebirth:energy_cable",
     "techrebirth:alloy_smelter",
+    "techrebirth:hardened_alloy_smelter",
+    "techrebirth:hardened_electric_furnace",
+    "techrebirth:reinforced_electric_furnace",
     "techrebirth:electric_crusher"
   ]
 }

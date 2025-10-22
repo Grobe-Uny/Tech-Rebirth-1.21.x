@@ -26,6 +26,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
         for (var tagKey : ModTags.Items.INGOTS_TIN_D.both())    tag(tagKey).add(ModItems.TIN_INGOT.get());
         for (var tagKey : ModTags.Items.INGOTS_NICKEL_D.both()) tag(tagKey).add(ModItems.NICKEL_INGOT.get());
         for (var tagKey : ModTags.Items.INGOTS_INVAR_D.both())  tag(tagKey).add(ModItems.INVAR_INGOT.get());
+        for (var tagKey : ModTags.Items.INGOTS_STEEL_D.both())   tag(tagKey).add(ModItems.STEEL_INGOT.get());
 
         // Furnace category tags: mark heavy items (raws + ores) so furnace treats them as heavier
         for (var tagKey : ModTags.Items.FURNACE_HEAVY_D.both()) {
@@ -54,12 +55,14 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .addTag(ModTags.Items.INGOTS_LEAD_D.neoforge())
                 .addTag(ModTags.Items.INGOTS_TIN_D.neoforge())
                 .addTag(ModTags.Items.INGOTS_NICKEL_D.neoforge())
-                .addTag(ModTags.Items.INGOTS_INVAR_D.neoforge());
+                .addTag(ModTags.Items.INGOTS_INVAR_D.neoforge())
+                .addTag(ModTags.Items.INGOTS_STEEL_D.neoforge());
         tag(ingotsBoth[1])
                 .addTag(ModTags.Items.INGOTS_LEAD_D.common())
                 .addTag(ModTags.Items.INGOTS_TIN_D.common())
                 .addTag(ModTags.Items.INGOTS_NICKEL_D.common())
-                .addTag(ModTags.Items.INGOTS_INVAR_D.common());
+                .addTag(ModTags.Items.INGOTS_INVAR_D.common())
+                .addTag(ModTags.Items.INGOTS_STEEL_D.common());
     }
 
 }

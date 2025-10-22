@@ -1,8 +1,7 @@
 package com.grobe.techrebirth.compat.jade;
 
-import com.grobe.techrebirth.TechRebirth;
-import com.grobe.techrebirth.block.custom.ElectricFurnaceBlock;
-import com.grobe.techrebirth.block.custom.entity.ElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.furnace.ElectricFurnaceBlock;
+import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
 import snownee.jade.api.IWailaPlugin;

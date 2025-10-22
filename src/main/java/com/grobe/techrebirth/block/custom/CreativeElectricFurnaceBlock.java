@@ -1,11 +1,11 @@
 package com.grobe.techrebirth.block.custom;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
-import com.grobe.techrebirth.block.custom.entity.CreativeElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.furnace.CreativeElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.furnace.ElectricFurnaceBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;

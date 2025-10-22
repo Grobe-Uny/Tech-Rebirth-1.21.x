@@ -6,7 +6,9 @@ import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.gui.alloy_smelter.AlloySmelterMenu;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.recipe.AlloySmeltingRecipe;
+import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.recipe.MultiItemRecipeInput;
+import com.grobe.techrebirth.util.MachineTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -47,15 +49,16 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         this(ModBlockEntities.ALLOY_SMELTER.get(), pos, state);
     }
 
+
     protected AlloySmelterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-        super(type, pos, state, 6, 50000, 1024, 1024, 0, 4);
+        super(type, pos, state, 6, MachineTier.BASIC, 4);
 
         this.data = new ContainerData() {
             @Override
             public int get(int index) {
                 return switch (index) {
                     case 0 -> AlloySmelterBlockEntity.this.progress;                    // cook progress
-                    case 1 -> AlloySmelterBlockEntity.this.maxProgress;                 // max progress
+                    case 1 -> AlloySmelterBlockEntity.this.getMaxProgress();                 // max progress
                     case 2 -> AlloySmelterBlockEntity.this.getEnergyStorage().getEnergyStored(); // energy stored
                     case 3 -> AlloySmelterBlockEntity.this.getEnergyStorage().getMaxEnergyStored(); // max energy
                     default -> 0;
@@ -66,7 +69,7 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
             public void set(int index, int value) {
                 switch (index) {
                     case 0 -> AlloySmelterBlockEntity.this.progress = value;
-                    case 1 -> AlloySmelterBlockEntity.this.maxProgress = value;
+                    case 1 -> {/*AlloySmelterBlockEntity.this.maxProgress = value;*/}
                     case 2 -> AlloySmelterBlockEntity.this.setEnergyStored(value); // client mirror
                     case 3 -> { /* no-op: max energy is static; client-side mirror only */ }
                 }
@@ -77,6 +80,31 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
                 return 4;
             }
         };
+    }
+    protected AlloySmelterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, MachineTier tier) {
+        super(type, pos, state, 6, tier, 4);
+    }
+
+    @Override
+    public int getMaxProgress() {
+        // Override da koristi cooking time iz recepta
+        Optional<RecipeHolder<AlloySmeltingRecipe>> recipeOpt = getCurrentRecipe();
+        if (recipeOpt.isPresent()) {
+            AlloySmeltingRecipe recipe = recipeOpt.get().value();
+            int baseTime = recipe.getCookingTime(); // 200 ticks
+            float speedMultiplier = getTier().speedMultiplier;
+            return (int)(baseTime / speedMultiplier);
+        }
+
+        // Fallback na default
+        return 100;
+    }
+
+    // ILI još bolje - overrideaj i getProgressPercent za točan prikaz:
+    @Override
+    public float getProgressPercent() {
+        if (getMaxProgress() <= 0) return 0;
+        return (float) progress / getMaxProgress();
     }
 
     public ContainerData getContainerData() {
@@ -138,7 +166,10 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
 
         float energyConsumptionMultiplier = (float) Math.pow(0.75, efficiencyUpgrades);
         float energySpeedPenalty = 1 + (0.25f * speedUpgrades);
-        return (int) (160 * energySpeedPenalty * energyConsumptionMultiplier);
+
+        float tierEnergyMultiplier = getTier().energyMultiplier;
+
+        return (int) (160 * energySpeedPenalty * energyConsumptionMultiplier * tierEnergyMultiplier);
     }
 
     protected void onProcessStart() {
@@ -177,7 +208,7 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
             MultiItemRecipeInput input = new MultiItemRecipeInput(input1, input2, input3);
 
             cachedRecipe = level.getRecipeManager().getRecipeFor(
-                    com.grobe.techrebirth.recipe.ModRecipeTypes.ALLOY_SMELTING_TYPE.get(),
+                    ModRecipeTypes.ALLOY_SMELTING_TYPE.get(),
                     input, level
             );
             recipeCacheValid = true;
@@ -371,8 +402,10 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         }
     }
     protected void increaseProgress() {
-        // progress field je u base klasi
-        progress++;
+        float speedMultiplier = getTier().speedMultiplier;
+
+        progress += speedMultiplier;
+
         setChanged();
     }
 
