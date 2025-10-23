@@ -61,8 +61,6 @@ public final class ModTags {
         public static final TagKey<Item> INGOTS_LEAD = tag("neoforge", "ingots/lead");
         public static final TagKey<Item> INGOTS_NICKEL = tag("neoforge", "ingots/nickel");
         public static final TagKey<Item> INGOTS_TIN = tag("neoforge", "ingots/tin");
-        public static final TagKey<Item> INGOTS_IRON = tag("neoforge", "ingots/iron");
-        public static final TagKey<Item> INGOTS_COPPER = tag("neoforge", "ingots/copper");
         public static final TagKey<Item> INGOTS_INVAR = tag("neoforge", "ingots/invar");
         public static final TagKey<Item> RAW_MATERIALS_LEAD = tag("neoforge", "raw_materials/lead");
         public static final TagKey<Item> ORES_LEAD_ITEMS = tag("neoforge", "ores/lead");

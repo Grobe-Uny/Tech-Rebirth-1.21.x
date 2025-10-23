@@ -72,8 +72,8 @@ public class ElectricCrusherBlock extends BaseMachineBlock {
                 CustomData data = stack.get(DataComponents.BLOCK_ENTITY_DATA);
                 if (data != null) {
                     CompoundTag tag = data.copyTag();
-                    if (tag.contains("electric_crusher.energy")) {
-                        int energy = tag.getInt("electric_crusher.energy");
+                    if (tag.contains("electric_crusher_energy")) {
+                        int energy = tag.getInt("electric_crusher_energy");
                         if (energy > 0) crusher.getEnergyStorage().receiveEnergy(energy, false);
                         crusher.setChanged();
                     }
@@ -106,7 +106,7 @@ public class ElectricCrusherBlock extends BaseMachineBlock {
         if (be instanceof ElectricCrusherBlockEntity crusher) {
             ItemStack stack = new ItemStack(this.asItem());
             CompoundTag beTag = new CompoundTag();
-            beTag.putInt("electric_crusher.energy", crusher.getEnergyStorage().getEnergyStored());
+            beTag.putInt("electric_crusher_energy", crusher.getEnergyStorage().getEnergyStored());
             stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(beTag));
             popResource(level, pos, stack);
         } else {

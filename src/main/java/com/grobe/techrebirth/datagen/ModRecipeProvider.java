@@ -140,6 +140,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('G', ModItems.IRON_GEAR.get())
                 .define('I', Items.IRON_INGOT.asItem())
                 .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/alloy_smelter"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.LEAD_WRENCH.get())
+                        .pattern("X X").pattern(" Y ").pattern(" X ")
+                        .define('X', ModItems.LEAD_INGOT.get()).define('Y', Items.IRON_INGOT)
+                        .unlockedBy("has_lead", has(ModItems.LEAD_INGOT)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "lead_wrench"));
+
+
 
         //region upgrades
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EFFICIENCY_UPGRADE.get())
@@ -155,12 +161,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         //endregion
 
         //region custom mod recipes
-        crushing(Ingredient.of(ModTags.Items.INGOTS_IRON), new ItemStack(ModItems.IRON_POWDER.get(), 1)).time(100)
+        crushing(Ingredient.of(Items.IRON_INGOT), new ItemStack(ModItems.IRON_POWDER.get(), 1)).time(100)
                 .unlockedBy("has_electrical_crusher", has(ModBlocks.ELECTRIC_CRUSHER)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/iron_powder_from_ingot"));
         buildCrushingRecipes(Ingredient.of(Items.RAW_IRON, Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE), new ItemStack(ModItems.IRON_POWDER.get(), 2), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/iron_powder_from_raw_and_ores"));
 
         buildCrushingRecipes(Ingredient.of(Items.RAW_COPPER, Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE), new ItemStack(ModItems.COPPER_POWDER.get(), 2), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/copper_powder_from_raw_and_ores"));
-        buildCrushingRecipes(Ingredient.of(ModTags.Items.INGOTS_COPPER), new ItemStack(ModItems.COPPER_POWDER.get(), 1), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/copper_powder_from_ingot"));
+        buildCrushingRecipes(Ingredient.of(Items.COPPER_INGOT), new ItemStack(ModItems.COPPER_POWDER.get(), 1), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/copper_powder_from_ingot"));
 
         buildCrushingRecipes(Ingredient.of(ModTags.Items.INGOTS_NICKEL), new ItemStack(ModItems.NICKEL_POWDER.get(), 1), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/nickel_powder_from_ingot"));
         buildCrushingRecipes(Ingredient.of(ModItems.RAW_NICKEL, ModBlocks.NICKEL_ORE, ModBlocks.NICKEL_DEEPSLATE_ORE), new ItemStack(ModItems.NICKEL_POWDER.get(), 2), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/nickel_powder_from_raw_and_ores"));
@@ -168,8 +174,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildCrushingRecipes(Ingredient.of(ModTags.Items.INGOTS_TIN), new ItemStack(ModItems.TIN_POWDER.get(), 1), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/tin_powder_from_ingot"));
         buildCrushingRecipes(Ingredient.of(ModItems.RAW_TIN, ModBlocks.TIN_ORE, ModBlocks.TIN_DEEPSLATE_ORE), new ItemStack(ModItems.TIN_POWDER.get(), 2), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/tin_powder_from_raw_and_ores"));
         // new recipes using custom mod recipes
-        buildCrushingRecipes(Ingredient.of(Blocks.COBBLESTONE), new ItemStack(Blocks.GRAVEL.asItem(), 1), 80, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/gravel_from_cobblestone"));
-        buildCrushingRecipes(Ingredient.of(Blocks.GRAVEL), new ItemStack(Blocks.SAND.asItem(), 1), 70, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/sand_from_gravel"));
+        buildCrushingRecipesWithChances(Ingredient.of(Blocks.COBBLESTONE), new ItemStack(Blocks.GRAVEL.asItem(), 1), 80,new ItemStack(Blocks.SAND), 0.05f, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/gravel_from_cobblestone"));
+        buildCrushingRecipesWithChances(Ingredient.of(Blocks.GRAVEL), new ItemStack(Blocks.SAND.asItem(), 1), 70,new ItemStack(Blocks.SAND), 0.075f, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/sand_from_gravel"));
         //endregion
 
         //region generator fuels
@@ -252,6 +258,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 ExpirienceReward,
                 CookingTime
         ).unlockedBy(Criteria, has(criteria)).save(recipeOutput);
+    }
+    public static void buildCrushingRecipesWithChances(Ingredient ingredient, ItemStack output, int length, ItemStack chanceOutput, float chanceRate, String Criteria, ItemLike criteria, RecipeOutput rOutput, ResourceLocation resourceLocation){
+        crushing(ingredient, output).time(length).chanceOutput(chanceOutput, chanceRate).unlockedBy(Criteria, has(criteria)).save(rOutput,  resourceLocation);
     }
     public static void buildCrushingRecipes(Ingredient ingredient, ItemStack output, int length, String Criteria, ItemLike criteria, RecipeOutput rOutput, ResourceLocation resourceLocation){
         crushing(ingredient, output).time(length).unlockedBy(Criteria, has(criteria)).save(rOutput,  resourceLocation);

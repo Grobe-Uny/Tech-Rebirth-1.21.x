@@ -8,11 +8,13 @@ import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.recipe.AlloySmeltingRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.recipe.MultiItemRecipeInput;
+import com.grobe.techrebirth.sound.ModSounds;
 import com.grobe.techrebirth.util.MachineTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -164,8 +166,8 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.get());
         int efficiencyUpgrades = getUpgradeCount(ModItems.EFFICIENCY_UPGRADE.get());
 
-        float energyConsumptionMultiplier = (float) Math.pow(0.75, efficiencyUpgrades);
-        float energySpeedPenalty = 1 + (0.25f * speedUpgrades);
+        float energyConsumptionMultiplier = 1 - (0.20f * efficiencyUpgrades);
+        float energySpeedPenalty = 1 + (0.15f * speedUpgrades);
 
         float tierEnergyMultiplier = getTier().energyMultiplier;
 
@@ -369,37 +371,53 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide) return;
 
-        // Ažuriraj cached recipe ako je potrebno
         if (!recipeCacheValid) {
             getCurrentRecipe();
             setChanged();
         }
 
-        if (canProcess()) {
+        if (hasRecipe()) {  // ← PROMJENA: hasRecipe() umjesto canProcess()
             // Postavi LIT stanje ako već nije
             if (!state.getValue(AlloySmelterBlock.LIT)) {
                 level.setBlock(pos, state.setValue(AlloySmelterBlock.LIT, true), 3);
             }
 
-            // Potroši energy i napravi progress
-            int energyCost = getEnergyCostPerTick();
-            if (getEnergyStorage().getEnergyStored() >= energyCost) {
-                getEnergyStorage().extractEnergy(energyCost, false);
-                increaseProgress();
-                setChanged();
+            // Provjeri može li nastaviti/nastaviti
+            if (canContinueProcessing()) {  // ← NOVA METODA!
+                int energyCost = getEnergyCostPerTick();
+                if (getEnergyStorage().getEnergyStored() >= energyCost) {
+                    getEnergyStorage().extractEnergy(energyCost, false);
+                    increaseProgress();
+                    setChanged();
 
-                if (getProgress() >= getMaxProgress()) {
-                    finishProcessing();
-                    resetProgress();
+                    if (getProgress() >= getMaxProgress()) {
+                        finishProcessing();
+                        resetProgress();
+                    }
                 }
+                // ✅ Ako nema dovoljno energije, SAMO PAUZIRAJ - ne resetiraj!
+            } else {
+                // ❌ Samo resetiraj ako recept više nije validan (nema inputa)
+                resetProgress();
             }
         } else {
-            // Reset progress i ugasi ako ne može procesirati
+            // Reset progress i ugasi ako nema recepta
             resetProgress();
             if (state.getValue(AlloySmelterBlock.LIT)) {
                 level.setBlock(pos, state.setValue(AlloySmelterBlock.LIT, false), 3);
             }
         }
+    }
+    // NOVA METODA - provjeri može li NASTAVITI procesuirati
+    private boolean canContinueProcessing() {
+        Optional<RecipeHolder<AlloySmeltingRecipe>> recipeOpt = getCurrentRecipe();
+        if (recipeOpt.isEmpty()) return false;
+
+        AlloySmeltingRecipe recipe = recipeOpt.get().value();
+        ItemStack result = recipe.getResultItem(null);
+
+        // Provjeri ima li još inputa i može li se output staviti
+        return hasEnoughInputItems() && canInsertOutput(result);
     }
     protected void increaseProgress() {
         float speedMultiplier = getTier().speedMultiplier;
@@ -421,6 +439,19 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         }
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
+    private void handleLoopingSound(Level level, BlockPos pos, boolean isActive) {
+        boolean isSoundPlaying = false;
+        if (isActive) {
+            if (!isSoundPlaying) {
+                level.playLocalSound(pos, ModSounds.CRUSHER_RUNNING.get(),
+                        SoundSource.BLOCKS, 0.3f, 1.0f, true); // loop = true
+                isSoundPlaying = true;
+            }
+        } else {
+            // Sound će se automatski zaustaviti kada se blok ugasi
+            isSoundPlaying = false;
+        }
+    }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
@@ -430,7 +461,6 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-
     }
 
 }

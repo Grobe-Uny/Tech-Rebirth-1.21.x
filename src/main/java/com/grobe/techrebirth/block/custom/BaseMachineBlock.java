@@ -2,13 +2,17 @@ package com.grobe.techrebirth.block.custom;
 
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.util.MachineTier;
+import com.grobe.techrebirth.util.ModDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -104,6 +108,38 @@ public abstract class BaseMachineBlock extends BaseEntityBlock implements Entity
         }
             super.playerDestroy(level, player, pos, state, blockEntity, tool);
 
+    }
+
+    public InteractionResult tryPickupWithWrench(BlockState state, Level level, BlockPos pos, Player player, ItemStack wrench) {
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof BaseMachineBlockEntity machine) {
+
+            // Spremi podatke mašine koristeći postojeći sistem
+            ItemStack machineStack = new ItemStack(this);
+
+            // Koristi isti način kao u playerDestroy
+            CompoundTag customData = new CompoundTag();
+            customData.putInt("StoredEnergy", machine.getEnergyStorage().getEnergyStored());
+
+            // Spremi specifične podatke
+            saveMachineSpecificData(machine, customData);
+
+            // Postavi custom data
+            CustomData dataComponent = CustomData.of(customData);
+            machineStack.set(DataComponents.CUSTOM_DATA, dataComponent);
+
+            // Dropaj item i ukloni block
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), machineStack);
+            level.removeBlock(pos, false);
+
+
+            // Dodaj sound efekte
+            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.8F, 1.0F);
+
+            return InteractionResult.SUCCESS;
+        }
+
+        return InteractionResult.FAIL;
     }
 
     @Override

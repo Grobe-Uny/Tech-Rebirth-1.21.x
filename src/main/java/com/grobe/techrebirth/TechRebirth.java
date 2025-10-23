@@ -11,6 +11,7 @@ import com.grobe.techrebirth.gui.electric_furnace.ElectricFurnaceScreen;
 import com.grobe.techrebirth.gui.generator.GeneratorScreen;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
+import com.grobe.techrebirth.sound.ModSounds;
 import com.grobe.techrebirth.util.ModDataComponents;
 import net.neoforged.fml.common.EventBusSubscriber;
 import org.slf4j.Logger;
@@ -61,6 +62,7 @@ public class TechRebirth {
 
 
         ModEnchantmentEffects.register(modEventBus);
+        ModSounds.SOUND_EVENTS.register(modEventBus);
 
         modEventBus.addListener(this::addCreativeTab);
 

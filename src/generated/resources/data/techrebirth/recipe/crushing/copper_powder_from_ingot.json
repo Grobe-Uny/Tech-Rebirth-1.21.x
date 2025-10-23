@@ -1,7 +1,7 @@
 {
   "type": "techrebirth:crushing",
   "ingredient": {
-    "tag": "neoforge:ingots/copper"
+    "item": "minecraft:copper_ingot"
   },
   "result": {
     "count": 1,

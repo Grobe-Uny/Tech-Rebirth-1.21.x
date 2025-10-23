@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "techrebirth:lead_ingot"
+    },
+    "Y": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "X X",
+    " Y ",
+    " X "
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:lead_wrench"
+  }
+}

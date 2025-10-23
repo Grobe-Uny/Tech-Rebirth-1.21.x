@@ -17,11 +17,11 @@ public class ElectricCrusherMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public ElectricCrusherMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData){
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
     public ElectricCrusherMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.ELECTRIC_CRUSHER_MENU.get(), pContainerId);
-        checkContainerSize(inv, 4);
+        checkContainerSize(inv, 6);
         blockEntity = ((ElectricCrusherBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
@@ -29,10 +29,21 @@ public class ElectricCrusherMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 56, 17));
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 56, 53));
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 2, 116, 17));
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 3, 116, 53));
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 44, 31));
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 98, 31){
+            @Override public boolean mayPlace(ItemStack stack) { return false; }
+            @Override public boolean mayPickup(Player player) { return true; }
+        });
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 2, 117, 31){
+            @Override public boolean mayPlace(ItemStack stack) { return false; }
+            @Override public boolean mayPickup(Player player) { return true; }
+        });
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 3, 98, 51){
+            @Override public boolean mayPlace(ItemStack stack) { return false; }
+            @Override public boolean mayPickup(Player player) { return true; }
+        });
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 4, 134, 61));
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 5, 152, 61));
 
         addDataSlots(data);
     }
@@ -56,7 +67,7 @@ public class ElectricCrusherMenu extends AbstractContainerMenu {
     private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
-    private static final int TE_INVENTORY_SLOT_COUNT = 4;
+    private static final int TE_INVENTORY_SLOT_COUNT = 6;
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
@@ -103,5 +114,18 @@ public class ElectricCrusherMenu extends AbstractContainerMenu {
         for (int i = 0; i < 9; ++i){
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
+    }
+    public int getEnergyStored() {
+        return this.data.get(2);
+    }
+
+    public int getMaxEnergyStored() {
+        return this.data.get(3);
+    }
+
+    public int getScaledEnergy(int height) {
+        int energy = getEnergyStored();
+        int max = getMaxEnergyStored();
+        return max > 0 ? (energy * height) / max : 0;
     }
 }

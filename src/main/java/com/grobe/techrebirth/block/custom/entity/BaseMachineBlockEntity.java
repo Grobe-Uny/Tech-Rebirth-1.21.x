@@ -237,10 +237,6 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         super.saveAdditional(tag, provider);
         tag.put(getEnergyTagName(), energyHandler.serializeNBT(provider));
         tag.put(getInventoryTagName(), getItemHandler().serializeNBT(provider));
-//        System.out.println("💾 " + this.getClass().getSimpleName() + " at " + worldPosition +
-//                " - SAVING Energy: " + energyHandler.getEnergyStored() +
-//                " under tag: " + getEnergyTagName());
-
     }
 
     @Override
@@ -250,15 +246,10 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         String inventoryTag = getInventoryTagName();
         if (tag.contains(energyTag)) {
             energyHandler.deserializeNBT(provider, tag.get(energyTag));
-//            System.out.println("📂 " + this.getClass().getSimpleName() + " at " + worldPosition +
-//                    " - LOADED Energy: " + energyHandler.getEnergyStored() +
-//                    " from tag: " + energyTag);
-//        } else {
-//            System.out.println("❌ " + this.getClass().getSimpleName() + " at " + worldPosition +
-//                        " - NO ENERGY TAG FOUND: " + energyTag);
-        }
+
             if (tag.contains(inventoryTag)) {
                 getItemHandler().deserializeNBT(provider, tag.getCompound(inventoryTag));
             }
+        }
     }
 }

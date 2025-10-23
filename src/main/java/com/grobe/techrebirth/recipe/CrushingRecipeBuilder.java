@@ -17,6 +17,8 @@ public class CrushingRecipeBuilder implements RecipeBuilder {
     private final Ingredient ingredient;
     private final ItemStack result;
     private int time = 72;
+    private ItemStack chanceOutput = ItemStack.EMPTY;  // ← NOVO
+    private float chanceRate = 0.0f;
 
     // store unlock criteria like vanilla builders
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
@@ -34,6 +36,15 @@ public class CrushingRecipeBuilder implements RecipeBuilder {
         this.time = ticks;
         return this;
     }
+    public CrushingRecipeBuilder chanceOutput(ItemStack output, float rate){
+        this.chanceOutput = (output == null) ? ItemStack.EMPTY : output.copy();
+        this.chanceRate = rate;
+        return this;
+    }
+    public CrushingRecipeBuilder chanceOutput(Item output, float rate) {
+        return chanceOutput(new ItemStack(output), rate);
+    }
+
 
     @Override
     public CrushingRecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
@@ -44,7 +55,9 @@ public class CrushingRecipeBuilder implements RecipeBuilder {
     @Override
     public void save(RecipeOutput output, ResourceLocation id){
         // Construct the concrete recipe instance (uses your codec serializer)
-        CrushingRecipe recipe = new CrushingRecipe(ingredient, result.copy(), time);
+
+        ItemStack finalChanceOutput = (chanceOutput == null || chanceOutput.isEmpty()) ? ItemStack.EMPTY : chanceOutput.copy();
+        CrushingRecipe recipe = new CrushingRecipe(ingredient, result.copy(), time, finalChanceOutput, chanceRate);
         // Publish the recipe without an advancement (keep simple/minimal)
         output.accept(id, recipe, null);
     }
