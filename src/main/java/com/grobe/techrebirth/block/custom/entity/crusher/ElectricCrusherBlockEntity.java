@@ -156,15 +156,17 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
 
 
     public void tick(Level level, BlockPos pos, BlockState state) {
-        // Determine if we should be working this tick
-        boolean shouldWork = hasRecipe();
+        boolean hasEnergy = getEnergyStorage().getEnergyStored() >= getEnergyCostPerTick();
+        boolean hasRecipe = hasRecipe();
 
-        // Toggle the block's LIT property to reflect working state
-        boolean wasLit = state.hasProperty(BlockStateProperties.LIT)
-                && state.getValue(BlockStateProperties.LIT);
+        boolean shouldWork = hasRecipe && hasEnergy;
+        boolean isWorking =  progress > 0;
+
+        // Toggle LIT state
+        boolean wasLit = state.hasProperty(BlockStateProperties.LIT) && state.getValue(BlockStateProperties.LIT);
         if (state.hasProperty(BlockStateProperties.LIT) && wasLit != shouldWork) {
             level.setBlock(pos, state.setValue(BlockStateProperties.LIT, shouldWork), 3);
-            state = level.getBlockState(pos); // refresh local state
+            state = level.getBlockState(pos);
         }
 
         if (shouldWork) {
@@ -172,12 +174,18 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
             if (recipeOpt.isPresent()) {
                 CrushingRecipe recipe = recipeOpt.get().value();
 
-                // ✅ KORISTI VRIJEME IZ RECEPTA + SPEED UPGRADE
                 int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.asItem());
-                float speedMultiplier = 1 + (0.5f * speedUpgrades);
-                int baseTime = recipe.getTime(); // Vrijeme iz recepta!
-                this.maxProgress = (int) (baseTime / speedMultiplier);
-                if (this.maxProgress < 1) this.maxProgress = 1;
+                // ✅ RAČUNAJ maxProgress SAMO AKO JE progress == 0 (novi crafting)
+                if (progress == 0) {
+                    float speedMultiplier = 1 + (0.5f * speedUpgrades);
+                    int baseTime = recipe.getTime();
+                    this.maxProgress = (int) (baseTime / speedMultiplier);
+                    if (this.maxProgress < 1) this.maxProgress = 1;
+
+                    // Debug ispis
+                    System.out.println("🔄 NEW CRAFTING: maxProgress = " + maxProgress +
+                            ", baseTime = " + baseTime + ", speedMultiplier = " + speedMultiplier);
+                }
 
                 // Energy cost
                 int efficiencyUpgrades = getUpgradeCount(ModItems.EFFICIENCY_UPGRADE.get());
@@ -185,15 +193,26 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
                 float energySpeedPenalty = 1 + (0.5f * speedUpgrades);
                 int energyToConsume = (int) (128 * energySpeedPenalty * energyConsumptionMultiplier);
 
-                getEnergyStorage().extractEnergy(energyToConsume, false);
-                increaseCraftingProgress();
+                // Debug progress
+                System.out.println("🔧 Progress: " + progress + "/" + maxProgress +
+                        " (" + (maxProgress > 0 ? (progress * 100 / maxProgress) : 0) + "%)");
 
-                setChanged(level, pos, state);
+                if (getEnergyStorage().getEnergyStored() >= energyToConsume) {
+                    getEnergyStorage().extractEnergy(energyToConsume, false);
+                    increaseCraftingProgress();
+                    setChanged(level, pos, state);
 
-                if (progress >= maxProgress) {
-                    craftItem();
+                    if (progress >= maxProgress) {
+                        craftItem();
+                        resetProgress();
+                    }
                 }
             } else {
+                resetProgress();
+            }
+        } else {
+            // Ako nema recepta, resetiraj progress
+            if (!hasRecipe && progress > 0) {
                 resetProgress();
             }
         }
@@ -273,8 +292,12 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
         return recipe.getChanceRate(); // Prilagodi prema tvojoj implementaciji
     }
 
-    private void resetProgress() { this.progress = 0; }
-    private void increaseCraftingProgress() { this.progress++; }
+    private void resetProgress() { this.progress = 0; System.out.println("Progress Reset");}
+    private void increaseCraftingProgress() { this.progress++;
+    if(progress % 10 == 0 ){
+        System.out.println("📈 Progress: " + progress + "/" + maxProgress);
+        }
+    }
 
     private boolean hasRecipe() {
         ItemStackHandler handler = getItemHandler();
@@ -288,8 +311,8 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
         ItemStack primaryResult = recipe.getResultItem(null);
 
         // Energy check
-        int energyToConsume = getEnergyCostPerTick();
-        if (getEnergyStorage().getEnergyStored() < energyToConsume) return false;
+//        int energyToConsume = getEnergyCostPerTick();
+//        if (getEnergyStorage().getEnergyStored() < energyToConsume) return false;
 
         // ✅ PROVJERA: Glavni result mora moći u PRIMARY_OUTPUT_1 ili PRIMARY_OUTPUT_2
         boolean canInsertPrimary = canInsertIntoPrimaryOutput(primaryResult);

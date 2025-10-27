@@ -52,12 +52,19 @@ public class ElectricCrusherMenu extends AbstractContainerMenu {
         return data.get(0) > 0;
     }
 
-    public int getScaledProgress(){
+    public int getScaledProgress(int width){
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);
-        int progressArrowSize = 26;
 
-        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+        if(maxProgress <= 0 || progress <= 0)
+        {
+            return 0;
+        }
+
+        int scaled = (progress * width)/maxProgress;
+
+
+        return Math.min(scaled, width);
     }
 
     private static final int HOTBAR_SLOT_COUNT = 9;
@@ -114,6 +121,12 @@ public class ElectricCrusherMenu extends AbstractContainerMenu {
         for (int i = 0; i < 9; ++i){
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
+    }
+    public int getProgress() {
+        return data.get(0); // Trenutni progress
+    }
+    public int getMaxProgress() {
+        return data.get(1); // Maksimalni progress
     }
     public int getEnergyStored() {
         return this.data.get(2);
