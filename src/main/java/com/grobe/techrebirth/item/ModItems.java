@@ -2,11 +2,8 @@ package com.grobe.techrebirth.item;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -81,6 +78,13 @@ public class ModItems {
     public static final DeferredItem<Item> STEEL_GEAR = ITEMS.register("steel_gear",
             () -> new Item(new Item.Properties()));
 
+    //blazing alloys
+    public static final DeferredItem<Item> BLAZING_GOLD_INGOT = ITEMS.register("blazing_gold_ingot",
+            () -> new Item(new Item.Properties()));
+
+
+
+
     //miscellaneous items
     public static final DeferredItem<Item> REDSTONE_RECEPTION_COIL = ITEMS.register("redstone_reception_coil",
             ()-> new Item(new Item.Properties()));
@@ -88,6 +92,26 @@ public class ModItems {
             () -> new Item(new Item.Properties()
                     .stacksTo(1)
             ));
+    public static final DeferredItem<EnchantedBookItem> LIGHTNING_STRIKER_ENCHANTED_BOOK = ITEMS.register("lightning_striker_enchanted_book",
+            () -> new EnchantedBookItem(new Item.Properties()));
+
+
+    // Armor
+    public static final DeferredItem<ArmorItem> BLAZING_GOLD_HELMET = ITEMS.register("blazing_gold_helmet",
+            ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+
+    public static final DeferredItem<ArmorItem> BLAZING_GOLD_CHESTPLATE = ITEMS.register("blazing_gold_chestplate",
+            ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+
+    public static final DeferredItem<ArmorItem> BLAZING_GOLD_LEGGINGS = ITEMS.register("blazing_gold_leggings",
+            ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+
+    public static final DeferredItem<ArmorItem> BLAZING_GOLD_BOOTS = ITEMS.register("blazing_gold_boots",
+            ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
 
 
 

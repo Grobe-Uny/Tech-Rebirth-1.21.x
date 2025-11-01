@@ -420,9 +420,11 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         return hasEnoughInputItems() && canInsertOutput(result);
     }
     protected void increaseProgress() {
-        float speedMultiplier = getTier().speedMultiplier;
+//        float speedMultiplier = getTier().speedMultiplier;
+//
+//        progress += speedMultiplier;
 
-        progress += speedMultiplier;
+        progress++;
 
         setChanged();
     }

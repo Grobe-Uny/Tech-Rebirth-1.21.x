@@ -13,6 +13,7 @@ import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.sound.ModSounds;
 import com.grobe.techrebirth.util.ModDataComponents;
+import com.grobe.techrebirth.util.TooltipModifier;
 import net.neoforged.fml.common.EventBusSubscriber;
 import org.slf4j.Logger;
 
@@ -65,23 +66,17 @@ public class TechRebirth {
         ModSounds.SOUND_EVENTS.register(modEventBus);
 
         modEventBus.addListener(this::addCreativeTab);
+        modEventBus.addListener(ModCreativeTabs::addCreative);
+
+        NeoForge.EVENT_BUS.addListener(TooltipModifier::onItemTooltip);
 
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, Config.SPEC);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
 
-        if (Config.LOG_DIRT_BLOCK.getAsBoolean()) {
-            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-        }
-
-        LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.getAsInt());
-
-        Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
     }
 
     private void addCreativeTab(BuildCreativeModeTabContentsEvent event){

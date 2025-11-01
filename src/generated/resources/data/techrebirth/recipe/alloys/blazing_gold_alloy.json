@@ -1,0 +1,19 @@
+{
+  "type": "techrebirth:alloy_smelting",
+  "cookingTime": 300,
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "techrebirth:blazing_gold_ingot"
+  }
+}

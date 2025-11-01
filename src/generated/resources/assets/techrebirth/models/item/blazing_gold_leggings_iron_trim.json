@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer_1": "techrebirth:item/blazing_gold_leggings",
+    "layer_2": "minecraft:trims/items/leggings_trim_iron"
+  }
+}

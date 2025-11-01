@@ -8,10 +8,13 @@ import com.grobe.techrebirth.item.custom.UpgradeItem;
 import com.grobe.techrebirth.recipe.CrushingRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.util.MachineTier;
+import com.grobe.techrebirth.util.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -27,6 +30,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -102,15 +106,57 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
     }
 
     private boolean isCrushable(ItemStack stack) {
-        if (stack.isEmpty() || this.level == null) return false;
-        // Debug ispis
-        System.out.println("🔍 Checking: " + stack.getItem().getDescriptionId());
-        System.out.println("🔍 RecipeType: " + ModRecipeTypes.CRUSHING_TYPE);
-        System.out.println("🔍 RecipeType.get(): " + ModRecipeTypes.CRUSHING_TYPE.get());
+//        if (stack.isEmpty() || this.level == null) return false;
+//            // Debug ispis
+//        System.out.println("🔍 Checking: " + stack.getItem().getDescriptionId());
+//        System.out.println("🔍 RecipeType: " + ModRecipeTypes.CRUSHING_TYPE);
+//        System.out.println("🔍 RecipeType.get(): " + ModRecipeTypes.CRUSHING_TYPE.get());
+//
+//
+//
+//        var input = new SingleRecipeInput(stack);
+//        var opt = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.CRUSHING_TYPE.get(), input, this.level);
+//        return opt.isPresent();
 
+        if (stack.isEmpty() || this.level == null) return false;
+
+        // ✅ PRVO provjeri tagove (brže i sigurnije)
+        if (isTaggedAsCrushable(stack)) {
+            return true;
+        }
+
+        // ✅ ONDA provjeri specifične recepte (fallback)
         var input = new SingleRecipeInput(stack);
         var opt = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.CRUSHING_TYPE.get(), input, this.level);
         return opt.isPresent();
+    }
+
+    private boolean isTaggedAsCrushable(ItemStack stack) {
+        try {
+            HolderLookup.RegistryLookup<Item> items = this.level.registryAccess().lookupOrThrow(Registries.ITEM);
+
+            // ✅ SAFE TAG CHECK - koristi try-catch za svaki tag
+            return  isInTagSafely(stack, items, ModTags.Items.RAW_MATERIALS_D.common()) ||
+                    isInTagSafely(stack, items, ModTags.Items.RAW_TIN_D.common()) ||
+                    isInTagSafely(stack, items, ModTags.Items.RAW_LEAD_D.common()) ||
+                    isInTagSafely(stack, items, ModTags.Items.RAW_NICKEL_D.common()) ||
+                    isInTagSafely(stack, items, Tags.Items.ORES);
+
+        } catch (Exception e) {
+            // ✅ FALLBACK: ako tag sistem faila, vrati false i koristi recipe sistem
+            System.out.println("⚠️ Tag check failed, using recipe fallback: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // ✅ SIGURNA metoda za tag provjeru
+    private boolean isInTagSafely(ItemStack stack, HolderLookup.RegistryLookup<Item> items, TagKey<Item> tag) {
+        try {
+            return stack.is(items.getOrThrow(tag));
+        } catch (Exception e) {
+            // Ako tag ne postoji ili je problem, jednostavno preskoči
+            return false;
+        }
     }
 
     public void drops() {

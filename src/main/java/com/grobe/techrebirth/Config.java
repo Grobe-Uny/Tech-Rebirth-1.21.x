@@ -16,25 +16,52 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 // Demonstrates how to use Neo's config APIs
 public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    static final ModConfigSpec SPEC;
 
-    public static final ModConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER
-            .comment("Whether to log the dirt block on common setup")
-            .define("logDirtBlock", true);
+    public static final ModConfigSpec.ConfigValue<String> PROGRESS_BAR_HIGHLIGHT_COLOR;
+    public static final ModConfigSpec.ConfigValue<Boolean> PROGRESS_BAR_HIGHLIGHT_ENABLED;
 
-    public static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
-            .comment("A magic number")
-            .defineInRange("magicNumber", 42, 0, Integer.MAX_VALUE);
 
-    public static final ModConfigSpec.ConfigValue<String> MAGIC_NUMBER_INTRODUCTION = BUILDER
-            .comment("What you want the introduction message to be for the magic number")
-            .define("magicNumberIntroduction", "The magic number is... ");
+    static{
+        BUILDER.push("UI Settings");
 
-    // a list of strings that are treated as resource locations for items
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> ITEM_STRINGS = BUILDER
-            .comment("A list of items to log on common setup.")
-            .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), () -> "", Config::validateItemName);
+        PROGRESS_BAR_HIGHLIGHT_ENABLED = BUILDER
+                .comment("Enable progress bar highlight on hover")
+                .define("progressBarHighlightEnabled", true);
+        PROGRESS_BAR_HIGHLIGHT_COLOR = BUILDER
+                .comment("Progress bar highlight color in hex format (e.g. #FFD700 for gold)"
+                , "Popular colors: #FFD700 (Gold), #00FF00 (Green), #FF4500 (Orange Red),"
+                ,"#1E90FF (Dodger Blue), #FF69B4 (Hot Pink), #32CD32 (Lime Green)")
+                .define("progressBarHighlightColor", "#FFD7000");
 
-    static final ModConfigSpec SPEC = BUILDER.build();
+        BUILDER.pop();
+        SPEC = BUILDER.build();
+
+    }
+    public static int getHighlightColor(){
+        try {
+            String colorHex = PROGRESS_BAR_HIGHLIGHT_COLOR.get().replace("#", "");
+            // ✅ DODAJ OVO: Osiguraj da je boja u full ARGB formatu
+            if (colorHex.length() == 6) {
+                colorHex = "FF" + colorHex; // Dodaj alpha channel (255 = fully opaque)
+            }
+            else if(colorHex.length() == 8){
+
+            }else{
+                System.out.println("Invalid color format: " + colorHex + " - using fallback");
+                return 0xFFFFD700; // fallback
+            }
+            long colorLong = Long.parseLong(colorHex, 16);
+            return (int) colorLong;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid color format in config: " + PROGRESS_BAR_HIGHLIGHT_COLOR.get());
+            return 0xFFFFD700; // fallback to gold
+        }
+    }
+    public static boolean isHighlightEnabled(){
+        return PROGRESS_BAR_HIGHLIGHT_ENABLED.get();
+    }
+
 
     private static boolean validateItemName(final Object obj) {
         return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(itemName));

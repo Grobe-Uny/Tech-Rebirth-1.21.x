@@ -50,8 +50,21 @@ public final class ModTags {
         public static final Dual INGOTS_TIN_D = dual("ingots/tin");
         public static final Dual INGOTS_INVAR_D = dual("ingots/invar");
         public static final Dual INGOTS_STEEL_D = dual("ingots/steel");
-        public static final Dual RAW_MATERIALS_LEAD_D = dual("raw_materials/lead");
-        public static final Dual ORES_LEAD_ITEMS_D = dual("ores/lead");
+        public static final Dual INGOTS_BLAZING_GOLD_D = dual("ingots/blazing_gold");
+
+        // Duals for dust/powder compatibility
+        public static final Dual DUSTS_D = dual("dusts");
+        public static final Dual IRON_DUST_D = dual("dusts/iron");
+        public static final Dual COPPER_DUST_D = dual("dusts/copper");
+        public static final Dual TIN_DUST_D = dual("dusts/tin");
+        public static final Dual NICKEL_DUST_D = dual("dusts/nickel");
+
+        // Duals for raw ores compatibility
+        public static final Dual RAW_MATERIALS_D = dual("raw_materials");
+        public static final Dual RAW_TIN_D = dual("raw_materials/tin");
+        public static final Dual RAW_NICKEL_D = dual("raw_materials/nickel");
+        public static final Dual RAW_LEAD_D = dual("raw_materials/lead");
+
         // Furnace behavior categories (TechRebirth-specific)
         public static final Dual FURNACE_FAST_D = dual("techrebirth/furnace_fast");
         public static final Dual FURNACE_HEAVY_D = dual("techrebirth/furnace_heavy");

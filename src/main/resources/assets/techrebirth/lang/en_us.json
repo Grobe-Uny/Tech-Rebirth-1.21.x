@@ -3,10 +3,6 @@
   "techrebirth.configuration.title": "Tech Rebirth Configs",
   "techrebirth.configuration.section.techrebirth.common.toml": "Tech Rebirth Configs",
   "techrebirth.configuration.section.techrebirth.common.toml.title": "Tech Rebirth Configs",
-  "techrebirth.configuration.items": "Item List",
-  "techrebirth.configuration.logDirtBlock": "Log Dirt Block",
-  "techrebirth.configuration.magicNumberIntroduction": "Magic Number Text",
-  "techrebirth.configuration.magicNumber": "Magic Number",
   "item.techrebirth.iron_powder": "Iron Powder",
   "item.techrebirth.copper_powder": "Copper Powder",
   "item.techrebirth.copper_gear": "Copper Gear",
@@ -26,10 +22,17 @@
   "item.techrebirth.cooked_carrot" : "Cooked Carrot",
   "item.techrebirth.raw_lead": "Raw Lead",
   "item.techrebirth.lead_ingot": "Lead Ingot",
+  "item.techrebirth.blazing_gold_ingot": "Blazing Gold Ingot",
   "item.techrebirth.lead_gear": "Lead Gear",
   "item.techrebirth.speed_upgrade": "Speed Upgrade",
   "item.techrebirth.efficiency_upgrade": "Efficiency Upgrade",
   "item.techrebirth.lead_wrench": "Lead Wrench",
+
+  "item.techrebirth.blazing_gold_helmet": "Blazing Gold Helmet",
+  "item.techrebirth.blazing_gold_chestplate": "Blazing Gold Chestplate",
+  "item.techrebirth.blazing_gold_leggings": "Blazing Gold Leggings",
+  "item.techrebirth.blazing_gold_boots": "Blazing Gold Boots",
+
 
   "block.techrebirth.machine_base": "Machine Base",
   "block.techrebirth.tin_ore": "Tin Ore",

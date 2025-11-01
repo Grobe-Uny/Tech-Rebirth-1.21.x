@@ -1,5 +1,6 @@
 package com.grobe.techrebirth.gui.alloy_smelter;
 
+import com.grobe.techrebirth.Config;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.compat.jei.JEITechRebirthPlugin;
 import com.grobe.techrebirth.recipe.AlloySmeltingRecipe;
@@ -54,7 +55,7 @@ public class AlloySmelterScreen extends AbstractContainerScreen<AlloySmelterMenu
         int y = (height - imageHeight) / 2;
 
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight, TEX_W, TEX_H);
-        renderProgressBar(guiGraphics, x, y);
+        renderProgressBar(guiGraphics, x, y, pMouseX, pMouseY);
         renderEnergyBar(guiGraphics, x, y);
     }
     private void renderEnergyBar(GuiGraphics guiGraphics, int x, int y) {
@@ -71,7 +72,7 @@ public class AlloySmelterScreen extends AbstractContainerScreen<AlloySmelterMenu
             guiGraphics.fill(ex, fy, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, color);
         }
     }
-    private void renderProgressBar(GuiGraphics guiGraphics, int x, int y) {
+    private void renderProgressBar(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY) {
         int progress = menu.getProgress();
         int maxProgress = menu.getMaxProgress();
 
@@ -89,6 +90,14 @@ public class AlloySmelterScreen extends AbstractContainerScreen<AlloySmelterMenu
                 int fillY = py + (PROGRESS_BAR_HEIGHT - progressHeight);
                 guiGraphics.fill(px, fillY, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, 0xFF2B93CC);
             }
+        }
+        if ( Config.isHighlightEnabled() && progressBarArea.isMouseOver(mouseX, mouseY)) {
+            int highlightColor = Config.getHighlightColor();
+            // Nacrtaj zlatni outline kada je miš iznad
+            guiGraphics.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py, highlightColor); // gornja linija
+            guiGraphics.fill(px - 1, py + PROGRESS_BAR_HEIGHT, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1, highlightColor); // donja linija
+            guiGraphics.fill(px - 1, py, px, py + PROGRESS_BAR_HEIGHT, highlightColor); // lijeva linija
+            guiGraphics.fill(px + PROGRESS_BAR_WIDTH, py, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT, highlightColor); // desna linija
         }
     }
     @Override

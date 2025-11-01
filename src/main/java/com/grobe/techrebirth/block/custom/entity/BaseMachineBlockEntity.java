@@ -30,7 +30,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     protected final DirtyEnergyStorage energyHandler;
 
     protected int progress = 0;
-    protected int maxProgress = 100;
+    protected int maxProgress;
 
     protected abstract String getEnergyTagName();
 

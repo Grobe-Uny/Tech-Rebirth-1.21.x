@@ -4,7 +4,7 @@
     "count": 1,
     "id": "minecraft:sand"
   },
-  "chance_rate": 0.075,
+  "chance_rate": 0.08,
   "ingredient": {
     "item": "minecraft:gravel"
   },

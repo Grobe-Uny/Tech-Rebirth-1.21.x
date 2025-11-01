@@ -1,5 +1,6 @@
 package com.grobe.techrebirth.gui.electric_crusher;
 
+import com.grobe.techrebirth.Config;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.compat.jei.JEITechRebirthPlugin;
 import com.grobe.techrebirth.recipe.CrushingRecipe;
@@ -101,12 +102,13 @@ public class ElectricCrusherScreen extends AbstractContainerScreen<ElectricCrush
             }
         }
 
-        if (progressBarArea.isMouseOver(mouseX, mouseY)) {
+        if (Config.isHighlightEnabled() && progressBarArea.isMouseOver(mouseX, mouseY)) {
+            int highlightColor = Config.getHighlightColor();
             // Nacrtaj zlatni outline kada je miš iznad
-            guiGraphics.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py, 0xFFFFD700); // gornja linija
-            guiGraphics.fill(px - 1, py + PROGRESS_BAR_HEIGHT, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1, 0xFFFFD700); // donja linija
-            guiGraphics.fill(px - 1, py, px, py + PROGRESS_BAR_HEIGHT, 0xFFFFD700); // lijeva linija
-            guiGraphics.fill(px + PROGRESS_BAR_WIDTH, py, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT, 0xFFFFD700); // desna linija
+            guiGraphics.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py, highlightColor); // gornja linija
+            guiGraphics.fill(px - 1, py + PROGRESS_BAR_HEIGHT, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1, highlightColor); // donja linija
+            guiGraphics.fill(px - 1, py, px, py + PROGRESS_BAR_HEIGHT, highlightColor); // lijeva linija
+            guiGraphics.fill(px + PROGRESS_BAR_WIDTH, py, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT, highlightColor); // desna linija
         }
     }
     @Override

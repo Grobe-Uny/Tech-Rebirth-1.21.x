@@ -77,12 +77,11 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu {
         return data.get(0) > 0;
     }
 
-    public int getScaledProgress(){
-        int progress = this.data.get(0);
-        int maxProgress = this.data.get(1);
-        int progressArrowSize = 26;
+    public int getScaledProgress(int height){
+        int progress = getProgress();
+        int maxProgress = getMaxProgress();
 
-        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+        return maxProgress > 0 ? (progress * height) / maxProgress : 0;
     }
 
     private static final int HOTBAR_SLOT_COUNT = 9;
@@ -176,6 +175,10 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
     }
+
+    public int getProgress(){ return this.data.get(0);}
+
+    public int getMaxProgress(){ return this.data.get(1);}
 
     public int getEnergyStored() {
         return this.data.get(2);

@@ -6,8 +6,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -35,6 +37,10 @@ public class ModCreativeTabs {
                         output.accept(ModItems.COOKED_CARROT);
                         output.accept(ModItems.EFFICIENCY_UPGRADE);
                         output.accept(ModItems.SPEED_UPGRADE);
+                        output.accept(ModItems.BLAZING_GOLD_HELMET);
+                        output.accept(ModItems.BLAZING_GOLD_CHESTPLATE);
+                        output.accept(ModItems.BLAZING_GOLD_LEGGINGS);
+                        output.accept(ModItems.BLAZING_GOLD_BOOTS);
 
 
                     })
@@ -96,5 +102,9 @@ public class ModCreativeTabs {
         CREATIVE_MODE_TAB.register(eventbus);
     }
 
-
+    public static void addCreative(BuildCreativeModeTabContentsEvent event){
+        if(event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES){
+            event.accept(ModItems.LIGHTNING_STRIKER_ENCHANTED_BOOK.get());
+        }
+    }
 }

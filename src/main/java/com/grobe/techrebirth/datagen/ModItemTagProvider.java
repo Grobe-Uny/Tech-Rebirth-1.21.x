@@ -7,6 +7,7 @@ import com.grobe.techrebirth.block.ModBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -21,12 +22,37 @@ public class ModItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider){
+
+
+        tag(ItemTags.TRIMMABLE_ARMOR)
+                .add(ModItems.BLAZING_GOLD_HELMET.get())
+                .add(ModItems.BLAZING_GOLD_CHESTPLATE.get())
+                .add(ModItems.BLAZING_GOLD_LEGGINGS.get())
+                .add(ModItems.BLAZING_GOLD_BOOTS.get());
+
+
+
+
         // Add our ingots to both c: and neoforge: ingot tags via Dual helpers
         for (var tagKey : ModTags.Items.INGOTS_LEAD_D.both())   tag(tagKey).add(ModItems.LEAD_INGOT.get());
         for (var tagKey : ModTags.Items.INGOTS_TIN_D.both())    tag(tagKey).add(ModItems.TIN_INGOT.get());
         for (var tagKey : ModTags.Items.INGOTS_NICKEL_D.both()) tag(tagKey).add(ModItems.NICKEL_INGOT.get());
         for (var tagKey : ModTags.Items.INGOTS_INVAR_D.both())  tag(tagKey).add(ModItems.INVAR_INGOT.get());
-        for (var tagKey : ModTags.Items.INGOTS_STEEL_D.both())   tag(tagKey).add(ModItems.STEEL_INGOT.get());
+        for (var tagKey : ModTags.Items.INGOTS_STEEL_D.both())  tag(tagKey).add(ModItems.STEEL_INGOT.get());
+        for (var tagKey : ModTags.Items.INGOTS_BLAZING_GOLD_D.both()) tag(tagKey).add(ModItems.BLAZING_GOLD_INGOT.get());
+
+
+        // Add our dusts to both c: and neoforge: dust tags via Dual helpers
+        for(var tagKey : ModTags.Items.IRON_DUST_D.both())      tag(tagKey).add(ModItems.IRON_POWDER.get());
+        for(var tagKey : ModTags.Items.COPPER_DUST_D.both())    tag(tagKey).add(ModItems.COPPER_POWDER.get());
+        for(var tagKey : ModTags.Items.TIN_DUST_D.both())       tag(tagKey).add(ModItems.TIN_POWDER.get());
+        for(var tagKey : ModTags.Items.NICKEL_DUST_D.both())    tag(tagKey).add(ModItems.NICKEL_POWDER.get());
+
+        // Add our raw materials to both c: and neoforge: raw_materials tags via Dual helpers
+        for(var tagKey : ModTags.Items.RAW_NICKEL_D.both())     tag(tagKey).add(ModItems.RAW_NICKEL.get());
+        for(var tagKey : ModTags.Items.RAW_LEAD_D.both())     tag(tagKey).add(ModItems.RAW_LEAD.get());
+        for(var tagKey : ModTags.Items.RAW_TIN_D.both())     tag(tagKey).add(ModItems.RAW_TIN.get());
+
 
         // Furnace category tags: mark heavy items (raws + ores) so furnace treats them as heavier
         for (var tagKey : ModTags.Items.FURNACE_HEAVY_D.both()) {
@@ -56,13 +82,38 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .addTag(ModTags.Items.INGOTS_TIN_D.neoforge())
                 .addTag(ModTags.Items.INGOTS_NICKEL_D.neoforge())
                 .addTag(ModTags.Items.INGOTS_INVAR_D.neoforge())
+                .addTag(ModTags.Items.INGOTS_BLAZING_GOLD_D.neoforge())
                 .addTag(ModTags.Items.INGOTS_STEEL_D.neoforge());
         tag(ingotsBoth[1])
                 .addTag(ModTags.Items.INGOTS_LEAD_D.common())
                 .addTag(ModTags.Items.INGOTS_TIN_D.common())
                 .addTag(ModTags.Items.INGOTS_NICKEL_D.common())
                 .addTag(ModTags.Items.INGOTS_INVAR_D.common())
+                .addTag(ModTags.Items.INGOTS_BLAZING_GOLD_D.common())
                 .addTag(ModTags.Items.INGOTS_STEEL_D.common());
+
+
+        var dustsBoth = ModTags.Items.DUSTS_D.both();
+        tag(dustsBoth[0])
+                .addTag(ModTags.Items.IRON_DUST_D.neoforge())
+                .addTag(ModTags.Items.COPPER_DUST_D.neoforge())
+                .addTag(ModTags.Items.NICKEL_DUST_D.neoforge())
+                .addTag(ModTags.Items.TIN_DUST_D.neoforge());
+        tag(dustsBoth[1])
+                .addTag(ModTags.Items.IRON_DUST_D.common())
+                .addTag(ModTags.Items.COPPER_DUST_D.common())
+                .addTag(ModTags.Items.NICKEL_DUST_D.common())
+                .addTag(ModTags.Items.TIN_DUST_D.common());
+
+        var rawMaterialsBoth = ModTags.Items.RAW_MATERIALS_D.both();
+        tag(rawMaterialsBoth[0])
+                .addTag(ModTags.Items.RAW_TIN_D.neoforge())
+                .addTag(ModTags.Items.RAW_LEAD_D.neoforge())
+                .addTag(ModTags.Items.RAW_NICKEL_D.neoforge());
+        tag(rawMaterialsBoth[1])
+                .addTag(ModTags.Items.RAW_LEAD_D.common())
+                .addTag(ModTags.Items.RAW_TIN_D.common())
+                .addTag(ModTags.Items.RAW_NICKEL_D.common());
     }
 
 }

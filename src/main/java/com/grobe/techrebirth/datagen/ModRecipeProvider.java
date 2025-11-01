@@ -175,7 +175,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildCrushingRecipes(Ingredient.of(ModItems.RAW_TIN, ModBlocks.TIN_ORE, ModBlocks.TIN_DEEPSLATE_ORE), new ItemStack(ModItems.TIN_POWDER.get(), 2), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/tin_powder_from_raw_and_ores"));
         // new recipes using custom mod recipes
         buildCrushingRecipesWithChances(Ingredient.of(Blocks.COBBLESTONE), new ItemStack(Blocks.GRAVEL.asItem(), 1), 80,new ItemStack(Blocks.SAND), 0.05f, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/gravel_from_cobblestone"));
-        buildCrushingRecipesWithChances(Ingredient.of(Blocks.GRAVEL), new ItemStack(Blocks.SAND.asItem(), 1), 70,new ItemStack(Blocks.SAND), 0.075f, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/sand_from_gravel"));
+        buildCrushingRecipesWithChances(Ingredient.of(Blocks.GRAVEL), new ItemStack(Blocks.SAND.asItem(), 1), 70,new ItemStack(Blocks.SAND), 0.08f, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/sand_from_gravel"));
+        buildCrushingRecipesWithChances(Ingredient.of(Blocks.ANCIENT_DEBRIS), new ItemStack(Items.NETHERITE_SCRAP.asItem(), 2), 200, new ItemStack(Items.NETHERITE_SCRAP), 0.01f,"has_electrical_crusher",ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "crushing/netherite_scraps_from_debris"));
         //endregion
 
         //region generator fuels
@@ -189,6 +190,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildAlloyRecipesD(invarReq, new ItemStack(ModItems.INVAR_INGOT.get(), 3), 100, "has_nickel", ModTags.Items.INGOTS_NICKEL_D, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/invar_alloy"));
         var steelReq = createIngredients(ModItems.IRON_POWDER, Items.COAL);
         buildAlloyRecipes(steelReq, new ItemStack(ModItems.STEEL_INGOT.get()), 200, "has_iron_powder", ModItems.IRON_POWDER.get(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/steel_alloy"));
+        var blazingGoldReq = createIngredients(Items.GOLD_INGOT.asItem(),Items.GOLD_INGOT.asItem(), Items.BLAZE_POWDER.asItem());
+        buildAlloyRecipes(blazingGoldReq, new ItemStack(ModItems.BLAZING_GOLD_INGOT.get(), 2), 300,"has_blaze_powder", Items.BLAZE_POWDER.asItem(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/blazing_gold_alloy"));
         //endregion
 
         // Smelting and blasting
