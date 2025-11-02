@@ -74,15 +74,15 @@ public class ModItemModelProvider extends ItemModelProvider {
 
                getBuilder(currentTrimName)
                        .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                       .texture("layer_1", armorItemResLoc.getNamespace()+ ":item/" + armorItemResLoc.getPath())
-                       .texture("layer_2", trimResLoc);
+                       .texture("layer0", armorItemResLoc.getNamespace()+ ":item/" + armorItemResLoc.getPath())
+                       .texture("layer1", trimResLoc);
 
                this.withExistingParent(itemDeferredItem.getId().getPath(),
                        mcLoc("item/generated"))
                        .override()
                        .model(new ModelFile.UncheckedModelFile(trimNameResLoc.getNamespace() + ":item/" + trimNameResLoc.getPath()))
                        .predicate(mcLoc("trim_type"), trimValue).end()
-                       .texture("layer_1", ResourceLocation.fromNamespaceAndPath(MODID, "item/" + itemDeferredItem.getId().getPath()));
+                       .texture("layer0", ResourceLocation.fromNamespaceAndPath(MODID, "item/" + itemDeferredItem.getId().getPath()));
            });
        }
     }
