@@ -62,6 +62,10 @@ public class ModBlockEntities {
             "hardened_alloy_smelter", () -> BlockEntityType.Builder.of(HardenedAlloySmelterBlockEntity::new, ModBlocks.HARDENED_ALLOY_SMELTER.get())
     );
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ElectricCentrifugeBlockEntity>> ELECTRIC_CENTRIFUGE_BE = register(
+            "electric_centrifuge", () -> BlockEntityType.Builder.of(ElectricCentrifugeBlockEntity::new, ModBlocks.ELECTRIC_CENTRIFUGE.get())
+    );
+
     private static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> register(String name, Supplier<BlockEntityType.Builder<T>> builder) {
         return BLOCK_ENTITIES.register(name,()-> builder.get().build(null));
     }

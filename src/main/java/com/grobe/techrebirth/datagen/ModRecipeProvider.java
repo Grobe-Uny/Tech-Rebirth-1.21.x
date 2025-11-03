@@ -26,6 +26,7 @@ import java.util.stream.Stream;
 import static com.grobe.techrebirth.recipe.CrushingRecipeBuilder.crushing;
 import static com.grobe.techrebirth.recipe.GeneratorFuelRecipeBuilder.fuel;
 import static com.grobe.techrebirth.recipe.AlloySmeltingRecipeBuilder.alloySmelting;
+import static com.grobe.techrebirth.recipe.CentrifugeRecipeBuilder.centrifuging;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
     public ModRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pRegistries) {
@@ -192,6 +193,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildAlloyRecipes(steelReq, new ItemStack(ModItems.STEEL_INGOT.get()), 200, "has_iron_powder", ModItems.IRON_POWDER.get(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/steel_alloy"));
         var blazingGoldReq = createIngredients(Items.GOLD_INGOT.asItem(),Items.GOLD_INGOT.asItem(), Items.BLAZE_POWDER.asItem());
         buildAlloyRecipes(blazingGoldReq, new ItemStack(ModItems.BLAZING_GOLD_INGOT.get(), 2), 300,"has_blaze_powder", Items.BLAZE_POWDER.asItem(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/blazing_gold_alloy"));
+        //endregion
+
+        //region centrifuge recipes
+        centrifuging(Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Items.BLAZE_POWDER), 20, new ItemStack(ModItems.BLAZING_GOLD_INGOT.get()), 300)
+                .unlockedBy("has_electric_centrifuge", has(ModBlocks.ELECTRIC_CENTRIFUGE.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "centrifuging/blazing_gold"));
         //endregion
 
         // Smelting and blasting

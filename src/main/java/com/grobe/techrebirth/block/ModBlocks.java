@@ -156,6 +156,14 @@ public class ModBlocks {
                     .sound(SoundType.METAL)
             ));
 
+    public static final DeferredBlock<Block> ELECTRIC_CENTRIFUGE = registerBlock("electric_centrifuge",
+            () -> new com.grobe.techrebirth.block.custom.ElectricCentrifugeBlock(BlockBehaviour.Properties.of()
+                    .strength(3.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL),
+                    MachineTier.BASIC
+            ));
+
     private static <T extends  Block> DeferredBlock<T> registerBlock (String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

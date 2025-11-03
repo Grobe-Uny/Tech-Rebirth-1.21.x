@@ -101,6 +101,7 @@ public class TechRebirth {
             event.register(ModMenuTypes.GENERATOR_MENU.get(), GeneratorScreen::new);
             event.register(ModMenuTypes.ELECTRIC_CRUSHER_MENU.get(), ElectricCrusherScreen::new);
             event.register(ModMenuTypes.ALLOY_SMELTER_MENU.get(), AlloySmelterScreen::new);
+            event.register(ModMenuTypes.ELECTRIC_CENTRIFUGE_MENU.get(), com.grobe.techrebirth.gui.electric_centrifuge.ElectricCentrifugeScreen::new);
         }
     }
 }

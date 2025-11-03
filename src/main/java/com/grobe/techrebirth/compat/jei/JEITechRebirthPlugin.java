@@ -41,6 +41,7 @@ public class JEITechRebirthPlugin implements IModPlugin {
         registration.addRecipeCategories(new ElectricFurnaceRecipeCategory(gui));
         registration.addRecipeCategories(new ElectricCrusherRecipeCategory(gui));
         registration.addRecipeCategories(new AlloySmelterRecipeCategory(gui));
+        registration.addRecipeCategories(new CentrifugeRecipeCategory(gui));
     }
 
     @Override
@@ -61,6 +62,12 @@ public class JEITechRebirthPlugin implements IModPlugin {
                 .map(holder -> holder.value())
                 .toList();
         registration.addRecipes(AlloySmelterRecipeCategory.TYPE, alloying);
+
+        // Centrifuge recipes
+        var centrifuging = recipeManager.getAllRecipesFor(ModRecipeTypes.CENTRIFUGE_TYPE.get()).stream()
+                .map(holder -> holder.value())
+                .toList();
+        registration.addRecipes(CentrifugeRecipeCategory.TYPE, centrifuging);
     }
 
     @Override
@@ -68,5 +75,6 @@ public class JEITechRebirthPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELECTRIC_FURNACE.get()), ElectricFurnaceRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELECTRIC_CRUSHER.get()), ElectricCrusherRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ALLOY_SMELTER.get()),    AlloySmelterRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELECTRIC_CENTRIFUGE.get()), CentrifugeRecipeCategory.TYPE);
     }
 }
