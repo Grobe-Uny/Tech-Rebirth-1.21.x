@@ -42,12 +42,11 @@ public class ElectricCentrifugeMenu extends AbstractContainerMenu {
         return data.get(0) > 0;
     }
 
-    public int getScaledProgress() {
-        int progress = this.data.get(0);
-        int maxProgress = this.data.get(1);
-        int progressArrowSize = 24; // Width of the progress arrow
+    public int getScaledProgress(int width) {
+        int progress = getProgress();
+        int maxProgress = getMaxProgress();
 
-        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+        return maxProgress > 0 ? (progress * width) / maxProgress : 0;
     }
 
     public int getEnergy() {
@@ -72,6 +71,18 @@ public class ElectricCentrifugeMenu extends AbstractContainerMenu {
 
     public int getMaxProgress() {
         return this.data.get(1);
+    }
+
+    public int getEnergyScaled(int height){
+        int energy = getEnergy();
+        int maxEnergy = getMaxEnergy();
+        return maxEnergy > 0 ?  (energy * height) / maxEnergy : 0;
+    }
+    public int getCatalystScaled(int height){
+        int catalyst = getCatalystAmount();
+        int maxCatalyst = 1000;
+
+        return maxCatalyst > 0 ? (catalyst * height) / maxCatalyst : 0;
     }
 
     @Override

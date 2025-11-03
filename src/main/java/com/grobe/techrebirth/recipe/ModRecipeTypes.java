@@ -52,17 +52,7 @@ public class ModRecipeTypes {
             });
 
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CentrifugeRecipe>> CENTRIFUGE_SERIALIZER =
-            SERIALIZERS.register("centrifuging", () -> new RecipeSerializer<CentrifugeRecipe>() {
-                @Override
-                public com.mojang.serialization.MapCodec<CentrifugeRecipe> codec() {
-                    return CentrifugeRecipe.CentrifugeRecipeSerializer.CODEC;
-                }
-
-                @Override
-                public net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, CentrifugeRecipe> streamCodec() {
-                    return CentrifugeRecipe.CentrifugeRecipeSerializer.STREAM_CODEC;
-                }
-            });
+            SERIALIZERS.register("centrifuging", CentrifugeRecipe.Serializer::new);
 
     public static void register(IEventBus bus) {
         SERIALIZERS.register(bus);

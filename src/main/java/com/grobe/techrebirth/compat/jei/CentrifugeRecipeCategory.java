@@ -12,6 +12,8 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -40,6 +42,7 @@ public class CentrifugeRecipeCategory implements IRecipeCategory<CentrifugeRecip
         return Component.translatable("block.techrebirth.electric_centrifuge");
     }
 
+    @SuppressWarnings("removal")
     @Override
     public IDrawable getBackground() {
         return background;
@@ -60,8 +63,9 @@ public class CentrifugeRecipeCategory implements IRecipeCategory<CentrifugeRecip
     @Override
     public void draw(CentrifugeRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gg, double mouseX, double mouseY) {
         // Render catalyst amount
+        Font font = Minecraft.getInstance().font;
         String catalystAmount = recipe.catalystAmount() + " mB";
-        gg.drawString(mc.font, catalystAmount, 18, 40, 0xFFFFFF, false);
+        gg.drawString(font, catalystAmount, 18, 40, 0xFFFFFF, false);
         IRecipeCategory.super.draw(recipe, recipeSlotsView, gg, mouseX, mouseY);
     }
 }

@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.block.custom.entity;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.gui.electric_centrifuge.ElectricCentrifugeMenu;
 import com.grobe.techrebirth.recipe.CentrifugeRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.util.MachineTier;
@@ -10,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
@@ -18,6 +20,8 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.event.level.NoteBlockEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -210,16 +214,18 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
         return switch (slot) {
             case INPUT_SLOT, CATALYST_FILL_SLOT -> true;
             case OUTPUT_SLOT -> false;
-            default -> super.isItemValid(slot, stack);
+//            default -> super.isItemValid(slot, stack);
+            default -> false;
         };
     }
 
     @Override
     public Component getDisplayName() { return Component.literal("Electric Centrifuge"); }
 
+    @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int id, Inventory playerInventory) {
-        return new com.grobe.techrebirth.gui.electric_centrifuge.ElectricCentrifugeMenu(id, playerInventory, this, this.data);
+    public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
+        return new ElectricCentrifugeMenu(id, playerInventory, this, this.getContainerData());
     }
     //endregion
 
@@ -243,5 +249,6 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
             this.catalystStack = ItemStack.parse(provider, tag.getCompound("centrifuge.catalyst_type")).orElse(ItemStack.EMPTY);
         }
     }
+
     //endregion
 }

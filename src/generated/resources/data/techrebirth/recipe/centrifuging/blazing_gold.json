@@ -1,0 +1,15 @@
+{
+  "type": "techrebirth:centrifuging",
+  "catalyst": {
+    "item": "minecraft:blaze_powder"
+  },
+  "catalyst_amount": 20,
+  "ingredient": {
+    "item": "minecraft:gold_ingot"
+  },
+  "result": {
+    "count": 1,
+    "id": "techrebirth:blazing_gold_ingot"
+  },
+  "time": 300
+}

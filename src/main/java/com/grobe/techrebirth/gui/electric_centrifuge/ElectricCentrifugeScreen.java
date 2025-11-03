@@ -1,13 +1,21 @@
 package com.grobe.techrebirth.gui.electric_centrifuge;
 
+import com.grobe.techrebirth.Config;
 import com.grobe.techrebirth.TechRebirth;
+import com.grobe.techrebirth.compat.jei.JEITechRebirthPlugin;
+import com.grobe.techrebirth.gui.alloy_smelter.AlloySmelterScreen;
+import com.grobe.techrebirth.recipe.AlloySmeltingRecipe;
+import com.grobe.techrebirth.recipe.CentrifugeRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
+import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ElectricCentrifugeScreen extends AbstractContainerScreen<ElectricCentrifugeMenu> {
@@ -15,11 +23,39 @@ public class ElectricCentrifugeScreen extends AbstractContainerScreen<ElectricCe
 
     public ElectricCentrifugeScreen(ElectricCentrifugeMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
+        this.imageWidth = TEX_W;
+        this.imageHeight = TEX_H;
     }
+
+
+    private static final int TEX_W = 176;
+    private static final int TEX_H = 166;
+
+    private static final int ENERGY_BAR_X = 10;
+    private static final int ENERGY_BAR_Y = 18;
+    private static final int ENERGY_BAR_WIDTH = 10;
+    private static final int ENERGY_BAR_HEIGHT = 50;
+
+    private static final int PROGRESS_BAR_X = 78;
+    private static final int PROGRESS_BAR_Y = 40;
+    private static final int PROGRESS_BAR_WIDTH = 16;
+    private static final int PROGRESS_BAR_HEIGHT = 8;
+
+    private static final int CATALYST_BAR_X = 26;
+    private static final int CATALYST_BAR_Y = 30;
+    private static final int CATALYST_BAR_WIDTH = 5;
+    private static final int CATALYST_BAR_HEIGHT = 20;
+
+
+
+    private final ProgressBarArea progressBarArea = new ProgressBarArea();
 
     @Override
     protected void init() {
         super.init();
+        this.inventoryLabelY = 10000;
+        this.titleLabelY = 10000;
+        progressBarArea.updateScreenCoords(this.leftPos, this.topPos);
     }
 
     @Override
@@ -28,57 +64,152 @@ public class ElectricCentrifugeScreen extends AbstractContainerScreen<ElectricCe
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
-        guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
+        guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight, TEX_W, TEX_H);
 
-        renderProgressArrow(guiGraphics, x, y);
+        renderProgressBar(guiGraphics, x, y, pMouseX, pMouseY);
         renderEnergyBar(guiGraphics, x, y);
         renderCatalystBar(guiGraphics, x, y);
     }
 
-    private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
-        if (menu.isCrafting()) {
-            guiGraphics.blit(TEXTURE, x + 79, y + 34, 176, 0, menu.getScaledProgress(), 17);
+    private void renderEnergyBar(GuiGraphics guiGraphics, int x, int y) {
+        int ex = x + ENERGY_BAR_X;
+        int ey = y + ENERGY_BAR_Y;
+        int border = 0xFF202020;
+        guiGraphics.fill(ex - 1, ey - 1, ex + ENERGY_BAR_WIDTH + 1, ey + ENERGY_BAR_HEIGHT + 1, border);
+        int bg = 0xFF101010;
+        guiGraphics.fill(ex, ey, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, bg);
+        int filled = menu.getEnergyScaled(ENERGY_BAR_HEIGHT);
+        if (filled > 0) {
+            int fy = ey + (ENERGY_BAR_HEIGHT - filled);
+            int color = 0xFFCC2B2B;
+            guiGraphics.fill(ex, fy, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, color);
         }
     }
+    private void renderProgressBar(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY) {
+        int progress = menu.getProgress();
+        int maxProgress = menu.getMaxProgress();
 
-    private void renderEnergyBar(GuiGraphics guiGraphics, int x, int y) {
-        int energy = menu.getEnergy();
-        int maxEnergy = menu.getMaxEnergy();
-        int height = (int) (52 * ((float) energy / maxEnergy));
-        guiGraphics.blit(TEXTURE, x + 152, y + 17 + (52 - height), 176, 17, 16, height);
+        int px = x + PROGRESS_BAR_X;
+        int py = y + PROGRESS_BAR_Y;
+
+        // Background
+        guiGraphics.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1, 0xFF404040);
+        guiGraphics.fill(px, py, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, 0xFF202020);
+
+        // Progress fill
+        if (maxProgress > 0 && progress > 0) {
+            int progressHeight = menu.getScaledProgress(PROGRESS_BAR_WIDTH);
+            if (progressHeight > 0) {
+                int fillY = py + (PROGRESS_BAR_HEIGHT - progressHeight);
+                guiGraphics.fill(px, fillY, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, 0xFF2B93CC);
+            }
+        }
+        if ( Config.isHighlightEnabled() && progressBarArea.isMouseOver(mouseX, mouseY)) {
+            int highlightColor = Config.getHighlightColor();
+            // Nacrtaj zlatni outline kada je miš iznad
+            guiGraphics.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py, highlightColor); // gornja linija
+            guiGraphics.fill(px - 1, py + PROGRESS_BAR_HEIGHT, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1, highlightColor); // donja linija
+            guiGraphics.fill(px - 1, py, px, py + PROGRESS_BAR_HEIGHT, highlightColor); // lijeva linija
+            guiGraphics.fill(px + PROGRESS_BAR_WIDTH, py, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT, highlightColor); // desna linija
+        }
     }
-
-    private void renderCatalystBar(GuiGraphics guiGraphics, int x, int y) {
-        int catalyst = menu.getCatalystAmount();
-        int maxCatalyst = 1000; // This should be synced from the BE
-        int height = (int) (52 * ((float) catalyst / maxCatalyst));
-        guiGraphics.blit(TEXTURE, x + 8, y + 17 + (52 - height), 192, 17, 16, height);
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (button == 0 && progressBarArea.isMouseOver(mouseX, mouseY)) {
+            showJEIRecipes();
+            return true;
+        }
+        return super.mouseClicked(mouseX, mouseY, button);
     }
-
+    private void showJEIRecipes() {
+        IJeiRuntime jei = JEITechRebirthPlugin.getJeiRuntime();
+        if (jei != null) {
+            RecipeType<CentrifugeRecipe> recipeType = RecipeType.create(
+                    TechRebirth.MODID, "centrifuging", CentrifugeRecipe.class
+            );
+            jei.getRecipesGui().showTypes(List.of(recipeType));
+        }
+    }
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
+
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+
+        // Energy bar tooltip
+        int ex = x + ENERGY_BAR_X;
+        int ey = y + ENERGY_BAR_Y;
+        if (mouseX >= ex && mouseX < ex + ENERGY_BAR_WIDTH && mouseY >= ey && mouseY < ey + ENERGY_BAR_HEIGHT) {
+            int energy = menu.getEnergy();
+            int max = menu.getMaxEnergy();
+            guiGraphics.renderTooltip(this.font,
+                    Component.literal(energy + " / " + max + " RF"),
+                    mouseX, mouseY);
+        }
+
+        // Progress bar tooltip
+        int px = x + PROGRESS_BAR_X;
+        int py = y + PROGRESS_BAR_Y;
+        if (mouseX >= px && mouseX < px + PROGRESS_BAR_WIDTH && mouseY >= py && mouseY < py + PROGRESS_BAR_HEIGHT) {
+            String status = getProgressStatus();
+            Component tooltip = Component.literal(status + "\n§aClick to view recipes in JEI");
+            guiGraphics.renderTooltip(this.font, tooltip, mouseX, mouseY);
+        }
+
         renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
-    @Override
-    protected void renderTooltip(GuiGraphics guiGraphics, int pMouseX, int pMouseY) {
-        if (isHovering(152, 17, 16, 52, pMouseX, pMouseY)) {
-            guiGraphics.renderTooltip(this.font, Component.literal(menu.getEnergy() + " / " + menu.getMaxEnergy() + " RF"),
-                    Optional.empty(), pMouseX, pMouseY);
+    private String getProgressStatus() {
+        int progress = menu.getProgress();
+        int maxProgress = menu.getMaxProgress();
+
+        if (maxProgress > 0) {
+            float percent = (float) progress / maxProgress * 100;
+            int secondsLeft = (maxProgress - progress) / 20;
+            return progress > 0 ?
+                    String.format("Progress: %d/%d (%.1f%%) - %ds left", progress, maxProgress, percent, secondsLeft) :
+                    "Ready to process";
         }
-        if (isHovering(8, 17, 16, 52, pMouseX, pMouseY)) {
-            guiGraphics.renderTooltip(this.font, Component.literal(menu.getCatalystItem().getDisplayName().getString() + " " + menu.getCatalystAmount() + " / 1000 mB"),
-                    Optional.empty(), pMouseX, pMouseY);
-        }
-        if (isHovering(79, 34, 24, 17, pMouseX, pMouseY)) {
-            if (menu.isCrafting()) {
-                float timeRemaining = (menu.getMaxProgress() - menu.getProgress()) / 20f;
-                guiGraphics.renderTooltip(this.font, Component.literal(String.format("%.2f s", timeRemaining)),
-                        Optional.empty(), pMouseX, pMouseY);
-            }
-        }
-        super.renderTooltip(guiGraphics, pMouseX, pMouseY);
+        return "No active recipe";
     }
+
+    // Helper class za progress bar area
+    private static class ProgressBarArea {
+        private int screenX, screenY;
+        private final int width = PROGRESS_BAR_WIDTH;
+        private final int height = PROGRESS_BAR_HEIGHT;
+
+        public void updateScreenCoords(int guiLeft, int guiTop) {
+            this.screenX = guiLeft + PROGRESS_BAR_X;
+            this.screenY = guiTop + PROGRESS_BAR_Y;
+        }
+
+        public boolean isMouseOver(double mouseX, double mouseY) {
+            return mouseX >= screenX && mouseX < screenX + width &&
+                    mouseY >= screenY && mouseY < screenY + height;
+        }
+    }
+
+    private void renderCatalystBar(GuiGraphics guiGraphics, int x, int y) {
+        int cx = x + CATALYST_BAR_X;
+        int cy = y + CATALYST_BAR_Y;
+
+        int border = 0xFF404040;
+        guiGraphics.fill(cx - 1, cy - 1, cx + CATALYST_BAR_WIDTH + 1, cy + CATALYST_BAR_WIDTH + 1, border);
+        // Draw an inner background (almost black)
+        int bg = 0xFF202020;
+        guiGraphics.fill(cx, cy, cx + CATALYST_BAR_WIDTH, cy + CATALYST_BAR_HEIGHT, bg);
+        // Draw energy amount (red, from bottom up)
+        int filled = menu.getCatalystScaled(CATALYST_BAR_HEIGHT);
+        if (filled > 0) {
+            int fy = cy + (CATALYST_BAR_HEIGHT - filled);
+            int color = 0xFF32CD32;
+            guiGraphics.fill(cx, fy, cx + CATALYST_BAR_WIDTH, cy + CATALYST_BAR_HEIGHT, color);
+
+        }
+    }
+
+
 }

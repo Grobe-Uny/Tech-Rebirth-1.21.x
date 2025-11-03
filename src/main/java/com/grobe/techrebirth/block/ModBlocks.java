@@ -160,8 +160,7 @@ public class ModBlocks {
             () -> new com.grobe.techrebirth.block.custom.ElectricCentrifugeBlock(BlockBehaviour.Properties.of()
                     .strength(3.0f)
                     .requiresCorrectToolForDrops()
-                    .sound(SoundType.METAL),
-                    MachineTier.BASIC
+                    .sound(SoundType.METAL)
             ));
 
     private static <T extends  Block> DeferredBlock<T> registerBlock (String name, Supplier<T> block){
