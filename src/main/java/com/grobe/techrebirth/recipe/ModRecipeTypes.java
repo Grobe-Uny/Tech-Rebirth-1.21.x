@@ -44,6 +44,26 @@ public class ModRecipeTypes {
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CrushingRecipe>> CRUSHING_SERIALIZER =
             SERIALIZERS.register("crushing", CrushingRecipe.Serializer::new);
 
+    public static final ResourceLocation CENTRIFUGE_ID = ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "centrifuging");
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<CentrifugeRecipe>> CENTRIFUGE_TYPE =
+            TYPES.register("centrifuging", () -> new RecipeType<CentrifugeRecipe>() {
+                public String toString() { return CENTRIFUGE_ID.toString(); }
+            });
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CentrifugeRecipe>> CENTRIFUGE_SERIALIZER =
+            SERIALIZERS.register("centrifuging", () -> new RecipeSerializer<CentrifugeRecipe>() {
+                @Override
+                public com.mojang.serialization.MapCodec<CentrifugeRecipe> codec() {
+                    return CentrifugeRecipe.CentrifugeRecipeSerializer.CODEC;
+                }
+
+                @Override
+                public net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, CentrifugeRecipe> streamCodec() {
+                    return CentrifugeRecipe.CentrifugeRecipeSerializer.STREAM_CODEC;
+                }
+            });
+
     public static void register(IEventBus bus) {
         SERIALIZERS.register(bus);
         TYPES.register(bus);
