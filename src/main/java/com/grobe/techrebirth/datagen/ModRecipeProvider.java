@@ -209,6 +209,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         // Example food: keep near ~1.4–1.8s in machine; 160 vanilla -> 28.8 ticks (~1.44s)
         buildFoodCookingRecipe(Items.CARROT, ModItems.COOKED_CARROT, 2, 160, recipeOutput, "has_carrot", Items.CARROT);
 
+        // armor sets
+        buildArmorSetRecipes(ModItems.BLAZING_GOLD_INGOT.asItem(), ModItems.BLAZING_GOLD_HELMET.asItem(), ModItems.BLAZING_GOLD_CHESTPLATE.asItem(), ModItems.BLAZING_GOLD_LEGGINGS.asItem(),ModItems.BLAZING_GOLD_BOOTS.asItem(),"has_blazing_gold", recipeOutput);
+
         super.buildRecipes(recipeOutput);
     }
 
@@ -298,6 +301,41 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('B', hardenedMachine.asItem())
                 .unlockedBy("has_steel_gear", has(hardenedMachine))
                 .save(recipeOutput, resourceLocation);
+    }
+    public static void buildArmorSetRecipes(ItemLike material, ItemLike helmet, ItemLike chestplate, ItemLike leggings, ItemLike boots, String unlockCriterion, RecipeOutput recipeOutput) {
+        // Helmet
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, helmet)
+                .pattern("XXX")
+                .pattern("X X")
+                .define('X', material)
+                .unlockedBy(unlockCriterion, has(material))
+                .save(recipeOutput);
+
+        // Chestplate
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, chestplate)
+                .pattern("X X")
+                .pattern("XXX")
+                .pattern("XXX")
+                .define('X', material)
+                .unlockedBy(unlockCriterion, has(material))
+                .save(recipeOutput);
+
+        // Leggings
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, leggings)
+                .pattern("XXX")
+                .pattern("X X")
+                .pattern("X X")
+                .define('X', material)
+                .unlockedBy(unlockCriterion, has(material))
+                .save(recipeOutput);
+
+        // Boots
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, boots)
+                .pattern("X X")
+                .pattern("X X")
+                .define('X', material)
+                .unlockedBy(unlockCriterion, has(material))
+                .save(recipeOutput);
     }
     private static NonNullList<Ingredient> createIngredients(ItemLike... items){
         NonNullList<Ingredient>ingredients = NonNullList.create();
