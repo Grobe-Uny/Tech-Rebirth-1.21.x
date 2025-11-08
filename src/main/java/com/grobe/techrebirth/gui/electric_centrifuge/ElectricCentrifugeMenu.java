@@ -31,8 +31,8 @@ public class ElectricCentrifugeMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), ElectricCentrifugeBlockEntity.INPUT_SLOT, 44, 35));
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), ElectricCentrifugeBlockEntity.CATALYST_FILL_SLOT, 18, 52));
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), ElectricCentrifugeBlockEntity.INPUT_SLOT, 51, 35));
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), ElectricCentrifugeBlockEntity.CATALYST_FILL_SLOT, 26, 58));
         this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), ElectricCentrifugeBlockEntity.OUTPUT_SLOT, 116, 35));
 
         addDataSlots(data);

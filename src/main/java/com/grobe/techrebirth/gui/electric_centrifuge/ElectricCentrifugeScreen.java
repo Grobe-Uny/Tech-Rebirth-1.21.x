@@ -36,13 +36,13 @@ public class ElectricCentrifugeScreen extends AbstractContainerScreen<ElectricCe
     private static final int ENERGY_BAR_WIDTH = 10;
     private static final int ENERGY_BAR_HEIGHT = 50;
 
-    private static final int PROGRESS_BAR_X = 78;
+    private static final int PROGRESS_BAR_X = 82;
     private static final int PROGRESS_BAR_Y = 40;
     private static final int PROGRESS_BAR_WIDTH = 16;
     private static final int PROGRESS_BAR_HEIGHT = 8;
 
-    private static final int CATALYST_BAR_X = 26;
-    private static final int CATALYST_BAR_Y = 30;
+    //private static final int CATALYST_BAR_X = 35;
+    //private static final int CATALYST_BAR_Y = 30;
     private static final int CATALYST_BAR_WIDTH = 5;
     private static final int CATALYST_BAR_HEIGHT = 20;
 
@@ -98,10 +98,10 @@ public class ElectricCentrifugeScreen extends AbstractContainerScreen<ElectricCe
 
         // Progress fill
         if (maxProgress > 0 && progress > 0) {
-            int progressHeight = menu.getScaledProgress(PROGRESS_BAR_WIDTH);
-            if (progressHeight > 0) {
-                int fillY = py + (PROGRESS_BAR_HEIGHT - progressHeight);
-                guiGraphics.fill(px, fillY, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, 0xFF2B93CC);
+            int progressWidth = menu.getScaledProgress(PROGRESS_BAR_WIDTH);
+            if (progressWidth > 0) {
+                int fillX = px;
+                guiGraphics.fill(fillX, py, px + progressWidth, py + PROGRESS_BAR_HEIGHT, 0xFF2B93CC);
             }
         }
         if ( Config.isHighlightEnabled() && progressBarArea.isMouseOver(mouseX, mouseY)) {
@@ -193,23 +193,28 @@ public class ElectricCentrifugeScreen extends AbstractContainerScreen<ElectricCe
     }
 
     private void renderCatalystBar(GuiGraphics guiGraphics, int x, int y) {
-        int cx = x + CATALYST_BAR_X;
-        int cy = y + CATALYST_BAR_Y;
 
+        int catalystSlotX = 26;
+        int catalystSlotY = 58;
+        int catalystSlotWidth = 16;
+
+        int barCenterX = catalystSlotX + (catalystSlotWidth / 2);
+        int cx = x + barCenterX - (CATALYST_BAR_WIDTH / 2);
+        int cy = y + catalystSlotY - CATALYST_BAR_HEIGHT - 6;
+
+        // Background
         int border = 0xFF404040;
-        guiGraphics.fill(cx - 1, cy - 1, cx + CATALYST_BAR_WIDTH + 1, cy + CATALYST_BAR_WIDTH + 1, border);
-        // Draw an inner background (almost black)
+        guiGraphics.fill(cx - 1, cy - 1, cx + CATALYST_BAR_WIDTH + 1, cy + CATALYST_BAR_HEIGHT + 1, border);
+
         int bg = 0xFF202020;
         guiGraphics.fill(cx, cy, cx + CATALYST_BAR_WIDTH, cy + CATALYST_BAR_HEIGHT, bg);
-        // Draw energy amount (red, from bottom up)
+
+        // Progress fill - PUNI SE OD DOLJE PREMA GORE
         int filled = menu.getCatalystScaled(CATALYST_BAR_HEIGHT);
         if (filled > 0) {
-            int fy = cy + (CATALYST_BAR_HEIGHT - filled);
+            int fillY = cy + (CATALYST_BAR_HEIGHT - filled); // Počinje od dna
             int color = 0xFF32CD32;
-            guiGraphics.fill(cx, fy, cx + CATALYST_BAR_WIDTH, cy + CATALYST_BAR_HEIGHT, color);
-
+            guiGraphics.fill(cx, fillY, cx + CATALYST_BAR_WIDTH, cy + CATALYST_BAR_HEIGHT, color);
         }
     }
-
-
 }

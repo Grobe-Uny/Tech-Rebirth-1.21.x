@@ -5,6 +5,7 @@ import com.grobe.techrebirth.gui.electric_centrifuge.ElectricCentrifugeMenu;
 import com.grobe.techrebirth.recipe.CentrifugeRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.util.MachineTier;
+import com.grobe.techrebirth.util.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +17,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
@@ -23,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.event.level.NoteBlockEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.Optional;
 
 public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
@@ -37,6 +40,10 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
     private ItemStack catalystStack = ItemStack.EMPTY;
     private int catalystAmount = 0;
     private Optional<RecipeHolder<CentrifugeRecipe>> currentRecipe = Optional.empty();
+
+    private static final Map<Item, Integer> CATALYST_VALUES = Map.of(
+            Items.BLAZE_POWDER, 10
+    );
 
     public ElectricCentrifugeBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ELECTRIC_CENTRIFUGE_BE.get(), pos, state, 3, MachineTier.BASIC, 6);
@@ -154,7 +161,12 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
             return;
         }
 
-        int catalystValue = 10; // This should be defined in a config or data-driven way later
+        Integer catalystValue = getCatalystValue(catalystFillStack.getItem());
+        if (catalystValue == null) {
+            return; // Ako item nije u mapi, nije catalyst
+        }
+
+        // This should be defined in a config or data-driven way later
 
         if ((this.catalystStack.isEmpty() || ItemStack.isSameItem(this.catalystStack, catalystFillStack)) && this.catalystAmount < CATALYST_CAPACITY) {
             if (this.catalystStack.isEmpty()) {
@@ -167,6 +179,13 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
                 catalystFillStack.shrink(1);
             }
         }
+    }
+    private Integer getCatalystValue(Item item) {
+        return CATALYST_VALUES.get(item);
+    }
+    private boolean isCatalystItem(ItemStack stack) {
+        return CATALYST_VALUES.containsKey(stack.getItem()) ||
+                stack.is(ModTags.Items.CATALYSTS_D.common());
     }
 
     private boolean hasCorrectCatalyst(CentrifugeRecipe recipe) {
@@ -212,9 +231,9 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
     @Override
     protected boolean isItemValid(int slot, ItemStack stack) {
         return switch (slot) {
-            case INPUT_SLOT, CATALYST_FILL_SLOT -> true;
+            case INPUT_SLOT -> true;
+            case CATALYST_FILL_SLOT -> isCatalystItem(stack);
             case OUTPUT_SLOT -> false;
-//            default -> super.isItemValid(slot, stack);
             default -> false;
         };
     }

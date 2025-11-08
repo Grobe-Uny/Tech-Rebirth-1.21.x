@@ -52,6 +52,10 @@ public final class ModTags {
         public static final Dual INGOTS_STEEL_D = dual("ingots/steel");
         public static final Dual INGOTS_BLAZING_GOLD_D = dual("ingots/blazing_gold");
 
+        // Duals for catalysts in electric centrifuge
+        public static final Dual CATALYSTS_D = dual("catalyst");
+        public static final Dual CATALYST_BLAZE = dual("catalyst/blaze");
+
         // Duals for dust/powder compatibility
         public static final Dual DUSTS_D = dual("dusts");
         public static final Dual IRON_DUST_D = dual("dusts/iron");

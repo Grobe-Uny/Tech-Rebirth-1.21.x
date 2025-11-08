@@ -8,6 +8,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -31,7 +32,8 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.BLAZING_GOLD_BOOTS.get());
 
 
-
+        // Add catalysts to both c: and neoforge: catalyst via Dual helpers
+        for(var tagKey : ModTags.Items.CATALYST_BLAZE.both())   tag(tagKey).add(Items.BLAZE_POWDER);
 
         // Add our ingots to both c: and neoforge: ingot tags via Dual helpers
         for (var tagKey : ModTags.Items.INGOTS_LEAD_D.both())   tag(tagKey).add(ModItems.LEAD_INGOT.get());
@@ -92,6 +94,12 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .addTag(ModTags.Items.INGOTS_BLAZING_GOLD_D.common())
                 .addTag(ModTags.Items.INGOTS_STEEL_D.common());
 
+        var catalystsBoth = ModTags.Items.CATALYSTS_D.both();
+        tag(ingotsBoth[0])
+                .addTag(ModTags.Items.CATALYST_BLAZE.neoforge()
+                );
+        tag(ingotsBoth[1])
+                .addTag(ModTags.Items.CATALYST_BLAZE.common());
 
         var dustsBoth = ModTags.Items.DUSTS_D.both();
         tag(dustsBoth[0])
