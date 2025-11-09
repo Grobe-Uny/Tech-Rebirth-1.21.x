@@ -1,10 +1,12 @@
 package com.grobe.techrebirth.item;
 
 import com.grobe.techrebirth.util.ModTags;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.Tags;
 
 public class ModToolTiers {
 
@@ -26,7 +28,7 @@ public class ModToolTiers {
 
         @Override
         public TagKey<Block> getIncorrectBlocksForDrops() {
-            return null;
+            return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
         }
 
         @Override
