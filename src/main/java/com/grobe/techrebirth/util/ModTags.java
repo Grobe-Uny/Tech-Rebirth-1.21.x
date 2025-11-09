@@ -94,9 +94,6 @@ public final class ModTags {
         public static final TagKey<Item> C_RAW_MATERIALS_LEAD = tag("c", "raw_materials/lead");
         public static final TagKey<Item> C_ORES_LEAD_ITEMS = tag("c", "ores/lead");
 
-
-        // Duals for easier implementation of other stuff
-        public static final Dual BLAZING_GOLD_TOOLS_D = dual("tools/blazing_gold");
     }
 
     public static final class Blocks {

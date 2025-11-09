@@ -42,13 +42,6 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.BLAZING_GOLD_HOE.get());
 
 
-        //misc items
-        for(var tagKey : ModTags.Items.BLAZING_GOLD_TOOLS_D.both()) tag(tagKey).add(ModItems.BLAZING_GOLD_SWORD.get())
-                .add(ModItems.BLAZING_GOLD_AXE.get())
-                .add(ModItems.BLAZING_GOLD_PICKAXE.get())
-                .add(ModItems.BLAZING_GOLD_SHOVEL.get())
-                .add(ModItems.BLAZING_GOLD_HOE.get());
-
 
         // Add catalysts to both c: and neoforge: catalyst via Dual helpers
         for(var tagKey : ModTags.Items.CATALYST_BLAZE.both())   tag(tagKey).add(Items.BLAZE_POWDER);
