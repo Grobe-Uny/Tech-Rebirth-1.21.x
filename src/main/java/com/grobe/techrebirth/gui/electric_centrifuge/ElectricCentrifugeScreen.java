@@ -3,6 +3,7 @@ package com.grobe.techrebirth.gui.electric_centrifuge;
 import com.grobe.techrebirth.Config;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.compat.jei.JEITechRebirthPlugin;
+import com.grobe.techrebirth.gui.BaseMachineScreen;
 import com.grobe.techrebirth.gui.alloy_smelter.AlloySmelterScreen;
 import com.grobe.techrebirth.recipe.AlloySmeltingRecipe;
 import com.grobe.techrebirth.recipe.CentrifugeRecipe;
@@ -18,31 +19,30 @@ import net.minecraft.world.entity.player.Inventory;
 import java.util.List;
 import java.util.Optional;
 
-public class ElectricCentrifugeScreen extends AbstractContainerScreen<ElectricCentrifugeMenu> {
+public class ElectricCentrifugeScreen extends BaseMachineScreen<ElectricCentrifugeMenu> {
+
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/electric_centrifuge_gui.png");
 
     public ElectricCentrifugeScreen(ElectricCentrifugeMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
-        super(pMenu, pPlayerInventory, pTitle);
+        super(pMenu, pPlayerInventory, pTitle, TEXTURE);
         this.imageWidth = TEX_W;
         this.imageHeight = TEX_H;
     }
 
 
-    private static final int TEX_W = 176;
-    private static final int TEX_H = 166;
-
-    private static final int ENERGY_BAR_X = 10;
-    private static final int ENERGY_BAR_Y = 18;
-    private static final int ENERGY_BAR_WIDTH = 10;
-    private static final int ENERGY_BAR_HEIGHT = 50;
+//    private static final int TEX_W = 176;
+//    private static final int TEX_H = 166;
+//
+//    private static final int ENERGY_BAR_X = 10;
+//    private static final int ENERGY_BAR_Y = 18;
+//    private static final int ENERGY_BAR_WIDTH = 10;
+//    private static final int ENERGY_BAR_HEIGHT = 50;
 
     private static final int PROGRESS_BAR_X = 82;
     private static final int PROGRESS_BAR_Y = 40;
     private static final int PROGRESS_BAR_WIDTH = 16;
     private static final int PROGRESS_BAR_HEIGHT = 8;
 
-    //private static final int CATALYST_BAR_X = 35;
-    //private static final int CATALYST_BAR_Y = 30;
     private static final int CATALYST_BAR_WIDTH = 5;
     private static final int CATALYST_BAR_HEIGHT = 20;
 
@@ -60,31 +60,18 @@ public class ElectricCentrifugeScreen extends AbstractContainerScreen<ElectricCe
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
+        super.renderBg(guiGraphics, pPartialTick, pMouseX, pMouseY);
         RenderSystem.setShaderTexture(0, TEXTURE);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
-        guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight, TEX_W, TEX_H);
+        guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight,TEX_W,TEX_H );
 
         renderProgressBar(guiGraphics, x, y, pMouseX, pMouseY);
-        renderEnergyBar(guiGraphics, x, y);
         renderCatalystBar(guiGraphics, x, y);
+        renderEnergyBar(guiGraphics,x,y);
     }
 
-    private void renderEnergyBar(GuiGraphics guiGraphics, int x, int y) {
-        int ex = x + ENERGY_BAR_X;
-        int ey = y + ENERGY_BAR_Y;
-        int border = 0xFF202020;
-        guiGraphics.fill(ex - 1, ey - 1, ex + ENERGY_BAR_WIDTH + 1, ey + ENERGY_BAR_HEIGHT + 1, border);
-        int bg = 0xFF101010;
-        guiGraphics.fill(ex, ey, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, bg);
-        int filled = menu.getEnergyScaled(ENERGY_BAR_HEIGHT);
-        if (filled > 0) {
-            int fy = ey + (ENERGY_BAR_HEIGHT - filled);
-            int color = 0xFFCC2B2B;
-            guiGraphics.fill(ex, fy, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, color);
-        }
-    }
     private void renderProgressBar(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY) {
         int progress = menu.getProgress();
         int maxProgress = menu.getMaxProgress();
@@ -137,17 +124,6 @@ public class ElectricCentrifugeScreen extends AbstractContainerScreen<ElectricCe
 
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-
-        // Energy bar tooltip
-        int ex = x + ENERGY_BAR_X;
-        int ey = y + ENERGY_BAR_Y;
-        if (mouseX >= ex && mouseX < ex + ENERGY_BAR_WIDTH && mouseY >= ey && mouseY < ey + ENERGY_BAR_HEIGHT) {
-            int energy = menu.getEnergy();
-            int max = menu.getMaxEnergy();
-            guiGraphics.renderTooltip(this.font,
-                    Component.literal(energy + " / " + max + " RF"),
-                    mouseX, mouseY);
-        }
 
         // Progress bar tooltip
         int px = x + PROGRESS_BAR_X;

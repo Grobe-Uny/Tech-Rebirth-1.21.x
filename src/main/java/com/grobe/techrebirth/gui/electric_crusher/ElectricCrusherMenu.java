@@ -1,5 +1,6 @@
 package com.grobe.techrebirth.gui.electric_crusher;
 
+import com.grobe.techrebirth.gui.BaseMachineMenu;
 import com.grobe.techrebirth.gui.ModMenuTypes;
 import com.grobe.techrebirth.block.custom.entity.crusher.ElectricCrusherBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,7 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-public class ElectricCrusherMenu extends AbstractContainerMenu {
+public class ElectricCrusherMenu extends BaseMachineMenu {
     public final ElectricCrusherBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
@@ -20,7 +21,7 @@ public class ElectricCrusherMenu extends AbstractContainerMenu {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
     public ElectricCrusherMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.ELECTRIC_CRUSHER_MENU.get(), pContainerId);
+        super(ModMenuTypes.ELECTRIC_CRUSHER_MENU.get(), pContainerId, entity, data);
         checkContainerSize(inv, 6);
         blockEntity = ((ElectricCrusherBlockEntity) entity);
         this.level = inv.player.level();
@@ -109,19 +110,19 @@ public class ElectricCrusherMenu extends AbstractContainerMenu {
                 pPlayer, blockEntity.getBlockState().getBlock());
     }
 
-    private void addPlayerInventory(Inventory playerInventory){
-        for (int i = 0; i < 3; ++i){
-            for (int l = 0; l < 9; ++l){
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
-            }
-        }
-    }
-
-    private void addPlayerHotbar(Inventory playerInventory){
-        for (int i = 0; i < 9; ++i){
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-        }
-    }
+//    private void addPlayerInventory(Inventory playerInventory){
+//        for (int i = 0; i < 3; ++i){
+//            for (int l = 0; l < 9; ++l){
+//                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
+//            }
+//        }
+//    }
+//
+//    private void addPlayerHotbar(Inventory playerInventory){
+//        for (int i = 0; i < 9; ++i){
+//            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
+//        }
+//    }
     public int getProgress() {
         return data.get(0); // Trenutni progress
     }

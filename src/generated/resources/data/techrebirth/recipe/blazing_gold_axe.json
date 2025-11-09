@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "X": {
+      "item": "techrebirth:blazing_gold_ingot"
+    },
+    "Y": {
+      "item": "techrebirth:blazing_gold_ingot"
+    }
+  },
+  "pattern": [
+    "XX ",
+    "XY ",
+    " Y "
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:blazing_gold_axe"
+  }
+}

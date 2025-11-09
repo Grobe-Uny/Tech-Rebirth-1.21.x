@@ -1,4 +1,5 @@
-// 1.21.1	2025-11-02T15:46:41.2173227	Item Models: techrebirth
+// 1.21.1	2025-11-09T15:59:51.7205301	Item Models: techrebirth
+43dc8e4e033d0c73ab2765434cf12291a5e99715 assets/techrebirth/models/item/blazing_gold_axe.json
 2448110c745c1e9881edcce0cc377c5ddf597d07 assets/techrebirth/models/item/blazing_gold_boots.json
 bbd74ac26f40e15b745ecb298d4b870f3e37f2d2 assets/techrebirth/models/item/blazing_gold_boots_amethyst_trim.json
 696c5f0063dad309b81ac47ee21ea927b9bd3a56 assets/techrebirth/models/item/blazing_gold_boots_copper_trim.json
@@ -32,6 +33,7 @@ a7de1e2738b76329946ac78462149010526bec40 assets/techrebirth/models/item/blazing_
 bc43d99ca9d153d614f1e00a17fe4eb909ebca40 assets/techrebirth/models/item/blazing_gold_helmet_netherite_trim.json
 6645433041d77f49bd2c64d845d60e9c7d73fe2d assets/techrebirth/models/item/blazing_gold_helmet_quartz_trim.json
 5a4faafa7367b6484131472a8097419cb573954f assets/techrebirth/models/item/blazing_gold_helmet_redstone_trim.json
+7e6ebc12c11a17cd0ec84f633deba849c52918be assets/techrebirth/models/item/blazing_gold_hoe.json
 413b3e1c7f076e5eeb4b4e651ecca2e562a8a13f assets/techrebirth/models/item/blazing_gold_leggings.json
 fd17ec7da0f756b955aed8fdb9bfc890e46dfe7f assets/techrebirth/models/item/blazing_gold_leggings_amethyst_trim.json
 c93dc3e7da64f51e7b92d3faf2c9c3c002c46484 assets/techrebirth/models/item/blazing_gold_leggings_copper_trim.json
@@ -43,3 +45,6 @@ c6e20d53c593b48c12a7474fa7c76ca4b2d8ba48 assets/techrebirth/models/item/blazing_
 d0a4212012b3d1449bd584875a3538920477231c assets/techrebirth/models/item/blazing_gold_leggings_netherite_trim.json
 b2030e1200bf660387eade1cf43f0aaabe088350 assets/techrebirth/models/item/blazing_gold_leggings_quartz_trim.json
 343e653e4836f7b81f65ab37f94742f486838ba2 assets/techrebirth/models/item/blazing_gold_leggings_redstone_trim.json
+d5e6e3129b01b4e1cea5d2141520e7b7d8dfa84a assets/techrebirth/models/item/blazing_gold_pickaxe.json
+3a82452b9bb7a395a275711d500d1270cca1491e assets/techrebirth/models/item/blazing_gold_shovel.json
+af263ccf95847494c16d460980d8c50227f28330 assets/techrebirth/models/item/blazing_gold_sword.json

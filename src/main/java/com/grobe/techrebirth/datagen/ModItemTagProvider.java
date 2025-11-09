@@ -24,12 +24,30 @@ public class ModItemTagProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider){
 
-
         tag(ItemTags.TRIMMABLE_ARMOR)
                 .add(ModItems.BLAZING_GOLD_HELMET.get())
                 .add(ModItems.BLAZING_GOLD_CHESTPLATE.get())
                 .add(ModItems.BLAZING_GOLD_LEGGINGS.get())
                 .add(ModItems.BLAZING_GOLD_BOOTS.get());
+
+        tag(ItemTags.SWORDS)
+                .add(ModItems.BLAZING_GOLD_SWORD.get());
+        tag(ItemTags.AXES)
+                .add(ModItems.BLAZING_GOLD_AXE.get());
+        tag(ItemTags.PICKAXES)
+                .add(ModItems.BLAZING_GOLD_PICKAXE.get());
+        tag(ItemTags.SHOVELS)
+                .add(ModItems.BLAZING_GOLD_SHOVEL.get());
+        tag(ItemTags.HOES)
+                .add(ModItems.BLAZING_GOLD_HOE.get());
+
+
+        //misc items
+        for(var tagKey : ModTags.Items.BLAZING_GOLD_TOOLS_D.both()) tag(tagKey).add(ModItems.BLAZING_GOLD_SWORD.get())
+                .add(ModItems.BLAZING_GOLD_AXE.get())
+                .add(ModItems.BLAZING_GOLD_PICKAXE.get())
+                .add(ModItems.BLAZING_GOLD_SHOVEL.get())
+                .add(ModItems.BLAZING_GOLD_HOE.get());
 
 
         // Add catalysts to both c: and neoforge: catalyst via Dual helpers
@@ -49,6 +67,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
         for(var tagKey : ModTags.Items.COPPER_DUST_D.both())    tag(tagKey).add(ModItems.COPPER_POWDER.get());
         for(var tagKey : ModTags.Items.TIN_DUST_D.both())       tag(tagKey).add(ModItems.TIN_POWDER.get());
         for(var tagKey : ModTags.Items.NICKEL_DUST_D.both())    tag(tagKey).add(ModItems.NICKEL_POWDER.get());
+        for(var tagKey : ModTags.Items.DIAMOND_DUST_D.both())   tag(tagKey).add(ModItems.DIAMOND_POWDER.get());
 
         // Add our raw materials to both c: and neoforge: raw_materials tags via Dual helpers
         for(var tagKey : ModTags.Items.RAW_NICKEL_D.both())     tag(tagKey).add(ModItems.RAW_NICKEL.get());
@@ -95,10 +114,10 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .addTag(ModTags.Items.INGOTS_STEEL_D.common());
 
         var catalystsBoth = ModTags.Items.CATALYSTS_D.both();
-        tag(ingotsBoth[0])
+        tag(catalystsBoth[0])
                 .addTag(ModTags.Items.CATALYST_BLAZE.neoforge()
                 );
-        tag(ingotsBoth[1])
+        tag(catalystsBoth[1])
                 .addTag(ModTags.Items.CATALYST_BLAZE.common());
 
         var dustsBoth = ModTags.Items.DUSTS_D.both();
@@ -106,11 +125,13 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .addTag(ModTags.Items.IRON_DUST_D.neoforge())
                 .addTag(ModTags.Items.COPPER_DUST_D.neoforge())
                 .addTag(ModTags.Items.NICKEL_DUST_D.neoforge())
+                .addTag(ModTags.Items.DIAMOND_DUST_D.neoforge())
                 .addTag(ModTags.Items.TIN_DUST_D.neoforge());
         tag(dustsBoth[1])
                 .addTag(ModTags.Items.IRON_DUST_D.common())
                 .addTag(ModTags.Items.COPPER_DUST_D.common())
                 .addTag(ModTags.Items.NICKEL_DUST_D.common())
+                .addTag(ModTags.Items.DIAMOND_DUST_D.common())
                 .addTag(ModTags.Items.TIN_DUST_D.common());
 
         var rawMaterialsBoth = ModTags.Items.RAW_MATERIALS_D.both();
@@ -122,6 +143,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .addTag(ModTags.Items.RAW_LEAD_D.common())
                 .addTag(ModTags.Items.RAW_TIN_D.common())
                 .addTag(ModTags.Items.RAW_NICKEL_D.common());
+
     }
 
 }

@@ -21,7 +21,7 @@ public class AlloySmelterMenu extends BaseMachineMenu {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
     public AlloySmelterMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data){
-        super(ModMenuTypes.ALLOY_SMELTER_MENU.get(), pContainerId, entity);
+        super(ModMenuTypes.ALLOY_SMELTER_MENU.get(), pContainerId, entity, data);
         checkContainerSize(inv, 4);
         blockEntity = ((AlloySmelterBlockEntity) entity);
         this.level = inv.player.level();
@@ -36,9 +36,9 @@ public class AlloySmelterMenu extends BaseMachineMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 59, 27));
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 80, 14));
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 2, 101, 27));
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 59, 30));
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 80, 17));
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 2, 101, 30));
 
         this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 3, 80, 60){
             @Override

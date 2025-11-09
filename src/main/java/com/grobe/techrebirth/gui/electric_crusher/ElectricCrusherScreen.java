@@ -3,6 +3,7 @@ package com.grobe.techrebirth.gui.electric_crusher;
 import com.grobe.techrebirth.Config;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.compat.jei.JEITechRebirthPlugin;
+import com.grobe.techrebirth.gui.BaseMachineScreen;
 import com.grobe.techrebirth.recipe.CrushingRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mezz.jei.api.recipe.RecipeType;
@@ -16,18 +17,10 @@ import net.minecraft.world.entity.player.Inventory;
 
 import java.util.List;
 
-public class ElectricCrusherScreen extends AbstractContainerScreen<ElectricCrusherMenu> {
+public class ElectricCrusherScreen extends BaseMachineScreen<ElectricCrusherMenu> {
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/electric_crusher_gui.png");
 
-    // Actual texture dimensions
-    private static final int TEX_W = 176;
-    private static final int TEX_H = 166;
-
-    private static final int ENERGY_BAR_X = 10; // relative to GUI x
-    private static final int ENERGY_BAR_Y = 18; // relative to GUI y
-    private static final int ENERGY_BAR_WIDTH = 10;
-    private static final int ENERGY_BAR_HEIGHT = 50;
 
     private static final int PROGRESS_BAR_X = 70;
     private static final int PROGRESS_BAR_Y = 35;
@@ -37,7 +30,7 @@ public class ElectricCrusherScreen extends AbstractContainerScreen<ElectricCrush
     private final ProgressBarArea progressBarArea = new ProgressBarArea();
 
     public ElectricCrusherScreen(ElectricCrusherMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
-        super(pMenu, pPlayerInventory, pTitle);
+        super(pMenu, pPlayerInventory, pTitle, TEXTURE);
         this.imageWidth = TEX_W;
         this.imageHeight = TEX_H;
     }
@@ -65,23 +58,6 @@ public class ElectricCrusherScreen extends AbstractContainerScreen<ElectricCrush
     }
 
 
-    private void renderEnergyBar(GuiGraphics guiGraphics, int x, int y) {
-        int ex = x + ENERGY_BAR_X;
-        int ey = y + ENERGY_BAR_Y;
-        // Draw background (dark gray border)
-        int border = 0xFF202020;
-        guiGraphics.fill(ex - 1, ey - 1, ex + ENERGY_BAR_WIDTH + 1, ey + ENERGY_BAR_HEIGHT + 1, border);
-        // Draw an inner background (almost black)
-        int bg = 0xFF101010;
-        guiGraphics.fill(ex, ey, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, bg);
-        // Draw energy amount (red, from bottom up)
-        int filled = menu.getScaledEnergy(ENERGY_BAR_HEIGHT);
-        if (filled > 0) {
-            int fy = ey + (ENERGY_BAR_HEIGHT - filled);
-            int color = 0xFFCC2B2B; // red
-            guiGraphics.fill(ex, fy, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, color);
-        }
-    }
     private void renderProgressBar(GuiGraphics guiGraphics, int x, int y, int mouseX, int mouseY){
         int progress = menu.getProgress();
         int maxProgress = menu.getMaxProgress();
@@ -139,16 +115,6 @@ public class ElectricCrusherScreen extends AbstractContainerScreen<ElectricCrush
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
-        // Energy bar tooltip
-        int ex = x + ENERGY_BAR_X;
-        int ey = y + ENERGY_BAR_Y;
-        if (mouseX >= ex && mouseX < ex + ENERGY_BAR_WIDTH && mouseY >= ey && mouseY < ey + ENERGY_BAR_HEIGHT) {
-            int energy = menu.getEnergyStored();
-            int max = menu.getMaxEnergyStored();
-            guiGraphics.renderTooltip(this.font,
-                    Component.literal(energy + " / " + max + " RF"),
-                    mouseX, mouseY);
-        }
 
         // Progress bar tooltip
         int px = x + PROGRESS_BAR_X;

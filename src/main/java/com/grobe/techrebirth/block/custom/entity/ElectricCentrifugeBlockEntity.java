@@ -131,6 +131,11 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
         CentrifugeRecipe centrifugeRecipe = recipe.get().value();
         this.itemHandler.extractItem(INPUT_SLOT, 1, false);
         this.catalystAmount -= centrifugeRecipe.catalystAmount();
+        // Ako je catalyst potrošen, resetiraj tip
+        if (this.catalystAmount <= 0) {
+            this.catalystStack = ItemStack.EMPTY;
+            this.catalystAmount = 0;
+        }
 
         this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(centrifugeRecipe.getResultItem(this.level.registryAccess()).getItem(),
                 this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + centrifugeRecipe.getResultItem(this.level.registryAccess()).getCount()));
@@ -173,9 +178,23 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
                 this.catalystStack = new ItemStack(catalystFillStack.getItem(), 1);
             }
 
-            int amountToAdd = Math.min(catalystValue, CATALYST_CAPACITY - this.catalystAmount);
-            if (amountToAdd > 0) {
-                this.catalystAmount += amountToAdd;
+            int neededAmount = CATALYST_CAPACITY - this.catalystAmount;
+            int itemsNeeded = (int)Math.ceil((double) neededAmount / catalystValue);
+            int itemsToUse = Math.min(itemsNeeded, catalystFillStack.getCount());
+
+//            if(itemsToUse > 0){
+//                int amountToAdd = itemsToUse * catalystValue;
+//                this.catalystAmount += amountToAdd;
+//                catalystFillStack.shrink(itemsToUse);
+//
+//            int amountToAdd = Math.min(catalystValue, CATALYST_CAPACITY - this.catalystAmount);
+//            if (amountToAdd > 0) {
+//                this.catalystAmount += amountToAdd;
+//                catalystFillStack.shrink(1);
+//            }
+            // UZIMAJ 1 PO 1 ITEM DOK NE NAPUNIŠ KAPACITET
+            while (catalystFillStack.getCount() > 0 && this.catalystAmount < CATALYST_CAPACITY) {
+                this.catalystAmount += catalystValue;
                 catalystFillStack.shrink(1);
             }
         }

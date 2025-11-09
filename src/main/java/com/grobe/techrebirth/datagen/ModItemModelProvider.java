@@ -9,6 +9,8 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -45,6 +47,12 @@ public class ModItemModelProvider extends ItemModelProvider {
        trimmedArmorItem(ModItems.BLAZING_GOLD_CHESTPLATE);
        trimmedArmorItem(ModItems.BLAZING_GOLD_LEGGINGS);
        trimmedArmorItem(ModItems.BLAZING_GOLD_BOOTS);
+
+       handheldItem(ModItems.BLAZING_GOLD_SWORD);
+       handheldItem(ModItems.BLAZING_GOLD_AXE);
+       handheldItem(ModItems.BLAZING_GOLD_PICKAXE);
+       handheldItem(ModItems.BLAZING_GOLD_SHOVEL);
+       handheldItem(ModItems.BLAZING_GOLD_HOE);
 
     }
 
@@ -85,5 +93,11 @@ public class ModItemModelProvider extends ItemModelProvider {
                        .texture("layer0", ResourceLocation.fromNamespaceAndPath(MODID, "item/" + itemDeferredItem.getId().getPath()));
            });
        }
+    }
+
+    private ItemModelBuilder handheldItem(DeferredItem<?> item){
+       return withExistingParent(item.getId().getPath(),
+               ResourceLocation.parse("item/handheld")).texture("layer0",
+               ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID,  "item/tools/" + item.getId().getPath()));
     }
 }

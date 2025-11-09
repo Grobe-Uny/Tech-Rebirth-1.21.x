@@ -58,6 +58,13 @@ public class AlloySmelterScreen extends AbstractContainerScreen<AlloySmelterMenu
         renderProgressBar(guiGraphics, x, y, pMouseX, pMouseY);
         renderEnergyBar(guiGraphics, x, y);
     }
+    protected void renderLabels(GuiGraphics guiGraphics, int MouseX, int MouseY){
+        String title = this.title.getString();
+        int titleX = (this.imageWidth - this.font.width(title)) / 2;
+        int titleY = 6;
+
+        guiGraphics.drawString(this.font, title, titleX, titleY, 0x404040, false);
+    }
     private void renderEnergyBar(GuiGraphics guiGraphics, int x, int y) {
         int ex = x + ENERGY_BAR_X;
         int ey = y + ENERGY_BAR_Y;

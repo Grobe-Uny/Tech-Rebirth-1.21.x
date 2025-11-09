@@ -33,6 +33,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.IRON_POWDER);
                         output.accept(ModItems.COPPER_POWDER);
                         output.accept(ModItems.TIN_POWDER);
+                        output.accept(ModItems.DIAMOND_POWDER);
                         output.accept(ModItems.REDSTONE_RECEPTION_COIL);
                         output.accept(ModItems.COOKED_CARROT);
                         output.accept(ModItems.EFFICIENCY_UPGRADE);
@@ -41,6 +42,12 @@ public class ModCreativeTabs {
                         output.accept(ModItems.BLAZING_GOLD_CHESTPLATE);
                         output.accept(ModItems.BLAZING_GOLD_LEGGINGS);
                         output.accept(ModItems.BLAZING_GOLD_BOOTS);
+
+                        output.accept(ModItems.BLAZING_GOLD_SWORD);
+                        output.accept(ModItems.BLAZING_GOLD_AXE);
+                        output.accept(ModItems.BLAZING_GOLD_PICKAXE);
+                        output.accept(ModItems.BLAZING_GOLD_SHOVEL);
+                        output.accept(ModItems.BLAZING_GOLD_HOE);
 
 
                     })

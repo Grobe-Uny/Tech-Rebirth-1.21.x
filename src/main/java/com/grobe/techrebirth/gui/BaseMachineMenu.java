@@ -3,10 +3,7 @@ package com.grobe.techrebirth.gui;
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.Nullable;
@@ -14,11 +11,19 @@ import org.jetbrains.annotations.Nullable;
 public abstract class BaseMachineMenu extends AbstractContainerMenu {
     protected final BlockEntity blockEntity;
     protected final Level level;
+    protected final ContainerData data;
 
-    protected BaseMachineMenu(@Nullable MenuType<?> menuType, int containerId, BlockEntity blockEntity) {
+    protected int energyStored;
+    protected int maxEnergyStored;
+
+
+    protected BaseMachineMenu(@Nullable MenuType<?> menuType, int containerId, BlockEntity blockEntity, ContainerData data) {
         super(menuType, containerId);
         this.blockEntity = blockEntity;
         this.level = ((BaseMachineBlockEntity) blockEntity).getLevel();
+        this.data = data;
+
+        addDataSlots(data);
     }
 
     protected void addPlayerInventory(Inventory playerInventory){
@@ -41,5 +46,20 @@ public abstract class BaseMachineMenu extends AbstractContainerMenu {
                 player,
                 blockEntity.getBlockState().getBlock()
         );
+    }
+
+
+    public int getEnergy() {
+        return data.get(2);
+    }
+
+    public int getMaxEnergy() {
+        return data.get(3);
+    }
+
+    public int getEnergyScaled(int height) {
+        int energy = getEnergy();
+        int max = getMaxEnergy();
+        return max > 0 ? (energy * height) / max : 0;
     }
 }

@@ -2,17 +2,19 @@ package com.grobe.techrebirth.gui.electric_centrifuge;
 
 import com.grobe.techrebirth.block.ModBlocks;
 import com.grobe.techrebirth.block.custom.entity.ElectricCentrifugeBlockEntity;
+import com.grobe.techrebirth.gui.BaseMachineMenu;
 import com.grobe.techrebirth.gui.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-public class ElectricCentrifugeMenu extends AbstractContainerMenu {
+public class ElectricCentrifugeMenu extends BaseMachineMenu {
     public final ElectricCentrifugeBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
@@ -22,7 +24,7 @@ public class ElectricCentrifugeMenu extends AbstractContainerMenu {
     }
 
     public ElectricCentrifugeMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.ELECTRIC_CENTRIFUGE_MENU.get(), id);
+        super(ModMenuTypes.ELECTRIC_CENTRIFUGE_MENU.get(), id,entity, data);
         checkContainerSize(inv, 3);
         blockEntity = (ElectricCentrifugeBlockEntity) entity;
         this.level = inv.player.level();
@@ -62,7 +64,7 @@ public class ElectricCentrifugeMenu extends AbstractContainerMenu {
     }
 
     public ItemStack getCatalystItem() {
-        return new ItemStack(net.minecraft.world.item.Item.byId(this.data.get(5)));
+        return new ItemStack(Item.byId(this.data.get(5)));
     }
 
     public int getProgress() {
@@ -122,17 +124,17 @@ public class ElectricCentrifugeMenu extends AbstractContainerMenu {
                 pPlayer, ModBlocks.ELECTRIC_CENTRIFUGE.get());
     }
 
-    private void addPlayerInventory(Inventory playerInventory) {
-        for (int i = 0; i < 3; ++i) {
-            for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
-            }
-        }
-    }
-
-    private void addPlayerHotbar(Inventory playerInventory) {
-        for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-        }
-    }
+//    private void addPlayerInventory(Inventory playerInventory) {
+//        for (int i = 0; i < 3; ++i) {
+//            for (int l = 0; l < 9; ++l) {
+//                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
+//            }
+//        }
+//    }
+//
+//    private void addPlayerHotbar(Inventory playerInventory) {
+//        for (int i = 0; i < 9; ++i) {
+//            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
+//        }
+//    }
 }

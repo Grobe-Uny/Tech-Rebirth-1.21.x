@@ -1,0 +1,87 @@
+{
+  "parent": "techrebirth:start_mixing_stuff",
+  "criteria": {
+    "has_blazing_gold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "techrebirth:blazing_gold_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_electric_centrifuge": {
+      "conditions": {
+        "items": [
+          {
+            "items": "techrebirth:electric_centrifuge"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "techrebirth:generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_machine_base": {
+      "conditions": {
+        "items": [
+          {
+            "items": "techrebirth:machine_base"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_tin": {
+      "conditions": {
+        "items": [
+          {
+            "items": "techrebirth:tin_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancements.techrebirth.start_blazing.description"
+    },
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "techrebirth:blazing_gold_ingot"
+    },
+    "title": {
+      "translate": "advancements.techrebirth.start_blazing.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_tin"
+    ],
+    [
+      "has_machine_base"
+    ],
+    [
+      "has_generator"
+    ],
+    [
+      "has_electric_centrifuge"
+    ],
+    [
+      "has_blazing_gold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

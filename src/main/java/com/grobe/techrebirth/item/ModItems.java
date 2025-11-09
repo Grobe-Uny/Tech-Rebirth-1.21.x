@@ -23,6 +23,8 @@ public class ModItems {
             ()-> new Item(new Item.Properties()));
     public static final DeferredItem<Item> IRON_GEAR = ITEMS.register("iron_gear",
             ()-> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> DIAMOND_POWDER = ITEMS.register("diamond_powder",
+            () -> new Item(new Item.Properties()));
 
 
     public static final DeferredItem<Item> SPEED_UPGRADE = ITEMS.register("speed_upgrade",
@@ -114,6 +116,26 @@ public class ModItems {
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
 
 
+    // Tools
+    public static final DeferredItem<SwordItem> BLAZING_GOLD_SWORD = ITEMS.register("blazing_gold_sword",
+            ()-> new SwordItem(ModToolTiers.BLAZING_GOLD, new Item.Properties()
+                    .attributes(SwordItem.createAttributes(ModToolTiers.BLAZING_GOLD, 10.5f, -3f))));
+
+    public static final DeferredItem<AxeItem> BLAZING_GOLD_AXE = ITEMS.register("blazing_gold_axe",
+            ()-> new AxeItem(ModToolTiers.BLAZING_GOLD, new Item.Properties()
+                    .attributes(AxeItem.createAttributes(ModToolTiers.BLAZING_GOLD, 10.5f, -3f))));
+
+    public static final DeferredItem<PickaxeItem> BLAZING_GOLD_PICKAXE = ITEMS.register("blazing_gold_pickaxe",
+            ()-> new PickaxeItem(ModToolTiers.BLAZING_GOLD, new Item.Properties()
+                    .attributes(PickaxeItem.createAttributes(ModToolTiers.BLAZING_GOLD, 3f, -2.8f))));
+
+    public static final DeferredItem<ShovelItem> BLAZING_GOLD_SHOVEL = ITEMS.register("blazing_gold_shovel",
+            ()-> new ShovelItem(ModToolTiers.BLAZING_GOLD, new Item.Properties()
+                    .attributes(ShovelItem.createAttributes(ModToolTiers.BLAZING_GOLD, 12f, -3.2f))));
+
+    public static final DeferredItem<HoeItem> BLAZING_GOLD_HOE = ITEMS.register("blazing_gold_hoe",
+            ()-> new HoeItem(ModToolTiers.BLAZING_GOLD, new Item.Properties()
+                    .attributes(HoeItem.createAttributes(ModToolTiers.BLAZING_GOLD, 0f, -3f))));
 
     //Food Items
     public static final DeferredItem<Item> COOKED_CARROT = ITEMS.register("cooked_carrot",

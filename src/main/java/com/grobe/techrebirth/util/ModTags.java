@@ -6,11 +6,14 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
+
+
 /**
  * Centralized tag keys to keep datagen and runtime references neat and consistent.
  * Define tags once here and reuse across providers and recipes.
  */
 public final class ModTags {
+
     private ModTags() {}
 
     public static final class Items {
@@ -43,6 +46,8 @@ public final class ModTags {
             return new Dual(tag("neoforge", path), tag("c", path));
         }
 
+
+
         // Duals for common categories so you can easily add to both namespaces
         public static final Dual INGOTS_D = dual("ingots");
         public static final Dual INGOTS_LEAD_D = dual("ingots/lead");
@@ -62,6 +67,7 @@ public final class ModTags {
         public static final Dual COPPER_DUST_D = dual("dusts/copper");
         public static final Dual TIN_DUST_D = dual("dusts/tin");
         public static final Dual NICKEL_DUST_D = dual("dusts/nickel");
+        public static final Dual DIAMOND_DUST_D = dual("dusts/diamond");
 
         // Duals for raw ores compatibility
         public static final Dual RAW_MATERIALS_D = dual("raw_materials");
@@ -87,6 +93,10 @@ public final class ModTags {
         public static final TagKey<Item> C_INGOTS_LEAD = tag("c", "ingots/lead");
         public static final TagKey<Item> C_RAW_MATERIALS_LEAD = tag("c", "raw_materials/lead");
         public static final TagKey<Item> C_ORES_LEAD_ITEMS = tag("c", "ores/lead");
+
+
+        // Duals for easier implementation of other stuff
+        public static final Dual BLAZING_GOLD_TOOLS_D = dual("tools/blazing_gold");
     }
 
     public static final class Blocks {

@@ -178,6 +178,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildCrushingRecipesWithChances(Ingredient.of(Blocks.COBBLESTONE), new ItemStack(Blocks.GRAVEL.asItem(), 1), 80,new ItemStack(Blocks.SAND), 0.05f, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/gravel_from_cobblestone"));
         buildCrushingRecipesWithChances(Ingredient.of(Blocks.GRAVEL), new ItemStack(Blocks.SAND.asItem(), 1), 70,new ItemStack(Blocks.SAND), 0.08f, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/sand_from_gravel"));
         buildCrushingRecipesWithChances(Ingredient.of(Blocks.ANCIENT_DEBRIS), new ItemStack(Items.NETHERITE_SCRAP.asItem(), 2), 200, new ItemStack(Items.NETHERITE_SCRAP), 0.01f,"has_electrical_crusher",ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "crushing/netherite_scraps_from_debris"));
+        buildCrushingRecipes(Ingredient.of(Items.DIAMOND), new ItemStack(ModItems.DIAMOND_POWDER.get()), 150, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "crushing/diamond_powder_from_diamond"));
         //endregion
 
         //region generator fuels
@@ -218,6 +219,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         // armor sets
         buildArmorSetRecipes(ModItems.BLAZING_GOLD_INGOT.asItem(), ModItems.BLAZING_GOLD_HELMET.asItem(), ModItems.BLAZING_GOLD_CHESTPLATE.asItem(), ModItems.BLAZING_GOLD_LEGGINGS.asItem(),ModItems.BLAZING_GOLD_BOOTS.asItem(),"has_blazing_gold", recipeOutput);
+        buildToolRecipes(ModItems.BLAZING_GOLD_INGOT.asItem(), Items.STICK, ModItems.BLAZING_GOLD_SWORD.asItem(), ModItems.BLAZING_GOLD_AXE.asItem(), ModItems.BLAZING_GOLD_PICKAXE.asItem(), ModItems.BLAZING_GOLD_SHOVEL.asItem(), ModItems.BLAZING_GOLD_HOE.asItem(), "has_blazing_gold", recipeOutput);
+
+
 
         super.buildRecipes(recipeOutput);
     }
@@ -343,6 +347,54 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('X', material)
                 .unlockedBy(unlockCriterion, has(material))
                 .save(recipeOutput);
+    }
+
+    public static void buildToolRecipes(ItemLike material, ItemLike material2, ItemLike sword, ItemLike axe, ItemLike pickaxe, ItemLike shovel, ItemLike hoe, String unlockCriterion, RecipeOutput recipeOutput){
+        //Sword
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, sword)
+                .pattern(" X ")
+                .pattern(" X ")
+                .pattern(" Y ")
+                .define('X', material).define('Y',material)
+                .unlockedBy(unlockCriterion, has(material))
+                .save(recipeOutput);
+
+        //Axe
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, axe)
+                .pattern("XX ")
+                .pattern("XY ")
+                .pattern(" Y ")
+                .define('X', material).define('Y',material)
+                .unlockedBy(unlockCriterion, has(material))
+                .save(recipeOutput);
+
+        //Pickaxe
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, pickaxe)
+                .pattern("XXX")
+                .pattern(" Y ")
+                .pattern(" Y ")
+                .define('X', material).define('Y',material)
+                .unlockedBy(unlockCriterion, has(material))
+                .save(recipeOutput);
+
+        //Shovel
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, shovel)
+                .pattern(" X ")
+                .pattern(" Y ")
+                .pattern(" Y ")
+                .define('X', material).define('Y',material)
+                .unlockedBy(unlockCriterion, has(material))
+                .save(recipeOutput);
+
+        //Hoe
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, hoe)
+                .pattern("XX ")
+                .pattern(" Y ")
+                .pattern(" Y ")
+                .define('X', material).define('Y',material)
+                .unlockedBy(unlockCriterion, has(material))
+                .save(recipeOutput);
+
     }
     private static NonNullList<Ingredient> createIngredients(ItemLike... items){
         NonNullList<Ingredient>ingredients = NonNullList.create();

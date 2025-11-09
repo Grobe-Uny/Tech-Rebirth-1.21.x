@@ -14,6 +14,7 @@
   "item.techrebirth.raw_nickel": "Raw Nickel",
   "item.techrebirth.nickel_ingot": "Nickel Ingot",
   "item.techrebirth.nickel_powder": "Nickel Powder",
+  "item.techrebirth.diamond_powder": "Diamond Powder",
   "item.techrebirth.invar_ingot": "Invar Ingot",
   "item.techrebirth.invar_gear": "Invar Gear",
   "item.techrebirth.steel_ingot": "Steel Ingot",
@@ -32,6 +33,12 @@
   "item.techrebirth.blazing_gold_chestplate": "Blazing Gold Chestplate",
   "item.techrebirth.blazing_gold_leggings": "Blazing Gold Leggings",
   "item.techrebirth.blazing_gold_boots": "Blazing Gold Boots",
+
+  "item.techrebirth.blazing_gold_sword": "Blazing Gold Sword",
+  "item.techrebirth.blazing_gold_axe": "Blazing Gold Axe",
+  "item.techrebirth.blazing_gold_pickaxe": "Blazing Gold Pickaxe",
+  "item.techrebirth.blazing_gold_shovel": "Blazing Gold Shovel",
+  "item.techrebirth.blazing_gold_hoe": "Blazing Gold Hoe",
 
 
   "block.techrebirth.machine_base": "Machine Base",
@@ -72,5 +79,12 @@
   "advancements.techrebirth.basing_machines.title" : "Basing Machines",
   "advancements.techrebirth.basing_machines.description" : "Creating Base for Machines!",
   "advancements.techrebirth.first_sparks.title" : "First Sparks",
-  "advancements.techrebirth.first_sparks.description" : "Get Generator for first sparks of electricity!!"
+  "advancements.techrebirth.first_sparks.description" : "Get Generator for first sparks of electricity!!",
+
+  "advancements.techrebirth.start_of_development.description": "Get Electric Centrifuge for further development!",
+  "advancements.techrebirth.start_of_development.title": "Start of Development",
+  "advancements.techrebirth.start_blazing.title" : "Get Blazed!",
+  "advancements.techrebirth.start_blazing.description" : "Create your first Blazing Gold Ingot",
+  "advancements.techrebirth.get_tooled.title" : "Get Tooled",
+  "advancements.techrebirth.get_tooled.description" : "Create your first Blazing Gold tool(pickaxe, too dumb to implement all tools for achievement)"
 }

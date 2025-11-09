@@ -1,4 +1,4 @@
-// 1.21.1	2025-11-03T18:57:55.4118437	Recipes
+// 1.21.1	2025-11-09T14:43:09.4354344	Recipes
 60456172ebb8ee4319f165b37c6f4a8150138748 data/minecraft/advancement/recipes/misc/lead_ingot_from_blasting_lead_deepslate_ore.json
 ce5a5c14ab0ea3d1710fe65ba87932bf5c8c6a2e data/minecraft/advancement/recipes/misc/lead_ingot_from_blasting_lead_ore.json
 089b38199fead08416771db442ba45476e59f6c6 data/minecraft/advancement/recipes/misc/lead_ingot_from_blasting_raw_lead.json
@@ -74,6 +74,7 @@ ac9e9d6e4fd95c805d3263fcb8cd0384c6facd4f data/techrebirth/recipe/blazing_gold_ch
 9502931723616de5cd8ff776c80ba6a4e7c80eb6 data/techrebirth/recipe/cooked_carrot.json
 2c269581cdcc0ac324646fed9b3f212d4e09738e data/techrebirth/recipe/crushing/copper_powder_from_ingot.json
 76363cdc9c294ef156522957afc41898c3d97b7a data/techrebirth/recipe/crushing/copper_powder_from_raw_and_ores.json
+bfa4111eefcf3096842a89b1ea3b97ef2569365c data/techrebirth/recipe/crushing/diamond_powder_from_diamond.json
 1604c1b7bcbd12da702225413e9cbf280e3dd33c data/techrebirth/recipe/crushing/gravel_from_cobblestone.json
 dbdcca31a6112a3059ef374530c4bbbdb576c25a data/techrebirth/recipe/crushing/iron_powder_from_ingot.json
 7184a7edfde28ad4fd3decd86361802589027a52 data/techrebirth/recipe/crushing/iron_powder_from_raw_and_ores.json
