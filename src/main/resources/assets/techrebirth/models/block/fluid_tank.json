@@ -1,0 +1,23 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "techrebirth:block/fluid_tank_side",
+    "side": "techrebirth:block/fluid_tank_side",
+    "top": "techrebirth:block/fluid_tank_top",
+    "bottom": "techrebirth:block/fluid_tank_bottom"
+  },
+  "elements": [
+    {
+      "from": [1, 0, 1],
+      "to": [15, 16, 15],
+      "faces": {
+        "down": { "texture": "#bottom", "cullface": "down" },
+        "up": { "texture": "#top", "cullface": "up" },
+        "north": { "texture": "#side" },
+        "south": { "texture": "#side" },
+        "west": { "texture": "#side" },
+        "east": { "texture": "#side" }
+      }
+    }
+  ]
+}

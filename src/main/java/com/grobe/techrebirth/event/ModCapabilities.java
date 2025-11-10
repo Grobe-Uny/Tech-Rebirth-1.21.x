@@ -4,6 +4,7 @@ import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.EnergyCableBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.FluidTankBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -50,6 +51,17 @@ public class ModCapabilities {
         for (BlockEntityType<?> machineType : ALL_MACHINES) {
             registerMachineCapabilities(event, machineType);
         }
+
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.FLUID_TANK.get(),
+                (be, side) -> {
+                    if (be instanceof FluidTankBlockEntity tank) {
+                        return tank.getFluidHandler();
+                    }
+                    return null;
+                }
+        );
     }
 
     private static void registerMachineCapabilities(RegisterCapabilitiesEvent event, BlockEntityType<?> machineType) {

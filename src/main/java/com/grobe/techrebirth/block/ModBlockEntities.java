@@ -66,6 +66,10 @@ public class ModBlockEntities {
             "electric_centrifuge", () -> BlockEntityType.Builder.of(ElectricCentrifugeBlockEntity::new, ModBlocks.ELECTRIC_CENTRIFUGE.get())
     );
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidTankBlockEntity>> FLUID_TANK = register(
+            "fluid_tank", () -> BlockEntityType.Builder.of(FluidTankBlockEntity::new, ModBlocks.FLUID_TANK.get())
+    );
+
     private static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> register(String name, Supplier<BlockEntityType.Builder<T>> builder) {
         return BLOCK_ENTITIES.register(name,()-> builder.get().build(null));
     }
