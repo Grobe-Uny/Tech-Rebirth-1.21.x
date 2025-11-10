@@ -68,6 +68,7 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.ENERGY_BANK);
                         output.accept(ModBlocks.ALLOY_SMELTER);
                         output.accept(ModBlocks.HARDENED_ALLOY_SMELTER);
+                        output.accept(ModBlocks.ELECTRIC_CENTRIFUGE);
 
                     })
                     .build());
@@ -101,6 +102,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.INVAR_INGOT);
                         output.accept(ModItems.STEEL_INGOT);
                         output.accept(ModItems.LEAD_INGOT);
+                        output.accept(ModItems.BLAZING_GOLD_INGOT);
                         output.accept(ModItems.RAW_LEAD);
                     })
                     .build());

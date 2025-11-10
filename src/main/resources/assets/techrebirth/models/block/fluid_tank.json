@@ -19,5 +19,6 @@
         "east": { "texture": "#side" }
       }
     }
-  ]
+  ],
+  "render_type": "translucent"
 }
