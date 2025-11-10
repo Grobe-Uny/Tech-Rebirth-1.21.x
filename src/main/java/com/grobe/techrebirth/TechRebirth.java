@@ -66,7 +66,7 @@ public class TechRebirth {
         ModSounds.SOUND_EVENTS.register(modEventBus);
 
         modEventBus.addListener(this::addCreativeTab);
-        modEventBus.addListener(ModCreativeTabs::addCreative);
+        //modEventBus.addListener(ModCreativeTabs::addCreative);
 
         NeoForge.EVENT_BUS.addListener(TooltipModifier::onItemTooltip);
 
