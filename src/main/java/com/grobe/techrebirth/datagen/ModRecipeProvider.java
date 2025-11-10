@@ -89,6 +89,28 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         //endregion
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FLUID_TANK.get())
+                .pattern("XYX")
+                .pattern("ZYZ")
+                .pattern("XYX")
+                .define('X', Items.IRON_INGOT).define('Y', Items.GLASS).define('Z', ModItems.STEEL_INGOT)
+                .unlockedBy("has_steel_ingot", has(ModItems.STEEL_INGOT.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/usable/fluid_tank"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ELECTRIC_CENTRIFUGE.get())
+                .pattern("IGI")
+                .pattern("YXY")
+                .pattern("ZGZ")
+                .define('I', Items.IRON_INGOT)
+                .define('G', ModItems.LEAD_GEAR)
+                .define('Z', ModItems.REDSTONE_RECEPTION_COIL)
+                .define('Y', ModBlocks.FLUID_TANK)
+                .define('X', ModBlocks.MACHINE_BASE)
+                .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/electric_centrifuge"));
+
+
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ENERGY_CABLE.get())
                 .pattern("XXX").pattern("XYX").pattern("XXX")
                 .define('X', Items.CLAY_BALL).define('Y', ModItems.REDSTONE_RECEPTION_COIL.get())
@@ -192,8 +214,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildAlloyRecipesD(invarReq, new ItemStack(ModItems.INVAR_INGOT.get(), 3), 100, "has_nickel", ModTags.Items.INGOTS_NICKEL_D, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/invar_alloy"));
         var steelReq = createIngredients(ModItems.IRON_POWDER, Items.COAL);
         buildAlloyRecipes(steelReq, new ItemStack(ModItems.STEEL_INGOT.get()), 200, "has_iron_powder", ModItems.IRON_POWDER.get(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/steel_alloy"));
-        var blazingGoldReq = createIngredients(Items.GOLD_INGOT.asItem(),Items.GOLD_INGOT.asItem(), Items.BLAZE_POWDER.asItem());
-        buildAlloyRecipes(blazingGoldReq, new ItemStack(ModItems.BLAZING_GOLD_INGOT.get(), 2), 300,"has_blaze_powder", Items.BLAZE_POWDER.asItem(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/blazing_gold_alloy"));
         //endregion
 
         //region centrifuge recipes
@@ -355,7 +375,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern(" X ")
                 .pattern(" X ")
                 .pattern(" Y ")
-                .define('X', material).define('Y',material)
+                .define('X', material).define('Y',material2)
                 .unlockedBy(unlockCriterion, has(material))
                 .save(recipeOutput);
 
@@ -364,7 +384,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("XX ")
                 .pattern("XY ")
                 .pattern(" Y ")
-                .define('X', material).define('Y',material)
+                .define('X', material).define('Y',material2)
                 .unlockedBy(unlockCriterion, has(material))
                 .save(recipeOutput);
 
@@ -373,7 +393,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("XXX")
                 .pattern(" Y ")
                 .pattern(" Y ")
-                .define('X', material).define('Y',material)
+                .define('X', material).define('Y',material2)
                 .unlockedBy(unlockCriterion, has(material))
                 .save(recipeOutput);
 
@@ -382,7 +402,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern(" X ")
                 .pattern(" Y ")
                 .pattern(" Y ")
-                .define('X', material).define('Y',material)
+                .define('X', material).define('Y',material2)
                 .unlockedBy(unlockCriterion, has(material))
                 .save(recipeOutput);
 
@@ -391,7 +411,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("XX ")
                 .pattern(" Y ")
                 .pattern(" Y ")
-                .define('X', material).define('Y',material)
+                .define('X', material).define('Y',material2)
                 .unlockedBy(unlockCriterion, has(material))
                 .save(recipeOutput);
 

@@ -65,9 +65,13 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.CREATIVE_ELECTRIC_FURNACE);
                         output.accept(ModBlocks.GENERATOR);
                         output.accept(ModBlocks.ELECTRIC_CRUSHER);
-                        output.accept(ModBlocks.ENERGY_BANK);
+                      //  output.accept(ModBlocks.ENERGY_BANK);
                         output.accept(ModBlocks.ALLOY_SMELTER);
                         output.accept(ModBlocks.HARDENED_ALLOY_SMELTER);
+                        output.accept(ModBlocks.ELECTRIC_CENTRIFUGE);
+
+
+                        output.accept(ModBlocks.FLUID_TANK);
 
                     })
                     .build());
@@ -101,6 +105,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.INVAR_INGOT);
                         output.accept(ModItems.STEEL_INGOT);
                         output.accept(ModItems.LEAD_INGOT);
+                        output.accept(ModItems.BLAZING_GOLD_INGOT);
                         output.accept(ModItems.RAW_LEAD);
                     })
                     .build());
@@ -109,9 +114,10 @@ public class ModCreativeTabs {
         CREATIVE_MODE_TAB.register(eventbus);
     }
 
-    public static void addCreative(BuildCreativeModeTabContentsEvent event){
-        if(event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES){
-            event.accept(ModItems.LIGHTNING_STRIKER_ENCHANTED_BOOK.get());
-        }
-    }
+//    public static void addCreative(BuildCreativeModeTabContentsEvent event){
+//        if(event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES){
+//            event.accept(ModItems.LIGHTNING_STRIKER_ENCHANTED_BOOK.get());
+//        }
+//    }
+
 }

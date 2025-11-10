@@ -1,6 +1,9 @@
 package com.grobe.techrebirth;
 
+import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.client.renderer.FluidTankBER;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -27,5 +30,7 @@ public class TechRebirthClient {
         // Some client setup code
         TechRebirth.LOGGER.info("HELLO FROM CLIENT SETUP");
         TechRebirth.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
+        BlockEntityRenderers.register(ModBlockEntities.FLUID_TANK.get(), FluidTankBER::new);
     }
 }

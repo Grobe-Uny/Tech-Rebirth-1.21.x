@@ -12,6 +12,7 @@ import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.furnace.ElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.furnace.HardenedElectricFurnaceBlock;
+import com.grobe.techrebirth.block.custom.FluidTankBlock;
 import com.grobe.techrebirth.block.custom.furnace.ReinforcedElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.generator.GeneratorBlock;
 import com.grobe.techrebirth.item.ModItems;
@@ -161,6 +162,14 @@ public class ModBlocks {
                     .strength(3.0f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
+            ));
+
+    public static final DeferredBlock<Block> FLUID_TANK = registerBlock("fluid_tank",
+            () -> new FluidTankBlock(BlockBehaviour.Properties.of()
+                    .strength(3.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+                    .noOcclusion()
             ));
 
     private static <T extends  Block> DeferredBlock<T> registerBlock (String name, Supplier<T> block){
