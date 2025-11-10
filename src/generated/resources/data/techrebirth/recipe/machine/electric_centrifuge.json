@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "techrebirth:lead_gear"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "X": {
+      "item": "techrebirth:machine_base"
+    },
+    "Y": {
+      "item": "techrebirth:fluid_tank"
+    },
+    "Z": {
+      "item": "techrebirth:redstone_reception_coil"
+    }
+  },
+  "pattern": [
+    "IGI",
+    "YXY",
+    "ZGZ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:electric_centrifuge"
+  }
+}

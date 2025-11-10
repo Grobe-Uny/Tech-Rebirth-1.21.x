@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Y": {
+      "item": "minecraft:glass"
+    },
+    "Z": {
+      "item": "techrebirth:steel_ingot"
+    }
+  },
+  "pattern": [
+    "XYX",
+    "ZYZ",
+    "XYX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:fluid_tank"
+  }
+}

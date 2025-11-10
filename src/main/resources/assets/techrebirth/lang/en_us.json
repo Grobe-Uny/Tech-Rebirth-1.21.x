@@ -42,6 +42,7 @@
 
 
   "block.techrebirth.machine_base": "Machine Base",
+  "block.techrebirth.fluid_tank": "Fluid Tank",
   "block.techrebirth.tin_ore": "Tin Ore",
   "block.techrebirth.tin_deepslate_ore": "Tin Deepslate Ore",
   "block.techrebirth.nickel_deepslate_ore": "Nickel Deepslate Ore",

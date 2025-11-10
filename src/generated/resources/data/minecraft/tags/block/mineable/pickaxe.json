@@ -16,6 +16,8 @@
     "techrebirth:hardened_alloy_smelter",
     "techrebirth:hardened_electric_furnace",
     "techrebirth:reinforced_electric_furnace",
+    "techrebirth:electric_centrifuge",
+    "techrebirth:fluid_tank",
     "techrebirth:electric_crusher"
   ]
 }
