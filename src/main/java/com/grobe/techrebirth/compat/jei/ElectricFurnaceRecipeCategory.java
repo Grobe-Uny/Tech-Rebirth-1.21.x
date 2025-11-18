@@ -36,9 +36,6 @@ public class ElectricFurnaceRecipeCategory implements IRecipeCategory<SmeltingRe
     private static final int ENERGY_BAR_WIDTH = 10;
     private static final int ENERGY_BAR_HEIGHT = 50;
 
-    // Base machine stats (no upgrades)
-    private static final int BASE_TICKS = 72;           // from ElectricFurnaceBlockEntity
-    private static final int RF_PER_TICK = 128;         // from ElectricFurnaceBlockEntity
 
     public ElectricFurnaceRecipeCategory(IGuiHelper helper) {
         // Use a clean blank background to avoid cropping/stretching issues

@@ -80,7 +80,9 @@ public class ModItems {
     public static final DeferredItem<Item> STEEL_GEAR = ITEMS.register("steel_gear",
             () -> new Item(new Item.Properties()));
 
-    //blazing alloys
+    //misc ingots
+    public static final DeferredItem<Item> BASE_GOLDIUM_INGOT = ITEMS.register("base_goldium_ingot",
+            () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> BLAZING_GOLD_INGOT = ITEMS.register("blazing_gold_ingot",
             () -> new Item(new Item.Properties()));
 
@@ -119,7 +121,7 @@ public class ModItems {
     // Tools
     public static final DeferredItem<SwordItem> BLAZING_GOLD_SWORD = ITEMS.register("blazing_gold_sword",
             ()-> new SwordItem(ModToolTiers.BLAZING_GOLD, new Item.Properties()
-                    .attributes(SwordItem.createAttributes(ModToolTiers.BLAZING_GOLD, 10.5f, -3f))));
+                    .attributes(SwordItem.createAttributes(ModToolTiers.BLAZING_GOLD, 10.5f, -2.3f))));
 
     public static final DeferredItem<AxeItem> BLAZING_GOLD_AXE = ITEMS.register("blazing_gold_axe",
             ()-> new AxeItem(ModToolTiers.BLAZING_GOLD, new Item.Properties()

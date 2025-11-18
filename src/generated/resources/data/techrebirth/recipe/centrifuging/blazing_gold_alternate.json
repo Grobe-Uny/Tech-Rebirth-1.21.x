@@ -3,9 +3,9 @@
   "catalyst": {
     "item": "minecraft:blaze_powder"
   },
-  "catalyst_amount": 10,
+  "catalyst_amount": 20,
   "ingredient": {
-    "item": "techrebirth:base_goldium_ingot"
+    "item": "minecraft:gold_ingot"
   },
   "result": {
     "count": 1,

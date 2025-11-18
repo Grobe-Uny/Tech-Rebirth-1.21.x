@@ -105,6 +105,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.INVAR_INGOT);
                         output.accept(ModItems.STEEL_INGOT);
                         output.accept(ModItems.LEAD_INGOT);
+                        output.accept(ModItems.BASE_GOLDIUM_INGOT);
                         output.accept(ModItems.BLAZING_GOLD_INGOT);
                         output.accept(ModItems.RAW_LEAD);
                     })
