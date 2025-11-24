@@ -1,4 +1,4 @@
-// 1.21.1	2025-11-18T19:53:31.2978379	Recipes
+// 1.21.1	2025-11-24T22:32:49.996011852	Recipes
 60456172ebb8ee4319f165b37c6f4a8150138748 data/minecraft/advancement/recipes/misc/lead_ingot_from_blasting_lead_deepslate_ore.json
 ce5a5c14ab0ea3d1710fe65ba87932bf5c8c6a2e data/minecraft/advancement/recipes/misc/lead_ingot_from_blasting_lead_ore.json
 089b38199fead08416771db442ba45476e59f6c6 data/minecraft/advancement/recipes/misc/lead_ingot_from_blasting_raw_lead.json
@@ -70,7 +70,7 @@ f2932b1cc8da6f08330c750ba3bfba9e67cbd9d0 data/techrebirth/advancement/recipes/to
 dd2fcf198b5f05f1cf55ddb4c2fecf072ebad366 data/techrebirth/advancement/recipes/tools/blazing_gold_pickaxe.json
 016b41a2ab094ce8185fe6ab29aff250b094b4e0 data/techrebirth/advancement/recipes/tools/blazing_gold_shovel.json
 4e418d10ed9c44eaea48cfcf91164d263fc7f22e data/techrebirth/advancement/recipes/tools/blazing_gold_sword.json
-368d87be575dd0be8d12615fcc62f7604e568061 data/techrebirth/recipe/alloys/base_goldium_alloy.json
+1ce2fe9f745148201211e8309d34378841b8c20d data/techrebirth/recipe/alloys/base_goldium_alloy.json
 5e7ba73e3146d5fb5db657e82bc24ddfa3040955 data/techrebirth/recipe/alloys/invar_alloy.json
 7e47397c2a975be789905d078b5a6d1172450791 data/techrebirth/recipe/alloys/steel_alloy.json
 23008c8fe7ccef3340e0653d8f8bac69c5af61c5 data/techrebirth/recipe/blazing_gold_axe.json

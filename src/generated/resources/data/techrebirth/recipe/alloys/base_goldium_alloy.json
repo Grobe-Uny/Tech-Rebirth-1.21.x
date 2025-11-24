@@ -2,6 +2,12 @@
   "type": "techrebirth:alloy_smelting",
   "ingredients": [
     {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
       "item": "minecraft:glowstone_dust"
     }
   ],

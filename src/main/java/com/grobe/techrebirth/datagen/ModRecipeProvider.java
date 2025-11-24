@@ -214,7 +214,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildAlloyRecipesD(invarReq, new ItemStack(ModItems.INVAR_INGOT.get(), 3), 100, "has_nickel", ModTags.Items.INGOTS_NICKEL_D, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/invar_alloy"));
         var steelReq = createIngredients(ModItems.IRON_POWDER, Items.COAL);
         buildAlloyRecipes(steelReq, new ItemStack(ModItems.STEEL_INGOT.get()), 200, "has_iron_powder", ModItems.IRON_POWDER.get(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/steel_alloy"));
-        var baseGoldiumReq = createMixedIngredients(new ItemStack(Items.GOLD_INGOT, 2), Items.GLOWSTONE_DUST);
+        var baseGoldiumReq = createMixedIngredients(Items.GOLD_INGOT,Items.GOLD_INGOT, Items.GLOWSTONE_DUST);
         buildAlloyRecipes(baseGoldiumReq, new ItemStack(ModItems.BASE_GOLDIUM_INGOT.get(), 2),200, "has_gold", ModItems.BASE_GOLDIUM_INGOT.get(),recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/base_goldium_alloy"));
         //endregion
 
