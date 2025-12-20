@@ -45,6 +45,7 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     private Optional<RecipeHolder<AlloySmeltingRecipe>> cachedRecipe = Optional.empty();
     private boolean recipeCacheValid = false;
 
+    protected int maxProgress;
     private final Map<Integer, Integer> consumedInputs = new HashMap<>();
 
     public AlloySmelterBlockEntity(BlockPos pos, BlockState state) {
@@ -60,7 +61,7 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
             public int get(int index) {
                 return switch (index) {
                     case 0 -> AlloySmelterBlockEntity.this.progress;                    // cook progress
-                    case 1 -> AlloySmelterBlockEntity.this.getMaxProgress();                 // max progress
+                    case 1 -> AlloySmelterBlockEntity.this.maxProgress;                 // max progress
                     case 2 -> AlloySmelterBlockEntity.this.getEnergyStorage().getEnergyStored(); // energy stored
                     case 3 -> AlloySmelterBlockEntity.this.getEnergyStorage().getMaxEnergyStored(); // max energy
                     default -> 0;
@@ -71,7 +72,7 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
             public void set(int index, int value) {
                 switch (index) {
                     case 0 -> AlloySmelterBlockEntity.this.progress = value;
-                    case 1 -> {/*AlloySmelterBlockEntity.this.maxProgress = value;*/}
+                    case 1 -> AlloySmelterBlockEntity.this.maxProgress = value;
                     case 2 -> AlloySmelterBlockEntity.this.setEnergyStored(value); // client mirror
                     case 3 -> { /* no-op: max energy is static; client-side mirror only */ }
                 }
@@ -89,24 +90,14 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
 
     @Override
     public int getMaxProgress() {
-        // Override da koristi cooking time iz recepta
-        Optional<RecipeHolder<AlloySmeltingRecipe>> recipeOpt = getCurrentRecipe();
-        if (recipeOpt.isPresent()) {
-            AlloySmeltingRecipe recipe = recipeOpt.get().value();
-            int baseTime = recipe.getCookingTime(); // 200 ticks
-            float speedMultiplier = getTier().speedMultiplier;
-            return (int)(baseTime / speedMultiplier);
-        }
-
-        // Fallback na default
-        return 100;
+        return this.maxProgress;
     }
 
     // ILI još bolje - overrideaj i getProgressPercent za točan prikaz:
     @Override
     public float getProgressPercent() {
-        if (getMaxProgress() <= 0) return 0;
-        return (float) progress / getMaxProgress();
+        if (this.maxProgress <= 0) return 0;
+        return (float) progress / this.maxProgress;
     }
 
     public ContainerData getContainerData() {
@@ -376,28 +367,36 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
             setChanged();
         }
 
-        if (hasRecipe()) {  // ← PROMJENA: hasRecipe() umjesto canProcess()
-            // Postavi LIT stanje ako već nije
+        if (hasRecipe()) {
+            if(this.progress == 0) {
+                Optional<RecipeHolder<AlloySmeltingRecipe>> recipeOpt = getCurrentRecipe();
+                if (recipeOpt.isPresent()) {
+                    AlloySmeltingRecipe recipe = recipeOpt.get().value();
+                    int baseTime = recipe.getCookingTime();
+                    float speedMultiplier = getTier().speedMultiplier;
+                    this.maxProgress = (int)(baseTime / speedMultiplier);
+                    setChanged();
+                } else {
+                    this.maxProgress = 100; // Fallback
+                }
+            }
+
             if (!state.getValue(AlloySmelterBlock.LIT)) {
                 level.setBlock(pos, state.setValue(AlloySmelterBlock.LIT, true), 3);
             }
 
-            // Provjeri može li nastaviti/nastaviti
-            if (canContinueProcessing()) {  // ← NOVA METODA!
+            if (canContinueProcessing()) {
                 int energyCost = getEnergyCostPerTick();
                 if (getEnergyStorage().getEnergyStored() >= energyCost) {
                     getEnergyStorage().extractEnergy(energyCost, false);
                     increaseProgress();
-                    setChanged();
 
                     if (getProgress() >= getMaxProgress()) {
                         finishProcessing();
                         resetProgress();
                     }
                 }
-                // ✅ Ako nema dovoljno energije, SAMO PAUZIRAJ - ne resetiraj!
             } else {
-                // ❌ Samo resetiraj ako recept više nije validan (nema inputa)
                 resetProgress();
             }
         } else {
