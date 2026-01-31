@@ -73,6 +73,10 @@
 
 
   "tooltip.techrebirth.raw_tin" : "This ingot is really §sTin§l",
+  "tooltip.techrebirth.blazing_gold_pickaxe.auto_smelt": "This pickaxe smelts (almost) anything mined",
+  "tooltip.techrebirth.blazing_gold_pickaxe.fortune_compatible": "",
+  "tooltip.techrebirth.blazing_gold_armor.set_bonus": "§6Full Set Bonus§7: (4/4 pieces)",
+  "tooltip.techrebirth.blazing_gold_armor.effect": "§7• Sets attackers on fire for 2 seconds",
 
   "config.jade.plugin_techrebirth.electric_furnace" : "Show Electric Furnace Info",
 

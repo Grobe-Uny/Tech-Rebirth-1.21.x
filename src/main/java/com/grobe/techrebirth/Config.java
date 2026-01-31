@@ -1,15 +1,7 @@
 package com.grobe.techrebirth;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 // An example config class. This is not required, but it's a good idea to have one to keep your config organized.
@@ -20,6 +12,10 @@ public class Config {
 
     public static final ModConfigSpec.ConfigValue<String> PROGRESS_BAR_HIGHLIGHT_COLOR;
     public static final ModConfigSpec.ConfigValue<Boolean> PROGRESS_BAR_HIGHLIGHT_ENABLED;
+
+
+    public static final ModConfigSpec.ConfigValue<Boolean> AUTO_SMELT_ENABLED;
+    public static final ModConfigSpec.ConfigValue<Boolean> AUTO_SMELT_APPLY_FORTUNE;
 
 
     static{
@@ -33,6 +29,18 @@ public class Config {
                 , "Popular colors: #FFD700 (Gold), #00FF00 (Green), #FF4500 (Orange Red),"
                 ,"#1E90FF (Dodger Blue), #FF69B4 (Hot Pink), #32CD32 (Lime Green)")
                 .define("progressBarHighlightColor", "#FFD7000");
+
+        BUILDER.pop();
+        //SPEC = BUILDER.build();
+
+        BUILDER.push("Gameplay Settings");
+
+        AUTO_SMELT_ENABLED = BUILDER
+                .comment("Enable automatic smelting in mod on some tools")
+                .define("autoSmeltEnabled", true);
+        AUTO_SMELT_APPLY_FORTUNE = BUILDER
+                .comment("Should fortune work with ore drops and auto smelt if enabled")
+                        .define("autoSmeltFortune", false);
 
         BUILDER.pop();
         SPEC = BUILDER.build();
