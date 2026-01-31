@@ -61,7 +61,7 @@ public class ToolEvents {
             ItemStack finalDrop = processDrop(originalDrop, level);
 
             if (!finalDrop.isEmpty()) {
-                spawnDrop((Level) level, pos, finalDrop);
+                spawnDrop( level, pos, finalDrop);
             }
         }
 
