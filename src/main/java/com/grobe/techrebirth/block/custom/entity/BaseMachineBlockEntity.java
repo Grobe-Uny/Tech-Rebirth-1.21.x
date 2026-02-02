@@ -178,6 +178,10 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     }
 
 
+    public String getName(){
+         return getTier().name;
+    }
+
     public IEnergyStorage getEnergyStorage() {
         return energyHandler;
     }

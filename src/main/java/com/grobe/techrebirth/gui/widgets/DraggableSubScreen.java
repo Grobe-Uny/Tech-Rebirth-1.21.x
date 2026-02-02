@@ -1,5 +1,6 @@
 package com.grobe.techrebirth.gui.widgets;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -14,6 +15,7 @@ public abstract class DraggableSubScreen extends Screen {
         protected final ResourceLocation background;
         protected final Screen parentScreen;
         protected boolean visible = false;
+        protected boolean initialized = false;
 
         public DraggableSubScreen(Screen parent, ResourceLocation background, int width, int height, Component title){
             super(title);
@@ -39,16 +41,26 @@ public abstract class DraggableSubScreen extends Screen {
 
         @Override
         protected void init(){
-            super.init();
+            initialized = false;
          }
 
-        @Override
-        public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, int partialTick){
+
+        public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, int partialTick){
             if(!visible) return;
+
+
+            // Osiguraj da je inicijaliziran
+            if (!initialized && minecraft != null) {
+                super.init(minecraft, parentScreen.width, parentScreen.height);
+                initialized = true;
+            }
 
             // Background
             guiGraphics.blit(background, x, y, width, height,
                     4, 4, 4, 4, 256, 256);
+
+            // Render draggable window
+            RenderSystem.enableBlend();
 
             // Title bar (drag area)
             guiGraphics.fill(x, y, x + width, y + 20, 0xFF333333);
@@ -121,5 +133,10 @@ public abstract class DraggableSubScreen extends Screen {
     public boolean isMouseOver(double mouseX, double mouseY) {
         return visible && mouseX >= x && mouseX <= x + width &&
                 mouseY >= y && mouseY <= y + height;
+    }
+
+    public void bringToFront() {
+        // Ova metoda može biti prazna ili možete implementirati Z-order logiku
+        // Za sada je dovoljno da postoji
     }
 }

@@ -4,11 +4,16 @@ import com.grobe.techrebirth.Config;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.compat.jei.JEITechRebirthPlugin;
 import com.grobe.techrebirth.gui.electric_crusher.ElectricCrusherScreen;
+import com.grobe.techrebirth.gui.subscreen.ConfigSubScreen;
+import com.grobe.techrebirth.gui.subscreen.UpgradeSubScreen;
+import com.grobe.techrebirth.gui.widgets.ConfigButton;
 import com.grobe.techrebirth.recipe.CrushingRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -44,14 +49,53 @@ public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurna
         this.imageHeight = TEX_H;
     }
 
+    private ConfigSubScreen configScreen;
+    private UpgradeSubScreen upgradeScreen;
+    private AbstractWidget configButton, upgradeButton;
+
+
     @Override
     protected void init() {
         super.init();
         this.inventoryLabelY = 10000;
         this.titleLabelY = 10000;
+
+        // Config button
+        configButton = addRenderableWidget(new ConfigButton(
+                leftPos + 5, topPos + 5, 20, 20,
+                ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/buttons/config.png"),
+                0, 0,
+                Component.translatable("gui.techrebirth.config"),
+                button -> openConfigScreen()
+        ));
+
+        // Upgrade button
+        upgradeButton = addRenderableWidget(new ConfigButton(
+                leftPos + 30, topPos + 5, 20, 20,
+                ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/buttons/upgrade.png"),
+                0, 0,
+                Component.translatable("gui.techrebirth.upgrades"),
+                button -> openUpgradeScreen()
+        ));
+
+        // Inicijaliziraj sub-screens
+        configScreen = new ConfigSubScreen(this, menu.blockEntity);
+        upgradeScreen = new UpgradeSubScreen(this, menu.blockEntity);
+
+
         progressBarArea.updateScreenCoords(this.leftPos, this.topPos);
     }
 
+
+    private void openConfigScreen() {
+        configScreen.setVisible(true);
+        configScreen.bringToFront();
+    }
+
+    private void openUpgradeScreen() {
+        upgradeScreen.setVisible(true);
+        upgradeScreen.bringToFront();
+    }
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -97,6 +141,15 @@ public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurna
     }
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+
+        // Prvo provjeri sub-screens
+        if (configScreen.isVisible() && configScreen.mouseClicked(mouseX, mouseY, button)) {
+            return true;
+        }
+        if (upgradeScreen.isVisible() && upgradeScreen.mouseClicked(mouseX, mouseY, button)) {
+            return true;
+        }
+
         if (button == 0 && progressBarArea.isMouseOver(mouseX, mouseY)) {
             showJEIRecipes();
             return true;
@@ -113,7 +166,18 @@ public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurna
         }
     }
 
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+        // Prvo sub-screens
+        if (configScreen.isVisible() && configScreen.mouseDragged(mouseX, mouseY, button, dragX, dragY)) {
+            return true;
+        }
+        if (upgradeScreen.isVisible() && upgradeScreen.mouseDragged(mouseX, mouseY, button, dragX, dragY)) {
+            return true;
+        }
 
+        return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+    }
 
 
     private void renderEnergyBar(GuiGraphics guiGraphics, int x, int y) {
@@ -137,6 +201,14 @@ public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurna
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
+
+        // Render sub-screens iznad
+        if (configScreen.isVisible()) {
+            configScreen.render(guiGraphics, mouseX, mouseY, delta);
+        }
+        if (upgradeScreen.isVisible()) {
+            upgradeScreen.render(guiGraphics, mouseX, mouseY, delta);
+        }
 
         // Tooltip for energy bar on hover (same as generator)
         int x = (width - imageWidth) / 2;
