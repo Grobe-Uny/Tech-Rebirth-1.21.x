@@ -66,6 +66,43 @@ public class ModuleSubScreen extends DraggableSubScreen {
         renderStats(guiGraphics);
     }
 
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        // 1. CRNA POZADINA - da vidiš da li se screen pojavio
+        guiGraphics.fill(0, 0, this.width, this.height, 0xFF000000);
+
+        // 2. Bijeli okvir
+        int boxWidth = 300;
+        int boxHeight = 200;
+        int x = (this.width - boxWidth) / 2;
+        int y = (this.height - boxHeight) / 2;
+
+        // Siva pozadina okvira
+        guiGraphics.fill(x, y, x + boxWidth, y + boxHeight, 0xFF333333);
+
+        // Bijeli okvir
+        guiGraphics.renderOutline(x, y, boxWidth, boxHeight, 0xFFFFFFFF);
+
+        // 3. Veliki bijeli tekst u sredini
+        guiGraphics.drawCenteredString(
+                this.font,
+                "MODULE SCREEN IS WORKING!",
+                this.width / 2,
+                y + 30,
+                0xFFFFFF
+        );
+
+        guiGraphics.drawCenteredString(this.font,
+                "This is a simple test screen",
+                this.width / 2,
+                y + 50,
+                0xAAAAAA
+        );
+
+        // 4. OBAVEZNO pozovi super.render() da se gumb renderira
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+    }
+
     private void renderStats(GuiGraphics guiGraphics){
         int statsY = y + 120;
 

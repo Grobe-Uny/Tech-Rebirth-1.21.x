@@ -60,9 +60,13 @@ public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurna
         this.inventoryLabelY = 10000;
         this.titleLabelY = 10000;
 
+        int buttonX = this.leftPos + this.imageWidth + 10; // 10 piksela desno od GUI-a
+        int buttonY = this.topPos + 10; // 10 piksela od vrha
+
+
         // Config button
         configButton = addRenderableWidget(new ConfigButton(
-                leftPos + 5, topPos + 5, 20, 20,
+                buttonX, buttonY, 20, 20,
                 ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/buttons/config.png"),
                 0, 0,
                 Component.translatable("gui.techrebirth.config"),
@@ -71,7 +75,7 @@ public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurna
 
         // Upgrade button
         upgradeButton = addRenderableWidget(new ConfigButton(
-                leftPos + 30, topPos + 5, 20, 20,
+                buttonX, buttonY + 25, 20, 20,
                 ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/buttons/upgrade.png"),
                 0, 0,
                 Component.translatable("gui.techrebirth.upgrades"),
