@@ -16,7 +16,7 @@ public abstract class DraggableSubScreen extends Screen {
         protected final ResourceLocation background;
         protected final Screen parentScreen;
         protected boolean visible = false;
-        protected boolean initialized = false;
+
         // Dodano: spremanje širine i visine parent screena
         private int parentWidth = 0;
         private int parentHeight = 0;
@@ -31,6 +31,7 @@ public abstract class DraggableSubScreen extends Screen {
 
             if(parent != null){
                 this.minecraft = parent.getMinecraft();
+                this.font = parent.getMinecraft().font;
             }
 
         }

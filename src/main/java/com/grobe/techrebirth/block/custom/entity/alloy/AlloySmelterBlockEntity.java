@@ -41,6 +41,9 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     private static final int UPGRADE_SLOT_1 = 4;
     private static final int UPGRADE_SLOT_2 = 5;
 
+    private boolean isSoundPlaying = false;
+    private int soundCheckCounter = 0;
+
     // Cache za performance
     private Optional<RecipeHolder<AlloySmeltingRecipe>> cachedRecipe = Optional.empty();
     private boolean recipeCacheValid = false;
@@ -385,6 +388,12 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
                 level.setBlock(pos, state.setValue(AlloySmelterBlock.LIT, true), 3);
             }
 
+            soundCheckCounter++;
+            if (soundCheckCounter >= 10) {
+                handleLoopingSound(level, pos, hasRecipe() && canContinueProcessing());
+                soundCheckCounter = 0;
+            }
+
             if (canContinueProcessing()) {
                 int energyCost = getEnergyCostPerTick();
                 if (getEnergyStorage().getEnergyStored() >= energyCost) {
@@ -419,9 +428,6 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         return hasEnoughInputItems() && canInsertOutput(result);
     }
     protected void increaseProgress() {
-//        float speedMultiplier = getTier().speedMultiplier;
-//
-//        progress += speedMultiplier;
 
         progress++;
 
@@ -433,6 +439,11 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         setChanged();
     }
 
+    protected void onProcessStopped() {
+        isSoundPlaying = false;
+        resetProgress();
+    }
+
     public void drops (){
         SimpleContainer inventory = new SimpleContainer(6);
         for (int i = 0; i < 6; i++) {
@@ -441,15 +452,15 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
     private void handleLoopingSound(Level level, BlockPos pos, boolean isActive) {
-        boolean isSoundPlaying = false;
-        if (isActive) {
-            if (!isSoundPlaying) {
-                level.playLocalSound(pos, ModSounds.CRUSHER_RUNNING.get(),
-                        SoundSource.BLOCKS, 0.3f, 1.0f, true); // loop = true
-                isSoundPlaying = true;
-            }
-        } else {
-            // Sound će se automatski zaustaviti kada se blok ugasi
+        if (level.isClientSide) return;
+
+        if(isActive && !isSoundPlaying){
+            level.playSound(null, pos, ModSounds.CRUSHER_RUNNING.get(),
+                    SoundSource.BLOCKS, 0.3f, 1.0f);
+            isSoundPlaying = true;
+        }else if (!isActive && isSoundPlaying) {
+            level.playSound(null, pos, ModSounds.CRUSHER_RUNNING.get(),
+                    SoundSource.BLOCKS, 0f, 1.0f);
             isSoundPlaying = false;
         }
     }

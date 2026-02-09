@@ -1,0 +1,12 @@
+{
+  "crusher_running": {
+    "subtitle": "subtitles.techrebirth.crusher_running",
+    "sounds": [
+      {
+        "name": "techrebirth:blocks/machine/crusher_running",
+        "stream": true,
+        "attenuation_distance": 16
+      }
+    ]
+  }
+}

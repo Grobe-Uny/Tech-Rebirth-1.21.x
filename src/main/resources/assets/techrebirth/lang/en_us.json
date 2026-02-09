@@ -92,5 +92,19 @@
   "advancements.techrebirth.start_blazing.title" : "Get Blazed!",
   "advancements.techrebirth.start_blazing.description" : "Create your first Blazing Gold Ingot",
   "advancements.techrebirth.get_tooled.title" : "Get Tooled",
-  "advancements.techrebirth.get_tooled.description" : "Create your first Blazing Gold tool(pickaxe, too dumb to implement all tools for achievement)"
+  "advancements.techrebirth.get_tooled.description" : "Create your first Blazing Gold tool(pickaxe, too dumb to implement all tools for achievement)",
+
+  "config.jade.plugin_techrebirth.generator": "Generator",
+  "config.jade.plugin_techrebirth.energy_bank": "Energy Bank",
+  "gui.techrebirth.upgrades": "Modules",
+  "gui.techrebirth.config": "Config",
+  "gui.techrebirth.speed_bonus": "Speed: %s",
+  "gui.techrebirth.efficiency_bonus": "Efficiency: %s",
+  "gui.techrebirth.machine_tier": "Tier: %s",
+  "gui.techrebirth.upgrade_slot.0": "Slot 1",
+  "gui.techrebirth.upgrade_slot.1": "Slot 2",
+  "gui.techrebirth.upgrade_slot.2": "Slot 3",
+  "gui.techrebirth.upgrade_slot.3": "Slot 4",
+
+  "subtitles.techrebirth.crusher_running": "Crusher running"
 }

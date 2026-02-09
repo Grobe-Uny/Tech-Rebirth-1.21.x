@@ -1,6 +1,5 @@
 package com.grobe.techrebirth.block.custom.entity;
 
-import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.gui.generator.GeneratorMenu;
 import com.grobe.techrebirth.recipe.GeneratorFuelRecipe;
@@ -195,8 +194,8 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
                     energySent++;
                 }
             }
-            TechRebirth.LOGGER.debug("Generator at {}: Energy = {}/{}, Sending to {} neighbors",
-                    pos, be.getEnergyStorage().getEnergyStored(), be.getEnergyStorage().getMaxEnergyStored(), energySent);
+//            TechRebirth.LOGGER.debug("Generator at {}: Energy = {}/{}, Sending to {} neighbors",
+//                    pos, be.getEnergyStorage().getEnergyStored(), be.getEnergyStorage().getMaxEnergyStored(), energySent);
         }
     }
     public void drops() {
