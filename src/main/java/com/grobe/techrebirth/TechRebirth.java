@@ -63,7 +63,7 @@ public class TechRebirth {
 
 
         ModEnchantmentEffects.register(modEventBus);
-        ModSounds.SOUND_EVENTS.register(modEventBus);
+        ModSounds.register(modEventBus);
 
         modEventBus.addListener(this::addCreativeTab);
         //modEventBus.addListener(ModCreativeTabs::addCreative);

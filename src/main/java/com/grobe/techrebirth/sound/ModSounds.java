@@ -4,6 +4,7 @@ import com.grobe.techrebirth.TechRebirth;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -17,8 +18,11 @@ public class ModSounds {
 
 
     private static Supplier<SoundEvent> registerSoundEvent(String name) {
-        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(
-                ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, name)
-        ));
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, name);
+        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
+    }
+
+    public static void register(IEventBus eventBus){
+        SOUND_EVENTS.register(eventBus);
     }
 }

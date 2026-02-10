@@ -8,12 +8,17 @@ import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.recipe.AlloySmeltingRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.recipe.MultiItemRecipeInput;
+import com.grobe.techrebirth.sound.MachineSoundInstance;
 import com.grobe.techrebirth.sound.ModSounds;
 import com.grobe.techrebirth.util.MachineTier;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
@@ -41,8 +46,8 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     private static final int UPGRADE_SLOT_1 = 4;
     private static final int UPGRADE_SLOT_2 = 5;
 
-    private boolean isSoundPlaying = false;
-    private int soundCheckCounter = 0;
+
+    private boolean soundPlaying = false;
 
     // Cache za performance
     private Optional<RecipeHolder<AlloySmeltingRecipe>> cachedRecipe = Optional.empty();
@@ -170,6 +175,29 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
 
     protected void onProcessStart() {
         //place for particles and sounds
+        if(level instanceof ServerLevel serverLevel){
+            serverLevel.sendParticles(ParticleTypes.SMOKE,
+                    worldPosition.getX() + 0.5, worldPosition.getY() + 1.2, worldPosition.getZ() + 0.5,
+                    12,
+                    0.2, 0.2, 0.2,
+                    0.05);
+        }
+    }
+
+    private void updateSound() {
+        // Provjera isActuallyProcessing() koju si već napravio
+        if (this.level.isClientSide && isActuallyProcessing()) {
+            if (!soundPlaying) {
+                System.out.println("Započinjem zvuk na klijentu!");
+                Minecraft.getInstance().getSoundManager().play(
+                        new MachineSoundInstance(this, ModSounds.CRUSHER_RUNNING.get(), true, 2f)
+                );
+                soundPlaying = true;
+            }
+        } else {
+            // Ako stroj prestane raditi, resetiramo flag da se može opet pokrenuti kasnije
+            soundPlaying = false;
+        }
     }
 
 
@@ -363,6 +391,8 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
+        updateSound();
+
         if (level.isClientSide) return;
 
         if (!recipeCacheValid) {
@@ -388,15 +418,13 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
                 level.setBlock(pos, state.setValue(AlloySmelterBlock.LIT, true), 3);
             }
 
-            soundCheckCounter++;
-            if (soundCheckCounter >= 10) {
-                handleLoopingSound(level, pos, hasRecipe() && canContinueProcessing());
-                soundCheckCounter = 0;
-            }
-
             if (canContinueProcessing()) {
                 int energyCost = getEnergyCostPerTick();
                 if (getEnergyStorage().getEnergyStored() >= energyCost) {
+                    if(this.progress == 0){
+                        onProcessStart();
+                    }
+
                     getEnergyStorage().extractEnergy(energyCost, false);
                     increaseProgress();
 
@@ -439,11 +467,6 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         setChanged();
     }
 
-    protected void onProcessStopped() {
-        isSoundPlaying = false;
-        resetProgress();
-    }
-
     public void drops (){
         SimpleContainer inventory = new SimpleContainer(6);
         for (int i = 0; i < 6; i++) {
@@ -451,19 +474,11 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         }
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
-    private void handleLoopingSound(Level level, BlockPos pos, boolean isActive) {
-        if (level.isClientSide) return;
 
-        if(isActive && !isSoundPlaying){
-            level.playSound(null, pos, ModSounds.CRUSHER_RUNNING.get(),
-                    SoundSource.BLOCKS, 0.3f, 1.0f);
-            isSoundPlaying = true;
-        }else if (!isActive && isSoundPlaying) {
-            level.playSound(null, pos, ModSounds.CRUSHER_RUNNING.get(),
-                    SoundSource.BLOCKS, 0f, 1.0f);
-            isSoundPlaying = false;
-        }
+    public boolean isActuallyProcessing(){
+        return this.getBlockState().getValue(AlloySmelterBlock.LIT);
     }
+
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
