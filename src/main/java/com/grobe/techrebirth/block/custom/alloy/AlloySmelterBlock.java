@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,38 +67,9 @@ public class AlloySmelterBlock extends BaseMachineBlock {
     }
 
 
-    // When placed from an item, restore stored energy from the item's BlockEntity data component (safety net)
-//    @Override
-//    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-//        super.setPlacedBy(level, pos, state, placer, stack);
-//        if (!level.isClientSide()) {
-//            BlockEntity be = level.getBlockEntity(pos);
-//            if (be instanceof AlloySmelterBlockEntity alloySmelter) {
-//                CustomData data = stack.get(DataComponents.BLOCK_ENTITY_DATA);
-//                if (data != null) {
-//                    CompoundTag tag = data.copyTag();
-//                    if (tag.contains("alloy_smelter.energy")) {
-//                        int energy = tag.getInt("alloy_smelter.energy");
-//                        if (energy > 0) {
-//                            // Newly placed furnace starts at 0, so receiving is sufficient
-//                            alloySmelter.getEnergyStorage().receiveEnergy(energy, false);
-//                        }
-//                        alloySmelter.setChanged();
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     // Ensure inventory contents are dropped whenever the block is removed/replaced
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-//        if (!level.isClientSide() && state.getBlock() != newState.getBlock()) {
-//            BlockEntity be = level.getBlockEntity(pos);
-//            if (be instanceof AlloySmelterBlockEntity alloySmelter) {
-//                alloySmelter.drops();
-//            }
-//        }
         super.onRemove(state, level, pos, newState, isMoving);
     }
 
@@ -107,25 +79,5 @@ public class AlloySmelterBlock extends BaseMachineBlock {
             alloy.drops();
         }
     }
-
-    // When the block is broken by a player, drop a stack that preserves the BE's energy in BlockEntityTag
-//    @Override
-//    public void spawnAfterBreak(BlockState state, ServerLevel level, BlockPos pos, ItemStack tool, boolean dropExperience) {
-//        BlockEntity be = level.getBlockEntity(pos);
-//        if (be instanceof AlloySmelterBlockEntity alloySmelter) {
-//            // Inventory is dropped in onRemove; avoid double drops here
-//            // Create the block item with embedded BE NBT for energy
-//            ItemStack stack = new ItemStack(this.asItem());
-//            CompoundTag beTag = new CompoundTag();
-//            beTag.putInt("alloy_smelter.energy",alloySmelter.getEnergyStorage().getEnergyStored());
-//            // 1.21 uses data components for BE data on items
-//            stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(beTag));
-//            popResource(level, pos, stack);
-//        } else {
-//            // Fallback to normal behavior if BE missing for some reason
-//            super.spawnAfterBreak(state, level, pos, tool, dropExperience);
-//            return;
-//        }
-//        // Do not call super to avoid default loot (which would drop another bare block)
-//    }
+    
 }

@@ -391,9 +391,12 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
-        updateSound();
 
-        if (level.isClientSide) return;
+
+        if (level.isClientSide) {
+            updateSound();
+            return;
+        }
 
         if (!recipeCacheValid) {
             getCurrentRecipe();

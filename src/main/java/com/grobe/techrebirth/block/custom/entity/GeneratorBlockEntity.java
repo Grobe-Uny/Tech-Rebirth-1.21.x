@@ -32,7 +32,7 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
 
 
     // Generation configuration and client mirrors
-    private int genPerTick = 40;
+    private int genPerTick = 1600;
     private int clientMaxEnergyMirror = 50000; // used client-side when syncing via ContainerData
 
     private int burnTime = 0;
@@ -114,7 +114,7 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
                 be.burnTime--;
                 be.getEnergyStorage().receiveEnergy(be.genPerTick, false);
                 if(be.burnTime == 0){
-                    be.genPerTick = 40;
+                    be.genPerTick = 1600;
                     be.maxBurnTime = 0;
                     setChanged(level, pos, state);
                 }
