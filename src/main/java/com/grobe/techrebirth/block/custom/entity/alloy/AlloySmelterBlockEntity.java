@@ -8,10 +8,9 @@ import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.recipe.AlloySmeltingRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.recipe.MultiItemRecipeInput;
-import com.grobe.techrebirth.sound.MachineSoundInstance;
+import com.grobe.techrebirth.sound.ClientSoundHelper;
 import com.grobe.techrebirth.sound.ModSounds;
 import com.grobe.techrebirth.util.MachineTier;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleType;
@@ -188,10 +187,7 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         // Provjera isActuallyProcessing() koju si već napravio
         if (this.level.isClientSide && isActuallyProcessing()) {
             if (!soundPlaying) {
-                System.out.println("Započinjem zvuk na klijentu!");
-                Minecraft.getInstance().getSoundManager().play(
-                        new MachineSoundInstance(this, ModSounds.CRUSHER_RUNNING.get(), true, 2f)
-                );
+                ClientSoundHelper.playAlloySmelterSound(this);
                 soundPlaying = true;
             }
         } else {
