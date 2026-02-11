@@ -184,25 +184,15 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     }
 
     private void updateSound() {
-        // Provjera isActuallyProcessing() koju si već napravio
+        // Check isActuallyProcessing() which reflects the LIT state
         if (this.level.isClientSide && isActuallyProcessing()) {
             if (!soundPlaying) {
                 ClientSoundHelper.playAlloySmelterSound(this);
                 soundPlaying = true;
             }
         } else {
-            // Ako stroj prestane raditi, resetiramo flag da se može opet pokrenuti kasnije
+            // If the machine stops working, reset the flag so it can be started again later
             soundPlaying = false;
-        }
-    }
-
-
-    protected void updateBlockState(Level level, BlockPos pos, BlockState state, boolean isActive) {
-        if (state.hasProperty(BlockStateProperties.LIT)) {
-            boolean wasLit = state.getValue(BlockStateProperties.LIT);
-            if (wasLit != isActive) {
-                level.setBlock(pos, state.setValue(BlockStateProperties.LIT, isActive), 3);
-            }
         }
     }
 
@@ -387,8 +377,6 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
-
-
         if (level.isClientSide) {
             updateSound();
             return;
@@ -399,47 +387,50 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
             setChanged();
         }
 
-        if (hasRecipe()) {
-            if(this.progress == 0) {
+        boolean hasRecipe = hasRecipe();
+        boolean canContinue = hasRecipe && canContinueProcessing();
+        int energyCost = getEnergyCostPerTick();
+        boolean hasEnergy = getEnergyStorage().getEnergyStored() >= energyCost;
+
+        // The machine is working (making progress) if it has a recipe, can process (output space), and has energy
+        boolean isWorking = canContinue && hasEnergy;
+
+        // Toggle LIT state based on whether it's actually working
+        if (state.getValue(AlloySmelterBlock.LIT) != isWorking) {
+            level.setBlock(pos, state.setValue(AlloySmelterBlock.LIT, isWorking), 3);
+        }
+
+        if (hasRecipe) {
+            // Initialize maxProgress for new crafting
+            if (this.progress == 0) {
                 Optional<RecipeHolder<AlloySmeltingRecipe>> recipeOpt = getCurrentRecipe();
                 if (recipeOpt.isPresent()) {
                     AlloySmeltingRecipe recipe = recipeOpt.get().value();
                     int baseTime = recipe.getCookingTime();
                     float speedMultiplier = getTier().speedMultiplier;
-                    this.maxProgress = (int)(baseTime / speedMultiplier);
+                    this.maxProgress = (int) (baseTime / speedMultiplier);
                     setChanged();
-                } else {
-                    this.maxProgress = 100; // Fallback
                 }
             }
 
-            if (!state.getValue(AlloySmelterBlock.LIT)) {
-                level.setBlock(pos, state.setValue(AlloySmelterBlock.LIT, true), 3);
-            }
-
-            if (canContinueProcessing()) {
-                int energyCost = getEnergyCostPerTick();
-                if (getEnergyStorage().getEnergyStored() >= energyCost) {
-                    if(this.progress == 0){
-                        onProcessStart();
-                    }
-
-                    getEnergyStorage().extractEnergy(energyCost, false);
-                    increaseProgress();
-
-                    if (getProgress() >= getMaxProgress()) {
-                        finishProcessing();
-                        resetProgress();
-                    }
+            if (isWorking) {
+                if (this.progress == 0) {
+                    onProcessStart();
                 }
-            } else {
-                resetProgress();
+
+                getEnergyStorage().extractEnergy(energyCost, false);
+                increaseProgress();
+
+                if (getProgress() >= getMaxProgress()) {
+                    finishProcessing();
+                    resetProgress();
+                }
             }
+            // If hasRecipe is true but !isWorking, progress is paused (neither increased nor reset)
         } else {
-            // Reset progress i ugasi ako nema recepta
-            resetProgress();
-            if (state.getValue(AlloySmelterBlock.LIT)) {
-                level.setBlock(pos, state.setValue(AlloySmelterBlock.LIT, false), 3);
+            // No recipe anymore, reset progress and ensure LIT is false
+            if (this.progress > 0) {
+                resetProgress();
             }
         }
     }
