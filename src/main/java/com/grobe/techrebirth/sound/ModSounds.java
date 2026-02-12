@@ -15,6 +15,9 @@ public class ModSounds {
 
     // Registriraj sve zvukove
     public static final Supplier<SoundEvent> CRUSHER_RUNNING = registerSoundEvent("crusher_running");
+    public static final Supplier<SoundEvent> FURNACE_RUNNING = registerSoundEvent("furnace_running");
+    public static final Supplier<SoundEvent> ALLOY_SMELTING = registerSoundEvent("alloy_smelting");
+
 
 
     private static Supplier<SoundEvent> registerSoundEvent(String name) {

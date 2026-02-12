@@ -38,6 +38,15 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
     private int burnTime = 0;
     private int maxBurnTime = 0;
 
+    @Override
+    protected boolean hasRecipe() { return false; }
+    @Override
+    protected boolean canContinueProcessing() { return false; }
+    @Override
+    protected int getEnergyCostPerTick() { return 0; }
+    @Override
+    protected void finishProcessing() {}
+
     protected final ContainerData data = new ContainerData() {
         @Override
         public int get(int index) {
@@ -104,6 +113,11 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
         return burn > 0;
     }
 
+    @Override
+    public void tick(Level level, BlockPos pos, BlockState state) {
+        tick(level, pos, state, this);
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, GeneratorBlockEntity be) {
         if (level.isClientSide()) return;
 
@@ -145,7 +159,7 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
                             be.maxBurnTime = burn;
                             setChanged(level, pos, state);
                         }
-                }
+                    }
                 }
             }
         }

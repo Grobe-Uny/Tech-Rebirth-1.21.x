@@ -259,6 +259,11 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         return (int) (BASE_ENERGY_COST * speedMultiplier * efficiencyMultiplier * tierMultiplier);
     }
 
+    @Override
+    protected void finishProcessing() {
+
+    }
+
     private void craftItem() {
         Optional<RecipeHolder<SmeltingRecipe>> recipe = getCurrentRecipe();
         if (recipe.isEmpty()) return;
@@ -278,10 +283,10 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         resetProgress();
     }
 
-    private void resetProgress() { progress = 0; }
     private void increaseCraftingProgress() { progress++; }
 
-    private boolean hasRecipe() {
+    @Override
+    protected boolean hasRecipe() {
         Optional<RecipeHolder<SmeltingRecipe>> recipe = getCurrentRecipe();
         if (recipe.isEmpty()) return false;
 
@@ -292,6 +297,11 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         return canInsertAmountIntoOutputSlot(result.getCount()) &&
                 canInsertItemIntoOutputSlot(result.getItem()) &&
                 getEnergyStorage().getEnergyStored() >= getEnergyCostPerTick();
+    }
+
+    @Override
+    protected boolean canContinueProcessing() {
+        return false;
     }
 
     private int getUpgradeCount(Item upgradeItem) {

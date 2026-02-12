@@ -106,26 +106,11 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
     }
 
     private boolean isCrushable(ItemStack stack) {
-//        if (stack.isEmpty() || this.level == null) return false;
-//            // Debug ispis
-//        System.out.println("🔍 Checking: " + stack.getItem().getDescriptionId());
-//        System.out.println("🔍 RecipeType: " + ModRecipeTypes.CRUSHING_TYPE);
-//        System.out.println("🔍 RecipeType.get(): " + ModRecipeTypes.CRUSHING_TYPE.get());
-//
-//
-//
-//        var input = new SingleRecipeInput(stack);
-//        var opt = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.CRUSHING_TYPE.get(), input, this.level);
-//        return opt.isPresent();
-
         if (stack.isEmpty() || this.level == null) return false;
 
-        // ✅ PRVO provjeri tagove (brže i sigurnije)
         if (isTaggedAsCrushable(stack)) {
             return true;
         }
-
-        // ✅ ONDA provjeri specifične recepte (fallback)
         var input = new SingleRecipeInput(stack);
         var opt = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.CRUSHING_TYPE.get(), input, this.level);
         return opt.isPresent();
@@ -135,7 +120,6 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
         try {
             HolderLookup.RegistryLookup<Item> items = this.level.registryAccess().lookupOrThrow(Registries.ITEM);
 
-            // ✅ SAFE TAG CHECK - koristi try-catch za svaki tag
             return  isInTagSafely(stack, items, ModTags.Items.RAW_MATERIALS_D.common()) ||
                     isInTagSafely(stack, items, ModTags.Items.RAW_TIN_D.common()) ||
                     isInTagSafely(stack, items, ModTags.Items.RAW_LEAD_D.common()) ||
@@ -188,80 +172,63 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
     }
+    @Override
     protected int getEnergyCostPerTick() {
         int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.get());
         int efficiencyUpgrades = getUpgradeCount(ModItems.EFFICIENCY_UPGRADE.get());
 
-        float energyConsumptionMultiplier = 1 - (0.20f * efficiencyUpgrades);
-        float energySpeedPenalty = 1 + (0.15f * speedUpgrades);
+        float energyConsumptionMultiplier = (float) Math.pow(0.75, efficiencyUpgrades);
+        float energySpeedPenalty = 1 + (0.5f * speedUpgrades);
 
-        float tierEnergyMultiplier = getTier().energyMultiplier;
-
-        return (int) (160 * energySpeedPenalty * energyConsumptionMultiplier * tierEnergyMultiplier);
+        return (int) (128 * energySpeedPenalty * energyConsumptionMultiplier);
     }
 
+    @Override
+    protected void initProgressData() {
+        var recipeOpt = getCurrentRecipe();
+        if (recipeOpt.isPresent()) {
+            CrushingRecipe recipe = recipeOpt.get().value();
+            int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.asItem());
+            float speedMultiplier = 1 + (0.5f * speedUpgrades);
+            int baseTime = recipe.getTime();
+            this.maxProgress = (int) (baseTime / speedMultiplier);
+            if (this.maxProgress < 1) this.maxProgress = 1;
+        }
+    }
 
-    public void tick(Level level, BlockPos pos, BlockState state) {
-        boolean hasEnergy = getEnergyStorage().getEnergyStored() >= getEnergyCostPerTick();
-        boolean hasRecipe = hasRecipe();
+    @Override
+    protected void finishProcessing() {
+        craftItem();
+    }
 
-        boolean shouldWork = hasRecipe && hasEnergy;
-        boolean isWorking =  progress > 0;
+    @Override
+    protected boolean hasRecipe() {
+        ItemStackHandler handler = getItemHandler();
+        ItemStack input = handler.getStackInSlot(INPUT_SLOT);
+        if (input.isEmpty()) return false;
 
-        // Toggle LIT state
-        boolean wasLit = state.hasProperty(BlockStateProperties.LIT) && state.getValue(BlockStateProperties.LIT);
-        if (state.hasProperty(BlockStateProperties.LIT) && wasLit != shouldWork) {
-            level.setBlock(pos, state.setValue(BlockStateProperties.LIT, shouldWork), 3);
-            state = level.getBlockState(pos);
+        return getCurrentRecipe().isPresent();
+    }
+
+    @Override
+    protected boolean canContinueProcessing() {
+        var recipeOpt = getCurrentRecipe();
+        if (recipeOpt.isEmpty()) return false;
+
+        CrushingRecipe recipe = recipeOpt.get().value();
+        ItemStack primaryResult = recipe.getResultItem(null);
+
+        // ✅ PROVJERA: Glavni result mora moći u PRIMARY_OUTPUT_1 ili PRIMARY_OUTPUT_2
+        boolean canInsertPrimary = canInsertIntoPrimaryOutput(primaryResult);
+
+        // ✅ PROVJERA: Ako recept ima chance output, mora moći u CHANCE_OUTPUT
+        boolean canInsertChance = true; // Default true ako nema chance output
+        if (hasChanceOutput(recipe)) {
+            ItemStack chanceResult = getChanceOutput(recipe);
+            canInsertChance = canInsertIntoChanceOutput(chanceResult);
         }
 
-        if (shouldWork) {
-            var recipeOpt = getCurrentRecipe();
-            if (recipeOpt.isPresent()) {
-                CrushingRecipe recipe = recipeOpt.get().value();
-
-                int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.asItem());
-                // ✅ RAČUNAJ maxProgress SAMO AKO JE progress == 0 (novi crafting)
-                if (progress == 0) {
-                    float speedMultiplier = 1 + (0.5f * speedUpgrades);
-                    int baseTime = recipe.getTime();
-                    this.maxProgress = (int) (baseTime / speedMultiplier);
-                    if (this.maxProgress < 1) this.maxProgress = 1;
-
-                    // Debug ispis
-                    System.out.println("🔄 NEW CRAFTING: maxProgress = " + maxProgress +
-                            ", baseTime = " + baseTime + ", speedMultiplier = " + speedMultiplier);
-                }
-
-                // Energy cost
-                int efficiencyUpgrades = getUpgradeCount(ModItems.EFFICIENCY_UPGRADE.get());
-                float energyConsumptionMultiplier = (float) Math.pow(0.75, efficiencyUpgrades);
-                float energySpeedPenalty = 1 + (0.5f * speedUpgrades);
-                int energyToConsume = (int) (128 * energySpeedPenalty * energyConsumptionMultiplier);
-
-                // Debug progress
-                System.out.println("🔧 Progress: " + progress + "/" + maxProgress +
-                        " (" + (maxProgress > 0 ? (progress * 100 / maxProgress) : 0) + "%)");
-
-                if (getEnergyStorage().getEnergyStored() >= energyToConsume) {
-                    getEnergyStorage().extractEnergy(energyToConsume, false);
-                    increaseCraftingProgress();
-                    setChanged(level, pos, state);
-
-                    if (progress >= maxProgress) {
-                        craftItem();
-                        resetProgress();
-                    }
-                }
-            } else {
-                resetProgress();
-            }
-        } else {
-            // Ako nema recepta, resetiraj progress
-            if (!hasRecipe && progress > 0) {
-                resetProgress();
-            }
-        }
+        return canInsertPrimary && canInsertChance;
     }
 
     private void craftItem() {
@@ -283,8 +250,6 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
             ItemStack chanceResult = getChanceOutput(recipe);
             insertIntoChanceOutput(chanceResult);
         }
-
-        resetProgress();
     }
 
     private void insertIntoPrimaryOutput(ItemStack result) {
@@ -338,40 +303,6 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
         return recipe.getChanceRate(); // Prilagodi prema tvojoj implementaciji
     }
 
-    private void resetProgress() { this.progress = 0; System.out.println("Progress Reset");}
-    private void increaseCraftingProgress() { this.progress++;
-    if(progress % 10 == 0 ){
-        System.out.println("📈 Progress: " + progress + "/" + maxProgress);
-        }
-    }
-
-    private boolean hasRecipe() {
-        ItemStackHandler handler = getItemHandler();
-        ItemStack input = handler.getStackInSlot(INPUT_SLOT);
-        if (input.isEmpty()) return false;
-
-        var recipeOpt = getCurrentRecipe();
-        if (recipeOpt.isEmpty()) return false;
-
-        CrushingRecipe recipe = recipeOpt.get().value();
-        ItemStack primaryResult = recipe.getResultItem(null);
-
-        // Energy check
-//        int energyToConsume = getEnergyCostPerTick();
-//        if (getEnergyStorage().getEnergyStored() < energyToConsume) return false;
-
-        // ✅ PROVJERA: Glavni result mora moći u PRIMARY_OUTPUT_1 ili PRIMARY_OUTPUT_2
-        boolean canInsertPrimary = canInsertIntoPrimaryOutput(primaryResult);
-
-        // ✅ PROVJERA: Ako recept ima chance output, mora moći u CHANCE_OUTPUT
-        boolean canInsertChance = true; // Default true ako nema chance output
-        if (hasChanceOutput(recipe)) {
-            ItemStack chanceResult = getChanceOutput(recipe);
-            canInsertChance = canInsertIntoChanceOutput(chanceResult);
-        }
-
-        return canInsertPrimary && canInsertChance;
-    }
     private boolean canInsertIntoPrimaryOutput(ItemStack primaryResult) {
         ItemStackHandler handler = getItemHandler();
 

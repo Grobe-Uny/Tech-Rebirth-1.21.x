@@ -8,5 +8,15 @@
         "attenuation_distance": 16
       }
     ]
+  },
+  "alloy_smelting":{
+    "subtitle": "subtitles.tecrhebirth.alloy_smelter_running",
+    "sounds": [
+      {
+        "name": "techrebirth:blocks/machine/alloy_smelting",
+        "stream": true,
+        "attenuation_distance": 16
+      }
+    ]
   }
 }

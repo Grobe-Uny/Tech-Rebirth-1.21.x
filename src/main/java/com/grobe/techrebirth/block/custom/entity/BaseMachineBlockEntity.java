@@ -12,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -130,6 +131,16 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         return maxProgress > 0 ? (float) progress / maxProgress : 0;
     }
 
+    protected void increaseProgress() {
+        progress++;
+        setChanged();
+    }
+
+    protected void resetProgress() {
+        progress = 0;
+        setChanged();
+    }
+
     public void setEnergyStored(int energy) {
         this.energyHandler.setEnergy(energy);
     }
@@ -174,12 +185,75 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
-        if (level.isClientSide) return;
+        if (level.isClientSide) {
+            updateSound();
+            return;
+        }
+
+        if (!isRecipeCacheValid()) {
+            updateRecipeCache();
+        }
+
+        boolean hasRecipe = hasRecipe();
+        boolean canContinue = hasRecipe && canContinueProcessing();
+        int energyCost = getEnergyCostPerTick();
+        boolean hasEnergy = energyHandler.getEnergyStored() >= energyCost;
+
+        // The machine is working if it has a recipe, can process (output space), and has energy
+        boolean isWorking = canContinue && hasEnergy;
+
+        // Toggle LIT state based on whether it's actually working
+        if (state.hasProperty(BlockStateProperties.LIT) && state.getValue(BlockStateProperties.LIT) != isWorking) {
+            level.setBlock(pos, state.setValue(BlockStateProperties.LIT, isWorking), 3);
+        }
+
+        if (hasRecipe) {
+            // Initialize progress-related data if starting a new craft
+            if (this.progress == 0) {
+                initProgressData();
+            }
+
+            if (isWorking) {
+                if (this.progress == 0) {
+                    onProcessStart();
+                }
+
+                energyHandler.extractEnergy(energyCost, false);
+                increaseProgress();
+
+                if (getProgress() >= getMaxProgress()) {
+                    finishProcessing();
+                    resetProgress();
+                }
+            }
+            // If hasRecipe but !isWorking, progress is paused
+        } else {
+            // No valid recipe, reset progress
+            if (this.progress > 0) {
+                resetProgress();
+            }
+        }
+    }
+
+    // Methods to be implemented by subclasses for generalized tick logic
+    protected boolean isRecipeCacheValid() { return true; }
+    protected void updateRecipeCache() {}
+    protected abstract boolean hasRecipe();
+    protected abstract boolean canContinueProcessing();
+    protected abstract int getEnergyCostPerTick();
+    protected abstract void finishProcessing();
+    protected void initProgressData() {}
+    protected void onProcessStart() {}
+    protected void updateSound() {}
+
+    public boolean isActuallyProcessing() {
+        BlockState state = getBlockState();
+        return state.hasProperty(BlockStateProperties.LIT) && state.getValue(BlockStateProperties.LIT);
     }
 
 
     public String getName(){
-         return getTier().name;
+        return getTier().name;
     }
 
     public IEnergyStorage getEnergyStorage() {

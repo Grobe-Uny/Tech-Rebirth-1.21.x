@@ -52,7 +52,6 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     private Optional<RecipeHolder<AlloySmeltingRecipe>> cachedRecipe = Optional.empty();
     private boolean recipeCacheValid = false;
 
-    protected int maxProgress;
     private final Map<Integer, Integer> consumedInputs = new HashMap<>();
 
     public AlloySmelterBlockEntity(BlockPos pos, BlockState state) {
@@ -95,21 +94,6 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         super(type, pos, state, 6, tier, 4);
     }
 
-    @Override
-    public int getMaxProgress() {
-        return this.maxProgress;
-    }
-
-    // ILI još bolje - overrideaj i getProgressPercent za točan prikaz:
-    @Override
-    public float getProgressPercent() {
-        if (this.maxProgress <= 0) return 0;
-        return (float) progress / this.maxProgress;
-    }
-
-    public ContainerData getContainerData() {
-        return super.getContainerData();
-    }
 
     @Override
     protected String getEnergyTagName() {
@@ -136,30 +120,12 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         return item == ModItems.EFFICIENCY_UPGRADE.get() || item == ModItems.SPEED_UPGRADE.get();
     }
 
-    protected boolean canProcess() {
-        if (!hasRecipe()) return false;
-
-        ItemStack result = getCurrentRecipe().get().value().getResultItem(null);
-        int energyCost = getEnergyCostPerTick();
-
-        // Provjeri ima li dovoljno inputa
-        if (!hasEnoughInputItems()) {
-            return false;
-        }
-
-        // Provjeri može li se output staviti
-        if (!canInsertOutput(result)) {
-            return false;
-        }
-
-        // Provjeri ima li dovoljno energije
-        return getEnergyStorage().getEnergyStored() >= energyCost;
-    }
-
+    @Override
     protected void finishProcessing() {
         craftItem();
     }
 
+    @Override
     protected int getEnergyCostPerTick() {
         int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.get());
         int efficiencyUpgrades = getUpgradeCount(ModItems.EFFICIENCY_UPGRADE.get());
@@ -172,6 +138,7 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         return (int) (160 * energySpeedPenalty * energyConsumptionMultiplier * tierEnergyMultiplier);
     }
 
+    @Override
     protected void onProcessStart() {
         //place for particles and sounds
         if(level instanceof ServerLevel serverLevel){
@@ -183,7 +150,8 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         }
     }
 
-    private void updateSound() {
+    @Override
+    protected void updateSound() {
         // Check isActuallyProcessing() which reflects the LIT state
         if (this.level.isClientSide && isActuallyProcessing()) {
             if (!soundPlaying) {
@@ -203,7 +171,8 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         }
     }
 
-    private boolean hasRecipe() {
+    @Override
+    protected boolean hasRecipe() {
         return getCurrentRecipe().isPresent();
     }
 
@@ -299,7 +268,7 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
             getItemHandler().setStackInSlot(i, workingStacks[i]);
             System.out.println("📦 Slot " + i + " after: " + workingStacks[i].getItem().getDescriptionId() + " x" + workingStacks[i].getCount());
         }
-}
+    }
 
     private boolean hasEnoughInputItems() {
         Optional<RecipeHolder<AlloySmeltingRecipe>> recipeOpt = getCurrentRecipe();
@@ -376,66 +345,31 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         return new AlloySmelterMenu(containerId, playerInventory, this, this.getContainerData());
     }
 
-    public void tick(Level level, BlockPos pos, BlockState state) {
-        if (level.isClientSide) {
-            updateSound();
-            return;
-        }
+    @Override
+    protected boolean isRecipeCacheValid() {
+        return recipeCacheValid;
+    }
 
-        if (!recipeCacheValid) {
-            getCurrentRecipe();
+    @Override
+    protected void updateRecipeCache() {
+        getCurrentRecipe();
+        setChanged();
+    }
+
+    @Override
+    protected void initProgressData() {
+        Optional<RecipeHolder<AlloySmeltingRecipe>> recipeOpt = getCurrentRecipe();
+        if (recipeOpt.isPresent()) {
+            AlloySmeltingRecipe recipe = recipeOpt.get().value();
+            int baseTime = recipe.getCookingTime();
+            float speedMultiplier = getTier().speedMultiplier;
+            this.maxProgress = (int) (baseTime / speedMultiplier);
             setChanged();
         }
-
-        boolean hasRecipe = hasRecipe();
-        boolean canContinue = hasRecipe && canContinueProcessing();
-        int energyCost = getEnergyCostPerTick();
-        boolean hasEnergy = getEnergyStorage().getEnergyStored() >= energyCost;
-
-        // The machine is working (making progress) if it has a recipe, can process (output space), and has energy
-        boolean isWorking = canContinue && hasEnergy;
-
-        // Toggle LIT state based on whether it's actually working
-        if (state.getValue(AlloySmelterBlock.LIT) != isWorking) {
-            level.setBlock(pos, state.setValue(AlloySmelterBlock.LIT, isWorking), 3);
-        }
-
-        if (hasRecipe) {
-            // Initialize maxProgress for new crafting
-            if (this.progress == 0) {
-                Optional<RecipeHolder<AlloySmeltingRecipe>> recipeOpt = getCurrentRecipe();
-                if (recipeOpt.isPresent()) {
-                    AlloySmeltingRecipe recipe = recipeOpt.get().value();
-                    int baseTime = recipe.getCookingTime();
-                    float speedMultiplier = getTier().speedMultiplier;
-                    this.maxProgress = (int) (baseTime / speedMultiplier);
-                    setChanged();
-                }
-            }
-
-            if (isWorking) {
-                if (this.progress == 0) {
-                    onProcessStart();
-                }
-
-                getEnergyStorage().extractEnergy(energyCost, false);
-                increaseProgress();
-
-                if (getProgress() >= getMaxProgress()) {
-                    finishProcessing();
-                    resetProgress();
-                }
-            }
-            // If hasRecipe is true but !isWorking, progress is paused (neither increased nor reset)
-        } else {
-            // No recipe anymore, reset progress and ensure LIT is false
-            if (this.progress > 0) {
-                resetProgress();
-            }
-        }
     }
-    // NOVA METODA - provjeri može li NASTAVITI procesuirati
-    private boolean canContinueProcessing() {
+
+    @Override
+    protected boolean canContinueProcessing() {
         Optional<RecipeHolder<AlloySmeltingRecipe>> recipeOpt = getCurrentRecipe();
         if (recipeOpt.isEmpty()) return false;
 
@@ -444,17 +378,6 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
 
         // Provjeri ima li još inputa i može li se output staviti
         return hasEnoughInputItems() && canInsertOutput(result);
-    }
-    protected void increaseProgress() {
-
-        progress++;
-
-        setChanged();
-    }
-
-    protected void resetProgress() {
-        progress = 0;
-        setChanged();
     }
 
     public void drops (){
@@ -465,9 +388,6 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
-    public boolean isActuallyProcessing(){
-        return this.getBlockState().getValue(AlloySmelterBlock.LIT);
-    }
 
 
     @Override

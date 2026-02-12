@@ -88,26 +88,14 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
     //region Ticking and Crafting
     @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
-        if (level.isClientSide) return;
-
-        fillCatalyst();
-
-        if (hasRecipe()) {
-            int energyPerTick = calculateEnergyPerTick();
-            if (energyHandler.getEnergyStored() >= energyPerTick) {
-                energyHandler.extractEnergy(energyPerTick, false);
-                progress++;
-                if (progress >= maxProgress) {
-                    craftItem();
-                }
-            }
-        } else {
-            resetProgress();
+        if (!level.isClientSide) {
+            fillCatalyst();
         }
-        setChanged();
+        super.tick(level, pos, state);
     }
 
-    private boolean hasRecipe() {
+    @Override
+    protected boolean hasRecipe() {
         if (this.level == null) return false;
 
         Optional<RecipeHolder<CentrifugeRecipe>> recipe = getCurrentRecipe();
@@ -117,9 +105,14 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
 
         CentrifugeRecipe centrifugeRecipe = recipe.get().value();
         return canInsertAmountIntoOutputSlot() &&
-               canInsertItemIntoOutputSlot(centrifugeRecipe.getResultItem(this.level.registryAccess())) &&
-               hasCorrectCatalyst(centrifugeRecipe) &&
-               hasEnoughCatalyst(centrifugeRecipe);
+                canInsertItemIntoOutputSlot(centrifugeRecipe.getResultItem(this.level.registryAccess())) &&
+                hasCorrectCatalyst(centrifugeRecipe) &&
+                hasEnoughCatalyst(centrifugeRecipe);
+    }
+
+    @Override
+    protected void finishProcessing() {
+        craftItem();
     }
 
     private void craftItem() {
@@ -146,16 +139,33 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
     private Optional<RecipeHolder<CentrifugeRecipe>> getCurrentRecipe() {
         if (this.level == null) return Optional.empty();
 
-        if(currentRecipe.isPresent() && currentRecipe.get().value().matches(new SingleRecipeInput(this.itemHandler.getStackInSlot(INPUT_SLOT)), level)) {
+        if (currentRecipe.isPresent() && currentRecipe.get().value().matches(new SingleRecipeInput(this.itemHandler.getStackInSlot(INPUT_SLOT)), level)) {
             return currentRecipe;
         } else {
             currentRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.CENTRIFUGE_TYPE.get(), new SingleRecipeInput(this.itemHandler.getStackInSlot(INPUT_SLOT)), this.level);
-            if(currentRecipe.isPresent()) {
-                this.maxProgress = currentRecipe.get().value().processingTime();
-                this.progress = 0;
-            }
             return currentRecipe;
         }
+    }
+
+    @Override
+    protected void initProgressData() {
+        getCurrentRecipe().ifPresent(recipe -> {
+            this.maxProgress = recipe.value().processingTime();
+        });
+    }
+
+    @Override
+    protected boolean canContinueProcessing() {
+        if (this.level == null) return false;
+
+        Optional<RecipeHolder<CentrifugeRecipe>> recipe = getCurrentRecipe();
+        if (recipe.isEmpty()) return false;
+
+        CentrifugeRecipe centrifugeRecipe = recipe.get().value();
+        return canInsertAmountIntoOutputSlot() &&
+                canInsertItemIntoOutputSlot(centrifugeRecipe.getResultItem(this.level.registryAccess())) &&
+                hasCorrectCatalyst(centrifugeRecipe) &&
+                hasEnoughCatalyst(centrifugeRecipe);
     }
     //endregion
 
@@ -217,11 +227,8 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
     //endregion
 
     //region Helpers
-    private void resetProgress() {
-        this.progress = 0;
-    }
-
-    private int calculateEnergyPerTick() {
+    @Override
+    protected int getEnergyCostPerTick() {
         Optional<RecipeHolder<CentrifugeRecipe>> recipe = getCurrentRecipe();
         if (recipe.isEmpty()) return 0;
 
