@@ -1,0 +1,32 @@
+{
+  "alloy_smelting": {
+    "sounds": [
+      {
+        "name": "techrebirth:blocks/machine/alloy_smelting",
+        "stream": true,
+        "weight": 2
+      }
+    ],
+    "subtitle": "subtitles.techrebirth.alloy_smelting"
+  },
+  "crusher_running": {
+    "sounds": [
+      {
+        "name": "techrebirth:blocks/machine/crusher_running",
+        "stream": true,
+        "weight": 2
+      }
+    ],
+    "subtitle": "subtitles.techrebirth.crusher_running"
+  },
+  "furnace_running": {
+    "sounds": [
+      {
+        "name": "techrebirth:blocks/machine/furnace_running",
+        "stream": true,
+        "weight": 2
+      }
+    ],
+    "subtitle": "subtitles.techrebirth.furnace_running"
+  }
+}
