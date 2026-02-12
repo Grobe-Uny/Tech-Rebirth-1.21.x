@@ -106,5 +106,7 @@
   "gui.techrebirth.upgrade_slot.2": "Slot 3",
   "gui.techrebirth.upgrade_slot.3": "Slot 4",
 
-  "subtitles.techrebirth.crusher_running": "Crusher running"
+  "subtitles.techrebirth.crusher_running": "Crushing",
+  "subtitles.techrebirth.alloy_smelting": "Alloying",
+  "subtitles.techrebirth.furnace_running": "Smelting"
 }
