@@ -8,9 +8,9 @@ import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.recipe.AlloySmeltingRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.recipe.MultiItemRecipeInput;
-import com.grobe.techrebirth.sound.ClientSoundHelper;
 import com.grobe.techrebirth.sound.ModSounds;
 import com.grobe.techrebirth.util.MachineTier;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleType;
@@ -45,8 +45,6 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     private static final int UPGRADE_SLOT_1 = 4;
     private static final int UPGRADE_SLOT_2 = 5;
 
-
-    private boolean soundPlaying = false;
 
     // Cache za performance
     private Optional<RecipeHolder<AlloySmeltingRecipe>> cachedRecipe = Optional.empty();
@@ -151,17 +149,13 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     }
 
     @Override
-    protected void updateSound() {
-        // Check isActuallyProcessing() which reflects the LIT state
-        if (this.level.isClientSide && isActuallyProcessing()) {
-            if (!soundPlaying) {
-                ClientSoundHelper.playAlloySmelterSound(this);
-                soundPlaying = true;
-            }
-        } else {
-            // If the machine stops working, reset the flag so it can be started again later
-            soundPlaying = false;
-        }
+    protected SoundEvent getWorkingSound() {
+        return ModSounds.ALLOY_SMELTING.get();
+    }
+
+    @Override
+    protected float getWorkingSoundVolume() {
+        return 2.0f;
     }
 
     protected void onInventoryChanged(int slot) {

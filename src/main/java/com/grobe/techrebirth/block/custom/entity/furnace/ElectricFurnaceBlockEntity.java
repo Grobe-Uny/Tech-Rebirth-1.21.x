@@ -5,8 +5,10 @@ import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.gui.electric_furnace.ElectricFurnaceMenu;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
+import com.grobe.techrebirth.sound.ModSounds;
 import com.grobe.techrebirth.util.MachineTier;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -83,8 +85,6 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         return whole;
     }
 
-    int progress = 0;
-    int maxProgress = 72;
     private float pendingXp;
 
     private static int getRecipeCookTime(SmeltingRecipe recipe){
@@ -208,34 +208,6 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         pendingXp = tag.getFloat("pendingXp");
 
     }
-    @Override
-    public void tick(Level level, BlockPos pos, BlockState state) {
-        if (hasRecipe()) {
-            Optional<RecipeHolder<SmeltingRecipe>> recipeOpt = getCurrentRecipe();
-            if (recipeOpt.isEmpty()) { resetProgress(); return; }
-
-
-            SmeltingRecipe recipe = recipeOpt.get().value();
-
-            if(progress == 0){
-                calculateProgressTime(recipe);
-            }
-            int energyCost = getEnergyCostPerTick();
-
-            if (getEnergyStorage().getEnergyStored() >= energyCost) {
-                getEnergyStorage().extractEnergy(energyCost, false);
-                increaseCraftingProgress();
-                setChanged(level, pos, state);
-
-                if (progress >= maxProgress) {
-                    craftItem();
-                }
-            }
-        } else {
-            resetProgress();
-        }
-    }
-
     private void calculateProgressTime(SmeltingRecipe recipe){
         int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.get());
 
@@ -261,7 +233,7 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
 
     @Override
     protected void finishProcessing() {
-
+        craftItem();
     }
 
     private void craftItem() {
@@ -283,25 +255,30 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         resetProgress();
     }
 
-    private void increaseCraftingProgress() { progress++; }
-
     @Override
     protected boolean hasRecipe() {
         Optional<RecipeHolder<SmeltingRecipe>> recipe = getCurrentRecipe();
-        if (recipe.isEmpty()) return false;
-
-        ItemStack result = recipe.get().value().getResultItem(null);
-        ItemStackHandler handler = getItemHandler();
-
-
-        return canInsertAmountIntoOutputSlot(result.getCount()) &&
-                canInsertItemIntoOutputSlot(result.getItem()) &&
-                getEnergyStorage().getEnergyStored() >= getEnergyCostPerTick();
+        return recipe.isPresent();
     }
 
     @Override
     protected boolean canContinueProcessing() {
-        return false;
+        Optional<RecipeHolder<SmeltingRecipe>> recipe = getCurrentRecipe();
+        if (recipe.isEmpty()) return false;
+
+        ItemStack result = recipe.get().value().getResultItem(null);
+        return canInsertAmountIntoOutputSlot(result.getCount()) &&
+                canInsertItemIntoOutputSlot(result.getItem());
+    }
+
+    @Override
+    protected void initProgressData() {
+        getCurrentRecipe().ifPresent(recipeHolder -> calculateProgressTime(recipeHolder.value()));
+    }
+
+    @Override
+    protected SoundEvent getWorkingSound() {
+        return ModSounds.FURNACE_RUNNING.get();
     }
 
     private int getUpgradeCount(Item upgradeItem) {

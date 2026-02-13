@@ -7,8 +7,10 @@ import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
 import com.grobe.techrebirth.recipe.CrushingRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
+import com.grobe.techrebirth.sound.ModSounds;
 import com.grobe.techrebirth.util.MachineTier;
 import com.grobe.techrebirth.util.ModTags;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -199,6 +201,11 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
     @Override
     protected void finishProcessing() {
         craftItem();
+    }
+
+    @Override
+    protected SoundEvent getWorkingSound() {
+        return ModSounds.CRUSHER_RUNNING.get();
     }
 
     @Override

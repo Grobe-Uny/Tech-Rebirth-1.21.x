@@ -4,7 +4,9 @@ import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.gui.generator.GeneratorMenu;
 import com.grobe.techrebirth.recipe.GeneratorFuelRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
+import com.grobe.techrebirth.sound.ModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -22,6 +24,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
@@ -115,11 +118,25 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
 
     @Override
     public void tick(Level level, BlockPos pos, BlockState state) {
+        if (level.isClientSide) {
+            updateSound();
+            return;
+        }
         tick(level, pos, state, this);
+    }
+
+    @Override
+    protected SoundEvent getWorkingSound() {
+        return ModSounds.FURNACE_RUNNING.get();
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, GeneratorBlockEntity be) {
         if (level.isClientSide()) return;
+
+        boolean isWorking = be.burnTime > 0;
+        if (state.hasProperty(BlockStateProperties.LIT) && state.getValue(BlockStateProperties.LIT) != isWorking) {
+            level.setBlock(pos, state.setValue(BlockStateProperties.LIT, isWorking), 3);
+        }
 
         // Burn fuel and generate energy only if there is room to store it
         boolean hasRoomForEnergy = be.getEnergyStorage().getEnergyStored() < be.getEnergyStorage().getMaxEnergyStored();

@@ -4,8 +4,10 @@ import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.gui.electric_centrifuge.ElectricCentrifugeMenu;
 import com.grobe.techrebirth.recipe.CentrifugeRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
+import com.grobe.techrebirth.sound.ModSounds;
 import com.grobe.techrebirth.util.MachineTier;
 import com.grobe.techrebirth.util.ModTags;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -113,6 +115,11 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
     @Override
     protected void finishProcessing() {
         craftItem();
+    }
+
+    @Override
+    protected SoundEvent getWorkingSound() {
+        return ModSounds.CRUSHER_RUNNING.get();
     }
 
     private void craftItem() {
