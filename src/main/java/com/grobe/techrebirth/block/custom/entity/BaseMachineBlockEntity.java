@@ -1,8 +1,10 @@
 package com.grobe.techrebirth.block.custom.entity;
 
+import com.grobe.techrebirth.sound.ClientSoundHelper;
 import com.grobe.techrebirth.util.MachineTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.MenuProvider;
@@ -32,6 +34,8 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
 
     protected int progress = 0;
     protected int maxProgress;
+
+    private boolean soundPlaying = false;
 
     protected abstract String getEnergyTagName();
 
@@ -244,7 +248,32 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     protected abstract void finishProcessing();
     protected void initProgressData() {}
     protected void onProcessStart() {}
-    protected void updateSound() {}
+
+    protected void updateSound() {
+        if (this.level.isClientSide) {
+            SoundEvent sound = getWorkingSound();
+            if (sound != null && isActuallyProcessing()) {
+                if (!soundPlaying) {
+                    ClientSoundHelper.playMachineSound(this, sound, getWorkingSoundVolume(), getWorkingSoundPitch());
+                    soundPlaying = true;
+                }
+            } else {
+                soundPlaying = false;
+            }
+        }
+    }
+
+    protected SoundEvent getWorkingSound() {
+        return null;
+    }
+
+    protected float getWorkingSoundVolume() {
+        return 1.0f;
+    }
+
+    protected float getWorkingSoundPitch() {
+        return 1.0f;
+    }
 
     public boolean isActuallyProcessing() {
         BlockState state = getBlockState();
