@@ -2,17 +2,30 @@ package com.grobe.techrebirth.item;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
+import com.grobe.techrebirth.util.MetalType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(TechRebirth.MODID);
+
+    // A map to hold our dynamically registered nuggets
+    public static final Map<MetalType, DeferredItem<Item>> NUGGETS = new EnumMap<>(MetalType.class);
+
+    static {
+        for (MetalType metal : MetalType.values()) {
+            NUGGETS.put(metal, ITEMS.register(metal.getSerializedName() + "_nugget",
+                    () -> new Item(new Item.Properties())));
+        }
+    }
 
     //stuff already in minecraft but adding support for other mod items
     public static final DeferredItem<Item> IRON_POWDER = ITEMS.register("iron_powder",

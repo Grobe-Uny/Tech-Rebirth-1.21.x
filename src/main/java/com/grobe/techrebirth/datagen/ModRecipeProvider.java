@@ -4,6 +4,7 @@ import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlocks;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.util.MachineTier;
+import com.grobe.techrebirth.util.MetalType;
 import com.grobe.techrebirth.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -18,8 +19,10 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
@@ -246,9 +249,47 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildArmorSetRecipes(ModItems.BLAZING_GOLD_INGOT.asItem(), ModItems.BLAZING_GOLD_HELMET.asItem(), ModItems.BLAZING_GOLD_CHESTPLATE.asItem(), ModItems.BLAZING_GOLD_LEGGINGS.asItem(),ModItems.BLAZING_GOLD_BOOTS.asItem(),"has_blazing_gold", recipeOutput);
         buildToolRecipes(ModItems.BLAZING_GOLD_INGOT.asItem(), Items.STICK, ModItems.BLAZING_GOLD_SWORD.asItem(), ModItems.BLAZING_GOLD_AXE.asItem(), ModItems.BLAZING_GOLD_PICKAXE.asItem(), ModItems.BLAZING_GOLD_SHOVEL.asItem(), ModItems.BLAZING_GOLD_HOE.asItem(), "has_blazing_gold", recipeOutput);
 
+        // Automatic Nugget Recipes
+        for (Map.Entry<MetalType, DeferredItem<Item>> entry : ModItems.NUGGETS.entrySet()) {
+            MetalType type = entry.getKey();
+            Item nugget = entry.getValue().get();
+            ItemLike ingot = getIngotForMetal(type);
 
+            if (ingot != null) {
+                // Ingot -> 9 Nuggets
+                ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, nugget, 9)
+                        .requires(ingot)
+                        .unlockedBy("has_" + type.getSerializedName() + "_ingot", has(ingot))
+                        .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, type.getSerializedName() + "_nugget_from_ingot"));
+
+                // 9 Nuggets -> Ingot
+                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ingot)
+                        .pattern("XXX")
+                        .pattern("XXX")
+                        .pattern("XXX")
+                        .define('X', nugget)
+                        .unlockedBy("has_" + type.getSerializedName() + "_nugget", has(nugget))
+                        .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, type.getSerializedName() + "_ingot_from_nugget"));
+            }
+        }
 
         super.buildRecipes(recipeOutput);
+    }
+
+    private ItemLike getIngotForMetal(MetalType type) {
+        return switch (type) {
+            case TIN -> ModItems.TIN_INGOT.get();
+            case NICKEL -> ModItems.NICKEL_INGOT.get();
+            case INVAR -> ModItems.INVAR_INGOT.get();
+            case LEAD -> ModItems.LEAD_INGOT.get();
+            case STEEL -> ModItems.STEEL_INGOT.get();
+            case COPPER -> Items.COPPER_INGOT;
+            case IRON -> Items.IRON_INGOT;
+            case GOLD -> Items.GOLD_INGOT;
+            case DIAMOND -> Items.DIAMOND;
+            case BLAZING_GOLD -> ModItems.BLAZING_GOLD_INGOT.get();
+            default -> null;
+        };
     }
 
     public static void buildGearRecipe(ItemLike outputGear, ItemLike inputItem, String Criteria, ItemLike criteria, RecipeOutput recipeOutput, ResourceLocation resourceLocation){

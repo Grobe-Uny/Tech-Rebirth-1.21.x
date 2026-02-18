@@ -1,4 +1,4 @@
-// 1.21.1	2025-11-09T15:59:51.7205301	Item Models: techrebirth
+// 1.21.1	2026-02-18T22:25:07.063019636	Item Models: techrebirth
 43dc8e4e033d0c73ab2765434cf12291a5e99715 assets/techrebirth/models/item/blazing_gold_axe.json
 2448110c745c1e9881edcce0cc377c5ddf597d07 assets/techrebirth/models/item/blazing_gold_boots.json
 bbd74ac26f40e15b745ecb298d4b870f3e37f2d2 assets/techrebirth/models/item/blazing_gold_boots_amethyst_trim.json
@@ -45,6 +45,16 @@ c6e20d53c593b48c12a7474fa7c76ca4b2d8ba48 assets/techrebirth/models/item/blazing_
 d0a4212012b3d1449bd584875a3538920477231c assets/techrebirth/models/item/blazing_gold_leggings_netherite_trim.json
 b2030e1200bf660387eade1cf43f0aaabe088350 assets/techrebirth/models/item/blazing_gold_leggings_quartz_trim.json
 343e653e4836f7b81f65ab37f94742f486838ba2 assets/techrebirth/models/item/blazing_gold_leggings_redstone_trim.json
+d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/blazing_gold_nugget.json
 d5e6e3129b01b4e1cea5d2141520e7b7d8dfa84a assets/techrebirth/models/item/blazing_gold_pickaxe.json
 3a82452b9bb7a395a275711d500d1270cca1491e assets/techrebirth/models/item/blazing_gold_shovel.json
 af263ccf95847494c16d460980d8c50227f28330 assets/techrebirth/models/item/blazing_gold_sword.json
+d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/copper_nugget.json
+d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/diamond_nugget.json
+d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/gold_nugget.json
+d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/invar_nugget.json
+d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/iron_nugget.json
+d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/lead_nugget.json
+d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/nickel_nugget.json
+d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/steel_nugget.json
+d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/tin_nugget.json

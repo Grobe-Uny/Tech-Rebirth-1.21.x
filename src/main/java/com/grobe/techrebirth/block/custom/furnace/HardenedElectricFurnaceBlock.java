@@ -34,9 +34,6 @@ public class HardenedElectricFurnaceBlock extends ElectricFurnaceBlock{
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide()) {
-            return null;
-        }
         return BaseEntityBlock.createTickerHelper(type, ModBlockEntities.HARDENED_ELECTRIC_FURNACE.get(),
                 (lvl, pos, st, be) -> be.tick(lvl, pos, st));
     }

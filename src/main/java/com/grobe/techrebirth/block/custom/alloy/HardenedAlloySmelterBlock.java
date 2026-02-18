@@ -18,21 +18,6 @@ public class HardenedAlloySmelterBlock extends AlloySmelterBlock {
         super(pProperties);
     }
 
-//    @Override
-//    public InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-//        if (!pLevel.isClientSide()){
-//            BlockEntity entity = pLevel.getBlockEntity(pPos);
-//            System.out.println("DEBUG: BlockEntity found: " + entity);
-//            if (entity instanceof HardenedAlloySmelterBlockEntity){
-//                System.out.println("DEBUG: Opening menu...");
-//                pPlayer.openMenu((HardenedAlloySmelterBlockEntity)entity, pPos);
-//            } else {
-//                throw new IllegalStateException("Our Container provider is missing!");
-//            }
-//        }
-//        return InteractionResult.sidedSuccess(pLevel.isClientSide());
-//    }
-
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {

@@ -209,7 +209,7 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
     }
     @Override
     protected float getWorkingSoundVolume() {
-        return 2.0f;
+        return 4.0f;
     }
 
     @Override

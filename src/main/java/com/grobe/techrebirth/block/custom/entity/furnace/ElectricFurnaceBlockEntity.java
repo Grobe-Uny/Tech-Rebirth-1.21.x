@@ -282,7 +282,7 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
     }
     @Override
     protected float getWorkingSoundVolume() {
-        return 2.0f;
+        return 4.0f;
     }
 
     private int getUpgradeCount(Item upgradeItem) {

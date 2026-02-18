@@ -58,7 +58,6 @@ public class ElectricCrusherBlock extends BaseMachineBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide()) return null;
         return createTickerHelper(type, ModBlockEntities.ELECTRIC_CRUSHER.get(),
                 (lvl, pos, st, be) -> be.tick(lvl, pos, st));
     }

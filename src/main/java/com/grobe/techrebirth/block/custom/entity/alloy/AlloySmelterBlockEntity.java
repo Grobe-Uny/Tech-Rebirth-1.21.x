@@ -155,7 +155,7 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
 
     @Override
     protected float getWorkingSoundVolume() {
-        return 2.0f;
+        return 4.0f;
     }
 
     protected void onInventoryChanged(int slot) {
