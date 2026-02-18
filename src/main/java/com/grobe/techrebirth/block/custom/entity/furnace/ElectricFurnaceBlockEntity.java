@@ -280,6 +280,10 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
     protected SoundEvent getWorkingSound() {
         return ModSounds.FURNACE_RUNNING.get();
     }
+    @Override
+    protected float getWorkingSoundVolume() {
+        return 2.0f;
+    }
 
     private int getUpgradeCount(Item upgradeItem) {
         int count = 0;

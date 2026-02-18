@@ -207,6 +207,10 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
     protected SoundEvent getWorkingSound() {
         return ModSounds.CRUSHER_RUNNING.get();
     }
+    @Override
+    protected float getWorkingSoundVolume() {
+        return 2.0f;
+    }
 
     @Override
     protected boolean hasRecipe() {
