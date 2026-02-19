@@ -34,8 +34,7 @@ public class HardenedAlloySmelterBlock extends AlloySmelterBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.HARDENED_ALLOY_SMELTER.get(),
-                (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
+        return createTicker(pLevel, pBlockEntityType, ModBlockEntities.HARDENED_ALLOY_SMELTER.get());
     }
 
 }

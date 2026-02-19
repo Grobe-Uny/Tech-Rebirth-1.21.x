@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
@@ -23,11 +24,14 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -79,6 +83,19 @@ public abstract class BaseMachineBlock extends BaseEntityBlock implements Entity
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!level.isClientSide()) {
+            BlockEntity entity = level.getBlockEntity(pos);
+            if (entity instanceof BaseMachineBlockEntity be) {
+                ((ServerPlayer) player).openMenu(be, pos);
+            } else {
+                throw new IllegalStateException("Our Container provider is missing!");
+            }
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
     // ALTERNATIVA: Koristi postojeću CUSTOM_DATA komponentu
@@ -213,6 +230,12 @@ public abstract class BaseMachineBlock extends BaseEntityBlock implements Entity
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!level.isClientSide() && state.getBlock() != newState.getBlock()) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof BaseMachineBlockEntity machine) {
+                handleMachineSpecificDrops(machine, level, pos);
+            }
+        }
         super.onRemove(state, level, pos, newState, isMoving);
     }
 
@@ -243,5 +266,10 @@ public abstract class BaseMachineBlock extends BaseEntityBlock implements Entity
 
     protected void appendMachineSpecificTooltip(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         // Override u podklasama za specifične tooltipove
+    }
+
+    @Nullable
+    protected static <T extends BlockEntity> BlockEntityTicker<T> createTicker(Level level, BlockEntityType<T> type, BlockEntityType<? extends BaseMachineBlockEntity> targetType) {
+        return createTickerHelper(type, targetType, (lvl, pos, st, be) -> be.tick(lvl, pos, st));
     }
 }

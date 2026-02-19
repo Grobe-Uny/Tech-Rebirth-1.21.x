@@ -7,18 +7,15 @@ import com.grobe.techrebirth.util.MachineTier;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.component.DataComponents;
@@ -27,19 +24,6 @@ public class ElectricCrusherBlock extends BaseMachineBlock {
 
     public ElectricCrusherBlock(Properties props) {
         super(props, MachineTier.BASIC);
-    }
-
-    @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide()) {
-            BlockEntity entity = level.getBlockEntity(pos);
-            if (entity instanceof ElectricCrusherBlockEntity be) {
-                ((ServerPlayer) player).openMenu(be, pos);
-            } else {
-                throw new IllegalStateException("Our Container provider is missing!");
-            }
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
     @Nullable
@@ -58,8 +42,7 @@ public class ElectricCrusherBlock extends BaseMachineBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlockEntities.ELECTRIC_CRUSHER.get(),
-                (lvl, pos, st, be) -> be.tick(lvl, pos, st));
+        return createTicker(level, type, ModBlockEntities.ELECTRIC_CRUSHER.get());
     }
 
     @Override
@@ -79,17 +62,6 @@ public class ElectricCrusherBlock extends BaseMachineBlock {
                 }
             }
         }
-    }
-
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!level.isClientSide() && state.getBlock() != newState.getBlock()) {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof ElectricCrusherBlockEntity crusher) {
-                crusher.drops();
-            }
-        }
-        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Override

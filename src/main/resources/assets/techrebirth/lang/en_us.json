@@ -41,6 +41,13 @@
   "item.techrebirth.blazing_gold_shovel": "Blazing Gold Shovel",
   "item.techrebirth.blazing_gold_hoe": "Blazing Gold Hoe",
 
+  "item.techrebirth.tin_nugget": "Tin Nugget",
+  "item.techrebirth.nickel_nugget": "Nickel Nugget",
+  "item.techrebirth.invar_nugget": "Invar Nugget",
+  "item.techrebirth.lead_nugget": "Lead Nugget",
+  "item.techrebirth.steel_nugget": "Steel Nugget",
+  "item.techrebirth.diamond_nugget": "Diamond Nugget",
+  "item.techrebirth.blazing_gold_nugget": "Blazing Gold Nugget",
 
   "block.techrebirth.machine_base": "Machine Base",
   "block.techrebirth.fluid_tank": "Fluid Tank",

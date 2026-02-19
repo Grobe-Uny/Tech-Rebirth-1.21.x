@@ -283,9 +283,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
             case INVAR -> ModItems.INVAR_INGOT.get();
             case LEAD -> ModItems.LEAD_INGOT.get();
             case STEEL -> ModItems.STEEL_INGOT.get();
-            case COPPER -> Items.COPPER_INGOT;
-            case IRON -> Items.IRON_INGOT;
-            case GOLD -> Items.GOLD_INGOT;
             case DIAMOND -> Items.DIAMOND;
             case BLAZING_GOLD -> ModItems.BLAZING_GOLD_INGOT.get();
             default -> null;

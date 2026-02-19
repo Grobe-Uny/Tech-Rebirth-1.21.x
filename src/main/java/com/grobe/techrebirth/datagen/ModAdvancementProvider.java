@@ -34,27 +34,31 @@ public class ModAdvancementProvider extends AdvancementProvider {
     private static final class ModAdvancementGenerator implements AdvancementGenerator{
         @Override
         public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper){
-            Advancement.Builder builder = Advancement.Builder.advancement();
-            AdvancementHolder root = builder.display(
-                                    ModItems.TIN_INGOT.get(),
-                                    Component.translatable("advancements.techrebirth.rebirth_of_technology.title"),
-                                    Component.translatable("advancements.techrebirth.rebirth_of_technology.description"),
-                                    ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
-                                    AdvancementType.TASK,
-                                    true,true,false
-                            ).addCriterion("has_tin", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.TIN_INGOT))
+            AdvancementHolder root = Advancement.Builder.advancement()
+                    .display(
+                            ModItems.TIN_INGOT.get(),
+                            Component.translatable("advancements.techrebirth.rebirth_of_technology.title"),
+                            Component.translatable("advancements.techrebirth.rebirth_of_technology.description"),
+                            ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
+                            AdvancementType.TASK,
+                            true,true,false
+                    ).addCriterion("has_tin", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.TIN_INGOT))
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "tech_rebirth_start"), existingFileHelper);
-            AdvancementHolder beginning = builder.display(
-                    ModBlocks.MACHINE_BASE.get(),
-                    Component.translatable("advancements.techrebirth.basing_machines.title"),
-                    Component.translatable("advancements.techrebirth.basing_machines.description"),
-                    ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
-                    AdvancementType.TASK,
-                    true,true,false
-            ).addCriterion("has_machine_base", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.MACHINE_BASE))
+
+            AdvancementHolder beginning = Advancement.Builder.advancement()
+                    .display(
+                            ModBlocks.MACHINE_BASE.get(),
+                            Component.translatable("advancements.techrebirth.basing_machines.title"),
+                            Component.translatable("advancements.techrebirth.basing_machines.description"),
+                            ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
+                            AdvancementType.TASK,
+                            true,true,false
+                    ).addCriterion("has_machine_base", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.MACHINE_BASE))
                     .parent(root)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "beggining_of_machinery"), existingFileHelper);
-            AdvancementHolder generating_electricity = builder.display(
+
+            AdvancementHolder generating_electricity = Advancement.Builder.advancement()
+                    .display(
                             ModBlocks.GENERATOR.get(),
                             Component.translatable("advancements.techrebirth.first_sparks.title"),
                             Component.translatable("advancements.techrebirth.first_sparks.description"),
@@ -64,7 +68,9 @@ public class ModAdvancementProvider extends AdvancementProvider {
                     ).addCriterion("has_generator", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.GENERATOR))
                     .parent(beginning)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "sparks_of_electricity"), existingFileHelper);
-            AdvancementHolder start_of_development = builder.display(
+
+            AdvancementHolder start_of_development = Advancement.Builder.advancement()
+                    .display(
                             ModBlocks.ELECTRIC_CENTRIFUGE,
                             Component.translatable("advancements.techrebirth.start_of_development.title"),
                             Component.translatable("advancements.techrebirth.start_of_development.description"),
@@ -75,18 +81,20 @@ public class ModAdvancementProvider extends AdvancementProvider {
                     .parent(generating_electricity)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "start_mixing_stuff"), existingFileHelper);
 
-            AdvancementHolder get_blazed = builder.display(
-                    ModItems.BLAZING_GOLD_INGOT.get(),
-                    Component.translatable("advancements.techrebirth.start_blazing.title"),
-                    Component.translatable("advancements.techrebirth.start_blazing.description"),
-                    ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
-                    AdvancementType.TASK,
-                    true, true,true
-            ).addCriterion("has_blazing_gold", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.BLAZING_GOLD_INGOT))
+            AdvancementHolder get_blazed = Advancement.Builder.advancement()
+                    .display(
+                            ModItems.BLAZING_GOLD_INGOT.get(),
+                            Component.translatable("advancements.techrebirth.start_blazing.title"),
+                            Component.translatable("advancements.techrebirth.start_blazing.description"),
+                            ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
+                            AdvancementType.TASK,
+                            true, true,true
+                    ).addCriterion("has_blazing_gold", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.BLAZING_GOLD_INGOT))
                     .parent(start_of_development)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "getting_blazed_with_ingots"), existingFileHelper);
 
-            AdvancementHolder get_tooled = builder.display(
+            AdvancementHolder get_tooled = Advancement.Builder.advancement()
+                    .display(
                             ModItems.BLAZING_GOLD_PICKAXE,
                             Component.translatable("advancements.techrebirth.get_tooled.title"),
                             Component.translatable("advancements.techrebirth.get_tooled.description"),
@@ -96,7 +104,6 @@ public class ModAdvancementProvider extends AdvancementProvider {
                     ).addCriterion("has_blazing_gold_tools", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.BLAZING_GOLD_PICKAXE))
                     .parent(get_blazed)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "get_blazed_tools"), existingFileHelper);
-
         }
     }
 }

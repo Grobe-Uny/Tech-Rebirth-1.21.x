@@ -10,16 +10,6 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "has_tin": {
-      "conditions": {
-        "items": [
-          {
-            "items": "techrebirth:tin_ingot"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -36,9 +26,6 @@
     }
   },
   "requirements": [
-    [
-      "has_tin"
-    ],
     [
       "has_machine_base"
     ]

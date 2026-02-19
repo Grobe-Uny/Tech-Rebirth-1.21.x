@@ -34,7 +34,6 @@ public class CreativeElectricFurnaceBlock extends ElectricFurnaceBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return BaseEntityBlock.createTickerHelper(type, ModBlockEntities.CREATIVE_ELECTRIC_FURNACE.get(),
-                (lvl, pos, st, be) -> be.tick(lvl, pos, st));
+        return createTicker(level, type, ModBlockEntities.CREATIVE_ELECTRIC_FURNACE.get());
     }
 }
