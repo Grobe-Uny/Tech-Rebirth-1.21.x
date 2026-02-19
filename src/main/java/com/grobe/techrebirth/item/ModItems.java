@@ -2,6 +2,7 @@ package com.grobe.techrebirth.item;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
+import com.grobe.techrebirth.item.custom.WrenchItem;
 import com.grobe.techrebirth.util.MetalType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
@@ -106,7 +107,7 @@ public class ModItems {
     public static final DeferredItem<Item> REDSTONE_RECEPTION_COIL = ITEMS.register("redstone_reception_coil",
             ()-> new Item(new Item.Properties()));
     public static final DeferredItem<Item> LEAD_WRENCH = ITEMS.register("lead_wrench",
-            () -> new Item(new Item.Properties()
+            () -> new WrenchItem(new Item.Properties()
                     .stacksTo(1)
             ));
     public static final DeferredItem<EnchantedBookItem> LIGHTNING_STRIKER_ENCHANTED_BOOK = ITEMS.register("lightning_striker_enchanted_book",

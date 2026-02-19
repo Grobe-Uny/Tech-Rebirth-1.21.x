@@ -23,8 +23,12 @@ public class WrenchItem extends Item {
         Player player = context.getPlayer();
         ItemStack wrench = context.getItemInHand();
 
-        if(state.getBlock() instanceof BaseMachineBlock){
-            if(!level.isClientSide() && player != null){
+        if(state.getBlock() instanceof BaseMachineBlock machineBlock){
+            // Only work if the player is sneaking to avoid conflict with opening the GUI
+            if (player != null && player.isShiftKeyDown()) {
+                if (!level.isClientSide()) {
+                    return machineBlock.tryPickupWithWrench(state, level, pos, player, wrench);
+                }
                 return InteractionResult.sidedSuccess(level.isClientSide());
             }
         }
