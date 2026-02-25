@@ -5,6 +5,7 @@ import com.grobe.techrebirth.block.ModBlocks;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -25,6 +26,8 @@ public class ElectricFurnaceRecipeCategory implements IRecipeCategory<SmeltingRe
     public static final RecipeType<SmeltingRecipe> TYPE = new RecipeType<>(UID, SmeltingRecipe.class);
     private final IDrawable background;
     private final IDrawable icon;
+    private final IDrawable slotDrawable;
+    private final IDrawableAnimated progressBar;
 
     // Compact JEI panel size
     private static final int BG_W = 130;
@@ -36,11 +39,23 @@ public class ElectricFurnaceRecipeCategory implements IRecipeCategory<SmeltingRe
     private static final int ENERGY_BAR_WIDTH = 10;
     private static final int ENERGY_BAR_HEIGHT = 50;
 
+    // Progress bar visuals (match in-game style roughly)
+    private static final int PROGRESS_BAR_X = 72;
+    private static final int PROGRESS_BAR_Y = 45;
+    private static final int PROGRESS_BAR_WIDTH = 16;
+    private static final int PROGRESS_BAR_HEIGHT = 8;
+    private static final int PROGRESS_BAR_COLOR = 0xFF2B93CC;
 
     public ElectricFurnaceRecipeCategory(IGuiHelper helper) {
         // Use a clean blank background to avoid cropping/stretching issues
         this.background = helper.createBlankDrawable(BG_W, BG_H);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.ELECTRIC_FURNACE.get()));
+        this.slotDrawable = helper.getSlotDrawable();
+        this.progressBar = helper.createAnimatedDrawable(
+                helper.createDrawable(ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/widgets.png"), 0 ,0 , PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT),
+                100, // animation duration
+                IDrawableAnimated.StartDirection.LEFT,
+                true);
     }
 
     @Override
@@ -68,8 +83,10 @@ public class ElectricFurnaceRecipeCategory implements IRecipeCategory<SmeltingRe
     public void setRecipe(IRecipeLayoutBuilder builder, SmeltingRecipe recipe, IFocusGroup focuses) {
         // Input and output only; no upgrade slots in JEI view
         builder.addSlot(RecipeIngredientRole.INPUT, 32, 38)
+                .setBackground(slotDrawable, -1, -1)
                .addIngredients(recipe.getIngredients().get(0));
         builder.addSlot(RecipeIngredientRole.OUTPUT, 92, 38)
+                .setBackground(slotDrawable, -1, -1)
                .addItemStack(recipe.getResultItem(null));
     }
 
@@ -85,10 +102,28 @@ public class ElectricFurnaceRecipeCategory implements IRecipeCategory<SmeltingRe
         // Filled energy (full to indicate power usage context)
         gg.fill(ex, ey, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, 0xFFCC2B2B);
 
-        // Optional simple progress arrow box between slots
-        int ax = 64, ay = 30, aw = 14, ah = 8;
-        gg.fill(ax, ay, ax + aw, ay + ah, 0xFF606060);
-        gg.fill(ax + 1, ay + 1, ax + aw - 1, ay + ah - 1, 0xFFA0A0A0);
+        // Progress Bar
+        int px = PROGRESS_BAR_X;
+        int py = PROGRESS_BAR_Y;
+
+        // Progress bar background
+        gg.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1 , 0xFF404040);
+        gg.fill(px, py, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, 0xFF202020);
+
+        // Animated progress fill
+        long gameTime = System.currentTimeMillis() / 50;
+        int progressWidth = (int) ((gameTime % PROGRESS_BAR_WIDTH) + 1);
+        int fillY = py + (PROGRESS_BAR_WIDTH - progressWidth);
+        gg.fill(px, fillY, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, PROGRESS_BAR_COLOR);
+
+
+        // Progress bar border
+        gg.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py, 0xFF606060);
+        gg.fill(px - 1, py + PROGRESS_BAR_HEIGHT, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1, 0xFF606060);
+        gg.fill(px - 1, py, px, py + PROGRESS_BAR_HEIGHT, 0xFF606060);
+        gg.fill(px + PROGRESS_BAR_WIDTH, py, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT, 0xFF606060);
+
+
         // Compute time and RF/op from the same rules as the block entity
         int vanilla = Math.max(1, recipe.getCookingTime());
 
