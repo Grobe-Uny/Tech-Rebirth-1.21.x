@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.datagen;
 
 import com.grobe.techrebirth.TechRebirth;
+import com.grobe.techrebirth.block.ModBlocks;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.util.MetalType;
 import net.minecraft.data.PackOutput;
@@ -11,11 +12,13 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.LinkedHashMap;
@@ -60,6 +63,14 @@ public class ModItemModelProvider extends ItemModelProvider {
        // Generate models for all nuggets using a single base texture
        for (Map.Entry<MetalType, DeferredItem<Item>> entry : ModItems.NUGGETS.entrySet()) {
            simpleItem(entry.getValue(), "base_nugget");
+       }
+
+       // Generate item models for all ore blocks
+       for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
+           MetalType metal = entry.getKey();
+           DeferredBlock<Block> block = entry.getValue();
+           // Parent the item model to the block model
+           withExistingParent(block.getId().getPath(), modLoc("block/" + metal.getSerializedName() + "_block"));
        }
 
     }

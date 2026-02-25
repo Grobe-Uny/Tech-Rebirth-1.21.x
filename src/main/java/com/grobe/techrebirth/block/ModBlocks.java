@@ -17,16 +17,14 @@ import com.grobe.techrebirth.block.custom.furnace.ReinforcedElectricFurnaceBlock
 import com.grobe.techrebirth.block.custom.generator.GeneratorBlock;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.util.MachineTier;
+import com.grobe.techrebirth.util.MetalType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DropExperienceBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,11 +33,24 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class ModBlocks {
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(TechRebirth.MODID);
+
+    // A map to hold dynamically registered ore blocks
+    public static final Map<MetalType, DeferredBlock<Block>> ORE_BLOCKS = new EnumMap<>(MetalType.class);
+
+    static {
+        for(MetalType metal : MetalType.values()){
+            ORE_BLOCKS.put(metal, ModBlocks.registerBlock(metal.getSerializedName() + "_block",
+                    () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
+                    )));
+        }
+    }
 
     public static final DeferredBlock<Block> MACHINE_BASE = registerBlock("machine_base",
             ()-> new Block(BlockBehaviour.Properties.of()
@@ -93,13 +104,13 @@ public class ModBlocks {
                             .requiresCorrectToolForDrops()
                             .sound(SoundType.STONE)
             ));
-    public static final DeferredBlock<Block> INVAR_BLOCK = registerBlock("invar_block",
-            () ->new Block(BlockBehaviour.Properties.of()
-                            .strength(4f)
-                            .requiresCorrectToolForDrops()
-                            .sound(SoundType.METAL)
-            ));
-
+//    public static final DeferredBlock<Block> INVAR_BLOCK = registerBlock("invar_block",
+//            () ->new Block(BlockBehaviour.Properties.of()
+//                            .strength(4f)
+//                            .requiresCorrectToolForDrops()
+//                            .sound(SoundType.METAL)
+//            ));
+//
 
     /// Block Entities
 
@@ -114,7 +125,7 @@ public class ModBlocks {
     public static final DeferredBlock<Block> HARDENED_ELECTRIC_FURNACE = registerBlock("hardened_electric_furnace",
             () -> new HardenedElectricFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.ELECTRIC_FURNACE.get())));
     public static final DeferredBlock<Block> REINFORCED_ELECTRIC_FURNACE = registerBlock("reinforced_electric_furnace",
-            () -> new ReinforcedElectricFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.ELECTRIC_FURNACE.get())));
+            () -> new ReinforcedElectricFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.HARDENED_ELECTRIC_FURNACE.get())));
 
     public static final DeferredBlock<Block> ALLOY_SMELTER = registerBlock("alloy_smelter",
             ()-> new AlloySmelterBlock(BlockBehaviour.Properties.of()

@@ -94,7 +94,7 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.NICKEL_DEEPSLATE_ORE);
                         output.accept(ModBlocks.LEAD_ORE);
                         output.accept(ModBlocks.LEAD_DEEPSLATE_ORE);
-                        output.accept(ModBlocks.INVAR_BLOCK);
+                        //output.accept(ModBlocks.INVAR_BLOCK);
                         output.accept(ModItems.RAW_TIN);
                         output.accept(ModItems.TIN_INGOT);
                         output.accept(ModItems.RAW_NICKEL);
@@ -107,6 +107,10 @@ public class ModCreativeTabs {
                         output.accept(ModItems.BLAZING_GOLD_INGOT);
                         output.accept(ModItems.RAW_LEAD);
 
+                        // Add Ore Blocks
+                        for (var ore : ModBlocks.ORE_BLOCKS.values()){
+                            output.accept(ore.get());
+                        }
                         // Add Nuggets
                         for (var nugget : ModItems.NUGGETS.values()) {
                             output.accept(nugget.get());

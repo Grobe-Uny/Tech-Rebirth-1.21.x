@@ -3,7 +3,6 @@
     "techrebirth:tin_deepslate_ore",
     "techrebirth:nickel_deepslate_ore",
     "techrebirth:lead_deepslate_ore",
-    "techrebirth:invar_block",
     "techrebirth:electric_furnace",
     "techrebirth:machine_base",
     "techrebirth:energy_bank",
@@ -14,6 +13,13 @@
     "techrebirth:hardened_electric_furnace",
     "techrebirth:fluid_tank",
     "techrebirth:electric_centrifuge",
-    "techrebirth:reinforced_electric_furnace"
+    "techrebirth:reinforced_electric_furnace",
+    "techrebirth:tin_block",
+    "techrebirth:nickel_block",
+    "techrebirth:invar_block",
+    "techrebirth:lead_block",
+    "techrebirth:steel_block",
+    "techrebirth:diamond_block",
+    "techrebirth:blazing_gold_block"
   ]
 }

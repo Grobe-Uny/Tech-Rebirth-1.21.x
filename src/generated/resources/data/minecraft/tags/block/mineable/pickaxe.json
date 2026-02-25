@@ -8,7 +8,6 @@
     "techrebirth:nickel_ore",
     "techrebirth:tin_ore",
     "techrebirth:tin_deepslate_ore",
-    "techrebirth:invar_block",
     "techrebirth:energy_bank",
     "techrebirth:generator",
     "techrebirth:energy_cable",
@@ -18,6 +17,13 @@
     "techrebirth:reinforced_electric_furnace",
     "techrebirth:electric_centrifuge",
     "techrebirth:fluid_tank",
-    "techrebirth:electric_crusher"
+    "techrebirth:electric_crusher",
+    "techrebirth:tin_block",
+    "techrebirth:nickel_block",
+    "techrebirth:invar_block",
+    "techrebirth:lead_block",
+    "techrebirth:steel_block",
+    "techrebirth:diamond_block",
+    "techrebirth:blazing_gold_block"
   ]
 }

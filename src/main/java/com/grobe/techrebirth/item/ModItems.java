@@ -7,6 +7,7 @@ import com.grobe.techrebirth.util.MetalType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -18,8 +19,10 @@ import java.util.Map;
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(TechRebirth.MODID);
 
-    // A map to hold our dynamically registered nuggets
+    // A map to hold dynamically registered nuggets
     public static final Map<MetalType, DeferredItem<Item>> NUGGETS = new EnumMap<>(MetalType.class);
+
+
 
     static {
         for (MetalType metal : MetalType.values()) {

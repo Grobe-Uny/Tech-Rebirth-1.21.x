@@ -6,8 +6,10 @@ import com.grobe.techrebirth.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -27,7 +29,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         }
 
         // Mining tool and tier requirements
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        var pickaxeTag = tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.MACHINE_BASE.get())
                 .add(ModBlocks.ELECTRIC_FURNACE.get())
                 .add(ModBlocks.NICKEL_DEEPSLATE_ORE.get())
@@ -36,7 +38,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.NICKEL_ORE.get())
                 .add(ModBlocks.TIN_ORE.get())
                 .add(ModBlocks.TIN_DEEPSLATE_ORE.get())
-                .add(ModBlocks.INVAR_BLOCK.get())
+                //.add(ModBlocks.INVAR_BLOCK.get())
                 .add(ModBlocks.ENERGY_BANK.get())
                 .add(ModBlocks.GENERATOR.get())
                 .add(ModBlocks.ENERGY_CABLE.get())
@@ -54,11 +56,11 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.LEAD_ORE.get())
                 .add(ModBlocks.TIN_ORE.get())
                 .add(ModBlocks.ENERGY_CABLE.get());
-        tag(BlockTags.NEEDS_IRON_TOOL)
+        var ironToolTag = tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.TIN_DEEPSLATE_ORE.get())
                 .add(ModBlocks.NICKEL_DEEPSLATE_ORE.get())
                 .add(ModBlocks.LEAD_DEEPSLATE_ORE.get())
-                .add(ModBlocks.INVAR_BLOCK.get())
+                //.add(ModBlocks.INVAR_BLOCK.get())
                 .add(ModBlocks.ELECTRIC_FURNACE.get())
                 .add(ModBlocks.MACHINE_BASE.get())
                 .add(ModBlocks.ENERGY_BANK.get())
@@ -70,5 +72,11 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.FLUID_TANK.get())
                 .add(ModBlocks.ELECTRIC_CENTRIFUGE.get())
                 .add(ModBlocks.REINFORCED_ELECTRIC_FURNACE.get());
+
+        // Automatically add tags for generated ore blocks
+        for (DeferredBlock<Block> block : ModBlocks.ORE_BLOCKS.values()) {
+            pickaxeTag.add(block.get());
+            ironToolTag.add(block.get());
+        }
     }
 }

@@ -17,8 +17,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.List;
@@ -77,8 +79,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         //endregion
 
-        buildBlocksFromIngotsRecipe(ModBlocks.INVAR_BLOCK.asItem(), ModItems.INVAR_INGOT.asItem(), "has_invar", ModItems.INVAR_INGOT.asItem(), recipeOutput);
-        buildIngotsFromBlocksRecipe(ModItems.INVAR_INGOT.asItem(), 9, ModBlocks.INVAR_BLOCK, "has_invar", ModBlocks.INVAR_BLOCK, recipeOutput, "invar_ingot_from_invar_block");
+        //buildBlocksFromIngotsRecipe(ModBlocks.INVAR_BLOCK.asItem(), ModItems.INVAR_INGOT.asItem(), "has_invar", ModItems.INVAR_INGOT.asItem(), recipeOutput);
+        //buildIngotsFromBlocksRecipe(ModItems.INVAR_INGOT.asItem(), 9, ModBlocks.INVAR_BLOCK, "has_invar", ModBlocks.INVAR_BLOCK, recipeOutput, "invar_ingot_from_invar_block");
 
         //region hardened machines
 
@@ -270,6 +272,30 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                         .define('X', nugget)
                         .unlockedBy("has_" + type.getSerializedName() + "_nugget", has(nugget))
                         .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, type.getSerializedName() + "_ingot_from_nugget"));
+            }
+        }
+
+        // Automatic Block Recipes
+        for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
+            MetalType type = entry.getKey();
+            Block block = entry.getValue().get();
+            ItemLike ingot = getIngotForMetal(type);
+
+            if (ingot != null) {
+                // 9 Ingots -> 1 Block
+                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, block)
+                        .pattern("XXX")
+                        .pattern("XXX")
+                        .pattern("XXX")
+                        .define('X', ingot)
+                        .unlockedBy("has_" + type.getSerializedName() + "_ingot", has(ingot))
+                        .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, type.getSerializedName() + "_block_from_ingot"));
+
+                // 1 Block -> 9 Ingots
+                ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ingot, 9)
+                        .requires(block)
+                        .unlockedBy("has_" + type.getSerializedName() + "_block", has(block))
+                        .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, type.getSerializedName() + "_ingot_from_block"));
             }
         }
 

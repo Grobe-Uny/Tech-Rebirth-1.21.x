@@ -1,12 +1,14 @@
 package com.grobe.techrebirth;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.block.ModBlocks;
 import com.grobe.techrebirth.client.renderer.FluidTankBER;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.util.MetalType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -16,6 +18,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.Map;
@@ -43,8 +46,26 @@ public class TechRebirthClient {
 
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+        // Nuggets
         for (Map.Entry<MetalType, DeferredItem<Item>> entry : ModItems.NUGGETS.entrySet()) {
             event.register((stack, tintIndex) -> {
+                return tintIndex == 0 ? entry.getKey().getColor() : -1;
+            }, entry.getValue().get());
+        }
+
+        // Ore Blocks (Items)
+        for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
+            event.register((stack, tintIndex) -> {
+                return tintIndex == 0 ? entry.getKey().getColor() : -1;
+            }, entry.getValue().get());
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+        // Ore Blocks
+        for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
+            event.register((state, world, pos, tintIndex) -> {
                 return tintIndex == 0 ? entry.getKey().getColor() : -1;
             }, entry.getValue().get());
         }

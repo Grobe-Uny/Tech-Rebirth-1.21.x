@@ -70,6 +70,12 @@
   "block.techrebirth.energy_cable": "Energy Cable",
   "block.techrebirth.energy_bank": "Energy Bank",
 
+  "block.techrebirth.blazing_gold_block": "Blazing Gold Block",
+  "block.techrebirth.tin_block": "Tin Block",
+  "block.techrebirth.nickel_block": "Nickel Block",
+  "block.techrebirth.lead_block": "Lead Block",
+  "block.techrebirth.steel_block": "Steel Block",
+
   "creativetab.techrebirth.tech_rebirth_items": "Tech Rebirth Items",
   "creativetab.techrebirth.tech_rebirth_blocks": "Tech Rebirth Blocks",
   "creativetab.techrebirth.tech_rebirth_cables": "Tech Rebirth Cables",

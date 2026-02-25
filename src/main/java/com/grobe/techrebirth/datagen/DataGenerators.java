@@ -26,18 +26,21 @@ public class DataGenerators {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
+        // Server providers (recipes, loot tables, tags)
         generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
                 List.of(new LootTableProvider.SubProviderEntry(ModBlockLootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
         generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput, lookupProvider));
-
         BlockTagsProvider blockTagsProvider = new ModBlockTagProvider(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTagsProvider);
-
         generator.addProvider(event.includeServer(), new ModItemTagProvider(packOutput, lookupProvider,blockTagsProvider ,existingFileHelper));
         generator.addProvider(event.includeServer(), new ModDatapackProvider(packOutput,lookupProvider));
         generator.addProvider(event.includeServer(), new ModAdvancementProvider(packOutput,lookupProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModItemModelProvider(packOutput, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModSoundDefinitionProvider(packOutput, existingFileHelper));
+
+        // Client providers (models, blockstates, sounds)
+        // Blockstates must run BEFORE item models if item models depend on them
+        generator.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ModSoundDefinitionProvider(packOutput, existingFileHelper));
     }
 
 

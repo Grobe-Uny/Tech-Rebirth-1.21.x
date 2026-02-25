@@ -19,8 +19,11 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
+        for (var ore : ModBlocks.ORE_BLOCKS.values()){
+            dropSelf(ore.get());
+        }
         dropSelf(ModBlocks.MACHINE_BASE.get());
-        dropSelf(ModBlocks.INVAR_BLOCK.get());
+        //dropSelf(ModBlocks.INVAR_BLOCK.get());
         dropSelf(ModBlocks.ELECTRIC_FURNACE.get());
         dropSelf(ModBlocks.ENERGY_BANK.get());
         dropSelf(ModBlocks.GENERATOR.get());
