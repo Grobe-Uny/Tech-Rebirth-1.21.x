@@ -40,22 +40,23 @@ public class ElectricFurnaceRecipeCategory implements IRecipeCategory<SmeltingRe
     private static final int ENERGY_BAR_HEIGHT = 50;
 
     // Progress bar visuals (match in-game style roughly)
-    private static final int PROGRESS_BAR_X = 72;
-    private static final int PROGRESS_BAR_Y = 45;
+    private static final int PROGRESS_BAR_X = 62;
+    private static final int PROGRESS_BAR_Y = 40;
     private static final int PROGRESS_BAR_WIDTH = 16;
     private static final int PROGRESS_BAR_HEIGHT = 8;
-    private static final int PROGRESS_BAR_COLOR = 0xFF2B93CC;
 
     public ElectricFurnaceRecipeCategory(IGuiHelper helper) {
         // Use a clean blank background to avoid cropping/stretching issues
         this.background = helper.createBlankDrawable(BG_W, BG_H);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.ELECTRIC_FURNACE.get()));
         this.slotDrawable = helper.getSlotDrawable();
+
+        // Create the animated overlay
         this.progressBar = helper.createAnimatedDrawable(
-                helper.createDrawable(ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/widgets.png"), 0 ,0 , PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT),
+                helper.createDrawable(ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/widgets.png"), 0, 0, PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT),
                 100, // animation duration
                 IDrawableAnimated.StartDirection.LEFT,
-                true);
+                false); // false means it fills left-to-right
     }
 
     @Override
@@ -102,27 +103,14 @@ public class ElectricFurnaceRecipeCategory implements IRecipeCategory<SmeltingRe
         // Filled energy (full to indicate power usage context)
         gg.fill(ex, ey, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, 0xFFCC2B2B);
 
-        // Progress Bar
+        // Progress Bar Background (Dark box)
         int px = PROGRESS_BAR_X;
         int py = PROGRESS_BAR_Y;
+        gg.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1 , 0xFF404040); // Border
+        gg.fill(px, py, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, 0xFF202020); // Inner dark background
 
-        // Progress bar background
-        gg.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1 , 0xFF404040);
-        gg.fill(px, py, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, 0xFF202020);
-
-        // Animated progress fill
-        long gameTime = System.currentTimeMillis() / 50;
-        int progressWidth = (int) ((gameTime % PROGRESS_BAR_WIDTH) + 1);
-        int fillY = py + (PROGRESS_BAR_WIDTH - progressWidth);
-        gg.fill(px, fillY, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, PROGRESS_BAR_COLOR);
-
-
-        // Progress bar border
-        gg.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py, 0xFF606060);
-        gg.fill(px - 1, py + PROGRESS_BAR_HEIGHT, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1, 0xFF606060);
-        gg.fill(px - 1, py, px, py + PROGRESS_BAR_HEIGHT, 0xFF606060);
-        gg.fill(px + PROGRESS_BAR_WIDTH, py, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT, 0xFF606060);
-
+        // Draw the animated progress bar on top
+        progressBar.draw(gg, PROGRESS_BAR_X, PROGRESS_BAR_Y);
 
         // Compute time and RF/op from the same rules as the block entity
         int vanilla = Math.max(1, recipe.getCookingTime());
