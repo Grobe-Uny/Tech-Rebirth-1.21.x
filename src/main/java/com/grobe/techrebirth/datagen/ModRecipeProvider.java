@@ -79,8 +79,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         //endregion
 
-        //buildBlocksFromIngotsRecipe(ModBlocks.INVAR_BLOCK.asItem(), ModItems.INVAR_INGOT.asItem(), "has_invar", ModItems.INVAR_INGOT.asItem(), recipeOutput);
-        //buildIngotsFromBlocksRecipe(ModItems.INVAR_INGOT.asItem(), 9, ModBlocks.INVAR_BLOCK, "has_invar", ModBlocks.INVAR_BLOCK, recipeOutput, "invar_ingot_from_invar_block");
+//        buildBlocksFromIngotsRecipe(ModBlocks.INVAR_BLOCK.asItem(), ModItems.INVAR_INGOT.asItem(), "has_invar", ModItems.INVAR_INGOT.asItem(), recipeOutput);
+//        buildIngotsFromBlocksRecipe(ModItems.INVAR_INGOT.asItem(), 9, ModBlocks.INVAR_BLOCK, "has_invar", ModBlocks.INVAR_BLOCK, recipeOutput, "invar_ingot_from_invar_block");
 
         //region hardened machines
 
@@ -278,6 +278,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         // Automatic Block Recipes
         for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
             MetalType type = entry.getKey();
+            if (type == MetalType.DIAMOND) continue; // Skip Diamond Block recipes
+
             Block block = entry.getValue().get();
             ItemLike ingot = getIngotForMetal(type);
 

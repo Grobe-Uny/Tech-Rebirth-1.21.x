@@ -2,6 +2,7 @@ package com.grobe.techrebirth.datagen;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlocks;
+import com.grobe.techrebirth.util.MetalType;
 import com.grobe.techrebirth.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -12,6 +13,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class ModBlockTagProvider extends BlockTagsProvider {
@@ -74,9 +76,10 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.REINFORCED_ELECTRIC_FURNACE.get());
 
         // Automatically add tags for generated ore blocks
-        for (DeferredBlock<Block> block : ModBlocks.ORE_BLOCKS.values()) {
-            pickaxeTag.add(block.get());
-            ironToolTag.add(block.get());
+        for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
+            if (entry.getKey() == MetalType.DIAMOND) continue; // Skip Diamond Block tags
+            pickaxeTag.add(entry.getValue().get());
+            ironToolTag.add(entry.getValue().get());
         }
     }
 }

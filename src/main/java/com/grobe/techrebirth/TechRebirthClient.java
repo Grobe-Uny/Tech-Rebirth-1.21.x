@@ -26,7 +26,7 @@ import java.util.Map;
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = TechRebirth.MODID, dist = Dist.CLIENT)
 // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-@EventBusSubscriber(modid = TechRebirth.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = TechRebirth.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class TechRebirthClient {
     public TechRebirthClient(ModContainer container) {
         // Allows NeoForge to create a config screen for this mod's configs.
@@ -55,6 +55,7 @@ public class TechRebirthClient {
 
         // Ore Blocks (Items)
         for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
+            if (entry.getKey() == MetalType.DIAMOND) continue; // Skip Diamond Block item colors
             event.register((stack, tintIndex) -> {
                 return tintIndex == 0 ? entry.getKey().getColor() : -1;
             }, entry.getValue().get());
@@ -65,6 +66,7 @@ public class TechRebirthClient {
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
         // Ore Blocks
         for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
+            if (entry.getKey() == MetalType.DIAMOND) continue; // Skip Diamond Block colors
             event.register((state, world, pos, tintIndex) -> {
                 return tintIndex == 0 ? entry.getKey().getColor() : -1;
             }, entry.getValue().get());

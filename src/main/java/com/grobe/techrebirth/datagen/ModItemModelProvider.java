@@ -68,6 +68,8 @@ public class ModItemModelProvider extends ItemModelProvider {
        // Generate item models for all ore blocks
        for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
            MetalType metal = entry.getKey();
+           if (metal == MetalType.DIAMOND) continue; // Skip Diamond Block item models
+
            DeferredBlock<Block> block = entry.getValue();
            // Parent the item model to the block model
            withExistingParent(block.getId().getPath(), modLoc("block/" + metal.getSerializedName() + "_block"));

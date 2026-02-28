@@ -22,6 +22,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // Loop through all the dynamically registered ore blocks
         for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
             MetalType metal = entry.getKey();
+            if (metal == MetalType.DIAMOND) continue; // Skip Diamond Block models
+
             DeferredBlock<Block> block = entry.getValue();
 
             // Create a custom model with tintindex set to 0 for all faces

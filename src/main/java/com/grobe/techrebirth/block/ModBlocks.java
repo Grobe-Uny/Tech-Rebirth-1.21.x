@@ -46,8 +46,13 @@ public class ModBlocks {
 
     static {
         for(MetalType metal : MetalType.values()){
+            // Skip Diamond, as we only want the nugget, not the block
+            if (metal == MetalType.DIAMOND) continue;
+
             ORE_BLOCKS.put(metal, ModBlocks.registerBlock(metal.getSerializedName() + "_block",
                     () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
+
+
                     )));
         }
     }
@@ -110,7 +115,7 @@ public class ModBlocks {
 //                            .requiresCorrectToolForDrops()
 //                            .sound(SoundType.METAL)
 //            ));
-//
+
 
     /// Block Entities
 
@@ -125,7 +130,7 @@ public class ModBlocks {
     public static final DeferredBlock<Block> HARDENED_ELECTRIC_FURNACE = registerBlock("hardened_electric_furnace",
             () -> new HardenedElectricFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.ELECTRIC_FURNACE.get())));
     public static final DeferredBlock<Block> REINFORCED_ELECTRIC_FURNACE = registerBlock("reinforced_electric_furnace",
-            () -> new ReinforcedElectricFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.HARDENED_ELECTRIC_FURNACE.get())));
+            () -> new ReinforcedElectricFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.ELECTRIC_FURNACE.get())));
 
     public static final DeferredBlock<Block> ALLOY_SMELTER = registerBlock("alloy_smelter",
             ()-> new AlloySmelterBlock(BlockBehaviour.Properties.of()
