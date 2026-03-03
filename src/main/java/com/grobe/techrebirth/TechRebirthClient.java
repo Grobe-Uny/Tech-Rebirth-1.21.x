@@ -2,6 +2,8 @@ package com.grobe.techrebirth;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.block.ModBlocks;
+import com.grobe.techrebirth.client.renderer.Crucible;
+import com.grobe.techrebirth.client.renderer.CrucibleRenderer;
 import com.grobe.techrebirth.client.renderer.FluidTankBER;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.util.MetalType;
@@ -15,6 +17,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
@@ -40,8 +43,17 @@ public class TechRebirthClient {
         // Some client setup code
         TechRebirth.LOGGER.info("HELLO FROM CLIENT SETUP");
         TechRebirth.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+    }
 
-        BlockEntityRenderers.register(ModBlockEntities.FLUID_TANK.get(), FluidTankBER::new);
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(ModBlockEntities.FLUID_TANK.get(), FluidTankBER::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.CRUCIBLE.get(), CrucibleRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(Crucible.LAYER_LOCATION, Crucible::createBodyLayer);
     }
 
     @SubscribeEvent

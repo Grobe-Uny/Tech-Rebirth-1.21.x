@@ -3,6 +3,7 @@ package com.grobe.techrebirth.block;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.custom.BaseMachineBlock;
 import com.grobe.techrebirth.block.custom.CreativeElectricFurnaceBlock;
+import com.grobe.techrebirth.block.custom.CrucibleBlock;
 import com.grobe.techrebirth.block.custom.ElectricCrusherBlock;
 import com.grobe.techrebirth.block.custom.alloy.AlloySmelterBlock;
 import com.grobe.techrebirth.block.custom.alloy.HardenedAlloySmelterBlock;
@@ -109,12 +110,6 @@ public class ModBlocks {
                             .requiresCorrectToolForDrops()
                             .sound(SoundType.STONE)
             ));
-//    public static final DeferredBlock<Block> INVAR_BLOCK = registerBlock("invar_block",
-//            () ->new Block(BlockBehaviour.Properties.of()
-//                            .strength(4f)
-//                            .requiresCorrectToolForDrops()
-//                            .sound(SoundType.METAL)
-//            ));
 
 
     /// Block Entities
@@ -182,6 +177,14 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> FLUID_TANK = registerBlock("fluid_tank",
             () -> new FluidTankBlock(BlockBehaviour.Properties.of()
+                    .strength(3.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+                    .noOcclusion()
+            ));
+
+    public static final DeferredBlock<Block> CRUCIBLE = registerBlock("crucible",
+            () -> new CrucibleBlock(BlockBehaviour.Properties.of()
                     .strength(3.0f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
