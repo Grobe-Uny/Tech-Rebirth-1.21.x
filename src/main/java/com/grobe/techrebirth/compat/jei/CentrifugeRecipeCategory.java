@@ -26,6 +26,13 @@ public class CentrifugeRecipeCategory implements IRecipeCategory<CentrifugeRecip
     private final IDrawable icon;
     private final IDrawable slotDrawable;
 
+
+    private static final int catalystBarX = 5;
+    private static final int catalystBarY = 5;
+    private static final int catalystBarWidth = 4;
+    private static final int catalystBarHeight = 75;
+
+
     public CentrifugeRecipeCategory(IGuiHelper helper) {
         this.background = helper.createBlankDrawable(176, 85);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.ELECTRIC_CENTRIFUGE.get()));
@@ -55,9 +62,9 @@ public class CentrifugeRecipeCategory implements IRecipeCategory<CentrifugeRecip
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, CentrifugeRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 44, 35).addIngredients(recipe.input());
-        builder.addSlot(RecipeIngredientRole.CATALYST, 18, 52).addIngredients(recipe.catalyst());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 116, 35).addItemStack(recipe.output());
+        builder.addSlot(RecipeIngredientRole.INPUT, 55, 35).setBackground(slotDrawable, -1, -1).addIngredients(recipe.input());
+        builder.addSlot(RecipeIngredientRole.CATALYST, 18, 52).setBackground(slotDrawable, -1, -1).addIngredients(recipe.catalyst());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 116, 35).setBackground(slotDrawable, -1, -1).addItemStack(recipe.output());
     }
 
     @Override
@@ -66,6 +73,21 @@ public class CentrifugeRecipeCategory implements IRecipeCategory<CentrifugeRecip
         Font font = Minecraft.getInstance().font;
         String catalystAmount = recipe.catalystAmount() + " mB";
         gg.drawString(font, catalystAmount, 18, 40, 0xFFFFFF, false);
+
+        // Render catalyst bar
+
+        int cx = catalystBarX;
+        int cy = catalystBarY;
+
+        // border
+        gg.fill(cx - 1, cy - 1, cx + catalystBarWidth + 1, cy + catalystBarHeight + 1,0xFF202020);
+
+        // background
+        gg.fill(cx, cy, cx + catalystBarWidth, cy + catalystBarHeight,0xFF101010);
+
+        // filled catalyst
+        gg.fill(cx, cy, cx + catalystBarWidth, cy + catalystBarHeight, 0xFF202020);
+
         IRecipeCategory.super.draw(recipe, recipeSlotsView, gg, mouseX, mouseY);
     }
 }
