@@ -41,6 +41,9 @@
   "item.techrebirth.blazing_gold_shovel": "Blazing Gold Shovel",
   "item.techrebirth.blazing_gold_hoe": "Blazing Gold Hoe",
 
+
+  "item.techrebirth.tin_pickaxe": "Tin Pickaxe",
+
   "item.techrebirth.tin_nugget": "Tin Nugget",
   "item.techrebirth.nickel_nugget": "Nickel Nugget",
   "item.techrebirth.invar_nugget": "Invar Nugget",
@@ -121,5 +124,7 @@
 
   "subtitles.techrebirth.crusher_running": "Crushing",
   "subtitles.techrebirth.alloy_smelting": "Alloying",
-  "subtitles.techrebirth.furnace_running": "Smelting"
+  "subtitles.techrebirth.furnace_running": "Smelting",
+  "tooltip.techrebirth.tin_pickaxe_bonus": "§b +15% Mining Efficiency",
+  "tooltip.techrebirth.tin_pickaxe.detailed": "Lightweight and easy to swing."
 }

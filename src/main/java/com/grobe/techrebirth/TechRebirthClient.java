@@ -29,7 +29,7 @@ import java.util.Map;
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = TechRebirth.MODID, dist = Dist.CLIENT)
 // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-@EventBusSubscriber(modid = TechRebirth.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = TechRebirth.MODID, value = Dist.CLIENT)
 public class TechRebirthClient {
     public TechRebirthClient(ModContainer container) {
         // Allows NeoForge to create a config screen for this mod's configs.

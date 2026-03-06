@@ -251,6 +251,22 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildArmorSetRecipes(ModItems.BLAZING_GOLD_INGOT.asItem(), ModItems.BLAZING_GOLD_HELMET.asItem(), ModItems.BLAZING_GOLD_CHESTPLATE.asItem(), ModItems.BLAZING_GOLD_LEGGINGS.asItem(),ModItems.BLAZING_GOLD_BOOTS.asItem(),"has_blazing_gold", recipeOutput);
         buildToolRecipes(ModItems.BLAZING_GOLD_INGOT.asItem(), Items.STICK, ModItems.BLAZING_GOLD_SWORD.asItem(), ModItems.BLAZING_GOLD_AXE.asItem(), ModItems.BLAZING_GOLD_PICKAXE.asItem(), ModItems.BLAZING_GOLD_SHOVEL.asItem(), ModItems.BLAZING_GOLD_HOE.asItem(), "has_blazing_gold", recipeOutput);
 
+
+
+        //Temp
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.TIN_INGOT)
+                .pattern("XXX")
+                .pattern(" Y ")
+                .pattern(" Y ")
+                .define('X', ModItems.TIN_INGOT.asItem())
+                .define('Y', Items.STICK.asItem())
+                .unlockedBy("has_tin_ingot", has(ModItems.TIN_INGOT))
+                .save(recipeOutput);
+
+
+
+
+
         // Automatic Nugget Recipes
         for (Map.Entry<MetalType, DeferredItem<Item>> entry : ModItems.NUGGETS.entrySet()) {
             MetalType type = entry.getKey();

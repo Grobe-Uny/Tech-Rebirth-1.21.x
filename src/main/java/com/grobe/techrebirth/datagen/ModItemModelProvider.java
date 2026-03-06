@@ -59,6 +59,9 @@ public class ModItemModelProvider extends ItemModelProvider {
        handheldItem(ModItems.BLAZING_GOLD_PICKAXE);
        handheldItem(ModItems.BLAZING_GOLD_SHOVEL);
        handheldItem(ModItems.BLAZING_GOLD_HOE);
+       handheldItem(ModItems.TIN_PICKAXE);
+
+
 
        // Generate models for all nuggets using a single base texture
        for (Map.Entry<MetalType, DeferredItem<Item>> entry : ModItems.NUGGETS.entrySet()) {

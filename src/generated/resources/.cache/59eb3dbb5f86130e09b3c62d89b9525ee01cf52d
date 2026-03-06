@@ -1,7 +1,8 @@
-// 1.21.1	2026-02-28T20:54:23.999618217	Loot Tables
+// 1.21.1	2026-03-06T05:10:37.4637635	Loot Tables
 ef43043d63231c016daedea52a90bb4a5f943881 data/techrebirth/loot_table/blocks/alloy_smelter.json
 9c8744ec6d81b097f9eba4b2b6b8011d321e6dd4 data/techrebirth/loot_table/blocks/blazing_gold_block.json
 388e60989fb33c249d0f56037fad3f1662326de9 data/techrebirth/loot_table/blocks/creative_electric_furnace.json
+27264c1e0f1c6e3bc811844cb0208eb54f10c4b8 data/techrebirth/loot_table/blocks/crucible.json
 e879b9021d13f49bfcb0f81a6543f31d4867da62 data/techrebirth/loot_table/blocks/electric_centrifuge.json
 1f309806c478ff9014de0737e8a3c7ca65caced0 data/techrebirth/loot_table/blocks/electric_crusher.json
 383650aca5420661078aa8591806be9b64b3dbe1 data/techrebirth/loot_table/blocks/electric_furnace.json

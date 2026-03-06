@@ -41,4 +41,19 @@ public class ModToolTiers {
             return Ingredient.of(ModTags.Items.INGOTS_BLAZING_GOLD_D.common());
         }
     };
+   public static final Tier TIN = new Tier(){
+       @Override
+       public int getUses() {return 300;}
+       @Override
+       public float getSpeed() {return 8.0f;}
+       @Override
+       public float getAttackDamageBonus() {return 2.0f;}
+       @Override
+       public int getEnchantmentValue() {return 10;}
+       @Override
+       public Ingredient getRepairIngredient() {return Ingredient.of(ModTags.Items.INGOTS_TIN_D.common());}
+       @Override
+       public TagKey<Block> getIncorrectBlocksForDrops() { return BlockTags.INCORRECT_FOR_DIAMOND_TOOL;}
+   };
+
 }

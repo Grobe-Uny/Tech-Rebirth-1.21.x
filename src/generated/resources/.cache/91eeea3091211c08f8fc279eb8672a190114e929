@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-28T20:54:23.991282814	Item Models: techrebirth
+// 1.21.1	2026-03-06T05:10:37.457661788	Item Models: techrebirth
 43dc8e4e033d0c73ab2765434cf12291a5e99715 assets/techrebirth/models/item/blazing_gold_axe.json
 90997d5498d99ac757025865d492905fe22a89c7 assets/techrebirth/models/item/blazing_gold_block.json
 2448110c745c1e9881edcce0cc377c5ddf597d07 assets/techrebirth/models/item/blazing_gold_boots.json
@@ -61,3 +61,4 @@ e92124702039e8aa051371776f536ae3c3413889 assets/techrebirth/models/item/steel_bl
 d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/steel_nugget.json
 31e7037e441381912f2de17746756342e70c4f7f assets/techrebirth/models/item/tin_block.json
 d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/tin_nugget.json
+48e13551328fa53ab92967e76198cc01baca8e24 assets/techrebirth/models/item/tin_pickaxe.json

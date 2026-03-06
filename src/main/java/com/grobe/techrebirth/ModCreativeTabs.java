@@ -47,6 +47,8 @@ public class ModCreativeTabs {
                         output.accept(ModItems.BLAZING_GOLD_SHOVEL);
                         output.accept(ModItems.BLAZING_GOLD_HOE);
 
+                        output.accept(ModItems.TIN_PICKAXE);
+
 
                     })
                     .build());

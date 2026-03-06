@@ -35,7 +35,8 @@ public class ModItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.AXES)
                 .add(ModItems.BLAZING_GOLD_AXE.get());
         tag(ItemTags.PICKAXES)
-                .add(ModItems.BLAZING_GOLD_PICKAXE.get());
+                .add(ModItems.BLAZING_GOLD_PICKAXE.get())
+                .add(ModItems.TIN_PICKAXE.get());
         tag(ItemTags.SHOVELS)
                 .add(ModItems.BLAZING_GOLD_SHOVEL.get());
         tag(ItemTags.HOES)
