@@ -60,6 +60,10 @@ public class ModItemModelProvider extends ItemModelProvider {
        handheldItem(ModItems.BLAZING_GOLD_SHOVEL);
        handheldItem(ModItems.BLAZING_GOLD_HOE);
        handheldItem(ModItems.TIN_PICKAXE);
+       handheldItem(ModItems.TIN_AXE);
+       handheldItem(ModItems.TIN_HOE);
+       handheldItem(ModItems.TIN_SHOVEL);
+       handheldItem(ModItems.TIN_SWORD);
 
 
 

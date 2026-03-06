@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-06T05:10:37.461971815	Tags for minecraft:item mod id techrebirth
+// 1.21.1	2026-03-06T17:09:07.028490375	Tags for minecraft:item mod id techrebirth
 42b2544e04b961e0ada25ffe93e3bce65621e5d5 data/c/tags/item/catalyst.json
 9798d67e68f1fc1fcbc41d664432a3a37ba63beb data/c/tags/item/catalyst/blaze.json
 3b4a42c814e7079c37afbceaeb1fb940d5fe32da data/c/tags/item/dusts.json
@@ -20,11 +20,11 @@ da3ab293e59338127d5a69453965ece2800ab825 data/c/tags/item/raw_materials/nickel.j
 c394af5c23aa94da8c324487267a3beb2264e242 data/c/tags/item/raw_materials/tin.json
 8dc349eb0b763d9db009580f128f2548d86736db data/c/tags/item/techrebirth/furnace_fast.json
 9fe1923c5c6a30ea7b9219acf50467c3992ea011 data/c/tags/item/techrebirth/furnace_heavy.json
-20e87cfc99aebd4a790349ea4bff5b162df051a0 data/minecraft/tags/item/axes.json
-77bdca1b6f7acb39d1d4110f447bc3446af3570c data/minecraft/tags/item/hoes.json
+f375feac66f391d5c6a40ce5dcfe8f7fd5061089 data/minecraft/tags/item/axes.json
+800da8b4255dbc6ce62e71a8bf32166381450162 data/minecraft/tags/item/hoes.json
 6755edb23b49250a7aff503351ae6772cbcd79fc data/minecraft/tags/item/pickaxes.json
-6fda55c363fff35166d70db87185e60949472936 data/minecraft/tags/item/shovels.json
-25d751ed1372d852b3d0ba10cd2af159c763841b data/minecraft/tags/item/swords.json
+931af76ad675fad46d9c49a9d4a9c39a665728d6 data/minecraft/tags/item/shovels.json
+f8e08851386dbf1ea3cade666562eeb44248cac2 data/minecraft/tags/item/swords.json
 a27771393f5f59bfa7e5606bb36d523102ee2521 data/minecraft/tags/item/trimmable_armor.json
 c8c8623dc1b50433306f7ecd02fc38fab0432417 data/neoforge/tags/item/catalyst.json
 9798d67e68f1fc1fcbc41d664432a3a37ba63beb data/neoforge/tags/item/catalyst/blaze.json

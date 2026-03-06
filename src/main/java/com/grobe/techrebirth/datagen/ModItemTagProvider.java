@@ -31,16 +31,20 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.BLAZING_GOLD_BOOTS.get());
 
         tag(ItemTags.SWORDS)
-                .add(ModItems.BLAZING_GOLD_SWORD.get());
+                .add(ModItems.BLAZING_GOLD_SWORD.get())
+                .add(ModItems.TIN_SWORD.get());
         tag(ItemTags.AXES)
-                .add(ModItems.BLAZING_GOLD_AXE.get());
+                .add(ModItems.BLAZING_GOLD_AXE.get())
+                .add(ModItems.TIN_AXE.get());
         tag(ItemTags.PICKAXES)
                 .add(ModItems.BLAZING_GOLD_PICKAXE.get())
                 .add(ModItems.TIN_PICKAXE.get());
         tag(ItemTags.SHOVELS)
-                .add(ModItems.BLAZING_GOLD_SHOVEL.get());
+                .add(ModItems.BLAZING_GOLD_SHOVEL.get())
+                .add(ModItems.TIN_SHOVEL.get());
         tag(ItemTags.HOES)
-                .add(ModItems.BLAZING_GOLD_HOE.get());
+                .add(ModItems.BLAZING_GOLD_HOE.get())
+                .add(ModItems.TIN_HOE.get());
 
 
 

@@ -47,7 +47,11 @@ public class ModCreativeTabs {
                         output.accept(ModItems.BLAZING_GOLD_SHOVEL);
                         output.accept(ModItems.BLAZING_GOLD_HOE);
 
+                        output.accept(ModItems.TIN_SWORD);
+                        output.accept(ModItems.TIN_AXE);
                         output.accept(ModItems.TIN_PICKAXE);
+                        output.accept(ModItems.TIN_SHOVEL);
+                        output.accept(ModItems.TIN_HOE);
 
 
                     })
@@ -123,11 +127,5 @@ public class ModCreativeTabs {
     public static void register (IEventBus eventbus){
         CREATIVE_MODE_TAB.register(eventbus);
     }
-
-//    public static void addCreative(BuildCreativeModeTabContentsEvent event){
-//        if(event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES){
-//            event.accept(ModItems.LIGHTNING_STRIKER_ENCHANTED_BOOK.get());
-//        }
-//    }
 
 }

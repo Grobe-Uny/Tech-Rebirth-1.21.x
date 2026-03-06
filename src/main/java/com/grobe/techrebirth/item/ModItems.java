@@ -165,6 +165,22 @@ public class ModItems {
                     .attributes(HoeItem.createAttributes(ModToolTiers.BLAZING_GOLD, 0f, -3f))));
 
     //Tin
+    public static final DeferredItem<SwordItem> TIN_SWORD = ITEMS.register("tin_sword",
+            () -> new SwordItem(ModToolTiers.TIN, new Item.Properties()
+                    .attributes(SwordItem.createAttributes(ModToolTiers.TIN, 6f, -2.5f))));
+    public static final DeferredItem<AxeItem> TIN_AXE = ITEMS.register("tin_axe",
+            () -> new AxeItem(ModToolTiers.TIN, new Item.Properties()
+                    .attributes(createNewTinAttributes())){
+                @Override
+                public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+                    pTooltipComponents.add(Component.translatable("tooltip.techrebirth.tin_pickaxe.detailed")
+                            .withStyle(ChatFormatting.GREEN));
+                    if(Screen.hasShiftDown()){
+                        pTooltipComponents.add(Component.translatable("tooltip.techrebirth.tin_pickaxe_bonus"));
+                    }
+                    super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
+                }
+            });
     public static final DeferredItem<PickaxeItem> TIN_PICKAXE = ITEMS.register("tin_pickaxe",
             ()-> new PickaxeItem(ModToolTiers.TIN, new Item.Properties()
                     .attributes(createNewTinAttributes())){
@@ -178,7 +194,22 @@ public class ModItems {
         super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
 });
-
+    public static final DeferredItem<ShovelItem> TIN_SHOVEL = ITEMS.register("tin_shovel",
+            ()-> new ShovelItem(ModToolTiers.TIN, new Item.Properties()
+                    .attributes(createNewTinAttributes())){
+                @Override
+                public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+                    pTooltipComponents.add(Component.translatable("tooltip.techrebirth.tin_pickaxe.detailed")
+                            .withStyle(ChatFormatting.GREEN));
+                    if(Screen.hasShiftDown()){
+                        pTooltipComponents.add(Component.translatable("tooltip.techrebirth.tin_pickaxe_bonus"));
+                    }
+                    super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
+                }
+            });
+    public static final DeferredItem<HoeItem> TIN_HOE = ITEMS.register("tin_hoe",
+            () -> new HoeItem(ModToolTiers.TIN, new Item.Properties()
+                    .attributes(HoeItem.createAttributes(ModToolTiers.TIN, 0f, -3f))));
     //Food Items
     public static final DeferredItem<Item> COOKED_CARROT = ITEMS.register("cooked_carrot",
             () -> new Item(new Item.Properties().food(ModFoodProperties.COOKED_CARROT)));
