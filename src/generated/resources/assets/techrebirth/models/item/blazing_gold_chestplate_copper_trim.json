@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "techrebirth:item/blazing_gold_chestplate",
+    "layer0": "techrebirth:item/armor/blazing_gold/blazing_gold_chestplate",
     "layer1": "minecraft:trims/items/chestplate_trim_copper"
   }
 }

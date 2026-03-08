@@ -47,6 +47,10 @@ public class ModCreativeTabs {
                         output.accept(ModItems.BLAZING_GOLD_SHOVEL);
                         output.accept(ModItems.BLAZING_GOLD_HOE);
 
+                        output.accept(ModItems.TIN_HELMET);
+                        output.accept(ModItems.TIN_CHESTPLATE);
+                        output.accept(ModItems.TIN_LEGGINGS);
+                        output.accept(ModItems.TIN_BOOTS);
                         output.accept(ModItems.TIN_SWORD);
                         output.accept(ModItems.TIN_AXE);
                         output.accept(ModItems.TIN_PICKAXE);

@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "techrebirth:item/blazing_gold_leggings",
+    "layer0": "techrebirth:item/armor/blazing_gold/blazing_gold_leggings",
     "layer1": "minecraft:trims/items/leggings_trim_netherite"
   }
 }

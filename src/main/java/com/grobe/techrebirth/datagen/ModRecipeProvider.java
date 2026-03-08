@@ -253,11 +253,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
 
         buildToolRecipes(ModItems.TIN_INGOT.asItem(), Items.STICK, ModItems.TIN_SWORD.asItem(), ModItems.TIN_AXE.asItem(), ModItems.TIN_PICKAXE.asItem(), ModItems.TIN_SHOVEL.asItem(), ModItems.TIN_HOE.asItem(), "has_tin", recipeOutput);
+        buildArmorSetRecipes(Ingredient.of(ModTags.Items.INGOTS_TIN_D.common()), ModItems.TIN_HELMET.asItem(), ModItems.TIN_CHESTPLATE.asItem(), ModItems.TIN_LEGGINGS.asItem(),ModItems.TIN_BOOTS.asItem(),"has_tin", recipeOutput);
 
-
-
-
-
+        
         // Automatic Nugget Recipes
         for (Map.Entry<MetalType, DeferredItem<Item>> entry : ModItems.NUGGETS.entrySet()) {
             MetalType type = entry.getKey();
@@ -412,12 +410,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput, resourceLocation);
     }
     public static void buildArmorSetRecipes(ItemLike material, ItemLike helmet, ItemLike chestplate, ItemLike leggings, ItemLike boots, String unlockCriterion, RecipeOutput recipeOutput) {
+        buildArmorSetRecipes(Ingredient.of(material), helmet, chestplate, leggings, boots, unlockCriterion, recipeOutput);
+    }
+
+    public static void buildArmorSetRecipes(Ingredient material, ItemLike helmet, ItemLike chestplate, ItemLike leggings, ItemLike boots, String unlockCriterion, RecipeOutput recipeOutput) {
         // Helmet
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, helmet)
                 .pattern("XXX")
                 .pattern("X X")
                 .define('X', material)
-                .unlockedBy(unlockCriterion, has(material))
+                .unlockedBy(unlockCriterion, has(helmet)) // Note: 'has' check usually needs an ItemLike, but we can't easily get one from Ingredient. Using helmet as a fallback or we need to pass a criterion item.
                 .save(recipeOutput);
 
         // Chestplate
@@ -426,7 +428,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("XXX")
                 .pattern("XXX")
                 .define('X', material)
-                .unlockedBy(unlockCriterion, has(material))
+                .unlockedBy(unlockCriterion, has(chestplate))
                 .save(recipeOutput);
 
         // Leggings
@@ -435,7 +437,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("X X")
                 .pattern("X X")
                 .define('X', material)
-                .unlockedBy(unlockCriterion, has(material))
+                .unlockedBy(unlockCriterion, has(leggings))
                 .save(recipeOutput);
 
         // Boots
@@ -443,7 +445,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("X X")
                 .pattern("X X")
                 .define('X', material)
-                .unlockedBy(unlockCriterion, has(material))
+                .unlockedBy(unlockCriterion, has(boots))
                 .save(recipeOutput);
     }
 

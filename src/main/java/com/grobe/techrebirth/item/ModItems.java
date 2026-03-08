@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.item;
 
 import com.grobe.techrebirth.TechRebirth;
+import com.grobe.techrebirth.item.custom.TinArmorItem;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
 import com.grobe.techrebirth.item.custom.WrenchItem;
 import com.grobe.techrebirth.util.MetalType;
@@ -122,8 +123,8 @@ public class ModItems {
     public static final DeferredItem<EnchantedBookItem> LIGHTNING_STRIKER_ENCHANTED_BOOK = ITEMS.register("lightning_striker_enchanted_book",
             () -> new EnchantedBookItem(new Item.Properties()));
 
-
-    // Armor
+// Armor
+    // Blazing gold
     public static final DeferredItem<ArmorItem> BLAZING_GOLD_HELMET = ITEMS.register("blazing_gold_helmet",
             ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
@@ -138,6 +139,22 @@ public class ModItems {
 
     public static final DeferredItem<ArmorItem> BLAZING_GOLD_BOOTS = ITEMS.register("blazing_gold_boots",
             ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+    //Tin
+    public static DeferredItem<ArmorItem> TIN_HELMET = ITEMS.register("tin_helmet",
+            ()-> new TinArmorItem(ModArmorMaterials.TIN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+
+    public static final DeferredItem<ArmorItem> TIN_CHESTPLATE = ITEMS.register("tin_chestplate",
+            ()-> new TinArmorItem(ModArmorMaterials.TIN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+
+    public static final DeferredItem<ArmorItem> TIN_LEGGINGS = ITEMS.register("tin_leggings",
+            ()-> new TinArmorItem(ModArmorMaterials.TIN_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+
+    public static final DeferredItem<ArmorItem> TIN_BOOTS = ITEMS.register("tin_boots",
+            ()-> new TinArmorItem(ModArmorMaterials.TIN_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
 
 

@@ -53,6 +53,10 @@ public class ModItemModelProvider extends ItemModelProvider {
        trimmedArmorItem(ModItems.BLAZING_GOLD_CHESTPLATE);
        trimmedArmorItem(ModItems.BLAZING_GOLD_LEGGINGS);
        trimmedArmorItem(ModItems.BLAZING_GOLD_BOOTS);
+       trimmedArmorItem(ModItems.TIN_HELMET);
+       trimmedArmorItem(ModItems.TIN_CHESTPLATE);
+       trimmedArmorItem(ModItems.TIN_LEGGINGS);
+       trimmedArmorItem(ModItems.TIN_BOOTS);
 
        handheldItem(ModItems.BLAZING_GOLD_SWORD);
        handheldItem(ModItems.BLAZING_GOLD_AXE);
@@ -90,7 +94,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                 ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "item/" + textureName));
     }
 
-    private void trimmedArmorItem(DeferredItem<ArmorItem> itemDeferredItem){
+    private void trimmedArmorItem(DeferredItem<? extends ArmorItem> itemDeferredItem){
        final String MODID = TechRebirth.MODID;
 
        if(itemDeferredItem.get() instanceof ArmorItem armorItem){
@@ -114,9 +118,18 @@ public class ModItemModelProvider extends ItemModelProvider {
 
                existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
 
+               // Automatically determine texture path based on item name
+               String itemName = itemDeferredItem.getId().getPath();
+               String materialName = itemName.replace("_helmet", "")
+                       .replace("_chestplate", "")
+                       .replace("_leggings", "")
+                       .replace("_boots", "");
+
+               String texturePath = "item/armor/" + materialName + "/" + itemName;
+
                getBuilder(currentTrimName)
                        .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                       .texture("layer0", armorItemResLoc.getNamespace()+ ":item/" + armorItemResLoc.getPath())
+                       .texture("layer0", ResourceLocation.fromNamespaceAndPath(MODID, texturePath))
                        .texture("layer1", trimResLoc);
 
                this.withExistingParent(itemDeferredItem.getId().getPath(),
@@ -124,7 +137,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                        .override()
                        .model(new ModelFile.UncheckedModelFile(trimNameResLoc.getNamespace() + ":item/" + trimNameResLoc.getPath()))
                        .predicate(mcLoc("trim_type"), trimValue).end()
-                       .texture("layer0", ResourceLocation.fromNamespaceAndPath(MODID, "item/" + itemDeferredItem.getId().getPath()));
+                       .texture("layer0", ResourceLocation.fromNamespaceAndPath(MODID, texturePath));
            });
        }
     }

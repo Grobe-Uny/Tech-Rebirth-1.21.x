@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "techrebirth:item/blazing_gold_boots",
+    "layer0": "techrebirth:item/armor/blazing_gold/blazing_gold_boots",
     "layer1": "minecraft:trims/items/boots_trim_diamond"
   }
 }

@@ -28,7 +28,11 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.BLAZING_GOLD_HELMET.get())
                 .add(ModItems.BLAZING_GOLD_CHESTPLATE.get())
                 .add(ModItems.BLAZING_GOLD_LEGGINGS.get())
-                .add(ModItems.BLAZING_GOLD_BOOTS.get());
+                .add(ModItems.BLAZING_GOLD_BOOTS.get())
+                .add(ModItems.TIN_HELMET.get())
+                .add(ModItems.TIN_CHESTPLATE.get())
+                .add(ModItems.TIN_LEGGINGS.get())
+                .add(ModItems.TIN_BOOTS.get());
 
         tag(ItemTags.SWORDS)
                 .add(ModItems.BLAZING_GOLD_SWORD.get())

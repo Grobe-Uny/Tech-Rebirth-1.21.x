@@ -42,6 +42,11 @@
   "item.techrebirth.blazing_gold_hoe": "Blazing Gold Hoe",
 
 
+  "item.techrebirth.tin_helmet": "Tin Helmet",
+  "item.techrebirth.tin_chestplate": "Tin Chestplate",
+  "item.techrebirth.tin_leggings": "Tin Leggings",
+  "item.techrebirth.tin_boots": "Tin Boots",
+
   "item.techrebirth.tin_pickaxe": "Tin Pickaxe",
   "item.techrebirth.tin_axe": "Tin Axe",
   "item.techrebirth.tin_sword": "Tin Sword",
@@ -130,5 +135,7 @@
   "subtitles.techrebirth.alloy_smelting": "Alloying",
   "subtitles.techrebirth.furnace_running": "Smelting",
   "tooltip.techrebirth.tin_pickaxe_bonus": "§b +15% Mining Efficiency",
-  "tooltip.techrebirth.tin_pickaxe.detailed": "Lightweight and easy to swing."
+  "tooltip.techrebirth.tin_pickaxe.detailed": "Lightweight and easy to swing.",
+  "tooltip.techrebirth.tin_armor.set_bonus": "Armor Bonus: (Full set not required)",
+  "tooltip.techrebirth.tin_armor.effect": "+5% Movement Speed"
 }

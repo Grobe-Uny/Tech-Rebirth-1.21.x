@@ -4,6 +4,7 @@ import com.grobe.techrebirth.Config;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.item.ModItems;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -38,6 +39,21 @@ public class TooltipEvents {
 
             event.getToolTip().add(Component.translatable("tooltip.techrebirth.blazing_gold_armor.effect")
                     .withStyle(ChatFormatting.GRAY));
+        }
+
+        if (event.getItemStack().is(ModItems.TIN_HELMET.get()) ||
+                event.getItemStack().is(ModItems.TIN_CHESTPLATE.get()) ||
+                event.getItemStack().is(ModItems.TIN_LEGGINGS.get()) ||
+                event.getItemStack().is(ModItems.TIN_BOOTS.get())) {
+
+            event.getToolTip().add(Component.translatable("tooltip.techrebirth.tin_armor.set_bonus")
+                    .withStyle(ChatFormatting.GRAY));
+
+            if(Screen.hasShiftDown()){
+                event.getToolTip().add(Component.translatable("tooltip.techrebirth.tin_armor.effect")
+                        .withStyle(ChatFormatting.GOLD));
+            }
+
         }
     }
 }

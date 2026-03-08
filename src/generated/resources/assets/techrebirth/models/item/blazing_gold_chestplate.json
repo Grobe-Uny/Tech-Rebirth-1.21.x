@@ -63,6 +63,6 @@
     }
   ],
   "textures": {
-    "layer0": "techrebirth:item/blazing_gold_chestplate"
+    "layer0": "techrebirth:item/armor/blazing_gold/blazing_gold_chestplate"
   }
 }
