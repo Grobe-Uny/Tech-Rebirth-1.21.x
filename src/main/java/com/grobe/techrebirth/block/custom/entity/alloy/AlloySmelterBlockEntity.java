@@ -5,6 +5,7 @@ import com.grobe.techrebirth.block.custom.alloy.AlloySmelterBlock;
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.gui.alloy_smelter.AlloySmelterMenu;
 import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.item.custom.UpgradeItem;
 import com.grobe.techrebirth.recipe.AlloySmeltingRecipe;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.recipe.MultiItemRecipeInput;
@@ -45,6 +46,11 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
     private static final int UPGRADE_SLOT_1 = 4;
     private static final int UPGRADE_SLOT_2 = 5;
 
+    // Balancing Constants
+    private static final float SPEED_GAIN_PER_UPGRADE = 0.5f; // +50% speed per item
+    private static final float POWER_COST_PER_SPEED_UPGRADE = 0.5f; // +50% power per speed item
+    private static final float EFFICIENCY_FACTOR = 0.1f; // Hyperbolic reduction factor
+    private static final int BASE_ENERGY_COST = 160; // Base cost for alloy smelter
 
     // Cache za performance
     private Optional<RecipeHolder<AlloySmeltingRecipe>> cachedRecipe = Optional.empty();
@@ -128,12 +134,15 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
         int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.get());
         int efficiencyUpgrades = getUpgradeCount(ModItems.EFFICIENCY_UPGRADE.get());
 
-        float energyConsumptionMultiplier = 1 - (0.20f * efficiencyUpgrades);
-        float energySpeedPenalty = 1 + (0.15f * speedUpgrades);
+        // Linear power cost for speed: 1 + (0.5 * count)
+        float speedPenalty = 1.0f + (POWER_COST_PER_SPEED_UPGRADE * speedUpgrades);
+
+        // Hyperbolic power reduction for efficiency: 1 / (1 + 0.1 * count)
+        float efficiencyBonus = 1.0f / (1.0f + (EFFICIENCY_FACTOR * efficiencyUpgrades));
 
         float tierEnergyMultiplier = getTier().energyMultiplier;
 
-        return (int) (160 * energySpeedPenalty * energyConsumptionMultiplier * tierEnergyMultiplier);
+        return Math.max(1, (int) (BASE_ENERGY_COST * speedPenalty * efficiencyBonus * tierEnergyMultiplier));
     }
 
     @Override
@@ -327,7 +336,7 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
                 count += stack.getCount();
             }
         }
-        return Math.min(count, 4);
+        return count;
     }
     @Override
     public Component getDisplayName() {
@@ -357,7 +366,12 @@ public class AlloySmelterBlockEntity extends BaseMachineBlockEntity {
             AlloySmeltingRecipe recipe = recipeOpt.get().value();
             int baseTime = recipe.getCookingTime();
             float speedMultiplier = getTier().speedMultiplier;
-            this.maxProgress = (int) (baseTime / speedMultiplier);
+            
+            // Linear speed increase: 100% + (50% * count)
+            int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.get());
+            float totalSpeedMultiplier = 1.0f + (SPEED_GAIN_PER_UPGRADE * speedUpgrades);
+            
+            this.maxProgress = Math.max(1, (int) (baseTime / (speedMultiplier * totalSpeedMultiplier)));
             setChanged();
         }
     }

@@ -79,9 +79,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         //endregion
 
-//        buildBlocksFromIngotsRecipe(ModBlocks.INVAR_BLOCK.asItem(), ModItems.INVAR_INGOT.asItem(), "has_invar", ModItems.INVAR_INGOT.asItem(), recipeOutput);
-//        buildIngotsFromBlocksRecipe(ModItems.INVAR_INGOT.asItem(), 9, ModBlocks.INVAR_BLOCK, "has_invar", ModBlocks.INVAR_BLOCK, recipeOutput, "invar_ingot_from_invar_block");
-
         //region hardened machines
 
         buildHardenedMachines(ModBlocks.HARDENED_ELECTRIC_FURNACE.asItem(), ModBlocks.ELECTRIC_FURNACE.asItem(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/hardened/hardened_electric_furnace"));

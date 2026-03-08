@@ -7,6 +7,8 @@ import com.grobe.techrebirth.gui.electric_crusher.ElectricCrusherScreen;
 import com.grobe.techrebirth.gui.subscreen.ConfigSubScreen;
 import com.grobe.techrebirth.gui.subscreen.UpgradeSubScreen;
 import com.grobe.techrebirth.gui.widgets.ConfigButton;
+import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.item.custom.UpgradeItem;
 import com.grobe.techrebirth.recipe.CrushingRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mezz.jei.api.recipe.RecipeType;
@@ -19,8 +21,10 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurnaceMenu> {
@@ -222,9 +226,42 @@ public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurna
         if (mouseX >= ex && mouseX < ex + ENERGY_BAR_WIDTH && mouseY >= ey && mouseY < ey + ENERGY_BAR_HEIGHT) {
             int energy = menu.getEnergyStored();
             int max = menu.getMaxEnergyStored();
-            guiGraphics.renderTooltip(this.font,
-                    net.minecraft.network.chat.Component.literal(energy + " / " + max + " RF"),
-                    mouseX, mouseY);
+            
+            List<Component> tooltip = new ArrayList<>();
+            tooltip.add(Component.literal(energy + " / " + max + " RF"));
+            
+            // Calculate estimated usage
+            int speedUpgrades = 0;
+            int efficiencyUpgrades = 0;
+            
+            // Check slots 2 and 3 (upgrade slots)
+            // Note: We access the menu's slots directly, which are synced to client
+            for (int i = 36 + 2; i <= 36 + 3; i++) { // TE slots start at 36
+                if (i < menu.slots.size()) {
+                    ItemStack stack = menu.slots.get(i).getItem();
+                    if (!stack.isEmpty()) {
+                        if (stack.is(ModItems.SPEED_UPGRADE.get())) {
+                            speedUpgrades += stack.getCount();
+                        } else if (stack.is(ModItems.EFFICIENCY_UPGRADE.get())) {
+                            efficiencyUpgrades += stack.getCount();
+                        }
+                    }
+                }
+            }
+            
+            // Match logic from ElectricFurnaceBlockEntity
+            // Speed: +50% speed, +50% power (Linear)
+            // Efficiency: -10% power (Hyperbolic)
+            
+            float speedPenalty = 1.0f + (0.5f * speedUpgrades);
+            float efficiencyBonus = 1.0f / (1.0f + (0.1f * efficiencyUpgrades));
+            
+            int baseCost = 20;
+            int estimatedCost = Math.max(1, (int) (baseCost * speedPenalty * efficiencyBonus));
+            
+            tooltip.add(Component.literal("Usage: " + estimatedCost + " RF/t").withStyle(net.minecraft.ChatFormatting.GRAY));
+
+            guiGraphics.renderTooltip(this.font, tooltip, java.util.Optional.empty(), mouseX, mouseY);
         }
 
         renderTooltip(guiGraphics, mouseX, mouseY);

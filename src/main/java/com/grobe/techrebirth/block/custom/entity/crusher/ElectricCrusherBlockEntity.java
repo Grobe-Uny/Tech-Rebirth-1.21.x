@@ -48,6 +48,12 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
     private static final int UPGRADE_SLOT_1 = 4;
     private static final int UPGRADE_SLOT_2 = 5;
 
+    // Balancing Constants
+    private static final float SPEED_GAIN_PER_UPGRADE = 0.5f; // +50% speed per item
+    private static final float POWER_COST_PER_SPEED_UPGRADE = 0.5f; // +50% power per speed item
+    private static final float EFFICIENCY_FACTOR = 0.1f; // Hyperbolic reduction factor
+    private static final int BASE_ENERGY_COST = 128; // Base cost for crusher
+
     public ElectricCrusherBlockEntity(BlockPos pos, BlockState state) {
         this(ModBlockEntities.ELECTRIC_CRUSHER.get(), pos, state);
     }
@@ -179,10 +185,13 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
         int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.get());
         int efficiencyUpgrades = getUpgradeCount(ModItems.EFFICIENCY_UPGRADE.get());
 
-        float energyConsumptionMultiplier = (float) Math.pow(0.75, efficiencyUpgrades);
-        float energySpeedPenalty = 1 + (0.5f * speedUpgrades);
+        // Linear power cost for speed: 1 + (0.5 * count)
+        float speedPenalty = 1.0f + (POWER_COST_PER_SPEED_UPGRADE * speedUpgrades);
 
-        return (int) (128 * energySpeedPenalty * energyConsumptionMultiplier);
+        // Hyperbolic power reduction for efficiency: 1 / (1 + 0.1 * count)
+        float efficiencyBonus = 1.0f / (1.0f + (EFFICIENCY_FACTOR * efficiencyUpgrades));
+
+        return Math.max(1, (int) (BASE_ENERGY_COST * speedPenalty * efficiencyBonus));
     }
 
     @Override
@@ -191,10 +200,12 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
         if (recipeOpt.isPresent()) {
             CrushingRecipe recipe = recipeOpt.get().value();
             int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.asItem());
-            float speedMultiplier = 1 + (0.5f * speedUpgrades);
+            
+            // Linear speed increase: 100% + (50% * count)
+            float totalSpeedMultiplier = 1.0f + (SPEED_GAIN_PER_UPGRADE * speedUpgrades);
+            
             int baseTime = recipe.getTime();
-            this.maxProgress = (int) (baseTime / speedMultiplier);
-            if (this.maxProgress < 1) this.maxProgress = 1;
+            this.maxProgress = Math.max(1, (int) (baseTime / totalSpeedMultiplier));
         }
     }
 
@@ -370,6 +381,6 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
                 count += stack.getCount();
             }
         }
-        return Math.min(count, 4); // cap to avoid extremes
+        return count;
     }
 }

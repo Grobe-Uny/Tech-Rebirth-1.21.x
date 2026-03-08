@@ -42,9 +42,12 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
 
     protected final ContainerData data;
 
-    private static final float BASE_SPEED_MULTIPLIER = 1.25f;
-    private static final float SPEED_UPGRADE_MULTIPLIER = 0.15f;
     private static final int BASE_ENERGY_COST = 20;
+
+    // Balancing Constants (Linear/Hyperbolic for stack support)
+    private static final float SPEED_GAIN_PER_UPGRADE = 0.5f; // +50% speed per item
+    private static final float POWER_COST_PER_SPEED_UPGRADE = 0.5f; // +50% power per speed item
+    private static final float EFFICIENCY_FACTOR = 0.1f; // Hyperbolic reduction factor
 
 
     @Override
@@ -213,22 +216,25 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
 
         int vanillaTime = Math.max(1, getRecipeCookTime(recipe));
 
-        float totalSpeedMultiplier = BASE_SPEED_MULTIPLIER + (SPEED_UPGRADE_MULTIPLIER * speedUpgrades);
+        // Linear speed increase: 100% + (50% * count)
+        float totalSpeedMultiplier = 1.0f + (SPEED_GAIN_PER_UPGRADE * speedUpgrades);
 
-        this.maxProgress = Math.max(1, (int) (vanillaTime/ totalSpeedMultiplier));
+        this.maxProgress = Math.max(1, (int) (vanillaTime / totalSpeedMultiplier));
     }
 
     protected int getEnergyCostPerTick(){
         int speedUpgrades = getUpgradeCount(ModItems.SPEED_UPGRADE.get());
         int efficiencyUpgrades = getUpgradeCount(ModItems.EFFICIENCY_UPGRADE.get());
 
-        float speedMultiplier = 1 + (0.20f * speedUpgrades);
+        // Linear power cost for speed: 1 + (0.5 * count)
+        float speedPenalty = 1.0f + (POWER_COST_PER_SPEED_UPGRADE * speedUpgrades);
 
-        float efficiencyMultiplier = 1 - (0.15f * efficiencyUpgrades);
+        // Hyperbolic power reduction for efficiency: 1 / (1 + 0.1 * count)
+        float efficiencyBonus = 1.0f / (1.0f + (EFFICIENCY_FACTOR * efficiencyUpgrades));
 
         float tierMultiplier = getTier().energyMultiplier;
 
-        return (int) (BASE_ENERGY_COST * speedMultiplier * efficiencyMultiplier * tierMultiplier);
+        return Math.max(1, (int) (BASE_ENERGY_COST * speedPenalty * efficiencyBonus * tierMultiplier));
     }
 
     @Override
@@ -291,8 +297,8 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         ItemStack stack1 = handler.getStackInSlot(UPGRADE_SLOT_1);
         ItemStack stack2 = handler.getStackInSlot(UPGRADE_SLOT_2);
 
-        if (stack1.getItem() instanceof UpgradeItem && stack1.is(upgradeItem)) count++;
-        if (stack2.getItem() instanceof UpgradeItem && stack2.is(upgradeItem)) count++;
+        if (stack1.getItem() instanceof UpgradeItem && stack1.is(upgradeItem)) count += stack1.getCount();
+        if (stack2.getItem() instanceof UpgradeItem && stack2.is(upgradeItem)) count += stack2.getCount();
 
         return count;
     }

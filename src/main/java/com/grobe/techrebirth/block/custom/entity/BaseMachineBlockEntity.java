@@ -34,6 +34,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
 
     protected int progress = 0;
     protected int maxProgress;
+    protected int energyCostPerTick = 0; // Added for syncing
 
     private boolean soundPlaying = false;
 
@@ -54,6 +55,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
                     case 1 -> maxProgress;
                     case 2 -> energyHandler.getEnergyStored();
                     case 3 -> energyHandler.getMaxEnergyStored();
+                    case 4 -> energyCostPerTick; // New
                     default -> 0;
                 };
             }
@@ -64,6 +66,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
                     case 0 -> progress = value;
                     case 1 -> maxProgress = value;
                     case 2 -> energyHandler.setEnergy(value);
+                    case 4 -> energyCostPerTick = value; // New
                 }
             }
 
@@ -118,7 +121,6 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         this.machineTier = tier;
     }
 
-    // DODAJTE OVO ⬇️
     public MachineTier getTier() {
         return machineTier != null ? machineTier : MachineTier.BASIC;
     }
@@ -200,8 +202,8 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
 
         boolean hasRecipe = hasRecipe();
         boolean canContinue = hasRecipe && canContinueProcessing();
-        int energyCost = getEnergyCostPerTick();
-        boolean hasEnergy = energyHandler.getEnergyStored() >= energyCost;
+        this.energyCostPerTick = getEnergyCostPerTick(); // Update the field
+        boolean hasEnergy = energyHandler.getEnergyStored() >= this.energyCostPerTick;
 
         // The machine is working if it has a recipe, can process (output space), and has energy
         boolean isWorking = canContinue && hasEnergy;
@@ -222,7 +224,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
                     onProcessStart();
                 }
 
-                energyHandler.extractEnergy(energyCost, false);
+                energyHandler.extractEnergy(this.energyCostPerTick, false);
                 increaseProgress();
 
                 if (getProgress() >= getMaxProgress()) {
@@ -312,14 +314,6 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     @Override
     public void setRemoved() {
         if (level != null && !level.isClientSide) {
-            // 1. Dropaj sve iteme
-//            SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
-//            for (int i = 0; i < itemHandler.getSlots(); i++) {
-//                inventory.setItem(i, itemHandler.getStackInSlot(i));
-//            }
-//            Containers.dropContents(level, worldPosition, inventory);
-
-            // 2. OBAVEZNO: Spremi stanje PRIJE nego što se entity ukloni
             setChanged(); // Ovo triggera saveAdditional()
         }
         super.setRemoved();
