@@ -117,6 +117,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.BASE_GOLDIUM_INGOT);
                         output.accept(ModItems.BLAZING_GOLD_INGOT);
                         output.accept(ModItems.RAW_LEAD);
+                        output.accept(ModItems.PURIFIED_IRON_POWDER);
 
                         // Add Ore Blocks
                         for (var ore : ModBlocks.ORE_BLOCKS.values()){

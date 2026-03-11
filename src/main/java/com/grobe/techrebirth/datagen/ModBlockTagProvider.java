@@ -50,7 +50,8 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.REINFORCED_ELECTRIC_FURNACE.get())
                 .add(ModBlocks.ELECTRIC_CENTRIFUGE.get())
                 .add(ModBlocks.FLUID_TANK.get())
-                .add(ModBlocks.ELECTRIC_CRUSHER.get());
+                .add(ModBlocks.ELECTRIC_CRUSHER.get())
+                .add(ModBlocks.ELECTRIC_PURIFIER.get());
 
 
         tag(BlockTags.NEEDS_STONE_TOOL)
@@ -73,6 +74,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.HARDENED_ELECTRIC_FURNACE.get())
                 .add(ModBlocks.FLUID_TANK.get())
                 .add(ModBlocks.ELECTRIC_CENTRIFUGE.get())
+                .add(ModBlocks.ELECTRIC_PURIFIER.get())
                 .add(ModBlocks.REINFORCED_ELECTRIC_FURNACE.get());
 
         // Automatically add tags for generated ore blocks

@@ -7,6 +7,7 @@ import com.grobe.techrebirth.block.custom.entity.purifier.ElectricPurifierBlockE
 import com.grobe.techrebirth.util.MachineTier;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -38,13 +39,13 @@ public class ElectricPurifierBlock extends BaseMachineBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTicker(pLevel, pBlockEntityType, ModBlockEntities.ELECTRIC_FURNACE.get());
+        return createTicker(pLevel, pBlockEntityType, ModBlockEntities.ELECTRIC_PURIFIER.get());
     }
 
 
     // When placed from an item, restore stored energy from the item's BlockEntity data component (safety net)
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
     }
 

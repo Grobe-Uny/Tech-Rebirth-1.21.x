@@ -41,7 +41,8 @@ public class ModCapabilities {
                 ModBlockEntities.ENERGY_CABLE.get(),
                 ModBlockEntities.HARDENED_ELECTRIC_FURNACE.get(),
                 ModBlockEntities.REINFORCED_ELECTRIC_FURNACE.get(),
-                ModBlockEntities.ELECTRIC_CENTRIFUGE_BE.get()
+                ModBlockEntities.ELECTRIC_CENTRIFUGE_BE.get(),
+                ModBlockEntities.ELECTRIC_PURIFIER.get()
         );
     }
 

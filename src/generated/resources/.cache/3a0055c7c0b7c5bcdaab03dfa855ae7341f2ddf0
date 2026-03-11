@@ -1,10 +1,10 @@
-// 1.21.1	2026-03-08T22:23:58.811609672	Tags for minecraft:item mod id techrebirth
+// 1.21.1	2026-03-11T01:19:55.068037061	Tags for minecraft:item mod id techrebirth
 42b2544e04b961e0ada25ffe93e3bce65621e5d5 data/c/tags/item/catalyst.json
 9798d67e68f1fc1fcbc41d664432a3a37ba63beb data/c/tags/item/catalyst/blaze.json
-3b4a42c814e7079c37afbceaeb1fb940d5fe32da data/c/tags/item/dusts.json
+aa8e887528dd1f24d630b2707ec9c37f4def0890 data/c/tags/item/dusts.json
 a7d5fe2507776361624de9ad8bdfd17f305ebce0 data/c/tags/item/dusts/copper.json
 7c1b32fa66e3dafa9432c1dfaf2800f036579ae2 data/c/tags/item/dusts/diamond.json
-7b082f9495f7bd05fed2a069f942f743ef8ba8f6 data/c/tags/item/dusts/iron.json
+17a7d9ee523856f6719f99c0fad52076e6087e66 data/c/tags/item/dusts/iron.json
 d2e0ac0ef9713948f3a430c7d2744a26d36a3a65 data/c/tags/item/dusts/nickel.json
 74db30f7336a183b70267d2e44e84b3405cb11e2 data/c/tags/item/dusts/tin.json
 6faa573e191dd1d55a66eecd3c0bb1d5865a3017 data/c/tags/item/ingots.json
@@ -28,10 +28,10 @@ f8e08851386dbf1ea3cade666562eeb44248cac2 data/minecraft/tags/item/swords.json
 cf53ce4a0758aaa3182f915f8a07cab9a0958779 data/minecraft/tags/item/trimmable_armor.json
 c8c8623dc1b50433306f7ecd02fc38fab0432417 data/neoforge/tags/item/catalyst.json
 9798d67e68f1fc1fcbc41d664432a3a37ba63beb data/neoforge/tags/item/catalyst/blaze.json
-ace8edff8ac135cf1416b22a4d2a785ed36c0929 data/neoforge/tags/item/dusts.json
+a394bb7cbfb5b076ccc201093c36bd6e4e4a9104 data/neoforge/tags/item/dusts.json
 a7d5fe2507776361624de9ad8bdfd17f305ebce0 data/neoforge/tags/item/dusts/copper.json
 7c1b32fa66e3dafa9432c1dfaf2800f036579ae2 data/neoforge/tags/item/dusts/diamond.json
-7b082f9495f7bd05fed2a069f942f743ef8ba8f6 data/neoforge/tags/item/dusts/iron.json
+17a7d9ee523856f6719f99c0fad52076e6087e66 data/neoforge/tags/item/dusts/iron.json
 d2e0ac0ef9713948f3a430c7d2744a26d36a3a65 data/neoforge/tags/item/dusts/nickel.json
 74db30f7336a183b70267d2e44e84b3405cb11e2 data/neoforge/tags/item/dusts/tin.json
 b18ecac48d22794556713793222fffa898932812 data/neoforge/tags/item/ingots.json

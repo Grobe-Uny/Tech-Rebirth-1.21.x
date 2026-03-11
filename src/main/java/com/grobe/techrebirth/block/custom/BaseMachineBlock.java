@@ -175,13 +175,6 @@ public abstract class BaseMachineBlock extends BaseEntityBlock implements Entity
                     int savedEnergy = tag.getInt("StoredEnergy");
                     machine.setEnergyStored(savedEnergy);
 
-//                if (customData.contains("Progress")) {
-//                    machine.progress = customData.getInt("Progress");
-//                }
-//                if (customData.contains("MaxProgress")) {
-//                    machine.maxProgress = customData.getInt("MaxProgress");
-//                }
-
                     loadMachineSpecificData(machine, tag);
                     machine.setChanged();
 

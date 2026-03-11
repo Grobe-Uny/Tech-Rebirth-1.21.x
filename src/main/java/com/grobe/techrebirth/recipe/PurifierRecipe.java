@@ -29,7 +29,7 @@ public class PurifierRecipe implements Recipe<SingleRecipeInput> {
 
     @Override
     public boolean matches(SingleRecipeInput input, Level level) {
-        return ingredient.test(input.item());
+        return ingredient.test(input.getItem(0));
     }
 
     @Override

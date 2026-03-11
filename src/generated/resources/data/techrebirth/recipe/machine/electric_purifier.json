@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "G": {
+      "item": "techrebirth:tin_gear"
+    },
+    "N": {
+      "item": "techrebirth:nickel_ingot"
+    },
+    "R": {
+      "item": "techrebirth:redstone_reception_coil"
+    },
+    "X": {
+      "item": "techrebirth:machine_base"
+    }
+  },
+  "pattern": [
+    " G ",
+    "NXN",
+    "BRB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:electric_purifier"
+  }
+}

@@ -22,13 +22,13 @@ import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ElectricPurifierScreen extends BaseMachineScreen {
+public class ElectricPurifierScreen extends BaseMachineScreen<ElectricPurifierMenu> {
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/electric_purifier_gui.png");
 
 
-    private static final int PROGRESS_BAR_X = 70;
-    private static final int PROGRESS_BAR_Y = 35;
+    private static final int PROGRESS_BAR_X = 75;
+    private static final int PROGRESS_BAR_Y = 40;
     private static final int PROGRESS_BAR_WIDTH = 20;
     private static final int PROGRESS_BAR_HEIGHT = 8;
 
@@ -109,7 +109,7 @@ public class ElectricPurifierScreen extends BaseMachineScreen {
         IJeiRuntime jei = JEITechRebirthPlugin.getJeiRuntime();
         if (jei != null) {
             RecipeType<PurifierRecipe> recipeType = RecipeType.create(
-                    TechRebirth.MODID, "purifiying", PurifierRecipe.class
+                    TechRebirth.MODID, "purifying", PurifierRecipe.class
             );
             jei.getRecipesGui().showTypes(List.of(recipeType));
         }
@@ -149,10 +149,8 @@ public class ElectricPurifierScreen extends BaseMachineScreen {
             int speedUpgrades = 0;
             int efficiencyUpgrades = 0;
 
-            // Check slots 4 and 5 (upgrade slots for crusher)
-            // Note: TE slots start at 36. Crusher has 6 slots.
-            // Slots: 0 (input), 1,2,3 (output), 4,5 (upgrades)
-            for (int i = 36 + 4; i <= 36 + 5; i++) {
+            // Check slots 2 and 3 (upgrade slots for purifier)
+            for (int i = 36 + 2; i <= 36 + 3; i++) {
                 if (i < menu.slots.size()) {
                     ItemStack stack = menu.slots.get(i).getItem();
                     if (!stack.isEmpty()) {
@@ -167,7 +165,7 @@ public class ElectricPurifierScreen extends BaseMachineScreen {
 
             float speedMultiplier = 1.0f + (0.5f * speedUpgrades);
             float efficiencyMultiplier = 1.0f / (1.0f + (0.1f * efficiencyUpgrades));
-            int baseCost = 128;
+            int baseCost = 40;
             int estimatedCost = Math.max(1, (int) (baseCost * speedMultiplier * efficiencyMultiplier));
 
             tooltip.add(Component.literal("Usage: " + estimatedCost + " RF/t").withStyle(net.minecraft.ChatFormatting.GRAY));

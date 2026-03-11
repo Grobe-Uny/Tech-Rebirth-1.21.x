@@ -153,7 +153,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     private ItemModelBuilder powderHandheldItem(DeferredItem<?> item){
        return withExistingParent(item.getId().getPath(),
-               ResourceLocation.parse("item/handheld/powder")).texture("layer0",
+               ResourceLocation.parse("item/generated")).texture("layer0",
                ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID,  "item/powder/" + item.getId().getPath()));
     }
 }

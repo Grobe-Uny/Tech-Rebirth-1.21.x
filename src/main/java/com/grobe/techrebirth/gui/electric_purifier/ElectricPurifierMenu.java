@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.gui.electric_purifier;
 
 import com.grobe.techrebirth.block.custom.entity.crusher.ElectricCrusherBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.purifier.ElectricPurifierBlockEntity;
 import com.grobe.techrebirth.gui.BaseMachineMenu;
 import com.grobe.techrebirth.gui.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
@@ -16,17 +17,17 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ElectricPurifierMenu extends BaseMachineMenu {
-    public final ElectricCrusherBlockEntity blockEntity;
+    public final ElectricPurifierBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
     public ElectricPurifierMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData){
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5));
     }
     public ElectricPurifierMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.ELECTRIC_PURIFIER_MENU.get(), pContainerId, entity, data);
         checkContainerSize(inv, 6);
-        blockEntity = ((ElectricCrusherBlockEntity) entity);
+        blockEntity = ((ElectricPurifierBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 
@@ -70,7 +71,7 @@ public class ElectricPurifierMenu extends BaseMachineMenu {
     private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
-    private static final int TE_INVENTORY_SLOT_COUNT = 6;
+    private static final int TE_INVENTORY_SLOT_COUNT = 4;
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
