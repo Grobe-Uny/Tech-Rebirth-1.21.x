@@ -61,6 +61,8 @@
   "item.techrebirth.diamond_nugget": "Diamond Nugget",
   "item.techrebirth.blazing_gold_nugget": "Blazing Gold Nugget",
   "item.techrebirth.purified_iron_powder": "Purified Iron Powder",
+  "item.techrebirth.purified_copper_powder": "Purified Copper Powder",
+  "item.techrebirth.purified_gold_powder": "Purified Gold Powder",
 
   "block.techrebirth.machine_base": "Machine Base",
   "block.techrebirth.fluid_tank": "Fluid Tank",

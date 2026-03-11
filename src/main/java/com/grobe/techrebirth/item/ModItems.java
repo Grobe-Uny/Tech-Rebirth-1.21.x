@@ -114,6 +114,10 @@ public class ModItems {
 
     public static final DeferredItem<Item> PURIFIED_IRON_POWDER = ITEMS.register("purified_iron_powder",
             () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> PURIFIED_COPPER_POWDER = ITEMS.register("purified_copper_powder",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> PURIFIED_GOLD_POWDER = ITEMS.register("purified_gold_powder",
+            () -> new Item(new Item.Properties()));
 
 
 

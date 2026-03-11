@@ -5,6 +5,8 @@
     "#neoforge:dusts/nickel",
     "#neoforge:dusts/diamond",
     "#neoforge:dusts/iron",
+    "#neoforge:dusts/copper",
+    "#neoforge:dusts/gold",
     "#neoforge:dusts/tin"
   ]
 }

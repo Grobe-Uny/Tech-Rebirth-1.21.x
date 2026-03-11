@@ -107,7 +107,7 @@ public class ModAdvancementProvider extends AdvancementProvider {
                     ).addCriterion("has_blazing_gold_tools", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.BLAZING_GOLD_PICKAXE))
                     .parent(get_blazed)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "get_blazed_tools"), existingFileHelper);
-            
+
         }
     }
 }

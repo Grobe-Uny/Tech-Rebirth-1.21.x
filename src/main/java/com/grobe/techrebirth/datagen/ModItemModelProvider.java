@@ -70,6 +70,8 @@ public class ModItemModelProvider extends ItemModelProvider {
        handheldItem(ModItems.TIN_SWORD);
 
        powderHandheldItem(ModItems.PURIFIED_IRON_POWDER);
+       powderHandheldItem(ModItems.PURIFIED_COPPER_POWDER);
+       powderHandheldItem(ModItems.PURIFIED_GOLD_POWDER);
 
 
 

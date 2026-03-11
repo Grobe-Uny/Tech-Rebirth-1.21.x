@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-11T01:19:55.061687435	Item Models: techrebirth
+// 1.21.1	2026-03-11T19:55:50.220991231	Item Models: techrebirth
 43dc8e4e033d0c73ab2765434cf12291a5e99715 assets/techrebirth/models/item/blazing_gold_axe.json
 90997d5498d99ac757025865d492905fe22a89c7 assets/techrebirth/models/item/blazing_gold_block.json
 a8a620da0fdbad0ec76fcc45ff8e40f16ea2fef7 assets/techrebirth/models/item/blazing_gold_boots.json
@@ -57,6 +57,8 @@ bcdc921a039d88fcf634c8cb5fe21feaeb36aea0 assets/techrebirth/models/item/lead_blo
 d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/lead_nugget.json
 83472565bd111d6906cdb1d19e3c8577d6498681 assets/techrebirth/models/item/nickel_block.json
 d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/nickel_nugget.json
+a5e7d56a7f16a5c20a84464bfabe1d7216cac8f9 assets/techrebirth/models/item/purified_copper_powder.json
+df6c086918fd450890e85ddf8f69350ee8bfbec3 assets/techrebirth/models/item/purified_gold_powder.json
 5c033bc8fe8fecce32c539348740bafef84de23e assets/techrebirth/models/item/purified_iron_powder.json
 e92124702039e8aa051371776f536ae3c3413889 assets/techrebirth/models/item/steel_block.json
 d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/steel_nugget.json

@@ -1,0 +1,10 @@
+{
+  "type": "techrebirth:purifying",
+  "ingredient": {
+    "item": "minecraft:raw_gold"
+  },
+  "result": {
+    "count": 4,
+    "id": "techrebirth:purified_gold_powder"
+  }
+}

@@ -246,6 +246,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         //region purifying recipes
         purifying(Ingredient.of(Items.RAW_IRON), new ItemStack(ModItems.PURIFIED_IRON_POWDER.get(), 4)).unlockedBy("has_electric_purifier", has(ModBlocks.ELECTRIC_PURIFIER.get())).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "purifying/purified_iron_from_raw"));
+        purifying(Ingredient.of(Items.RAW_COPPER), new ItemStack(ModItems.PURIFIED_COPPER_POWDER.get(), 4)).unlockedBy("has_electric_purifier", has(ModBlocks.ELECTRIC_PURIFIER.get())).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "purifying/purified_copper_from_raw"));
+        purifying(Ingredient.of(Items.RAW_GOLD), new ItemStack(ModItems.PURIFIED_GOLD_POWDER.get(), 4)).unlockedBy("has_electric_purifier", has(ModBlocks.ELECTRIC_PURIFIER.get())).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "purifying/purified_gold_from_raw"));
         //endregion
 
         // Smelting and blasting
@@ -262,6 +264,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
 
         simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_IRON_POWDER, Items.IRON_INGOT, 0.7f);
+        simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_COPPER_POWDER, Items.COPPER_INGOT, 0.7f);
+        simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_GOLD_POWDER, Items.GOLD_INGOT, 0.7f);
 
         // Example food: keep near ~1.4–1.8s in machine; 160 vanilla -> 28.8 ticks (~1.44s)
         buildFoodCookingRecipe(Items.CARROT, ModItems.COOKED_CARROT, 2, 160, recipeOutput, "has_carrot", Items.CARROT);

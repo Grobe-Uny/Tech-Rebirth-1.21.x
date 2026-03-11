@@ -1,0 +1,10 @@
+{
+  "type": "techrebirth:purifying",
+  "ingredient": {
+    "item": "minecraft:raw_copper"
+  },
+  "result": {
+    "count": 4,
+    "id": "techrebirth:purified_copper_powder"
+  }
+}

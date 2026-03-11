@@ -1,9 +1,10 @@
-// 1.21.1	2026-03-11T01:19:55.068037061	Tags for minecraft:item mod id techrebirth
+// 1.21.1	2026-03-11T19:55:50.229128105	Tags for minecraft:item mod id techrebirth
 42b2544e04b961e0ada25ffe93e3bce65621e5d5 data/c/tags/item/catalyst.json
 9798d67e68f1fc1fcbc41d664432a3a37ba63beb data/c/tags/item/catalyst/blaze.json
-aa8e887528dd1f24d630b2707ec9c37f4def0890 data/c/tags/item/dusts.json
-a7d5fe2507776361624de9ad8bdfd17f305ebce0 data/c/tags/item/dusts/copper.json
+d8616e113c9f8589810f49b200746d35e3d284be data/c/tags/item/dusts.json
+86010523d222947ae6a8d4d1ea655c4b8269cd1e data/c/tags/item/dusts/copper.json
 7c1b32fa66e3dafa9432c1dfaf2800f036579ae2 data/c/tags/item/dusts/diamond.json
+781448dbbff5c68d15098586bcc69b9ae984f761 data/c/tags/item/dusts/gold.json
 17a7d9ee523856f6719f99c0fad52076e6087e66 data/c/tags/item/dusts/iron.json
 d2e0ac0ef9713948f3a430c7d2744a26d36a3a65 data/c/tags/item/dusts/nickel.json
 74db30f7336a183b70267d2e44e84b3405cb11e2 data/c/tags/item/dusts/tin.json
@@ -28,9 +29,10 @@ f8e08851386dbf1ea3cade666562eeb44248cac2 data/minecraft/tags/item/swords.json
 cf53ce4a0758aaa3182f915f8a07cab9a0958779 data/minecraft/tags/item/trimmable_armor.json
 c8c8623dc1b50433306f7ecd02fc38fab0432417 data/neoforge/tags/item/catalyst.json
 9798d67e68f1fc1fcbc41d664432a3a37ba63beb data/neoforge/tags/item/catalyst/blaze.json
-a394bb7cbfb5b076ccc201093c36bd6e4e4a9104 data/neoforge/tags/item/dusts.json
-a7d5fe2507776361624de9ad8bdfd17f305ebce0 data/neoforge/tags/item/dusts/copper.json
+da8f10d0e8475fef6d9f690451643200e2742dc9 data/neoforge/tags/item/dusts.json
+86010523d222947ae6a8d4d1ea655c4b8269cd1e data/neoforge/tags/item/dusts/copper.json
 7c1b32fa66e3dafa9432c1dfaf2800f036579ae2 data/neoforge/tags/item/dusts/diamond.json
+781448dbbff5c68d15098586bcc69b9ae984f761 data/neoforge/tags/item/dusts/gold.json
 17a7d9ee523856f6719f99c0fad52076e6087e66 data/neoforge/tags/item/dusts/iron.json
 d2e0ac0ef9713948f3a430c7d2744a26d36a3a65 data/neoforge/tags/item/dusts/nickel.json
 74db30f7336a183b70267d2e44e84b3405cb11e2 data/neoforge/tags/item/dusts/tin.json

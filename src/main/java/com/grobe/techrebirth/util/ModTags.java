@@ -69,6 +69,8 @@ public final class ModTags {
         public static final Dual NICKEL_DUST_D = dual("dusts/nickel");
         public static final Dual DIAMOND_DUST_D = dual("dusts/diamond");
         public static final Dual PURIFIED_IRON_DUST_D = dual("dusts/iron");
+        public static final Dual PURIFIED_COPPER_DUST_D = dual("dusts/copper");
+        public static final Dual PURIFIED_GOLD_DUST_D = dual("dusts/gold");
 
         // Duals for raw ores compatibility
         public static final Dual RAW_MATERIALS_D = dual("raw_materials");
