@@ -5,6 +5,7 @@
   "techrebirth.configuration.section.techrebirth.common.toml.title": "Tech Rebirth Configs",
   "item.techrebirth.iron_powder": "Iron Powder",
   "item.techrebirth.copper_powder": "Copper Powder",
+  "item.techrebirth.gold_powder": "Gold Powder",
   "item.techrebirth.copper_gear": "Copper Gear",
   "item.techrebirth.iron_gear": "Iron Gear",
   "item.techrebirth.raw_tin": "Raw Tin",
@@ -63,6 +64,8 @@
   "item.techrebirth.purified_iron_powder": "Purified Iron Powder",
   "item.techrebirth.purified_copper_powder": "Purified Copper Powder",
   "item.techrebirth.purified_gold_powder": "Purified Gold Powder",
+  "item.techrebirth.purified_tin_powder": "Purified Tin Powder",
+  "item.techrebirth.purified_nickel_powder": "Purified Nickel Powder",
 
   "block.techrebirth.machine_base": "Machine Base",
   "block.techrebirth.fluid_tank": "Fluid Tank",
@@ -141,5 +144,7 @@
   "tooltip.techrebirth.tin_pickaxe.detailed": "Lightweight and easy to swing.",
   "tooltip.techrebirth.tin_armor.set_bonus": "Armor Bonus: (Full set not required)",
   "tooltip.techrebirth.tin_armor.effect": "+5% Movement Speed",
-  "block.techrebirth.electric_purifier": "Electric Purifier"
+  "block.techrebirth.electric_purifier": "Electric Purifier",
+  "advancements.techrebirth.more_less.title": "Getting more from less!",
+  "advancements.techrebirth.more_less.description": "Create a Electric Purifier to triple or even quadruple your ore proccesing!"
 }

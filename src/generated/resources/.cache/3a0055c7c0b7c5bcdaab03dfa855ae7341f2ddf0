@@ -1,13 +1,13 @@
-// 1.21.1	2026-03-11T19:55:50.229128105	Tags for minecraft:item mod id techrebirth
+// 1.21.1	2026-03-11T23:31:57.592559203	Tags for minecraft:item mod id techrebirth
 42b2544e04b961e0ada25ffe93e3bce65621e5d5 data/c/tags/item/catalyst.json
 9798d67e68f1fc1fcbc41d664432a3a37ba63beb data/c/tags/item/catalyst/blaze.json
-d8616e113c9f8589810f49b200746d35e3d284be data/c/tags/item/dusts.json
+7332ed4149a8179b7ce2927aa16aab19f2c8d92d data/c/tags/item/dusts.json
 86010523d222947ae6a8d4d1ea655c4b8269cd1e data/c/tags/item/dusts/copper.json
 7c1b32fa66e3dafa9432c1dfaf2800f036579ae2 data/c/tags/item/dusts/diamond.json
-781448dbbff5c68d15098586bcc69b9ae984f761 data/c/tags/item/dusts/gold.json
+bc6765c4ecc73720c3d3f942b77deed42375eb01 data/c/tags/item/dusts/gold.json
 17a7d9ee523856f6719f99c0fad52076e6087e66 data/c/tags/item/dusts/iron.json
-d2e0ac0ef9713948f3a430c7d2744a26d36a3a65 data/c/tags/item/dusts/nickel.json
-74db30f7336a183b70267d2e44e84b3405cb11e2 data/c/tags/item/dusts/tin.json
+af367d735d6af335ce16d097599cf44090d5d549 data/c/tags/item/dusts/nickel.json
+cfba751096d7428a1838362a7bf316cc755154b5 data/c/tags/item/dusts/tin.json
 6faa573e191dd1d55a66eecd3c0bb1d5865a3017 data/c/tags/item/ingots.json
 83bf11b574296e8a5a84c7102d9544ff1f9d490d data/c/tags/item/ingots/blazing_gold.json
 993680dd13691865eec028ea586e03d322e3e717 data/c/tags/item/ingots/invar.json
@@ -29,13 +29,13 @@ f8e08851386dbf1ea3cade666562eeb44248cac2 data/minecraft/tags/item/swords.json
 cf53ce4a0758aaa3182f915f8a07cab9a0958779 data/minecraft/tags/item/trimmable_armor.json
 c8c8623dc1b50433306f7ecd02fc38fab0432417 data/neoforge/tags/item/catalyst.json
 9798d67e68f1fc1fcbc41d664432a3a37ba63beb data/neoforge/tags/item/catalyst/blaze.json
-da8f10d0e8475fef6d9f690451643200e2742dc9 data/neoforge/tags/item/dusts.json
+e1d1dba1e68d68e31ec643000ce817c2417e1a33 data/neoforge/tags/item/dusts.json
 86010523d222947ae6a8d4d1ea655c4b8269cd1e data/neoforge/tags/item/dusts/copper.json
 7c1b32fa66e3dafa9432c1dfaf2800f036579ae2 data/neoforge/tags/item/dusts/diamond.json
-781448dbbff5c68d15098586bcc69b9ae984f761 data/neoforge/tags/item/dusts/gold.json
+bc6765c4ecc73720c3d3f942b77deed42375eb01 data/neoforge/tags/item/dusts/gold.json
 17a7d9ee523856f6719f99c0fad52076e6087e66 data/neoforge/tags/item/dusts/iron.json
-d2e0ac0ef9713948f3a430c7d2744a26d36a3a65 data/neoforge/tags/item/dusts/nickel.json
-74db30f7336a183b70267d2e44e84b3405cb11e2 data/neoforge/tags/item/dusts/tin.json
+af367d735d6af335ce16d097599cf44090d5d549 data/neoforge/tags/item/dusts/nickel.json
+cfba751096d7428a1838362a7bf316cc755154b5 data/neoforge/tags/item/dusts/tin.json
 b18ecac48d22794556713793222fffa898932812 data/neoforge/tags/item/ingots.json
 83bf11b574296e8a5a84c7102d9544ff1f9d490d data/neoforge/tags/item/ingots/blazing_gold.json
 993680dd13691865eec028ea586e03d322e3e717 data/neoforge/tags/item/ingots/invar.json

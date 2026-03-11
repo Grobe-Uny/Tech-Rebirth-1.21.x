@@ -30,6 +30,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.STEEL_GEAR);
                         output.accept(ModItems.IRON_POWDER);
                         output.accept(ModItems.COPPER_POWDER);
+                        output.accept(ModItems.GOLD_POWDER);
                         output.accept(ModItems.TIN_POWDER);
                         output.accept(ModItems.DIAMOND_POWDER);
                         output.accept(ModItems.REDSTONE_RECEPTION_COIL);
@@ -105,7 +106,6 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.NICKEL_DEEPSLATE_ORE);
                         output.accept(ModBlocks.LEAD_ORE);
                         output.accept(ModBlocks.LEAD_DEEPSLATE_ORE);
-                        //output.accept(ModBlocks.INVAR_BLOCK);
                         output.accept(ModItems.RAW_TIN);
                         output.accept(ModItems.TIN_INGOT);
                         output.accept(ModItems.RAW_NICKEL);
@@ -118,6 +118,10 @@ public class ModCreativeTabs {
                         output.accept(ModItems.BLAZING_GOLD_INGOT);
                         output.accept(ModItems.RAW_LEAD);
                         output.accept(ModItems.PURIFIED_IRON_POWDER);
+                        output.accept(ModItems.PURIFIED_COPPER_POWDER);
+                        output.accept(ModItems.PURIFIED_GOLD_POWDER);
+                        output.accept(ModItems.PURIFIED_TIN_POWDER);
+                        output.accept(ModItems.PURIFIED_NICKEL_POWDER);
 
                         // Add Ore Blocks
                         for (var ore : ModBlocks.ORE_BLOCKS.values()){

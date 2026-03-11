@@ -67,6 +67,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
         // Add our dusts to both c: and neoforge: dust tags via Dual helpers
         for(var tagKey : ModTags.Items.IRON_DUST_D.both())      tag(tagKey).add(ModItems.IRON_POWDER.get());
         for(var tagKey : ModTags.Items.COPPER_DUST_D.both())    tag(tagKey).add(ModItems.COPPER_POWDER.get());
+        for(var tagKey : ModTags.Items.GOLD_DUST_D.both())    tag(tagKey).add(ModItems.GOLD_POWDER.get());
         for(var tagKey : ModTags.Items.TIN_DUST_D.both())       tag(tagKey).add(ModItems.TIN_POWDER.get());
         for(var tagKey : ModTags.Items.NICKEL_DUST_D.both())    tag(tagKey).add(ModItems.NICKEL_POWDER.get());
         for(var tagKey : ModTags.Items.DIAMOND_DUST_D.both())   tag(tagKey).add(ModItems.DIAMOND_POWDER.get());
@@ -75,6 +76,8 @@ public class ModItemTagProvider extends ItemTagsProvider {
         for(var tagKey : ModTags.Items.PURIFIED_IRON_DUST_D.both())   tag(tagKey).add(ModItems.PURIFIED_IRON_POWDER.get());
         for(var tagKey : ModTags.Items.PURIFIED_COPPER_DUST_D.both())   tag(tagKey).add(ModItems.PURIFIED_COPPER_POWDER.get());
         for(var tagKey : ModTags.Items.PURIFIED_GOLD_DUST_D.both())   tag(tagKey).add(ModItems.PURIFIED_GOLD_POWDER.get());
+        for(var tagKey : ModTags.Items.PURIFIED_TIN_DUST_D.both())   tag(tagKey).add(ModItems.PURIFIED_TIN_POWDER.get());
+        for(var tagKey : ModTags.Items.PURIFIED_NICKEL_DUST_D.both())   tag(tagKey).add(ModItems.PURIFIED_NICKEL_POWDER.get());
 
         // Add our raw materials to both c: and neoforge: raw_materials tags via Dual helpers
         for(var tagKey : ModTags.Items.RAW_NICKEL_D.both())     tag(tagKey).add(ModItems.RAW_NICKEL.get());
@@ -131,20 +134,26 @@ public class ModItemTagProvider extends ItemTagsProvider {
         tag(dustsBoth[0])
                 .addTag(ModTags.Items.IRON_DUST_D.neoforge())
                 .addTag(ModTags.Items.COPPER_DUST_D.neoforge())
+                .addTag(ModTags.Items.GOLD_DUST_D.neoforge())
                 .addTag(ModTags.Items.NICKEL_DUST_D.neoforge())
                 .addTag(ModTags.Items.DIAMOND_DUST_D.neoforge())
                 .addTag(ModTags.Items.PURIFIED_IRON_DUST_D.neoforge())
                 .addTag(ModTags.Items.PURIFIED_COPPER_DUST_D.neoforge())
                 .addTag(ModTags.Items.PURIFIED_GOLD_DUST_D.neoforge())
+                .addTag(ModTags.Items.PURIFIED_TIN_DUST_D.neoforge())
+                .addTag(ModTags.Items.PURIFIED_NICKEL_DUST_D.neoforge())
                 .addTag(ModTags.Items.TIN_DUST_D.neoforge());
         tag(dustsBoth[1])
                 .addTag(ModTags.Items.IRON_DUST_D.common())
                 .addTag(ModTags.Items.COPPER_DUST_D.common())
+                .addTag(ModTags.Items.GOLD_DUST_D.common())
                 .addTag(ModTags.Items.NICKEL_DUST_D.common())
                 .addTag(ModTags.Items.DIAMOND_DUST_D.common())
                 .addTag(ModTags.Items.PURIFIED_IRON_DUST_D.common())
                 .addTag(ModTags.Items.PURIFIED_COPPER_DUST_D.common())
                 .addTag(ModTags.Items.PURIFIED_GOLD_DUST_D.common())
+                .addTag(ModTags.Items.PURIFIED_TIN_DUST_D.common())
+                .addTag(ModTags.Items.PURIFIED_NICKEL_DUST_D.common())
                 .addTag(ModTags.Items.TIN_DUST_D.common());
 
 

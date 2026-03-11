@@ -2,11 +2,14 @@
   "values": [
     "#neoforge:dusts/iron",
     "#neoforge:dusts/copper",
+    "#neoforge:dusts/gold",
     "#neoforge:dusts/nickel",
     "#neoforge:dusts/diamond",
     "#neoforge:dusts/iron",
     "#neoforge:dusts/copper",
     "#neoforge:dusts/gold",
+    "#neoforge:dusts/tin",
+    "#neoforge:dusts/nickel",
     "#neoforge:dusts/tin"
   ]
 }

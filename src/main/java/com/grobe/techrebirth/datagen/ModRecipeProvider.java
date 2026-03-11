@@ -203,9 +203,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         crushing(Ingredient.of(Items.IRON_INGOT), new ItemStack(ModItems.IRON_POWDER.get(), 1)).time(100)
                 .unlockedBy("has_electrical_crusher", has(ModBlocks.ELECTRIC_CRUSHER)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/iron_powder_from_ingot"));
         buildCrushingRecipes(Ingredient.of(Items.RAW_IRON, Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE), new ItemStack(ModItems.IRON_POWDER.get(), 2), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/iron_powder_from_raw_and_ores"));
+        buildCrushingRecipes(Ingredient.of(Items.RAW_GOLD, Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE), new ItemStack(ModItems.GOLD_POWDER.get(), 2), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/gold_powder_from_raw_and_ores"));
 
-        buildCrushingRecipes(Ingredient.of(Items.RAW_COPPER, Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE), new ItemStack(ModItems.COPPER_POWDER.get(), 2), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/copper_powder_from_raw_and_ores"));
         buildCrushingRecipes(Ingredient.of(Items.COPPER_INGOT), new ItemStack(ModItems.COPPER_POWDER.get(), 1), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/copper_powder_from_ingot"));
+        buildCrushingRecipes(Ingredient.of(Items.GOLD_INGOT), new ItemStack(ModItems.GOLD_POWDER.get(), 1), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/gold_powder_from_ingot"));
 
         buildCrushingRecipes(Ingredient.of(ModTags.Items.INGOTS_NICKEL), new ItemStack(ModItems.NICKEL_POWDER.get(), 1), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/nickel_powder_from_ingot"));
         buildCrushingRecipes(Ingredient.of(ModItems.RAW_NICKEL, ModBlocks.NICKEL_ORE, ModBlocks.NICKEL_DEEPSLATE_ORE), new ItemStack(ModItems.NICKEL_POWDER.get(), 2), 100, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/nickel_powder_from_raw_and_ores"));
@@ -216,6 +217,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildCrushingRecipesWithChances(Ingredient.of(Blocks.COBBLESTONE), new ItemStack(Blocks.GRAVEL.asItem(), 1), 80,new ItemStack(Blocks.SAND), 0.05f, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/gravel_from_cobblestone"));
         buildCrushingRecipesWithChances(Ingredient.of(Blocks.GRAVEL), new ItemStack(Blocks.SAND.asItem(), 1), 70,new ItemStack(Blocks.SAND), 0.08f, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath("techrebirth", "crushing/sand_from_gravel"));
         buildCrushingRecipesWithChances(Ingredient.of(Blocks.ANCIENT_DEBRIS), new ItemStack(Items.NETHERITE_SCRAP.asItem(), 2), 200, new ItemStack(Items.NETHERITE_SCRAP), 0.01f,"has_electrical_crusher",ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "crushing/netherite_scraps_from_debris"));
+        buildCrushingRecipesWithChances(Ingredient.of(Items.RAW_COPPER, Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE), new ItemStack(ModItems.COPPER_POWDER.get(), 2), 200, new ItemStack(ModItems.GOLD_POWDER.get()), 0.1f,"has_electrical_crusher",ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "crushing/copper_powder_from_raw_and_ores"));
         buildCrushingRecipes(Ingredient.of(Items.DIAMOND), new ItemStack(ModItems.DIAMOND_POWDER.get()), 150, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "crushing/diamond_powder_from_diamond"));
         //endregion
 
@@ -248,6 +250,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         purifying(Ingredient.of(Items.RAW_IRON), new ItemStack(ModItems.PURIFIED_IRON_POWDER.get(), 4)).unlockedBy("has_electric_purifier", has(ModBlocks.ELECTRIC_PURIFIER.get())).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "purifying/purified_iron_from_raw"));
         purifying(Ingredient.of(Items.RAW_COPPER), new ItemStack(ModItems.PURIFIED_COPPER_POWDER.get(), 4)).unlockedBy("has_electric_purifier", has(ModBlocks.ELECTRIC_PURIFIER.get())).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "purifying/purified_copper_from_raw"));
         purifying(Ingredient.of(Items.RAW_GOLD), new ItemStack(ModItems.PURIFIED_GOLD_POWDER.get(), 4)).unlockedBy("has_electric_purifier", has(ModBlocks.ELECTRIC_PURIFIER.get())).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "purifying/purified_gold_from_raw"));
+        purifying(Ingredient.of(ModItems.RAW_TIN), new ItemStack(ModItems.PURIFIED_TIN_POWDER.get(), 3)).unlockedBy("has_electric_purifier", has(ModBlocks.ELECTRIC_PURIFIER.get())).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "purifying/purified_tin_from_raw"));
+        purifying(Ingredient.of(ModItems.RAW_NICKEL), new ItemStack(ModItems.PURIFIED_NICKEL_POWDER.get(), 3)).unlockedBy("has_electric_purifier", has(ModBlocks.ELECTRIC_PURIFIER.get())).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "purifying/purified_nickel_from_raw"));
         //endregion
 
         // Smelting and blasting
@@ -266,6 +270,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_IRON_POWDER, Items.IRON_INGOT, 0.7f);
         simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_COPPER_POWDER, Items.COPPER_INGOT, 0.7f);
         simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_GOLD_POWDER, Items.GOLD_INGOT, 0.7f);
+        simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_TIN_POWDER, ModItems.TIN_INGOT, 0.7f);
+        simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_NICKEL_POWDER, ModItems.NICKEL_INGOT, 0.7f);
 
         // Example food: keep near ~1.4–1.8s in machine; 160 vanilla -> 28.8 ticks (~1.44s)
         buildFoodCookingRecipe(Items.CARROT, ModItems.COOKED_CARROT, 2, 160, recipeOutput, "has_carrot", Items.CARROT);

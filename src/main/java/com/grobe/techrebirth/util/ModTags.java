@@ -65,12 +65,15 @@ public final class ModTags {
         public static final Dual DUSTS_D = dual("dusts");
         public static final Dual IRON_DUST_D = dual("dusts/iron");
         public static final Dual COPPER_DUST_D = dual("dusts/copper");
+        public static final Dual GOLD_DUST_D = dual("dusts/gold");
         public static final Dual TIN_DUST_D = dual("dusts/tin");
         public static final Dual NICKEL_DUST_D = dual("dusts/nickel");
         public static final Dual DIAMOND_DUST_D = dual("dusts/diamond");
         public static final Dual PURIFIED_IRON_DUST_D = dual("dusts/iron");
         public static final Dual PURIFIED_COPPER_DUST_D = dual("dusts/copper");
         public static final Dual PURIFIED_GOLD_DUST_D = dual("dusts/gold");
+        public static final Dual PURIFIED_TIN_DUST_D = dual("dusts/tin");
+        public static final Dual PURIFIED_NICKEL_DUST_D = dual("dusts/nickel");
 
         // Duals for raw ores compatibility
         public static final Dual RAW_MATERIALS_D = dual("raw_materials");

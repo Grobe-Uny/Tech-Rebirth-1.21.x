@@ -1,7 +1,8 @@
-// 1.21.1	2026-03-11T02:35:46.394764786	Advancements
+// 1.21.1	2026-03-11T23:31:57.606967598	Advancements
 375caebdcffbb8d1a15b66b400c42e8757a4b35d data/techrebirth/advancement/beggining_of_machinery.json
 401e84147085dd58134558d4bdbc1ca1e98aa4da data/techrebirth/advancement/get_blazed_tools.json
 f23760d2ac4a77298c024a63867a19590a950785 data/techrebirth/advancement/getting_blazed_with_ingots.json
+92e50296d7bf14cb6c25553af609dd1ce4f05b0f data/techrebirth/advancement/more_less.json
 cdaadea152feb9ae2dd5db8bea1097df4c0bcb00 data/techrebirth/advancement/sparks_of_electricity.json
 6b0dde0fc00ed778cf436c6abf5e6c18c37fd747 data/techrebirth/advancement/start_mixing_stuff.json
 91ecdf946749e6ec1227aef00ecf58fb9b23ae68 data/techrebirth/advancement/tech_rebirth_start.json

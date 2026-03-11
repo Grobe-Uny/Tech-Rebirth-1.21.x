@@ -1,0 +1,10 @@
+{
+  "type": "techrebirth:purifying",
+  "ingredient": {
+    "item": "techrebirth:raw_nickel"
+  },
+  "result": {
+    "count": 3,
+    "id": "techrebirth:purified_nickel_powder"
+  }
+}

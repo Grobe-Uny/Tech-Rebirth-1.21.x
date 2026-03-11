@@ -1,0 +1,35 @@
+{
+  "parent": "techrebirth:start_mixing_stuff",
+  "criteria": {
+    "has_electric_purifier": {
+      "conditions": {
+        "items": [
+          {
+            "items": "techrebirth:electric_purifier"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancements.techrebirth.more_less.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "techrebirth:electric_purifier"
+    },
+    "title": {
+      "translate": "advancements.techrebirth.more_less.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_electric_purifier"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

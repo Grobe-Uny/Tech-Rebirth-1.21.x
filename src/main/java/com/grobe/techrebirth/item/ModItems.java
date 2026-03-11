@@ -43,6 +43,8 @@ public class ModItems {
             () -> new Item (new Item.Properties()));
     public static final DeferredItem<Item> COPPER_POWDER = ITEMS.register("copper_powder",
             ()-> new Item (new Item.Properties()));
+    public static final DeferredItem<Item> GOLD_POWDER = ITEMS.register("gold_powder",
+            () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> COPPER_GEAR = ITEMS.register("copper_gear",
             ()-> new Item(new Item.Properties()));
     public static final DeferredItem<Item> IRON_GEAR = ITEMS.register("iron_gear",
@@ -117,6 +119,10 @@ public class ModItems {
     public static final DeferredItem<Item> PURIFIED_COPPER_POWDER = ITEMS.register("purified_copper_powder",
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> PURIFIED_GOLD_POWDER = ITEMS.register("purified_gold_powder",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> PURIFIED_TIN_POWDER = ITEMS.register("purified_tin_powder",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> PURIFIED_NICKEL_POWDER = ITEMS.register("purified_nickel_powder",
             () -> new Item(new Item.Properties()));
 
 

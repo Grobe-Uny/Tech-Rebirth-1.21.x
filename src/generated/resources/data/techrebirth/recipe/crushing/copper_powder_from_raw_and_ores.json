@@ -1,5 +1,10 @@
 {
   "type": "techrebirth:crushing",
+  "chance_output": {
+    "count": 1,
+    "id": "techrebirth:gold_powder"
+  },
+  "chance_rate": 0.1,
   "ingredient": [
     {
       "item": "minecraft:raw_copper"
@@ -15,5 +20,5 @@
     "count": 2,
     "id": "techrebirth:copper_powder"
   },
-  "time": 100
+  "time": 200
 }

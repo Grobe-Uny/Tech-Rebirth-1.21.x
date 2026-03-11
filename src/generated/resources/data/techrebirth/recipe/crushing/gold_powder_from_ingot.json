@@ -1,0 +1,11 @@
+{
+  "type": "techrebirth:crushing",
+  "ingredient": {
+    "item": "minecraft:gold_ingot"
+  },
+  "result": {
+    "count": 1,
+    "id": "techrebirth:gold_powder"
+  },
+  "time": 100
+}

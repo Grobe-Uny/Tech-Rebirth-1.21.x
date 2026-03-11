@@ -1,0 +1,19 @@
+{
+  "type": "techrebirth:crushing",
+  "ingredient": [
+    {
+      "item": "minecraft:raw_gold"
+    },
+    {
+      "item": "minecraft:gold_ore"
+    },
+    {
+      "item": "minecraft:deepslate_gold_ore"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "techrebirth:gold_powder"
+  },
+  "time": 100
+}

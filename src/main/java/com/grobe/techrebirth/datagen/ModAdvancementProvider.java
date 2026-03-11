@@ -108,6 +108,17 @@ public class ModAdvancementProvider extends AdvancementProvider {
                     .parent(get_blazed)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "get_blazed_tools"), existingFileHelper);
 
+            AdvancementHolder more_less = Advancement.Builder.advancement()
+                    .display(
+                            ModBlocks.ELECTRIC_PURIFIER,
+                            Component.translatable("advancements.techrebirth.more_less.title"),
+                            Component.translatable("advancements.techrebirth.more_less.description"),
+                            ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
+                            AdvancementType.CHALLENGE,
+                            true, true,isHidden
+                    ).addCriterion("has_electric_purifier", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.ELECTRIC_PURIFIER))
+                    .parent(start_of_development)
+                    .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "more_less"), existingFileHelper);
         }
     }
 }
