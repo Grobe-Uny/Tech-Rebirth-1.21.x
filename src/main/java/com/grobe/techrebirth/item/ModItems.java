@@ -112,6 +112,10 @@ public class ModItems {
 
 
 
+    public static final DeferredItem<Item> PURIFIED_IRON_POWDER = ITEMS.register("purified_iron_powder",
+            () -> new Item(new Item.Properties()));
+
+
 
     //miscellaneous items
     public static final DeferredItem<Item> REDSTONE_RECEPTION_COIL = ITEMS.register("redstone_reception_coil",

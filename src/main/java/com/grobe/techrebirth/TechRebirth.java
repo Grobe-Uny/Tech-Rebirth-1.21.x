@@ -6,8 +6,10 @@ import com.grobe.techrebirth.enchantment.ModEnchantmentEffects;
 import com.grobe.techrebirth.gui.ModMenuTypes;
 import com.grobe.techrebirth.gui.alloy_smelter.AlloySmelterMenu;
 import com.grobe.techrebirth.gui.alloy_smelter.AlloySmelterScreen;
+import com.grobe.techrebirth.gui.electric_centrifuge.ElectricCentrifugeScreen;
 import com.grobe.techrebirth.gui.electric_crusher.ElectricCrusherScreen;
 import com.grobe.techrebirth.gui.electric_furnace.ElectricFurnaceScreen;
+import com.grobe.techrebirth.gui.electric_purifier.ElectricPurifierScreen;
 import com.grobe.techrebirth.gui.generator.GeneratorScreen;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
@@ -101,7 +103,8 @@ public class TechRebirth {
             event.register(ModMenuTypes.GENERATOR_MENU.get(), GeneratorScreen::new);
             event.register(ModMenuTypes.ELECTRIC_CRUSHER_MENU.get(), ElectricCrusherScreen::new);
             event.register(ModMenuTypes.ALLOY_SMELTER_MENU.get(), AlloySmelterScreen::new);
-            event.register(ModMenuTypes.ELECTRIC_CENTRIFUGE_MENU.get(), com.grobe.techrebirth.gui.electric_centrifuge.ElectricCentrifugeScreen::new);
+            event.register(ModMenuTypes.ELECTRIC_CENTRIFUGE_MENU.get(), ElectricCentrifugeScreen::new);
+            event.register(ModMenuTypes.ELECTRIC_PURIFIER_MENU.get(), ElectricPurifierScreen::new);
         }
     }
 }

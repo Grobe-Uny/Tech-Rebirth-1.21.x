@@ -15,7 +15,10 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -32,6 +35,7 @@ import static com.grobe.techrebirth.recipe.CrushingRecipeBuilder.crushing;
 import static com.grobe.techrebirth.recipe.GeneratorFuelRecipeBuilder.fuel;
 import static com.grobe.techrebirth.recipe.AlloySmeltingRecipeBuilder.alloySmelting;
 import static com.grobe.techrebirth.recipe.CentrifugeRecipeBuilder.centrifuging;
+import static com.grobe.techrebirth.recipe.PurifierRecipeBuilder.purifying;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
     public ModRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pRegistries) {
@@ -111,7 +115,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/electric_centrifuge"));
 
-
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ELECTRIC_PURIFIER.get())
+                .pattern(" G ")
+                .pattern("NXN")
+                .pattern("BRB")
+                .define('N', ModItems.NICKEL_INGOT)
+                .define('X', ModBlocks.MACHINE_BASE)
+                .define('B', Items.BUCKET)
+                .define('R', ModItems.REDSTONE_RECEPTION_COIL)
+                .define('G', ModItems.TIN_GEAR)
+                .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/electric_purifier"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ENERGY_CABLE.get())
                 .pattern("XXX").pattern("XYX").pattern("XXX")
@@ -229,6 +243,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "centrifuging/blazing_gold"));
         //endregion
 
+
+        //region purifying recipes
+        purifying(Ingredient.of(Items.RAW_IRON), new ItemStack(ModItems.PURIFIED_IRON_POWDER.get(), 4)).unlockedBy("has_electric_purifier", has(ModBlocks.ELECTRIC_PURIFIER.get())).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "purifying/purified_iron_from_raw"));
+        //endregion
+
         // Smelting and blasting
         // Target Electric Furnace durations: ~3.0s smelting, ~2.0s blasting (base, no upgrades)
         int ORE_SMELT = secondsToVanillaTicks.apply(3.0f);   // ≈ 333 ticks -> ~3.0s in machine
@@ -240,6 +259,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         oreBlasting(recipeOutput, NICKEL_SMELTABLES, RecipeCategory.MISC, ModItems.NICKEL_INGOT, 10f, ORE_BLAST, "nickel");
         oreSmelting(recipeOutput, LEAD_SMELTABLES, RecipeCategory.MISC, ModItems.LEAD_INGOT, 9f, ORE_SMELT, "lead");
         oreBlasting(recipeOutput, LEAD_SMELTABLES, RecipeCategory.MISC, ModItems.LEAD_INGOT, 9f, ORE_BLAST, "lead");
+
+
+        simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_IRON_POWDER, Items.IRON_INGOT, 0.7f);
 
         // Example food: keep near ~1.4–1.8s in machine; 160 vanilla -> 28.8 ticks (~1.44s)
         buildFoodCookingRecipe(Items.CARROT, ModItems.COOKED_CARROT, 2, 160, recipeOutput, "has_carrot", Items.CARROT);

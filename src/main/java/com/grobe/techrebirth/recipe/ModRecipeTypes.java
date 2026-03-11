@@ -54,6 +54,15 @@ public class ModRecipeTypes {
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CentrifugeRecipe>> CENTRIFUGE_SERIALIZER =
             SERIALIZERS.register("centrifuging", CentrifugeRecipe.Serializer::new);
 
+    public static final ResourceLocation PURIFYING_ID = ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "purifying");
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<PurifierRecipe>> PURIFIER_TYPE =
+            TYPES.register("purifying", () -> new RecipeType<PurifierRecipe>() {
+                public String toString() { return PURIFYING_ID.toString(); }
+            });
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PurifierRecipe>> PURIFIER_SERIALIZER =
+            SERIALIZERS.register("purifying", PurifierRecipe.Serializer::new);
+
     public static void register(IEventBus bus) {
         SERIALIZERS.register(bus);
         TYPES.register(bus);

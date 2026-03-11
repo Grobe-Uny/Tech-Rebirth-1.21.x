@@ -192,10 +192,7 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
     }
 
 
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        //tag.put("inventory", getItemHandler().serializeNBT(provider));
-        //tag.putInt("electric_furnace.progress", progress);
-        //tag.putInt("electric_furnace.energy", getEnergyStorage().getEnergyStored());
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider){
         super.saveAdditional(tag, provider);
         tag.putFloat("pendingXp", pendingXp);
 
@@ -204,9 +201,6 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        //getItemHandler().deserializeNBT(provider, tag.getCompound("inventory"));
-        //progress = tag.getInt("electric_furnace.progress");
-        //this.setEnergyStored(tag.getInt("electric_furnace.energy"));
         super.loadAdditional(tag, provider);
         pendingXp = tag.getFloat("pendingXp");
 

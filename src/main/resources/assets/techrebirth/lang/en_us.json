@@ -60,6 +60,7 @@
   "item.techrebirth.steel_nugget": "Steel Nugget",
   "item.techrebirth.diamond_nugget": "Diamond Nugget",
   "item.techrebirth.blazing_gold_nugget": "Blazing Gold Nugget",
+  "item.techrebirth.purified_iron_powder": "Purified Iron Powder",
 
   "block.techrebirth.machine_base": "Machine Base",
   "block.techrebirth.fluid_tank": "Fluid Tank",
@@ -137,5 +138,6 @@
   "tooltip.techrebirth.tin_pickaxe_bonus": "§b +15% Mining Efficiency",
   "tooltip.techrebirth.tin_pickaxe.detailed": "Lightweight and easy to swing.",
   "tooltip.techrebirth.tin_armor.set_bonus": "Armor Bonus: (Full set not required)",
-  "tooltip.techrebirth.tin_armor.effect": "+5% Movement Speed"
+  "tooltip.techrebirth.tin_armor.effect": "+5% Movement Speed",
+  "block.techrebirth.electric_purifier": "Electric Purifier"
 }

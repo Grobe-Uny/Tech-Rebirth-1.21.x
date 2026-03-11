@@ -69,6 +69,9 @@ public class ModItemModelProvider extends ItemModelProvider {
        handheldItem(ModItems.TIN_SHOVEL);
        handheldItem(ModItems.TIN_SWORD);
 
+       powderHandheldItem(ModItems.PURIFIED_IRON_POWDER);
+
+
 
 
        // Generate models for all nuggets using a single base texture
@@ -146,5 +149,11 @@ public class ModItemModelProvider extends ItemModelProvider {
        return withExistingParent(item.getId().getPath(),
                ResourceLocation.parse("item/handheld")).texture("layer0",
                ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID,  "item/tools/" + item.getId().getPath()));
+    }
+
+    private ItemModelBuilder powderHandheldItem(DeferredItem<?> item){
+       return withExistingParent(item.getId().getPath(),
+               ResourceLocation.parse("item/handheld/powder")).texture("layer0",
+               ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID,  "item/powder/" + item.getId().getPath()));
     }
 }

@@ -10,6 +10,7 @@ import com.grobe.techrebirth.block.custom.entity.furnace.CreativeElectricFurnace
 import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.furnace.HardenedElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.furnace.ReinforcedElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.purifier.ElectricPurifierBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -66,6 +67,9 @@ public class ModBlockEntities {
             "electric_centrifuge", () -> BlockEntityType.Builder.of(ElectricCentrifugeBlockEntity::new, ModBlocks.ELECTRIC_CENTRIFUGE.get())
     );
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ElectricPurifierBlockEntity>> ELECTRIC_PURIFIER = register(
+            "electric_purifier", () -> BlockEntityType.Builder.of(ElectricPurifierBlockEntity::new, ModBlocks.ELECTRIC_PURIFIER.get())
+    );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidTankBlockEntity>> FLUID_TANK = register(
             "fluid_tank", () -> BlockEntityType.Builder.of(FluidTankBlockEntity::new, ModBlocks.FLUID_TANK.get())
     );

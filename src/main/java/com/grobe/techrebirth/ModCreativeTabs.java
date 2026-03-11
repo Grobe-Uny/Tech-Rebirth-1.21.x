@@ -77,6 +77,7 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.ALLOY_SMELTER);
                         output.accept(ModBlocks.HARDENED_ALLOY_SMELTER);
                         output.accept(ModBlocks.ELECTRIC_CENTRIFUGE);
+                        output.accept(ModBlocks.ELECTRIC_PURIFIER);
 
 
                         output.accept(ModBlocks.FLUID_TANK);

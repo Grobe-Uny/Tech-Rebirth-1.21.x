@@ -16,6 +16,7 @@ import com.grobe.techrebirth.block.custom.furnace.HardenedElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.FluidTankBlock;
 import com.grobe.techrebirth.block.custom.furnace.ReinforcedElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.generator.GeneratorBlock;
+import com.grobe.techrebirth.block.custom.purifier.ElectricPurifierBlock;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.util.MachineTier;
 import com.grobe.techrebirth.util.MetalType;
@@ -145,6 +146,13 @@ public class ModBlocks {
             ));
     public static final DeferredBlock<Block> CREATIVE_ELECTRIC_FURNACE = registerBlock("creative_electric_furnace",
             () -> new CreativeElectricFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.ELECTRIC_FURNACE.get())));
+
+    public static final DeferredBlock<Block> ELECTRIC_PURIFIER = registerBlock("electric_purifier",
+            () -> new ElectricPurifierBlock(BlockBehaviour.Properties.of()
+                    .strength(3.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+            ));
 
 
     public static final DeferredBlock<Block> GENERATOR = registerBlock("generator",
