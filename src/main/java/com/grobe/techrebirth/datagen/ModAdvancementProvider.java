@@ -11,6 +11,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -34,6 +35,8 @@ public class ModAdvancementProvider extends AdvancementProvider {
     private static final class ModAdvancementGenerator implements AdvancementGenerator{
         @Override
         public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper){
+
+            boolean isHidden = FMLLoader.isProduction();
             AdvancementHolder root = Advancement.Builder.advancement()
                     .display(
                             ModItems.TIN_INGOT.get(),
@@ -76,7 +79,7 @@ public class ModAdvancementProvider extends AdvancementProvider {
                             Component.translatable("advancements.techrebirth.start_of_development.description"),
                             ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
                             AdvancementType.TASK,
-                            true, true,true
+                            true, true,isHidden
                     ).addCriterion("has_electric_centrifuge", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.ELECTRIC_CENTRIFUGE))
                     .parent(generating_electricity)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "start_mixing_stuff"), existingFileHelper);
@@ -88,7 +91,7 @@ public class ModAdvancementProvider extends AdvancementProvider {
                             Component.translatable("advancements.techrebirth.start_blazing.description"),
                             ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
                             AdvancementType.TASK,
-                            true, true,true
+                            true, true,isHidden
                     ).addCriterion("has_blazing_gold", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.BLAZING_GOLD_INGOT))
                     .parent(start_of_development)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "getting_blazed_with_ingots"), existingFileHelper);
@@ -100,10 +103,11 @@ public class ModAdvancementProvider extends AdvancementProvider {
                             Component.translatable("advancements.techrebirth.get_tooled.description"),
                             ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
                             AdvancementType.TASK,
-                            true, true,true
+                            true, true,isHidden
                     ).addCriterion("has_blazing_gold_tools", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.BLAZING_GOLD_PICKAXE))
                     .parent(get_blazed)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "get_blazed_tools"), existingFileHelper);
+            
         }
     }
 }

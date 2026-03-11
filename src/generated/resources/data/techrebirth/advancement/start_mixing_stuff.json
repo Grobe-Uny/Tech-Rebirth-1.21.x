@@ -17,7 +17,6 @@
     "description": {
       "translate": "advancements.techrebirth.start_of_development.description"
     },
-    "hidden": true,
     "icon": {
       "count": 1,
       "id": "techrebirth:electric_centrifuge"

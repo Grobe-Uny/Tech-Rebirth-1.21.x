@@ -17,7 +17,6 @@
     "description": {
       "translate": "advancements.techrebirth.get_tooled.description"
     },
-    "hidden": true,
     "icon": {
       "count": 1,
       "id": "techrebirth:blazing_gold_pickaxe"
