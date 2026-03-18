@@ -347,10 +347,9 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         String inventoryTag = getInventoryTagName();
         if (tag.contains(energyTag)) {
             energyHandler.deserializeNBT(provider, tag.get(energyTag));
-
-            if (tag.contains(inventoryTag)) {
-                getItemHandler().deserializeNBT(provider, tag.getCompound(inventoryTag));
-            }
+        }
+        if(tag.contains(inventoryTag)){
+            getItemHandler().deserializeNBT(provider, tag.getCompound(inventoryTag));
         }
     }
 }

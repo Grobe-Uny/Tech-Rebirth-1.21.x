@@ -93,14 +93,21 @@ public class EnergyCableBlockEntity extends BlockEntity {
     }
 
     private void findConnectedCables(Level level, BlockPos pos) {
-        if (networkMembers.contains(pos)) return;
-        networkMembers.add(pos);
+        Queue<BlockPos> queue = new LinkedList<>();
+        queue.add(pos);
 
-        for (Direction dir : Direction.values()) {
-            BlockPos neighborPos = pos.relative(dir);
-            BlockEntity be = level.getBlockEntity(neighborPos);
-            if (be instanceof EnergyCableBlockEntity) {
-                findConnectedCables(level, neighborPos);
+        while (!queue.isEmpty()) {
+            BlockPos current = queue.poll();
+            if (networkMembers.contains(current)) continue;
+            networkMembers.add(current);
+
+            for (Direction dir : Direction.values()) {
+                BlockPos neighborPos = current.relative(dir);
+                if (networkMembers.contains(neighborPos)) continue; // Optimization check
+                BlockEntity be = level.getBlockEntity(neighborPos);
+                if (be instanceof EnergyCableBlockEntity) {
+                    queue.add(neighborPos);
+                }
             }
         }
     }
@@ -319,5 +326,13 @@ public class EnergyCableBlockEntity extends BlockEntity {
                 cable.markNetworkDirty();
             }
         }
+    }
+
+    @Override
+    public void setRemoved() {
+        if (level != null && !level.isClientSide) {
+            notifyNeighbors(level, worldPosition);
+        }
+        super.setRemoved();
     }
 }

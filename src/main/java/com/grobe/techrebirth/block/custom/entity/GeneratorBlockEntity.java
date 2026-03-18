@@ -50,38 +50,41 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
     @Override
     protected void finishProcessing() {}
 
-    protected final ContainerData data = new ContainerData() {
-        @Override
-        public int get(int index) {
-            return switch (index) {
-                case 0 -> GeneratorBlockEntity.this.burnTime; // remaining burn time
-                case 1 -> GeneratorBlockEntity.this.maxBurnTime; // max burn time
-                case 2 -> GeneratorBlockEntity.this.getEnergyStorage().getEnergyStored(); // energy stored
-                case 3 -> GeneratorBlockEntity.this.getEnergyStorage().getMaxEnergyStored(); // max energy
-                case 4 -> GeneratorBlockEntity.this.genPerTick; // generation rate
-                default -> 0;
-            };
-        }
-
-        @Override
-        public void set(int index, int value) {
-            switch (index) {
-                case 0 -> GeneratorBlockEntity.this.burnTime = value;
-                case 1 -> GeneratorBlockEntity.this.maxBurnTime = value;
-                case 2 -> GeneratorBlockEntity.this.setEnergyStored(value);
-                case 3 -> GeneratorBlockEntity.this.clientMaxEnergyMirror = value; // client-side mirror
-                case 4 -> GeneratorBlockEntity.this.genPerTick = value;
+    @Override
+    protected ContainerData createContainerData(int size) {
+        return new ContainerData() {
+            @Override
+            public int get(int index) {
+                return switch (index) {
+                    case 0 -> GeneratorBlockEntity.this.burnTime;
+                    case 1 -> GeneratorBlockEntity.this.maxBurnTime;
+                    case 2 -> GeneratorBlockEntity.this.getEnergyStorage().getEnergyStored();
+                    case 3 -> GeneratorBlockEntity.this.getEnergyStorage().getMaxEnergyStored();
+                    case 4 -> GeneratorBlockEntity.this.genPerTick;
+                    default -> 0;
+                };
             }
-        }
 
-        @Override
-        public int getCount() {
-            return 5;
-        }
-    };
+            @Override
+            public void set(int index, int value) {
+                switch (index) {
+                    case 0 -> GeneratorBlockEntity.this.burnTime = value;
+                    case 1 -> GeneratorBlockEntity.this.maxBurnTime = value;
+                    case 2 -> GeneratorBlockEntity.this.setEnergyStored(value);
+                    case 3 -> GeneratorBlockEntity.this.clientMaxEnergyMirror = value;
+                    case 4 -> GeneratorBlockEntity.this.genPerTick = value;
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return size;
+            }
+        };
+    }
 
     public GeneratorBlockEntity(BlockPos pPos, BlockState pState) {
-        super(ModBlockEntities.GENERATOR.get(), pPos, pState, 1, 50000, 1024, 1024, 0, 4);
+        super(ModBlockEntities.GENERATOR.get(), pPos, pState, 1, 50000, 1024, 1024, 0, 5);
     }
 
     @Override
@@ -139,7 +142,8 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
         }
 
         // Burn fuel and generate energy only if there is room to store it
-        boolean hasRoomForEnergy = be.getEnergyStorage().getEnergyStored() < be.getEnergyStorage().getMaxEnergyStored();
+        // Fix: Check if we can fit the generated amount, otherwise we void energy
+        boolean hasRoomForEnergy = be.getEnergyStorage().getEnergyStored() <= be.getEnergyStorage().getMaxEnergyStored() - be.genPerTick;
         if (be.burnTime > 0) {
             if (hasRoomForEnergy) {
                 be.burnTime--;
