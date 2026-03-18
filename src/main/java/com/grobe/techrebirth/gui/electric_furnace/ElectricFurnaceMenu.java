@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.gui.electric_furnace;
 
 import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.gui.BaseMachineMenu;
 import com.grobe.techrebirth.gui.ModMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -12,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-public class ElectricFurnaceMenu extends AbstractContainerMenu {
+public class ElectricFurnaceMenu extends BaseMachineMenu {
     public final ElectricFurnaceBlockEntity blockEntity;
     private final Level level;
     final ContainerData data;
@@ -21,7 +22,7 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
     public ElectricFurnaceMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.ELECTRIC_FURNACE_MENU.get(), pContainerId);
+        super(ModMenuTypes.ELECTRIC_FURNACE_MENU.get(), pContainerId, entity, data);
         checkContainerSize(inv, 4);
         blockEntity = ((ElectricFurnaceBlockEntity) entity);
         this.level = inv.player.level();
@@ -162,19 +163,6 @@ public class ElectricFurnaceMenu extends AbstractContainerMenu {
                 pPlayer, blockEntity.getBlockState().getBlock());
     }
 
-    private void addPlayerInventory(Inventory playerInventory){
-        for (int i = 0; i < 3; ++i){
-            for (int l = 0; l < 9; ++l){
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
-            }
-        }
-    }
-
-    private void addPlayerHotbar(Inventory playerInventory){
-        for (int i = 0; i < 9; ++i){
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-        }
-    }
 
     public int getProgress(){ return this.data.get(0);}
 

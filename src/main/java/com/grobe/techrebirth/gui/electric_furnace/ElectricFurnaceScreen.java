@@ -3,6 +3,7 @@ package com.grobe.techrebirth.gui.electric_furnace;
 import com.grobe.techrebirth.Config;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.compat.jei.JEITechRebirthPlugin;
+import com.grobe.techrebirth.gui.BaseMachineScreen;
 import com.grobe.techrebirth.gui.electric_crusher.ElectricCrusherScreen;
 import com.grobe.techrebirth.gui.subscreen.ConfigSubScreen;
 import com.grobe.techrebirth.gui.subscreen.UpgradeSubScreen;
@@ -27,7 +28,7 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurnaceMenu> {
+public class ElectricFurnaceScreen extends BaseMachineScreen<ElectricFurnaceMenu> {
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/electric_furnace_gui.png");
 
@@ -48,7 +49,7 @@ public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurna
     private final ProgressBarArea progressBarArea = new ProgressBarArea();
 
     public ElectricFurnaceScreen(ElectricFurnaceMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
-        super(pMenu, pPlayerInventory, pTitle);
+        super(pMenu, pPlayerInventory, pTitle, TEXTURE);
         this.imageWidth = TEX_W;
         this.imageHeight = TEX_H;
     }
@@ -187,24 +188,24 @@ public class ElectricFurnaceScreen extends AbstractContainerScreen<ElectricFurna
         return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
     }
 
-
-    private void renderEnergyBar(GuiGraphics guiGraphics, int x, int y) {
-        int ex = x + ENERGY_BAR_X;
-        int ey = y + ENERGY_BAR_Y;
-        // Draw background (dark gray border)
-        int border = 0xFF202020;
-        guiGraphics.fill(ex - 1, ey - 1, ex + ENERGY_BAR_WIDTH + 1, ey + ENERGY_BAR_HEIGHT + 1, border);
-        // Draw an inner background (almost black)
-        int bg = 0xFF101010;
-        guiGraphics.fill(ex, ey, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, bg);
-        // Draw energy amount (red, from bottom up)
-        int filled = menu.getScaledEnergy(ENERGY_BAR_HEIGHT);
-        if (filled > 0) {
-            int fy = ey + (ENERGY_BAR_HEIGHT - filled);
-            int color = 0xFFCC2B2B; // red
-            guiGraphics.fill(ex, fy, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, color);
-        }
-    }
+//
+//    private void renderEnergyBar(GuiGraphics guiGraphics, int x, int y) {
+//        int ex = x + ENERGY_BAR_X;
+//        int ey = y + ENERGY_BAR_Y;
+//        // Draw background (dark gray border)
+//        int border = 0xFF202020;
+//        guiGraphics.fill(ex - 1, ey - 1, ex + ENERGY_BAR_WIDTH + 1, ey + ENERGY_BAR_HEIGHT + 1, border);
+//        // Draw an inner background (almost black)
+//        int bg = 0xFF101010;
+//        guiGraphics.fill(ex, ey, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, bg);
+//        // Draw energy amount (red, from bottom up)
+//        int filled = menu.getScaledEnergy(ENERGY_BAR_HEIGHT);
+//        if (filled > 0) {
+//            int fy = ey + (ENERGY_BAR_HEIGHT - filled);
+//            int color = 0xFFCC2B2B; // red
+//            guiGraphics.fill(ex, fy, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, color);
+//        }
+//    }
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         renderBackground(guiGraphics, mouseX, mouseY, delta);
