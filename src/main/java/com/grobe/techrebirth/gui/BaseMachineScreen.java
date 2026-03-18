@@ -1,5 +1,6 @@
 package com.grobe.techrebirth.gui;
 
+import com.grobe.techrebirth.Config;
 import com.grobe.techrebirth.TechRebirth;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,17 +24,34 @@ public class BaseMachineScreen<T extends BaseMachineMenu> extends AbstractContai
     private static final int ENERGY_BAR_WIDTH = 10;
     private static final int ENERGY_BAR_HEIGHT = 50;
 
-    public BaseMachineScreen(T menu, Inventory playerInventory, Component title, ResourceLocation texture) {
+    protected final int PROGRESS_BAR_X;
+    protected final int PROGRESS_BAR_Y;
+    protected final int PROGRESS_BAR_WIDTH;
+    protected final int PROGRESS_BAR_HEIGHT;
+
+    protected final boolean isProgressBarVertical;
+
+    protected final ProgressBarArea progressBarArea;
+    public BaseMachineScreen(T menu, Inventory playerInventory, Component title, ResourceLocation texture,int pX, int pY, int pW, int pH, boolean isVertical) {
         super(menu, playerInventory, title);
         this.TEXTURE = texture;
         this.imageWidth = TEX_W;
         this.imageHeight = TEX_H;
+        this.PROGRESS_BAR_X = pX;
+        this.PROGRESS_BAR_Y = pY;
+        this.PROGRESS_BAR_WIDTH = pW;
+        this.PROGRESS_BAR_HEIGHT = pH;
+        this.isProgressBarVertical = isVertical;
+        this.progressBarArea = new ProgressBarArea();
     }
     @Override
     protected void init(){
         super.init();
         this.inventoryLabelY = 10000;
         this.titleLabelY = 10000;
+        if (this.progressBarArea != null) {
+            this.progressBarArea.updateScreenCoords(this.leftPos, this.topPos);
+        }
     }
 
     @Override
@@ -69,6 +87,47 @@ public class BaseMachineScreen<T extends BaseMachineMenu> extends AbstractContai
             guiGraphics.fill(ex, fy, ex + ENERGY_BAR_WIDTH, ey + ENERGY_BAR_HEIGHT, color);
         }
     }
+
+
+    protected void renderProgressBar(GuiGraphics gg, int x, int y, int mouseX, int mouseY) {
+        int progress = menu.getProgress();
+        int maxProgress = menu.getMaxProgress();
+
+        int px = x + PROGRESS_BAR_X;
+        int py = y + PROGRESS_BAR_Y;
+
+        // Background
+        gg.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1, 0xFF404040);
+        gg.fill(px, py, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, 0xFF202020);
+
+        // Progress fill
+        if (maxProgress > 0 && progress > 0) {
+            if(isProgressBarVertical){
+                int progressHeight = menu.getVerticalScaledProgress(PROGRESS_BAR_HEIGHT);
+                if (progressHeight > 0) {
+                    int fillY = py + (PROGRESS_BAR_HEIGHT - progressHeight);
+                    gg.fill(px, fillY, px + PROGRESS_BAR_WIDTH, py + PROGRESS_BAR_HEIGHT, 0xFF2B93CC);
+                }
+            }else{
+                int progressWidth = menu.getHorizontalScaledProgress(PROGRESS_BAR_WIDTH);
+                if (progressWidth > 0) {
+                    int fillX = px + (PROGRESS_BAR_WIDTH - progressWidth);
+                    gg.fill(fillX, py, px + progressWidth, py + PROGRESS_BAR_HEIGHT, 0xFF2B93CC);
+                }
+            }
+        }
+
+        if ( Config.isHighlightEnabled() && progressBarArea.isMouseOver(mouseX, mouseY)) {
+            int highlightColor = Config.getHighlightColor();
+            // Nacrtaj zlatni outline kada je miš iznad
+            gg.fill(px - 1, py - 1, px + PROGRESS_BAR_WIDTH + 1, py, highlightColor); // gornja linija
+            gg.fill(px - 1, py + PROGRESS_BAR_HEIGHT, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT + 1, highlightColor); // donja linija
+            gg.fill(px - 1, py, px, py + PROGRESS_BAR_HEIGHT, highlightColor); // lijeva linija
+            gg.fill(px + PROGRESS_BAR_WIDTH, py, px + PROGRESS_BAR_WIDTH + 1, py + PROGRESS_BAR_HEIGHT, highlightColor); // desna linija
+        }
+    }
+
+
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         renderBackground(guiGraphics, mouseX, mouseY, delta);
@@ -89,5 +148,35 @@ public class BaseMachineScreen<T extends BaseMachineMenu> extends AbstractContai
         }
 
         renderTooltip(guiGraphics, mouseX, mouseY);
+    }
+
+    protected String getProgressStatus() {
+        int progress = menu.getProgress();
+        int maxProgress = menu.getMaxProgress();
+
+        if (maxProgress > 0) {
+            float percent = (float) progress / maxProgress * 100;
+            int secondsLeft = (maxProgress - progress) / 20;
+            return progress > 0 ?
+                    String.format("Progress: %d/%d (%.1f%%) - %ds left", progress, maxProgress, percent, secondsLeft) :
+                    "Ready to process";
+        }
+        return "No active recipe";
+    }
+    // Helper class za progress bar area
+    public class ProgressBarArea {
+        private int screenX, screenY;
+        private final int width = PROGRESS_BAR_WIDTH;
+        private final int height = PROGRESS_BAR_HEIGHT;
+
+        public void updateScreenCoords(int guiLeft, int guiTop) {
+            this.screenX = guiLeft + PROGRESS_BAR_X;
+            this.screenY = guiTop + PROGRESS_BAR_Y;
+        }
+
+        public boolean isMouseOver(double mouseX, double mouseY) {
+            return mouseX >= screenX && mouseX < screenX + width &&
+                    mouseY >= screenY && mouseY < screenY + height;
+        }
     }
 }

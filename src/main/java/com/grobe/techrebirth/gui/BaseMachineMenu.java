@@ -49,6 +49,12 @@ public abstract class BaseMachineMenu extends AbstractContainerMenu {
     }
 
 
+    public int getProgress() { return data.get(0);
+    }
+
+    public int getMaxProgress() { return data.get(1);
+    }
+
     public int getEnergy() {
         return data.get(2);
     }
@@ -61,5 +67,17 @@ public abstract class BaseMachineMenu extends AbstractContainerMenu {
         int energy = getEnergy();
         int max = getMaxEnergy();
         return max > 0 ? (energy * height) / max : 0;
+    }
+
+
+    public int getVerticalScaledProgress(int height) {
+        int progress = getProgress();
+        int max = getMaxProgress();
+        return max > 0 ? (progress * height) / max : 0;
+    }
+    public int getHorizontalScaledProgress(int width) {
+        int progress = getProgress();
+        int max = getMaxProgress();
+        return max > 0 ? (progress * width) / max : 0;
     }
 }
