@@ -3,7 +3,6 @@ package com.grobe.techrebirth.datagen;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlocks;
 import com.grobe.techrebirth.item.ModItems;
-import com.grobe.techrebirth.util.MachineTier;
 import com.grobe.techrebirth.util.MetalType;
 import com.grobe.techrebirth.util.ModTags;
 import net.minecraft.core.HolderLookup;
@@ -15,7 +14,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
@@ -219,6 +217,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildCrushingRecipesWithChances(Ingredient.of(Blocks.ANCIENT_DEBRIS), new ItemStack(Items.NETHERITE_SCRAP.asItem(), 2), 200, new ItemStack(Items.NETHERITE_SCRAP), 0.01f,"has_electrical_crusher",ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "crushing/netherite_scraps_from_debris"));
         buildCrushingRecipesWithChances(Ingredient.of(Items.RAW_COPPER, Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE), new ItemStack(ModItems.COPPER_POWDER.get(), 2), 200, new ItemStack(ModItems.GOLD_POWDER.get()), 0.1f,"has_electrical_crusher",ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "crushing/copper_powder_from_raw_and_ores"));
         buildCrushingRecipes(Ingredient.of(Items.DIAMOND), new ItemStack(ModItems.DIAMOND_POWDER.get()), 150, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "crushing/diamond_powder_from_diamond"));
+
+
+        buildCrushingRecipes(Ingredient.of(Items.OBSIDIAN), new ItemStack(ModItems.OBSIDIAN_POWDER.get(), 2), 400, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "crushing/obsidian_powder_from_obsidian"));
+        buildCrushingRecipes(Ingredient.of(Items.CRYING_OBSIDIAN), new ItemStack(ModItems.OBSIDIAN_POWDER.get(), 4), 520, "has_electrical_crusher", ModBlocks.ELECTRIC_CRUSHER, recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "crushing/obsidian_powder_from_crying_obsidian"));
         //endregion
 
         //region generator fuels
@@ -234,6 +236,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildAlloyRecipes(steelReq, new ItemStack(ModItems.STEEL_INGOT.get()), 200, "has_iron_powder", ModItems.IRON_POWDER.get(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/steel_alloy"));
         var baseGoldiumReq = createMixedIngredients(Items.GOLD_INGOT,Items.GOLD_INGOT, Items.GLOWSTONE_DUST);
         buildAlloyRecipes(baseGoldiumReq, new ItemStack(ModItems.BASE_GOLDIUM_INGOT.get(), 2),200, "has_gold", ModItems.BASE_GOLDIUM_INGOT.get(),recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/base_goldium_alloy"));
+        var baseObsidianReq = createIngredients(ModItems.OBSIDIAN_POWDER, Items.IRON_INGOT);
+        buildAlloyRecipes(baseObsidianReq, new ItemStack(ModItems.BASE_OBSIDIAN_INGOT.get(), 1), 340, "has_obsidian_powder", ModItems.OBSIDIAN_POWDER.get(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/base_obsidian_alloy"));
         //endregion
 
         //region centrifuge recipes
@@ -243,6 +247,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         centrifuging(Ingredient.of(ModItems.BASE_GOLDIUM_INGOT), Ingredient.of(Items.BLAZE_POWDER), 10, new ItemStack(ModItems.BLAZING_GOLD_INGOT.get()), 300)
                 .unlockedBy("has_electric_centrifuge", has(ModBlocks.ELECTRIC_CENTRIFUGE.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "centrifuging/blazing_gold"));
+
+        centrifuging(Ingredient.of(ModItems.BASE_OBSIDIAN_INGOT), Ingredient.of(Items.DIAMOND), 40, new ItemStack(ModItems.REFINED_OBSIDIAN_INGOT.get()), 200)
+                .unlockedBy("has_electric_centrifuge", has(ModBlocks.ELECTRIC_CENTRIFUGE.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "centrifuging/refined_obsidian"));        
         //endregion
 
 

@@ -66,6 +66,12 @@
   "item.techrebirth.purified_gold_powder": "Purified Gold Powder",
   "item.techrebirth.purified_tin_powder": "Purified Tin Powder",
   "item.techrebirth.purified_nickel_powder": "Purified Nickel Powder",
+  "item.techrebirth.obsidian_powder": "Obsidian Powder",
+
+
+  "item.techrebirth.base_obsidian_ingot":"Base Obsidian Ingot",
+  "item.tecrebirth.refined_obsidian_ingot": "Refined Obsidian Ingot",
+
 
   "block.techrebirth.machine_base": "Machine Base",
   "block.techrebirth.fluid_tank": "Fluid Tank",
@@ -94,6 +100,8 @@
   "block.techrebirth.lead_block": "Lead Block",
   "block.techrebirth.steel_block": "Steel Block",
 
+
+  
   "creativetab.techrebirth.tech_rebirth_items": "Tech Rebirth Items",
   "creativetab.techrebirth.tech_rebirth_blocks": "Tech Rebirth Blocks",
   "creativetab.techrebirth.tech_rebirth_cables": "Tech Rebirth Cables",

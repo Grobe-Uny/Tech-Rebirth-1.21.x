@@ -54,6 +54,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
 
         // Add catalysts to both c: and neoforge: catalyst via Dual helpers
         for(var tagKey : ModTags.Items.CATALYST_BLAZE.both())   tag(tagKey).add(Items.BLAZE_POWDER);
+        for(var tagKey : ModTags.Items.CATALYST_DIAMOND.both()) tag(tagKey).add(Items.DIAMOND);
 
         // Add our ingots to both c: and neoforge: ingot tags via Dual helpers
         for (var tagKey : ModTags.Items.INGOTS_LEAD_D.both())   tag(tagKey).add(ModItems.LEAD_INGOT.get());
@@ -62,7 +63,8 @@ public class ModItemTagProvider extends ItemTagsProvider {
         for (var tagKey : ModTags.Items.INGOTS_INVAR_D.both())  tag(tagKey).add(ModItems.INVAR_INGOT.get());
         for (var tagKey : ModTags.Items.INGOTS_STEEL_D.both())  tag(tagKey).add(ModItems.STEEL_INGOT.get());
         for (var tagKey : ModTags.Items.INGOTS_BLAZING_GOLD_D.both()) tag(tagKey).add(ModItems.BLAZING_GOLD_INGOT.get());
-
+        for (var tagKey : ModTags.Items.BASE_OBSIDIAN_INGOT_D.both()) tag(tagKey).add(ModItems.BASE_OBSIDIAN_INGOT.get());
+        for (var tagKey : ModTags.Items.REFINED_OBSIDIAN_INGOT.both()) tag(tagKey).add(ModItems.REFINED_OBSIDIAN_INGOT.get());
 
         // Add our dusts to both c: and neoforge: dust tags via Dual helpers
         for(var tagKey : ModTags.Items.IRON_DUST_D.both())      tag(tagKey).add(ModItems.IRON_POWDER.get());
@@ -71,6 +73,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
         for(var tagKey : ModTags.Items.TIN_DUST_D.both())       tag(tagKey).add(ModItems.TIN_POWDER.get());
         for(var tagKey : ModTags.Items.NICKEL_DUST_D.both())    tag(tagKey).add(ModItems.NICKEL_POWDER.get());
         for(var tagKey : ModTags.Items.DIAMOND_DUST_D.both())   tag(tagKey).add(ModItems.DIAMOND_POWDER.get());
+        for(var tagKey : ModTags.Items.OBSIDIAN_DUST_D.both())   tag(tagKey).add(ModItems.OBSIDIAN_POWDER.get());
 
         // Purified dusts to tags for compat
         for(var tagKey : ModTags.Items.PURIFIED_IRON_DUST_D.both())   tag(tagKey).add(ModItems.PURIFIED_IRON_POWDER.get());
@@ -114,6 +117,8 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .addTag(ModTags.Items.INGOTS_NICKEL_D.neoforge())
                 .addTag(ModTags.Items.INGOTS_INVAR_D.neoforge())
                 .addTag(ModTags.Items.INGOTS_BLAZING_GOLD_D.neoforge())
+                .addTag(ModTags.Items.BASE_OBSIDIAN_INGOT_D.neoforge())
+                .addTag(ModTags.Items.REFINED_OBSIDIAN_INGOT.neoforge())
                 .addTag(ModTags.Items.INGOTS_STEEL_D.neoforge());
         tag(ingotsBoth[1])
                 .addTag(ModTags.Items.INGOTS_LEAD_D.common())
@@ -121,13 +126,16 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .addTag(ModTags.Items.INGOTS_NICKEL_D.common())
                 .addTag(ModTags.Items.INGOTS_INVAR_D.common())
                 .addTag(ModTags.Items.INGOTS_BLAZING_GOLD_D.common())
+                .addTag(ModTags.Items.BASE_OBSIDIAN_INGOT_D.common())
+                .addTag(ModTags.Items.REFINED_OBSIDIAN_INGOT.common())
                 .addTag(ModTags.Items.INGOTS_STEEL_D.common());
 
         var catalystsBoth = ModTags.Items.CATALYSTS_D.both();
         tag(catalystsBoth[0])
-                .addTag(ModTags.Items.CATALYST_BLAZE.neoforge()
-                );
+                .addTag(ModTags.Items.CATALYST_DIAMOND.neoforge())
+                .addTag(ModTags.Items.CATALYST_BLAZE.neoforge());
         tag(catalystsBoth[1])
+                .addTag(ModTags.Items.CATALYST_DIAMOND.common())
                 .addTag(ModTags.Items.CATALYST_BLAZE.common());
 
         var dustsBoth = ModTags.Items.DUSTS_D.both();
@@ -142,6 +150,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .addTag(ModTags.Items.PURIFIED_GOLD_DUST_D.neoforge())
                 .addTag(ModTags.Items.PURIFIED_TIN_DUST_D.neoforge())
                 .addTag(ModTags.Items.PURIFIED_NICKEL_DUST_D.neoforge())
+                .addTag(ModTags.Items.OBSIDIAN_DUST_D.neoforge())
                 .addTag(ModTags.Items.TIN_DUST_D.neoforge());
         tag(dustsBoth[1])
                 .addTag(ModTags.Items.IRON_DUST_D.common())
@@ -154,6 +163,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .addTag(ModTags.Items.PURIFIED_GOLD_DUST_D.common())
                 .addTag(ModTags.Items.PURIFIED_TIN_DUST_D.common())
                 .addTag(ModTags.Items.PURIFIED_NICKEL_DUST_D.common())
+                .addTag(ModTags.Items.OBSIDIAN_DUST_D.common())
                 .addTag(ModTags.Items.TIN_DUST_D.common());
 
 

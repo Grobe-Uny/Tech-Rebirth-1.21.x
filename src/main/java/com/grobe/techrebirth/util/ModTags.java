@@ -56,10 +56,13 @@ public final class ModTags {
         public static final Dual INGOTS_INVAR_D = dual("ingots/invar");
         public static final Dual INGOTS_STEEL_D = dual("ingots/steel");
         public static final Dual INGOTS_BLAZING_GOLD_D = dual("ingots/blazing_gold");
+        public static final Dual BASE_OBSIDIAN_INGOT_D = dual("ingots/base_obsidian");
+        public static final Dual REFINED_OBSIDIAN_INGOT = dual("ingots/refined_obsidian");
 
         // Duals for catalysts in electric centrifuge
         public static final Dual CATALYSTS_D = dual("catalyst");
         public static final Dual CATALYST_BLAZE = dual("catalyst/blaze");
+        public static final Dual CATALYST_DIAMOND = dual("catalyst/diamond");
 
         // Duals for dust/powder compatibility
         public static final Dual DUSTS_D = dual("dusts");
@@ -74,6 +77,8 @@ public final class ModTags {
         public static final Dual PURIFIED_GOLD_DUST_D = dual("dusts/gold");
         public static final Dual PURIFIED_TIN_DUST_D = dual("dusts/tin");
         public static final Dual PURIFIED_NICKEL_DUST_D = dual("dusts/nickel");
+        public static final Dual OBSIDIAN_DUST_D = dual("dusts/obsidian");
+
 
         // Duals for raw ores compatibility
         public static final Dual RAW_MATERIALS_D = dual("raw_materials");

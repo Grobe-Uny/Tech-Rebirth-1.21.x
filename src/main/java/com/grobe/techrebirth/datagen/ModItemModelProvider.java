@@ -75,6 +75,10 @@ public class ModItemModelProvider extends ItemModelProvider {
        powderHandheldItem(ModItems.PURIFIED_GOLD_POWDER);
        powderHandheldItem(ModItems.PURIFIED_TIN_POWDER);
        powderHandheldItem(ModItems.PURIFIED_NICKEL_POWDER);
+       powderHandheldItem(ModItems.OBSIDIAN_POWDER);
+
+       ingotHandheldItem(ModItems.BASE_OBSIDIAN_INGOT);
+       ingotHandheldItem(ModItems.REFINED_OBSIDIAN_INGOT);
 
 
 
@@ -161,4 +165,11 @@ public class ModItemModelProvider extends ItemModelProvider {
                ResourceLocation.parse("item/generated")).texture("layer0",
                ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID,  "item/powder/" + item.getId().getPath()));
     }
+
+    private ItemModelBuilder ingotHandheldItem(DeferredItem<?> item){
+       return withExistingParent(item.getId().getPath(),
+               ResourceLocation.parse("item/generated")).texture("layer0",  
+               ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID,  "item/ingots/" + item.getId().getPath()));
+    }
+
 }

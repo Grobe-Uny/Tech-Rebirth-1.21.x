@@ -4,7 +4,6 @@ import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.block.ModBlocks;
 import com.grobe.techrebirth.enchantment.ModEnchantmentEffects;
 import com.grobe.techrebirth.gui.ModMenuTypes;
-import com.grobe.techrebirth.gui.alloy_smelter.AlloySmelterMenu;
 import com.grobe.techrebirth.gui.alloy_smelter.AlloySmelterScreen;
 import com.grobe.techrebirth.gui.electric_centrifuge.ElectricCentrifugeScreen;
 import com.grobe.techrebirth.gui.electric_crusher.ElectricCrusherScreen;
@@ -21,8 +20,6 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;

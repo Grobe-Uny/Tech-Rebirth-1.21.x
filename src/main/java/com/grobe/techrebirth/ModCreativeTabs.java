@@ -33,6 +33,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.GOLD_POWDER);
                         output.accept(ModItems.TIN_POWDER);
                         output.accept(ModItems.DIAMOND_POWDER);
+                        output.accept(ModItems.OBSIDIAN_POWDER);
                         output.accept(ModItems.REDSTONE_RECEPTION_COIL);
                         output.accept(ModItems.COOKED_CARROT);
                         output.accept(ModItems.EFFICIENCY_UPGRADE);
@@ -106,6 +107,8 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.NICKEL_DEEPSLATE_ORE);
                         output.accept(ModBlocks.LEAD_ORE);
                         output.accept(ModBlocks.LEAD_DEEPSLATE_ORE);
+                        output.accept(ModItems.RAW_LEAD);
+                        output.accept(ModItems.LEAD_INGOT);
                         output.accept(ModItems.RAW_TIN);
                         output.accept(ModItems.TIN_INGOT);
                         output.accept(ModItems.RAW_NICKEL);
@@ -113,10 +116,10 @@ public class ModCreativeTabs {
                         output.accept(ModItems.NICKEL_POWDER);
                         output.accept(ModItems.INVAR_INGOT);
                         output.accept(ModItems.STEEL_INGOT);
-                        output.accept(ModItems.LEAD_INGOT);
                         output.accept(ModItems.BASE_GOLDIUM_INGOT);
                         output.accept(ModItems.BLAZING_GOLD_INGOT);
-                        output.accept(ModItems.RAW_LEAD);
+                        output.accept(ModItems.BASE_OBSIDIAN_INGOT);
+                        output.accept(ModItems.REFINED_OBSIDIAN_INGOT);
                         output.accept(ModItems.PURIFIED_IRON_POWDER);
                         output.accept(ModItems.PURIFIED_COPPER_POWDER);
                         output.accept(ModItems.PURIFIED_GOLD_POWDER);

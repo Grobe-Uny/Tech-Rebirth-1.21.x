@@ -1,7 +1,6 @@
 package com.grobe.techrebirth.block;
 
 import com.grobe.techrebirth.TechRebirth;
-import com.grobe.techrebirth.block.custom.BaseMachineBlock;
 import com.grobe.techrebirth.block.custom.CreativeElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.CrucibleBlock;
 import com.grobe.techrebirth.block.custom.ElectricCrusherBlock;
@@ -9,8 +8,6 @@ import com.grobe.techrebirth.block.custom.alloy.AlloySmelterBlock;
 import com.grobe.techrebirth.block.custom.alloy.HardenedAlloySmelterBlock;
 import com.grobe.techrebirth.block.custom.cable.EnergyCableBlock;
 import com.grobe.techrebirth.block.custom.bank.EnergyBankBlock;
-import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
-import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.furnace.ElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.furnace.HardenedElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.FluidTankBlock;
@@ -18,23 +15,15 @@ import com.grobe.techrebirth.block.custom.furnace.ReinforcedElectricFurnaceBlock
 import com.grobe.techrebirth.block.custom.generator.GeneratorBlock;
 import com.grobe.techrebirth.block.custom.purifier.ElectricPurifierBlock;
 import com.grobe.techrebirth.item.ModItems;
-import com.grobe.techrebirth.util.MachineTier;
 import com.grobe.techrebirth.util.MetalType;
-import com.mojang.serialization.MapCodec;
-import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;

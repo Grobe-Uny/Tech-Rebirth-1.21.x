@@ -111,6 +111,10 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> BLAZING_GOLD_INGOT = ITEMS.register("blazing_gold_ingot",
             () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> BASE_OBSIDIAN_INGOT = ITEMS.register("base_obsidian_ingot", 
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> REFINED_OBSIDIAN_INGOT = ITEMS.register("refined_obsidian_ingot", 
+            () -> new Item(new Item.Properties()));
 
 
 
@@ -123,6 +127,9 @@ public class ModItems {
     public static final DeferredItem<Item> PURIFIED_TIN_POWDER = ITEMS.register("purified_tin_powder",
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> PURIFIED_NICKEL_POWDER = ITEMS.register("purified_nickel_powder",
+            () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> OBSIDIAN_POWDER = ITEMS.register("obsidian_powder", 
             () -> new Item(new Item.Properties()));
 
 
