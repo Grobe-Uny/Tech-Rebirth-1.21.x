@@ -1,7 +1,6 @@
 package com.grobe.techrebirth.gui;
 
 import com.grobe.techrebirth.Config;
-import com.grobe.techrebirth.TechRebirth;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -30,9 +29,10 @@ public class BaseMachineScreen<T extends BaseMachineMenu> extends AbstractContai
     protected final int PROGRESS_BAR_HEIGHT;
 
     protected final boolean isProgressBarVertical;
+    protected final boolean hasProgressBar;
 
     protected final ProgressBarArea progressBarArea;
-    public BaseMachineScreen(T menu, Inventory playerInventory, Component title, ResourceLocation texture,int pX, int pY, int pW, int pH, boolean isVertical) {
+    public BaseMachineScreen(T menu, Inventory playerInventory, Component title, ResourceLocation texture,int pX, int pY, int pW, int pH, boolean isVertical, boolean hasProgressBar) {
         super(menu, playerInventory, title);
         this.TEXTURE = texture;
         this.imageWidth = TEX_W;
@@ -43,13 +43,14 @@ public class BaseMachineScreen<T extends BaseMachineMenu> extends AbstractContai
         this.PROGRESS_BAR_HEIGHT = pH;
         this.isProgressBarVertical = isVertical;
         this.progressBarArea = new ProgressBarArea();
+        this.hasProgressBar = hasProgressBar;
     }
     @Override
     protected void init(){
         super.init();
         this.inventoryLabelY = 10000;
         this.titleLabelY = 10000;
-        if (this.progressBarArea != null) {
+        if (this.progressBarArea != null && this.hasProgressBar) {
             this.progressBarArea.updateScreenCoords(this.leftPos, this.topPos);
         }
     }
@@ -64,6 +65,10 @@ public class BaseMachineScreen<T extends BaseMachineMenu> extends AbstractContai
 
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight, TEX_W, TEX_H);
         renderEnergyBar(guiGraphics, x, y);
+        if(hasProgressBar){
+            renderProgressBar(guiGraphics, x, y, mouseX, mouseY);
+        }
+
     }
 
     protected void renderLabels(GuiGraphics guiGraphics, int MouseX, int MouseY){
@@ -135,6 +140,15 @@ public class BaseMachineScreen<T extends BaseMachineMenu> extends AbstractContai
 
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
+
+        // Progress bar tooltip
+        int px = x + PROGRESS_BAR_X;
+        int py = y + PROGRESS_BAR_Y;
+        if (mouseX >= px && mouseX < px + PROGRESS_BAR_WIDTH && mouseY >= py && mouseY < py + PROGRESS_BAR_HEIGHT) {
+            String status = getProgressStatus();
+            Component tooltip = Component.literal(status + "\n§aClick to view recipes in JEI");
+            guiGraphics.renderTooltip(this.font, tooltip, mouseX, mouseY);
+        }
 
         // Energy bar tooltip
         int ex = x + ENERGY_BAR_X;
