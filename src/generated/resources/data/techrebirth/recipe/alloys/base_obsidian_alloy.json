@@ -1,0 +1,16 @@
+{
+  "type": "techrebirth:alloy_smelting",
+  "cookingTime": 340,
+  "ingredients": [
+    {
+      "item": "techrebirth:obsidian_powder"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:base_obsidian_ingot"
+  }
+}

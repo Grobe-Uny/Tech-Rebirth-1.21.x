@@ -1,13 +1,16 @@
-// 1.21.1	2026-02-28T20:54:24.011180744	Block States: techrebirth
+// 1.21.1	2026-03-20T01:25:01.238438905	Block States: techrebirth
 28ed1f24fca50bd3104b74b5b1769c14c16e3b25 assets/techrebirth/blockstates/blazing_gold_block.json
 d9ad8977b6efe2cf11c55e0c6450f1272950154a assets/techrebirth/blockstates/invar_block.json
 10b61581f026a7f788dbb2e51b6f0b4129cc2ab5 assets/techrebirth/blockstates/lead_block.json
+e2ca310a09ace5417054661d0726cc63ec5a75a8 assets/techrebirth/blockstates/lithium_ore.json
 4e9c7ebaffea0618a1b0fe4a3075426e4d6f3cd1 assets/techrebirth/blockstates/nickel_block.json
 3330d217146430e7d987b3a244385dbb988969a6 assets/techrebirth/blockstates/steel_block.json
 f5260eb9e160c5c167e2be893ec8ffa84e22a77c assets/techrebirth/blockstates/tin_block.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/blazing_gold_block.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/invar_block.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/lead_block.json
+6171fb09fd388526123dbcd6674c3611fc438a3e assets/techrebirth/models/block/lithium_ore.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/nickel_block.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/steel_block.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/tin_block.json
+a2e316ce1fb77976d5eb950218eb81dbda1dd520 assets/techrebirth/models/item/lithium_ore.json

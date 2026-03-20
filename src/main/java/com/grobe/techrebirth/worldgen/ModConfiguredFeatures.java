@@ -21,6 +21,9 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?,?>> TIN_ORE_KEY = registerName("tin_ore");
     public static final ResourceKey<ConfiguredFeature<?,?>> NICKEL_ORE_KEY = registerName("nickel_ore");
     public static final ResourceKey<ConfiguredFeature<?,?>> LEAD_ORE_KEY = registerName("lead_ore");
+    public static final ResourceKey<ConfiguredFeature<?,?>> LITHIUM_ORE_KEY = registerName("lithium_ore");
+
+
 
     public static void Bootstrap(BootstrapContext<ConfiguredFeature<?,?>> context){
         RuleTest stoneReplacable = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
@@ -36,6 +39,7 @@ public class ModConfiguredFeatures {
         register(context, TIN_ORE_KEY, Feature.ORE, new OreConfiguration(tinOres, 8));
         register(context, NICKEL_ORE_KEY, Feature.ORE, new OreConfiguration(nickelOres, 8));
         register(context, LEAD_ORE_KEY, Feature.ORE, new OreConfiguration(leadOres, 8));
+        register(context, LITHIUM_ORE_KEY, Feature.ORE, new OreConfiguration(stoneReplacable, ModBlocks.LITHIUM_ORE.get().defaultBlockState(), 6));
 
     }
 

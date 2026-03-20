@@ -1,11 +1,13 @@
-// 1.21.1	2025-10-13T01:58:04.3938641	Registries
+// 1.21.1	2026-03-20T00:48:49.231689764	Registries
 7b0a0269413f329c8aa2b8371c07929de4f18aec data/techrebirth/enchantment/lightning_strike.json
 4e37e1e37f3a2573023ffd4f091716e7dea0fd9c data/techrebirth/neoforge/biome_modifier/add_lead_ore.json
 d9d2d9c95110c197a3de40213fe9d25f84e2c299 data/techrebirth/neoforge/biome_modifier/add_nickel_ore.json
 537241403adfe5d67b4a1c2b68a814b15ffd0949 data/techrebirth/neoforge/biome_modifier/add_tin_ore.json
 f14a1dc74d4641dd8d7be4f897530307046d81f6 data/techrebirth/worldgen/configured_feature/lead_ore.json
+eeb7d2e7f346e0382e9b0550d6d796f6a74f4fd3 data/techrebirth/worldgen/configured_feature/lithium_ore.json
 238e83e5695ce105af77055725b9ab3b39296533 data/techrebirth/worldgen/configured_feature/nickel_ore.json
 1ce25f023c36ca69d940e0dff848b1cb9a5359ce data/techrebirth/worldgen/configured_feature/tin_ore.json
 5d32b01c33705f026eb86c85bc5a18c4b2e29a2a data/techrebirth/worldgen/placed_feature/lead_ore_placed.json
+79a1e0787dfa27d83d064e900499d020f2398b5d data/techrebirth/worldgen/placed_feature/lithium_ore_placed.json
 9c0aca9d69d546afaf054fbd46479fad067bb0ed data/techrebirth/worldgen/placed_feature/nickel_ore_placed.json
 92fd8ee5fe06078c959ffa09b7e4708deed5d9c4 data/techrebirth/worldgen/placed_feature/tin_ore_placed.json

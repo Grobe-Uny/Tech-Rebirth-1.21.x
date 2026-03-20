@@ -1,0 +1,14 @@
+{
+  "type": "techrebirth:centrifuging",
+  "catalyst": {
+    "item": "minecraft:diamond"
+  },
+  "catalyst_amount": 40,
+  "ingredient": {
+    "item": "techrebirth:base_obsidian_ingot"
+  },
+  "result": {
+    "count": 1,
+    "id": "techrebirth:refined_obsidian_ingot"
+  }
+}

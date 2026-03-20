@@ -78,6 +78,7 @@ public final class ModTags {
         public static final Dual PURIFIED_TIN_DUST_D = dual("dusts/tin");
         public static final Dual PURIFIED_NICKEL_DUST_D = dual("dusts/nickel");
         public static final Dual OBSIDIAN_DUST_D = dual("dusts/obsidian");
+        public static final Dual LITHIUM_DUST_D = dual("dusts/lithium");
 
 
         // Duals for raw ores compatibility

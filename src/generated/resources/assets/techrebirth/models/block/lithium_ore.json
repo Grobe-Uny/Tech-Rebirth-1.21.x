@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "techrebirth:block/ore/lithium_ore"
+  }
+}

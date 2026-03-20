@@ -1,0 +1,11 @@
+{
+  "type": "techrebirth:crushing",
+  "ingredient": {
+    "item": "minecraft:crying_obsidian"
+  },
+  "result": {
+    "count": 4,
+    "id": "techrebirth:obsidian_powder"
+  },
+  "time": 520
+}

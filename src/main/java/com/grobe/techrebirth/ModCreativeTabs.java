@@ -34,6 +34,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.TIN_POWDER);
                         output.accept(ModItems.DIAMOND_POWDER);
                         output.accept(ModItems.OBSIDIAN_POWDER);
+                        output.accept(ModItems.LITHIUM_POWDER);
                         output.accept(ModItems.REDSTONE_RECEPTION_COIL);
                         output.accept(ModItems.COOKED_CARROT);
                         output.accept(ModItems.EFFICIENCY_UPGRADE);
@@ -101,6 +102,7 @@ public class ModCreativeTabs {
                     .withTabsBefore(ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "tech_rebirth_cables"))
                     .title(Component.translatable("creativetab.techrebirth.tech_rebirth_ores"))
                     .displayItems((itemDisplayParameters, output) -> {
+                        output.accept(ModBlocks.LITHIUM_ORE);
                         output.accept(ModBlocks.TIN_ORE);
                         output.accept(ModBlocks.TIN_DEEPSLATE_ORE);
                         output.accept(ModBlocks.NICKEL_ORE);

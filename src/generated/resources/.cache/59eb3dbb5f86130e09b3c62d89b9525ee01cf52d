@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-11T01:19:55.069152745	Loot Tables
+// 1.21.1	2026-03-20T00:48:49.228290019	Loot Tables
 ef43043d63231c016daedea52a90bb4a5f943881 data/techrebirth/loot_table/blocks/alloy_smelter.json
 9c8744ec6d81b097f9eba4b2b6b8011d321e6dd4 data/techrebirth/loot_table/blocks/blazing_gold_block.json
 388e60989fb33c249d0f56037fad3f1662326de9 data/techrebirth/loot_table/blocks/creative_electric_furnace.json
@@ -17,6 +17,7 @@ a2cb853ea8896c61d33aa4560a5659cd74ff419d data/techrebirth/loot_table/blocks/hard
 13fce0af84d656802c958c8d410950de2137f86a data/techrebirth/loot_table/blocks/lead_block.json
 9f26a875f1d96eec2cec8246a5434437c0d1986f data/techrebirth/loot_table/blocks/lead_deepslate_ore.json
 e9f461015047be7b245304293fca5b756d7d73a2 data/techrebirth/loot_table/blocks/lead_ore.json
+4116f54398ec1a1d644c0fdc07b5c00de83994b4 data/techrebirth/loot_table/blocks/lithium_ore.json
 f19d78cea33a22c88551c6f20f712e84f092c4b9 data/techrebirth/loot_table/blocks/machine_base.json
 80def0ff33994ee3a76d5ad5d3276983ebd8de15 data/techrebirth/loot_table/blocks/nickel_block.json
 523bd9ce45ee54ade9f31556f9877e6b3543b66b data/techrebirth/loot_table/blocks/nickel_deepslate_ore.json

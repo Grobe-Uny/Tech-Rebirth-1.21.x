@@ -19,6 +19,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        oreBlock(ModBlocks.LITHIUM_ORE);
+
+
         // Loop through all the dynamically registered ore blocks
         for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
             MetalType metal = entry.getKey();
@@ -38,5 +41,16 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
             simpleBlock(block.get(), model);
         }
+    }
+
+    private void blockWithItem(DeferredBlock<Block> deferredBlock){
+        simpleBlockWithItem(deferredBlock.get(), cubeAll(deferredBlock.get()));
+    }
+    private void oreBlock(DeferredBlock<Block> deferredBlock){
+        String name = deferredBlock.getId().getPath();
+
+        var model = models().cubeAll(name, modLoc("block/ore/" + name));
+
+        simpleBlockWithItem(deferredBlock.get(), model);
     }
 }

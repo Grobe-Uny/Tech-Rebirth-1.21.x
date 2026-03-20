@@ -16,6 +16,7 @@ import com.grobe.techrebirth.block.custom.generator.GeneratorBlock;
 import com.grobe.techrebirth.block.custom.purifier.ElectricPurifierBlock;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.util.MetalType;
+import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -100,6 +101,13 @@ public class ModBlocks {
                             .requiresCorrectToolForDrops()
                             .sound(SoundType.STONE)
             ));
+
+    public static final DeferredBlock<Block> LITHIUM_ORE = registerBlock("lithium_ore",
+            () -> new DropExperienceBlock(UniformInt.of(1,3),
+                    BlockBehaviour.Properties.of()
+                            .strength(3f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.STONE)));
 
 
     /// Block Entities

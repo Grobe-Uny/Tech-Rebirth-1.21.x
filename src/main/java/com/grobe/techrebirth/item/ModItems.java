@@ -53,6 +53,10 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
 
+    public static final DeferredItem<Item> LITHIUM_POWDER = ITEMS.register("lithium_powder",
+            ()-> new Item(new Item.Properties()));
+
+
     public static final DeferredItem<Item> SPEED_UPGRADE = ITEMS.register("speed_upgrade",
             () -> new UpgradeItem(new Item.Properties()));
 

@@ -70,7 +70,9 @@
 
 
   "item.techrebirth.base_obsidian_ingot":"Base Obsidian Ingot",
-  "item.tecrebirth.refined_obsidian_ingot": "Refined Obsidian Ingot",
+  "item.techrebirth.refined_obsidian_ingot": "Refined Obsidian Ingot",
+  "item.techrebirth.lithium_powder": "Lithium Powder",
+  "block.techrebirth.lithium_ore": "Lithium Ore",
 
 
   "block.techrebirth.machine_base": "Machine Base",

@@ -5,6 +5,8 @@
     "#c:ingots/nickel",
     "#c:ingots/invar",
     "#c:ingots/blazing_gold",
+    "#c:ingots/base_obsidian",
+    "#c:ingots/refined_obsidian",
     "#c:ingots/steel"
   ]
 }

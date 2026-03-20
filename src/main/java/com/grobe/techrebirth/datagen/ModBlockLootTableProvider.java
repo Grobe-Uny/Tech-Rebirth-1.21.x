@@ -23,7 +23,6 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
             dropSelf(ore.get());
         }
         dropSelf(ModBlocks.MACHINE_BASE.get());
-        //dropSelf(ModBlocks.INVAR_BLOCK.get());
         dropSelf(ModBlocks.ELECTRIC_FURNACE.get());
         dropSelf(ModBlocks.ENERGY_BANK.get());
         dropSelf(ModBlocks.GENERATOR.get());
@@ -54,6 +53,9 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
                 block -> createOreDrop(ModBlocks.TIN_ORE.get(), ModItems.RAW_TIN.get()));
         add(ModBlocks.TIN_DEEPSLATE_ORE.get(),
                 block -> createOreDrop(ModBlocks.TIN_DEEPSLATE_ORE.get(), ModItems.RAW_TIN.get()));
+
+        add(ModBlocks.LITHIUM_ORE.get(),
+                block -> createOreDrop(ModBlocks.LITHIUM_ORE.get(), ModItems.LITHIUM_POWDER.get()));
     }
 
     @Override

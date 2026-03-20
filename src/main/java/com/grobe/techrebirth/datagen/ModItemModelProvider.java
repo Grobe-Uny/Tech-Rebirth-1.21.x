@@ -76,6 +76,7 @@ public class ModItemModelProvider extends ItemModelProvider {
        powderHandheldItem(ModItems.PURIFIED_TIN_POWDER);
        powderHandheldItem(ModItems.PURIFIED_NICKEL_POWDER);
        powderHandheldItem(ModItems.OBSIDIAN_POWDER);
+       powderHandheldItem(ModItems.LITHIUM_POWDER);
 
        ingotHandheldItem(ModItems.BASE_OBSIDIAN_INGOT);
        ingotHandheldItem(ModItems.REFINED_OBSIDIAN_INGOT);

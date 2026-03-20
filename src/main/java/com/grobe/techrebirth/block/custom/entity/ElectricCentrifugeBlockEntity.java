@@ -183,7 +183,7 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
             return;
         }
 
-        Integer catalystValue = getCatalystValue(catalystFillStack.getItem());
+        Integer catalystValue = getCatalystValue(catalystFillStack);
         if (catalystValue == null) {
             return; // Ako item nije u mapi, nije catalyst
         }
@@ -216,8 +216,14 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
             }
         }
     }
-    private Integer getCatalystValue(Item item) {
-        return CATALYST_VALUES.get(item);
+    private Integer getCatalystValue(ItemStack item) {
+        if(CATALYST_VALUES.containsKey(item.getItem())){
+            return CATALYST_VALUES.get(item.getItem());
+        }
+        if(item.is(ModTags.Items.CATALYST_DIAMOND.common())){
+            return 15;
+        }
+        return null;
     }
     private boolean isCatalystItem(ItemStack stack) {
         return CATALYST_VALUES.containsKey(stack.getItem()) ||
