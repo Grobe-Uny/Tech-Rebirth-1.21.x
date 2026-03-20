@@ -5,6 +5,7 @@ import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.EnergyCableBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.FluidTankBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.bank.EnergyBankBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -42,12 +43,32 @@ public class ModCapabilities {
                 ModBlockEntities.HARDENED_ELECTRIC_FURNACE.get(),
                 ModBlockEntities.REINFORCED_ELECTRIC_FURNACE.get(),
                 ModBlockEntities.ELECTRIC_CENTRIFUGE_BE.get(),
-                ModBlockEntities.ELECTRIC_PURIFIER.get()
+                ModBlockEntities.ELECTRIC_PURIFIER.get(),
+                ModBlockEntities.ENERGY_BANK.get()
         );
     }
 
     @SubscribeEvent
     public static void register(RegisterCapabilitiesEvent event) {
+        // Initialize list if null (safety check)
+        if (ALL_MACHINES == null) {
+             ALL_MACHINES = List.of(
+                ModBlockEntities.ELECTRIC_FURNACE.get(),
+                ModBlockEntities.CREATIVE_ELECTRIC_FURNACE.get(),
+                ModBlockEntities.ELECTRIC_CRUSHER.get(),
+                ModBlockEntities.GENERATOR.get(),
+                ModBlockEntities.ENERGY_BANK.get(),
+                ModBlockEntities.ALLOY_SMELTER.get(),
+                ModBlockEntities.HARDENED_ALLOY_SMELTER.get(),
+                ModBlockEntities.ENERGY_CABLE.get(),
+                ModBlockEntities.HARDENED_ELECTRIC_FURNACE.get(),
+                ModBlockEntities.REINFORCED_ELECTRIC_FURNACE.get(),
+                ModBlockEntities.ELECTRIC_CENTRIFUGE_BE.get(),
+                ModBlockEntities.ELECTRIC_PURIFIER.get(),
+                ModBlockEntities.ENERGY_BANK.get()
+            );
+        }
+
         // REGISTRIRAJ SVE MAŠINE AUTOMATSKI
         for (BlockEntityType<?> machineType : ALL_MACHINES) {
             registerMachineCapabilities(event, machineType);
@@ -74,9 +95,11 @@ public class ModCapabilities {
                     if (be instanceof BaseMachineBlockEntity machine) {
                         return machine.getEnergyStorage();
                     }
-                    // Poseban slučaj za cable ako treba
                     if (be instanceof EnergyCableBlockEntity cable) {
                         return cable.getEnergyStorage();
+                    }
+                    if (be instanceof EnergyBankBlockEntity bank) {
+                        return bank.getEnergyStorageForSide(side);
                     }
                     return null;
                 }
@@ -87,12 +110,9 @@ public class ModCapabilities {
                 Capabilities.ItemHandler.BLOCK,
                 machineType,
                 (be, side) -> {
-                    // Electric Furnace ima poseban side-based handling
                     if (be instanceof ElectricFurnaceBlockEntity furnace) {
                         return getElectricFurnaceItemHandler(furnace, side);
                     }
-
-                    // Ostale mašine koriste default
                     if (be instanceof BaseMachineBlockEntity machine) {
                         return machine.getSidedItemHandler(side);
                     }
@@ -113,24 +133,21 @@ public class ModCapabilities {
         );
     }
 
-    // POMOĆNA METODA ZA ELECTRIC FURNACE SIDE-BASED HANDLING
     private static IItemHandler getElectricFurnaceItemHandler(ElectricFurnaceBlockEntity furnace, Direction side) {
         ItemStackHandler baseHandler = furnace.getItemHandler();
 
         if (side == Direction.DOWN) {
-            // Donja strana - samo output slot (slot 1), može se extractati
             return new RangedWrapper(baseHandler, 1, 2) {
                 @Override
                 public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                    return stack; // Ne može se insertati
+                    return stack;
                 }
             };
         } else {
-            // Ostale strane - samo input slot (slot 0), može se insertati
             return new RangedWrapper(baseHandler, 0, 1) {
                 @Override
                 public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                    return ItemStack.EMPTY; // Ne može se extractati
+                    return ItemStack.EMPTY;
                 }
             };
         }

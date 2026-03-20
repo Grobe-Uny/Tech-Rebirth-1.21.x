@@ -1,7 +1,7 @@
 package com.grobe.techrebirth.block.custom.entity.bank;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
-import com.grobe.techrebirth.event.ModCapabilities;
+import com.grobe.techrebirth.util.EnergySideConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -9,7 +9,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.*;
 
@@ -17,21 +19,34 @@ public class EnergyBankBlockEntity extends BlockEntity {
     public static final int BASE_CAPACITY = 100_000;
     public static final int MAX_IO = 1000;
 
-    // Actual per-block storage
     private final ModEnergy localEnergy = new ModEnergy(BASE_CAPACITY, MAX_IO, MAX_IO, 0);
-
-    // Network wrapper exposed via capability
     private final NetworkEnergyStorage networkEnergy = new NetworkEnergyStorage();
+    private final Map<Direction, EnergySideConfig> sideConfigs = new EnumMap<>(Direction.class);
 
     public EnergyBankBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ENERGY_BANK.get(), pos, state);
+        for (Direction dir : Direction.values()) {
+            sideConfigs.put(dir, EnergySideConfig.INPUT); // Default to INPUT
+        }
     }
 
-    public EnergyStorage getExposedEnergyStorage() {
-        return networkEnergy;
+    public IEnergyStorage getEnergyStorageForSide(Direction side) {
+        if (side == null) return networkEnergy; // Internal/Null side access gets full access
+        return new SidedEnergyStorage(networkEnergy, side);
     }
 
-    public ModEnergy getLocalEnergy() {
+    public EnergySideConfig getSideConfig(Direction side) {
+        return sideConfigs.getOrDefault(side, EnergySideConfig.NONE);
+    }
+
+    public void cycleSideConfig(Direction side) {
+        sideConfigs.compute(side, (dir, config) -> (config == null) ? EnergySideConfig.INPUT : config.next());
+        setChanged();
+        if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+    }
+
+    // Changed return type to public EnergyStorage to avoid visibility issues
+    public EnergyStorage getLocalEnergy() {
         return localEnergy;
     }
 
@@ -60,7 +75,6 @@ public class EnergyBankBlockEntity extends BlockEntity {
         }
     }
 
-    // Energy storage that proxies operations to the whole connected cluster
     private class NetworkEnergyStorage extends EnergyStorage {
         public NetworkEnergyStorage() {
             super(BASE_CAPACITY, MAX_IO, MAX_IO, 0);
@@ -105,11 +119,10 @@ public class EnergyBankBlockEntity extends BlockEntity {
             if (toAccept <= 0) return 0;
             if (simulate) return toAccept;
 
-            // Distribute greedily to members with most free space
-            cluster.sort(Comparator.comparingInt(be -> be.localEnergy.getEnergyStored())); // ascending energy => more free space later fill
-            Collections.reverse(cluster); // descending by energy (we actually want free space; sort by free space desc instead)
+            cluster.sort(Comparator.comparingInt(be -> be.localEnergy.getEnergyStored()));
+            Collections.reverse(cluster);
             cluster.sort(Comparator.comparingInt(be -> (BASE_CAPACITY - be.localEnergy.getEnergyStored())));
-            Collections.reverse(cluster); // now by free space desc
+            Collections.reverse(cluster);
 
             int remaining = toAccept;
             for (EnergyBankBlockEntity be : cluster) {
@@ -136,9 +149,8 @@ public class EnergyBankBlockEntity extends BlockEntity {
             if (toGive <= 0) return 0;
             if (simulate) return toGive;
 
-            // Pull greedily from members with most energy
             cluster.sort(Comparator.comparingInt(be -> be.localEnergy.getEnergyStored()));
-            Collections.reverse(cluster); // now desc by stored energy
+            Collections.reverse(cluster);
 
             int remaining = toGive;
             for (EnergyBankBlockEntity be : cluster) {
@@ -150,6 +162,48 @@ public class EnergyBankBlockEntity extends BlockEntity {
                 remaining -= extracted;
             }
             return toGive - remaining;
+        }
+    }
+
+    private class SidedEnergyStorage implements IEnergyStorage {
+        private final IEnergyStorage wrapped;
+        private final Direction side;
+
+        public SidedEnergyStorage(IEnergyStorage wrapped, Direction side) {
+            this.wrapped = wrapped;
+            this.side = side;
+        }
+
+        @Override
+        public int receiveEnergy(int maxReceive, boolean simulate) {
+            if (canReceive()) {
+                return wrapped.receiveEnergy(maxReceive, simulate);
+            }
+            return 0;
+        }
+
+        @Override
+        public int extractEnergy(int maxExtract, boolean simulate) {
+            if (canExtract()) {
+                return wrapped.extractEnergy(maxExtract, simulate);
+            }
+            return 0;
+        }
+
+        @Override
+        public int getEnergyStored() { return wrapped.getEnergyStored(); }
+
+        @Override
+        public int getMaxEnergyStored() { return wrapped.getMaxEnergyStored(); }
+
+        @Override
+        public boolean canExtract() {
+            return getSideConfig(side) == EnergySideConfig.OUTPUT;
+        }
+
+        @Override
+        public boolean canReceive() {
+            return getSideConfig(side) == EnergySideConfig.INPUT;
         }
     }
 
@@ -184,6 +238,11 @@ public class EnergyBankBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         tag.putInt("bank_energy", localEnergy.getEnergyStored());
+        CompoundTag configTag = new CompoundTag();
+        for (Map.Entry<Direction, EnergySideConfig> entry : sideConfigs.entrySet()) {
+            configTag.putString(entry.getKey().getName(), entry.getValue().name());
+        }
+        tag.put("side_configs", configTag);
         super.saveAdditional(tag, provider);
     }
 
@@ -191,18 +250,51 @@ public class EnergyBankBlockEntity extends BlockEntity {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag,provider);
         localEnergy.setEnergy(tag.getInt("bank_energy"));
+        if (tag.contains("side_configs")) {
+            CompoundTag configTag = tag.getCompound("side_configs");
+            for (Direction dir : Direction.values()) {
+                if (configTag.contains(dir.getName())) {
+                    try {
+                        sideConfigs.put(dir, EnergySideConfig.valueOf(configTag.getString(dir.getName())));
+                    } catch (IllegalArgumentException e) {
+                        sideConfigs.put(dir, EnergySideConfig.INPUT);
+                    }
+                }
+            }
+        }
     }
 
-    // Server-side tick to distribute energy from the bank network to neighbors
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        CompoundTag tag = super.getUpdateTag(provider);
+        saveAdditional(tag, provider);
+        return tag;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider provider) {
+        loadAdditional(tag, provider);
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, EnergyBankBlockEntity be) {
         if (level.isClientSide()) return;
-        EnergyStorage network = be.getExposedEnergyStorage();
-        if (network.getEnergyStored() <= 0) return;
-        for (net.minecraft.core.Direction dir : net.minecraft.core.Direction.values()) {
-            if (network.getEnergyStored() <= 0) break;
-            BlockPos nPos = pos.relative(dir);
-            BlockState nState = level.getBlockState(nPos);
-            BlockEntity nBe = level.getBlockEntity(nPos);
+        
+        // Push energy to adjacent blocks if side is OUTPUT
+        for (Direction dir : Direction.values()) {
+            if (be.getSideConfig(dir) == EnergySideConfig.OUTPUT) {
+                BlockPos neighborPos = pos.relative(dir);
+                // Get the capability directly from the level for the neighbor
+                IEnergyStorage neighborEnergy = level.getCapability(Capabilities.EnergyStorage.BLOCK, neighborPos, dir.getOpposite());
+                
+                if (neighborEnergy != null && neighborEnergy.canReceive()) {
+                    int stored = be.networkEnergy.getEnergyStored();
+                    int maxExtract = MAX_IO;
+                    int extracted = be.networkEnergy.extractEnergy(maxExtract, true); // Simulate extract
+                    
+                    int sent = neighborEnergy.receiveEnergy(extracted, false);
+                    be.networkEnergy.extractEnergy(sent, false); // Actually extract what was sent
+                }
+            }
         }
     }
 }

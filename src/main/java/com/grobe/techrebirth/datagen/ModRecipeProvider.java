@@ -125,6 +125,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/electric_purifier"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ENERGY_BANK.get())
+                .pattern("ILI")
+                .pattern("LML")
+                .pattern("ILI")
+                .define('I', Items.IRON_INGOT)
+                .define('L', ModItems.LITHIUM_INGOT)
+                .define('M', ModBlocks.MACHINE_BASE)
+                .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/energy_bank"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ENERGY_CABLE.get())
                 .pattern("XXX").pattern("XYX").pattern("XXX")
                 .define('X', Items.CLAY_BALL).define('Y', ModItems.REDSTONE_RECEPTION_COIL.get())
@@ -280,6 +290,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_GOLD_POWDER, Items.GOLD_INGOT, 0.7f);
         simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_TIN_POWDER, ModItems.TIN_INGOT, 0.7f);
         simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_NICKEL_POWDER, ModItems.NICKEL_INGOT, 0.7f);
+        simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 120, ModItems.LITHIUM_POWDER, ModItems.LITHIUM_INGOT, 0.6f);
 
         // Example food: keep near ~1.4–1.8s in machine; 160 vanilla -> 28.8 ticks (~1.44s)
         buildFoodCookingRecipe(Items.CARROT, ModItems.COOKED_CARROT, 2, 160, recipeOutput, "has_carrot", Items.CARROT);

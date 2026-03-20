@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.item.custom;
 
 import com.grobe.techrebirth.block.custom.BaseMachineBlock;
+import com.grobe.techrebirth.block.custom.bank.EnergyBankBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -23,13 +24,31 @@ public class WrenchItem extends Item {
         Player player = context.getPlayer();
         ItemStack wrench = context.getItemInHand();
 
-        if(state.getBlock() instanceof BaseMachineBlock machineBlock){
+        if (state.getBlock() instanceof BaseMachineBlock machineBlock) {
             // Only work if the player is sneaking to avoid conflict with opening the GUI
             if (player != null && player.isShiftKeyDown()) {
                 if (!level.isClientSide()) {
                     return machineBlock.tryPickupWithWrench(state, level, pos, player, wrench);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide());
+            }
+        }
+        
+        if (state.getBlock() instanceof EnergyBankBlock bankBlock) {
+            if (player != null) {
+                if (player.isShiftKeyDown()) {
+                    // Pickup
+                    if (!level.isClientSide()) {
+                        return bankBlock.tryPickupWithWrench(state, level, pos, player, wrench);
+                    }
+                    return InteractionResult.sidedSuccess(level.isClientSide());
+                } else {
+                    // Configure Side
+                    if (!level.isClientSide()) {
+                        return bankBlock.onWrenchRightClick(state, level, pos, player, context.getClickedFace());
+                    }
+                    return InteractionResult.sidedSuccess(level.isClientSide());
+                }
             }
         }
 

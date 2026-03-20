@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 120,
+  "experience": 0.6,
+  "ingredient": {
+    "item": "techrebirth:lithium_powder"
+  },
+  "result": {
+    "count": 1,
+    "id": "techrebirth:lithium_ingot"
+  }
+}

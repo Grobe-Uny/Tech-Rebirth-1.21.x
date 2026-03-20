@@ -21,6 +21,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         oreBlock(ModBlocks.LITHIUM_ORE);
 
+        columnBlock(ModBlocks.ENERGY_BANK);
+
 
         // Loop through all the dynamically registered ore blocks
         for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
@@ -50,6 +52,16 @@ public class ModBlockStateProvider extends BlockStateProvider {
         String name = deferredBlock.getId().getPath();
 
         var model = models().cubeAll(name, modLoc("block/ore/" + name));
+
+        simpleBlockWithItem(deferredBlock.get(), model);
+    }
+
+    private void columnBlock(DeferredBlock<Block> deferredBlock){
+        String name = deferredBlock.getId().getPath();
+
+        var model = models().cubeColumn(name,
+                modLoc("block/" + name + "_side"),
+                modLoc("block/" + name + "_top"));
 
         simpleBlockWithItem(deferredBlock.get(), model);
     }

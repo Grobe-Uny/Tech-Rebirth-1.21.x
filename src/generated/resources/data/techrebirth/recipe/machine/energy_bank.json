@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": {
+      "item": "techrebirth:lithium_ingot"
+    },
+    "M": {
+      "item": "techrebirth:machine_base"
+    }
+  },
+  "pattern": [
+    "ILI",
+    "LML",
+    "ILI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:energy_bank"
+  }
+}

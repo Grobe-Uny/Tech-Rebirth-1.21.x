@@ -76,7 +76,7 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.CREATIVE_ELECTRIC_FURNACE);
                         output.accept(ModBlocks.GENERATOR);
                         output.accept(ModBlocks.ELECTRIC_CRUSHER);
-                      //  output.accept(ModBlocks.ENERGY_BANK);
+                        output.accept(ModBlocks.ENERGY_BANK);
                         output.accept(ModBlocks.ALLOY_SMELTER);
                         output.accept(ModBlocks.HARDENED_ALLOY_SMELTER);
                         output.accept(ModBlocks.ELECTRIC_CENTRIFUGE);
@@ -122,6 +122,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.BLAZING_GOLD_INGOT);
                         output.accept(ModItems.BASE_OBSIDIAN_INGOT);
                         output.accept(ModItems.REFINED_OBSIDIAN_INGOT);
+                        output.accept(ModItems.LITHIUM_INGOT);
                         output.accept(ModItems.PURIFIED_IRON_POWDER);
                         output.accept(ModItems.PURIFIED_COPPER_POWDER);
                         output.accept(ModItems.PURIFIED_GOLD_POWDER);

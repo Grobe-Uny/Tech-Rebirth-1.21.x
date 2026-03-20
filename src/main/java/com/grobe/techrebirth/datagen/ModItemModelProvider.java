@@ -80,6 +80,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
        ingotHandheldItem(ModItems.BASE_OBSIDIAN_INGOT);
        ingotHandheldItem(ModItems.REFINED_OBSIDIAN_INGOT);
+       ingotHandheldItem(ModItems.LITHIUM_INGOT);
+
 
 
 
