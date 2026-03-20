@@ -7,6 +7,7 @@ import com.grobe.techrebirth.util.MetalType;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
@@ -47,6 +48,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
             simpleBlock(block.get(), model);
         }
+
+//        // Add Electric Purifier
+//        directionalMachineBlock(ModBlocks.ELECTRIC_PURIFIER.get(), "electric_purifier");
     }
 
     private void blockWithItem(DeferredBlock<Block> deferredBlock){
@@ -70,6 +74,42 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(deferredBlock.get(), model);
     }
 
+//    private void directionalMachineBlock(Block block, String name) {
+//        ResourceLocation offTexture = modLoc("block/" + name + "_front_off");
+//        ResourceLocation onTexture = modLoc("block/" + name + "_front_on");
+//        ResourceLocation sideTexture = modLoc("block/" + name + "_side");
+//        ResourceLocation topTexture = modLoc("block/" + name + "_top");
+//
+//        ModelFile modelOff = models().cube(name,
+//                        sideTexture, // down
+//                        topTexture,  // up
+//                        offTexture,  // north
+//                        sideTexture, // south
+//                        sideTexture, // east
+//                        sideTexture  // west
+//                )
+//                .texture("particle", offTexture);
+//
+//        ModelFile modelOn = models().cube(name + "_on",
+//                        sideTexture, // down
+//                        topTexture,  // up
+//                        onTexture,   // north
+//                        sideTexture, // south
+//                        sideTexture, // east
+//                        sideTexture  // west
+//                )
+//                .texture("particle", onTexture);
+//
+//        getVariantBuilder(block)
+//                .forAllStates(state -> {
+//                    boolean lit = state.getValue(BlockStateProperties.LIT);
+//                    return net.minecraft.client.renderer.block.model.Variant.variant()
+//                            .with(net.minecraft.client.renderer.block.model.VariantProperty.MODEL, lit ? modelOn : modelOff)
+//                            .with(net.minecraft.client.renderer.block.model.VariantProperty.Y_ROT, (int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot())
+//                            .build();
+//                });
+//    }
+
     private void cableBlock(DeferredBlock<Block> deferredBlock) {
         String name = deferredBlock.getId().getPath();
         ResourceLocation texture = modLoc("block/cable/" + name);
@@ -81,15 +121,18 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .element().from(5, 5, 5).to(11, 11, 11)
                 .allFaces((d, f) -> f.texture("#all")).end();
 
-        // Part Model: Arm extending North (6,6,0 to 10,10,6)
+        // Part Model: Arm extending North (6,6,0 to 10,10,8) - Extends to center
         BlockModelBuilder partModel = models().withExistingParent(name + "_part", "block/block")
                 .texture("particle", texture)
                 .texture("all", texture)
-                .element().from(6, 6, 0).to(10, 10, 6)
+                .element().from(6, 6, 0).to(10, 10, 8)
                 .allFaces((d, f) -> f.texture("#all")).end();
 
         getMultipartBuilder(deferredBlock.get())
-                .part().modelFile(coreModel).addModel().end()
+                // Core only renders if RENDER_CORE property is true
+                .part().modelFile(coreModel).addModel().condition(EnergyCableBlock.RENDER_CORE, true).end()
+                
+                // Arms render based on direction properties
                 .part().modelFile(partModel).addModel().condition(EnergyCableBlock.NORTH, true).end()
                 .part().modelFile(partModel).rotationY(180).addModel().condition(EnergyCableBlock.SOUTH, true).end()
                 .part().modelFile(partModel).rotationY(90).addModel().condition(EnergyCableBlock.EAST, true).end()

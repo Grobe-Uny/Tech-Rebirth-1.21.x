@@ -32,6 +32,9 @@ public class EnergyCableBlock extends BaseEntityBlock implements EntityBlock {
     public static final BooleanProperty WEST = BooleanProperty.create("west");
     public static final BooleanProperty UP = BooleanProperty.create("up");
     public static final BooleanProperty DOWN = BooleanProperty.create("down");
+    
+    // Property to control core rendering
+    public static final BooleanProperty RENDER_CORE = BooleanProperty.create("render_core");
 
     // Voxel shapes za različite konekcije
     private static final VoxelShape CORE = Block.box(6, 6, 6, 10, 10, 10);
@@ -44,14 +47,15 @@ public class EnergyCableBlock extends BaseEntityBlock implements EntityBlock {
 
     public EnergyCableBlock(Properties properties) {
         super(properties.noOcclusion());
-        // Postavi default state sa svim konekcijama na false
+        // Postavi default state sa svim konekcijama na false i render_core na true (default state usually has no connections)
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(NORTH, false)
                 .setValue(SOUTH, false)
                 .setValue(EAST, false)
                 .setValue(WEST, false)
                 .setValue(UP, false)
-                .setValue(DOWN, false));
+                .setValue(DOWN, false)
+                .setValue(RENDER_CORE, true));
     }
 
     public static final MapCodec<EnergyCableBlock> CODEC = Block.simpleCodec(EnergyCableBlock::new);
@@ -63,12 +67,13 @@ public class EnergyCableBlock extends BaseEntityBlock implements EntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN);
+        builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN, RENDER_CORE);
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        VoxelShape shape = CORE;
+        VoxelShape shape = CORE; // Core shape is always part of collision/outline even if not rendered visually? Maybe.
+        // Usually safer to keep it for collision so you can aim at the center.
 
         // Dodaj "krake" ovisno o konekcijama
         if (state.getValue(NORTH)) shape = Shapes.or(shape, NORTH_ARM);
@@ -148,11 +153,27 @@ public class EnergyCableBlock extends BaseEntityBlock implements EntityBlock {
     private void updateConnections(Level level, BlockPos pos) {
         BlockState state = level.getBlockState(pos);
         BlockState newState = state;
+        int connectionCount = 0;
 
         for (Direction direction : Direction.values()) {
             boolean shouldConnect = shouldConnectTo(level, pos, direction);
             newState = newState.setValue(getPropertyForDirection(direction), shouldConnect);
+            if (shouldConnect) connectionCount++;
         }
+        
+        // Determine if core should be rendered
+        // Render core if it's an endpoint (0 or 1 connection) or complex junction? 
+        // User request: "last ones for example 1 and 5 should have cores because they are end points"
+        // This implies connectionCount <= 1.
+        // What about corners (2 connections)? EnderIO usually renders them as just pipes meeting.
+        // So RENDER_CORE = true if connectionCount <= 1. 
+        // Wait, if it's a corner (2 connections), you probably don't want a core either?
+        // But if it's a T-junction (3 connections), maybe you do? 
+        // Let's stick to the user's specific request: "end points". End point = 1 connection. 
+        // (0 connections is a floating dot, also needs core).
+        
+        boolean renderCore = connectionCount <= 1;
+        newState = newState.setValue(RENDER_CORE, renderCore);
 
         // Postavi novi state SAMO ako se stvarno promijenio
         if (!state.equals(newState)) {

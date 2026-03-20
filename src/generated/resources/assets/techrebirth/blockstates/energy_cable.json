@@ -3,6 +3,9 @@
     {
       "apply": {
         "model": "techrebirth:block/energy_cable_core"
+      },
+      "when": {
+        "render_core": "true"
       }
     },
     {

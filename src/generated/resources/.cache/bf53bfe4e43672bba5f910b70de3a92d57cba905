@@ -1,7 +1,7 @@
-// 1.21.1	2026-03-20T22:13:47.287990965	Block States: techrebirth
+// 1.21.1	2026-03-20T22:53:20.629249129	Block States: techrebirth
 28ed1f24fca50bd3104b74b5b1769c14c16e3b25 assets/techrebirth/blockstates/blazing_gold_block.json
 39d9f7e8812414ef0315cc03adb05dcfe35e8784 assets/techrebirth/blockstates/energy_bank.json
-b63fb566be527aefaf0d940094d1b790c74a2bf3 assets/techrebirth/blockstates/energy_cable.json
+339369277abdd002c8d1600e832d8f0a9b4fbed4 assets/techrebirth/blockstates/energy_cable.json
 d9ad8977b6efe2cf11c55e0c6450f1272950154a assets/techrebirth/blockstates/invar_block.json
 10b61581f026a7f788dbb2e51b6f0b4129cc2ab5 assets/techrebirth/blockstates/lead_block.json
 4e9c7ebaffea0618a1b0fe4a3075426e4d6f3cd1 assets/techrebirth/blockstates/nickel_block.json
@@ -10,7 +10,7 @@ f5260eb9e160c5c167e2be893ec8ffa84e22a77c assets/techrebirth/blockstates/tin_bloc
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/blazing_gold_block.json
 47c22c9a1302ecfcddb4c09a8d4b2ce7fe91e762 assets/techrebirth/models/block/energy_bank.json
 9bd3b77b8a8e75a7f0179170d423c309557db618 assets/techrebirth/models/block/energy_cable_core.json
-7afca0d1a998066cc3a09fae18e1cded67c3be28 assets/techrebirth/models/block/energy_cable_part.json
+71a5f327ead5e826ecdf68b8e978fb9a11d7521b assets/techrebirth/models/block/energy_cable_part.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/invar_block.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/lead_block.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/nickel_block.json
