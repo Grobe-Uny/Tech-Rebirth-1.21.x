@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "techrebirth:item/ingots/conductium_ingot"
+  }
+}

@@ -2,17 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "X": {
-      "item": "minecraft:clay_ball"
+    "C": {
+      "item": "techrebirth:conductium_ingot"
     },
-    "Y": {
-      "item": "techrebirth:redstone_reception_coil"
+    "I": {
+      "item": "techrebirth:isolatum_composite"
     }
   },
   "pattern": [
-    "XXX",
-    "XYX",
-    "XXX"
+    "III",
+    "CCC",
+    "III"
   ],
   "result": {
     "count": 1,

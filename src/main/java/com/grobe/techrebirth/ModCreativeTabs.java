@@ -35,6 +35,9 @@ public class ModCreativeTabs {
                         output.accept(ModItems.DIAMOND_POWDER);
                         output.accept(ModItems.OBSIDIAN_POWDER);
                         output.accept(ModItems.LITHIUM_POWDER);
+                        output.accept(ModItems.ISOLATUM_BLEND);
+                        output.accept(ModItems.ISOLATUM_COMPOSITE);
+                        output.accept(ModItems.CONDUCTIUM_INGOT);
                         output.accept(ModItems.REDSTONE_RECEPTION_COIL);
                         output.accept(ModItems.COOKED_CARROT);
                         output.accept(ModItems.EFFICIENCY_UPGRADE);

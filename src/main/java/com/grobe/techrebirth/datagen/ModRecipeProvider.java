@@ -20,6 +20,7 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -125,6 +126,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/electric_purifier"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, new ItemStack (ModItems.ISOLATUM_BLEND.get(),16))
+                .pattern("GSG")
+                .pattern("SCS")
+                .pattern("GSG")
+                .define('G', Items.GRAVEL)
+                .define('S', Items.SAND)
+                .define('C', Items.COAL)
+                .unlockedBy("has_coal", has(Items.COAL))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "cable/isolatum_blend"));
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ENERGY_BANK.get())
                 .pattern("ILI")
                 .pattern("LML")
@@ -136,9 +146,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/energy_bank"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ENERGY_CABLE.get())
-                .pattern("XXX").pattern("XYX").pattern("XXX")
-                .define('X', Items.CLAY_BALL).define('Y', ModItems.REDSTONE_RECEPTION_COIL.get())
-                .unlockedBy("has_redstone_reception_coil", has(ModItems.REDSTONE_RECEPTION_COIL.get()))
+                .pattern("III").pattern("CCC").pattern("III")
+                .define('I', ModItems.ISOLATUM_COMPOSITE).define('C', ModItems.CONDUCTIUM_INGOT.get())
+                .unlockedBy("has_conductium_ingot", has(ModItems.CONDUCTIUM_INGOT.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "cable/energy_cable"));
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MACHINE_BASE.get())
                 .pattern("YZY")
@@ -248,6 +258,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildAlloyRecipes(baseGoldiumReq, new ItemStack(ModItems.BASE_GOLDIUM_INGOT.get(), 2),200, "has_gold", ModItems.BASE_GOLDIUM_INGOT.get(),recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/base_goldium_alloy"));
         var baseObsidianReq = createIngredients(ModItems.OBSIDIAN_POWDER, Items.IRON_INGOT);
         buildAlloyRecipes(baseObsidianReq, new ItemStack(ModItems.BASE_OBSIDIAN_INGOT.get(), 1), 340, "has_obsidian_powder", ModItems.OBSIDIAN_POWDER.get(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/base_obsidian_alloy"));
+        var conductiumReq = createIngredients(Items.IRON_INGOT, Items.REDSTONE);
+        buildAlloyRecipes(conductiumReq, new ItemStack(ModItems.CONDUCTIUM_INGOT.get(), 1), 100, "has_conductium", ModItems.CONDUCTIUM_INGOT.get(), recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloys/conductium_alloy"));
         //endregion
 
         //region centrifuge recipes
@@ -291,6 +303,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_TIN_POWDER, ModItems.TIN_INGOT, 0.7f);
         simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 100, ModItems.PURIFIED_NICKEL_POWDER, ModItems.NICKEL_INGOT, 0.7f);
         simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 120, ModItems.LITHIUM_POWDER, ModItems.LITHIUM_INGOT, 0.6f);
+        simpleCookingRecipe(recipeOutput, "smelting", RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, 50, ModItems.ISOLATUM_BLEND, ModItems.ISOLATUM_COMPOSITE, 0.3f);
 
         // Example food: keep near ~1.4–1.8s in machine; 160 vanilla -> 28.8 ticks (~1.44s)
         buildFoodCookingRecipe(Items.CARROT, ModItems.COOKED_CARROT, 2, 160, recipeOutput, "has_carrot", Items.CARROT);

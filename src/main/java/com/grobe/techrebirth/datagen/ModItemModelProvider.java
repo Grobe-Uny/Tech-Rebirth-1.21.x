@@ -81,9 +81,11 @@ public class ModItemModelProvider extends ItemModelProvider {
        ingotHandheldItem(ModItems.BASE_OBSIDIAN_INGOT);
        ingotHandheldItem(ModItems.REFINED_OBSIDIAN_INGOT);
        ingotHandheldItem(ModItems.LITHIUM_INGOT);
+       ingotHandheldItem(ModItems.CONDUCTIUM_INGOT);
 
 
-
+        generalItem(ModItems.ISOLATUM_BLEND);
+        generalItem(ModItems.ISOLATUM_COMPOSITE);
 
 
        // Generate models for all nuggets using a single base texture
@@ -161,6 +163,11 @@ public class ModItemModelProvider extends ItemModelProvider {
        return withExistingParent(item.getId().getPath(),
                ResourceLocation.parse("item/handheld")).texture("layer0",
                ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID,  "item/tools/" + item.getId().getPath()));
+    }
+    private ItemModelBuilder generalItem(DeferredItem<?> item){
+       return withExistingParent(item.getId().getPath(),
+               ResourceLocation.parse("item/generated")).texture("layer0",
+               ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID,  "item/" + item.getId().getPath()));
     }
 
     private ItemModelBuilder powderHandheldItem(DeferredItem<?> item){

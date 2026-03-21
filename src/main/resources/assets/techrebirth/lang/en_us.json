@@ -74,6 +74,9 @@
   "item.techrebirth.lithium_powder": "Lithium Powder",
   "block.techrebirth.lithium_ore": "Lithium Ore",
   "item.techrebirth.lithium_ingot": "Lithium Ingot",
+  "item.techrebirth.isolatum_blend": "Isolatum Blend",
+  "item.techrebirth.isolatum_composite": "Isolatum Composite",
+  "item.techrebirth.conductium_ingot": "Conductium Ingot",
 
 
   "block.techrebirth.machine_base": "Machine Base",

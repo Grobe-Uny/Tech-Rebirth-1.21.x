@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_conductium_ingot": {
+    "has_coal": {
       "conditions": {
         "items": [
           {
-            "items": "techrebirth:conductium_ingot"
+            "items": "minecraft:coal"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "techrebirth:cable/energy_cable"
+        "recipe": "techrebirth:cable/isolatum_blend"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_conductium_ingot"
+      "has_coal"
     ]
   ],
   "rewards": {
     "recipes": [
-      "techrebirth:cable/energy_cable"
+      "techrebirth:cable/isolatum_blend"
     ]
   }
 }
