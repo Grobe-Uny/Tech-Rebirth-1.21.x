@@ -16,6 +16,7 @@ import com.grobe.techrebirth.block.custom.generator.GeneratorBlock;
 import com.grobe.techrebirth.block.custom.purifier.ElectricPurifierBlock;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.util.MetalType;
+import com.sun.beans.WeakCache;
 import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
@@ -36,6 +37,7 @@ public class ModBlocks {
     // A map to hold dynamically registered ore blocks
     public static final Map<MetalType, DeferredBlock<Block>> ORE_BLOCKS = new EnumMap<>(MetalType.class);
 
+
     static {
         for(MetalType metal : MetalType.values()){
             // Skip Diamond, as we only want the nugget, not the block
@@ -48,6 +50,11 @@ public class ModBlocks {
                     )));
         }
     }
+
+    public static final DeferredBlock<Block> LIQUIFIED_COAL_BLOCK = registerBlock("liquified_coal_block",
+    () -> new Block(BlockBehaviour.Properties.of()
+            .liquid()
+            .);
 
     public static final DeferredBlock<Block> MACHINE_BASE = registerBlock("machine_base",
             ()-> new Block(BlockBehaviour.Properties.of()

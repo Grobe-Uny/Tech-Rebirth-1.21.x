@@ -4,22 +4,51 @@
     {
       "faces": {
         "down": {
-          "texture": "#all"
+          "texture": "#all",
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            16.0
+          ]
         },
         "east": {
-          "texture": "#all"
+          "rotation": 90,
+          "texture": "#all",
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            16.0
+          ]
         },
         "north": {
-          "texture": "#all"
-        },
-        "south": {
-          "texture": "#all"
+          "texture": "#all",
+          "uv": [
+            2.0,
+            4.0,
+            6.0,
+            8.0
+          ]
         },
         "up": {
-          "texture": "#all"
+          "texture": "#all",
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            16.0
+          ]
         },
         "west": {
-          "texture": "#all"
+          "rotation": 90,
+          "texture": "#all",
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            16.0
+          ]
         }
       },
       "from": [
@@ -35,7 +64,7 @@
     }
   ],
   "textures": {
-    "all": "techrebirth:block/cable/energy_cable",
-    "particle": "techrebirth:block/cable/energy_cable"
+    "all": "techrebirth:block/cable/energy_cable_arm",
+    "particle": "techrebirth:block/cable/energy_cable_arm"
   }
 }
