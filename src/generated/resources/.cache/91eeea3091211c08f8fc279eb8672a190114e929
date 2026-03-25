@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-21T01:34:49.378034109	Item Models: techrebirth
+// 1.21.1	2026-03-25T02:41:46.128588202	Item Models: techrebirth
 cfc121e4096043e5f6f05f4a600492a155562e4d assets/techrebirth/models/item/base_obsidian_ingot.json
 43dc8e4e033d0c73ab2765434cf12291a5e99715 assets/techrebirth/models/item/blazing_gold_axe.json
 90997d5498d99ac757025865d492905fe22a89c7 assets/techrebirth/models/item/blazing_gold_block.json
@@ -60,6 +60,7 @@ d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/invar_nu
 7322a2eb90730fe04c315245363fac9ebf0ca3c1 assets/techrebirth/models/item/isolatum_composite.json
 bcdc921a039d88fcf634c8cb5fe21feaeb36aea0 assets/techrebirth/models/item/lead_block.json
 d7d626851d506a00e05e3c05419fc157b7ec4540 assets/techrebirth/models/item/lead_nugget.json
+9b0002ace596206488a778077c69c1e42b5e6f99 assets/techrebirth/models/item/liquified_coal_bucket.json
 a595c92c07bac4132d7719af4241ad26ea3dfbcc assets/techrebirth/models/item/lithium_ingot.json
 2aded1368b131f9b9f32091f6c11378c9564daac assets/techrebirth/models/item/lithium_powder.json
 83472565bd111d6906cdb1d19e3c8577d6498681 assets/techrebirth/models/item/nickel_block.json

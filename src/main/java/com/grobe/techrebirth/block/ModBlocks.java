@@ -14,10 +14,9 @@ import com.grobe.techrebirth.block.custom.FluidTankBlock;
 import com.grobe.techrebirth.block.custom.furnace.ReinforcedElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.generator.GeneratorBlock;
 import com.grobe.techrebirth.block.custom.purifier.ElectricPurifierBlock;
+import com.grobe.techrebirth.fluid.ModFluids;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.util.MetalType;
-import com.sun.beans.WeakCache;
-import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -26,6 +25,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.awt.*;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -36,7 +37,6 @@ public class ModBlocks {
 
     // A map to hold dynamically registered ore blocks
     public static final Map<MetalType, DeferredBlock<Block>> ORE_BLOCKS = new EnumMap<>(MetalType.class);
-
 
     static {
         for(MetalType metal : MetalType.values()){
@@ -51,10 +51,6 @@ public class ModBlocks {
         }
     }
 
-    public static final DeferredBlock<Block> LIQUIFIED_COAL_BLOCK = registerBlock("liquified_coal_block",
-    () -> new Block(BlockBehaviour.Properties.of()
-            .liquid()
-            .);
 
     public static final DeferredBlock<Block> MACHINE_BASE = registerBlock("machine_base",
             ()-> new Block(BlockBehaviour.Properties.of()
@@ -202,6 +198,9 @@ public class ModBlocks {
                     .sound(SoundType.METAL)
                     .noOcclusion()
             ));
+            
+    public static final DeferredBlock<LiquidBlock> LIQUIFIED_COAL_BLOCK = BLOCKS.register("liquified_coal_block",
+            () -> new LiquidBlock(ModFluids.SOURCE_LIQUIFIED_COAL.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).noLootTable()));
 
     private static <T extends  Block> DeferredBlock<T> registerBlock (String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

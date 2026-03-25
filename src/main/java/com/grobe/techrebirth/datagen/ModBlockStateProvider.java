@@ -6,6 +6,8 @@ import com.grobe.techrebirth.block.custom.cable.EnergyCableBlock;
 import com.grobe.techrebirth.util.MetalType;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.models.blockstates.Variant;
+import net.minecraft.data.models.blockstates.VariantProperty;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
@@ -23,11 +25,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        //oreBlock(ModBlocks.LITHIUM_ORE); // Assuming this was a placeholder or exists
+        oreBlock(ModBlocks.LITHIUM_ORE);
 
         columnBlock(ModBlocks.ENERGY_BANK);
 
         cableBlock(ModBlocks.ENERGY_CABLE);
+
+        fluidBlock(ModBlocks.LIQUIFIED_COAL_BLOCK);
 
         // Loop through all the dynamically registered ore blocks
         for (Map.Entry<MetalType, DeferredBlock<Block>> entry : ModBlocks.ORE_BLOCKS.entrySet()) {
@@ -152,5 +156,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .part().modelFile(partModel).rotationY(270).addModel().condition(EnergyCableBlock.WEST, true).end()
                 .part().modelFile(partModel).rotationX(270).addModel().condition(EnergyCableBlock.UP, true).end()
                 .part().modelFile(partModel).rotationX(90).addModel().condition(EnergyCableBlock.DOWN, true).end();
+    }
+
+    private void fluidBlock(DeferredBlock<?> deferredBlock) {
+        simpleBlock(deferredBlock.get(), models().withExistingParent(deferredBlock.getId().getPath(), mcLoc("block/water")));
     }
 }

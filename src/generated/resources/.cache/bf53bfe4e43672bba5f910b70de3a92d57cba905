@@ -1,9 +1,11 @@
-// 1.21.1	2026-03-21T04:26:43.950737946	Block States: techrebirth
+// 1.21.1	2026-03-25T03:23:58.032566635	Block States: techrebirth
 28ed1f24fca50bd3104b74b5b1769c14c16e3b25 assets/techrebirth/blockstates/blazing_gold_block.json
 39d9f7e8812414ef0315cc03adb05dcfe35e8784 assets/techrebirth/blockstates/energy_bank.json
 339369277abdd002c8d1600e832d8f0a9b4fbed4 assets/techrebirth/blockstates/energy_cable.json
 d9ad8977b6efe2cf11c55e0c6450f1272950154a assets/techrebirth/blockstates/invar_block.json
 10b61581f026a7f788dbb2e51b6f0b4129cc2ab5 assets/techrebirth/blockstates/lead_block.json
+13f13df925718949aff17bfb7de7b4cc362b1299 assets/techrebirth/blockstates/liquified_coal_block.json
+e2ca310a09ace5417054661d0726cc63ec5a75a8 assets/techrebirth/blockstates/lithium_ore.json
 4e9c7ebaffea0618a1b0fe4a3075426e4d6f3cd1 assets/techrebirth/blockstates/nickel_block.json
 3330d217146430e7d987b3a244385dbb988969a6 assets/techrebirth/blockstates/steel_block.json
 f5260eb9e160c5c167e2be893ec8ffa84e22a77c assets/techrebirth/blockstates/tin_block.json
@@ -13,7 +15,10 @@ f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/blazing
 a7e8e8039b769ba305ad182f4384510bfe4fa13d assets/techrebirth/models/block/energy_cable_part.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/invar_block.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/lead_block.json
+5b766e0f61b66c7c6e57476273d2725d32055dd6 assets/techrebirth/models/block/liquified_coal_block.json
+6171fb09fd388526123dbcd6674c3611fc438a3e assets/techrebirth/models/block/lithium_ore.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/nickel_block.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/steel_block.json
 f131c85d92aeb901ec83ca3cc20d2cc419ae5f14 assets/techrebirth/models/block/tin_block.json
 0dbed1db6401b2307405a7326c8b6fd92d15cfe2 assets/techrebirth/models/item/energy_bank.json
+a2e316ce1fb77976d5eb950218eb81dbda1dd520 assets/techrebirth/models/item/lithium_ore.json

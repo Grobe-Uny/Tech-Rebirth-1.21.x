@@ -77,7 +77,9 @@
   "item.techrebirth.isolatum_blend": "Isolatum Blend",
   "item.techrebirth.isolatum_composite": "Isolatum Composite",
   "item.techrebirth.conductium_ingot": "Conductium Ingot",
-
+  "item.techrebirth.liquified_coal_bucket": "Bucket of Liquified Coal",
+  "block.techrebirth.liquified_coal_block":"Liquified Coal",
+  "fluid_type.techrebirth.liquified_coal":"Liquified Coal",
 
   "block.techrebirth.machine_base": "Machine Base",
   "block.techrebirth.fluid_tank": "Fluid Tank",

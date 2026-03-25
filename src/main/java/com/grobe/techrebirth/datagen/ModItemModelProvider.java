@@ -86,6 +86,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         generalItem(ModItems.ISOLATUM_BLEND);
         generalItem(ModItems.ISOLATUM_COMPOSITE);
+        generalItem(ModItems.LIQUIFIED_COAL_BUCKET);
 
 
        // Generate models for all nuggets using a single base texture
@@ -181,5 +182,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                ResourceLocation.parse("item/generated")).texture("layer0",  
                ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID,  "item/ingots/" + item.getId().getPath()));
     }
+
+
 
 }

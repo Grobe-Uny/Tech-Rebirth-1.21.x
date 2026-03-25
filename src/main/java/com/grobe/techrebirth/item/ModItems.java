@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.item;
 
 import com.grobe.techrebirth.TechRebirth;
+import com.grobe.techrebirth.fluid.ModFluids;
 import com.grobe.techrebirth.item.custom.TinArmorItem;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
 import com.grobe.techrebirth.item.custom.WrenchItem;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -26,7 +28,7 @@ import java.util.Map;
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(TechRebirth.MODID);
 
-    // A map to hold dynamically registered nuggets
+    // A map to hold our dynamically registered nuggets
     public static final Map<MetalType, DeferredItem<Item>> NUGGETS = new EnumMap<>(MetalType.class);
 
 
@@ -157,6 +159,9 @@ public class ModItems {
             ));
     public static final DeferredItem<EnchantedBookItem> LIGHTNING_STRIKER_ENCHANTED_BOOK = ITEMS.register("lightning_striker_enchanted_book",
             () -> new EnchantedBookItem(new Item.Properties()));
+
+    public static final DeferredItem<Item> LIQUIFIED_COAL_BUCKET = ITEMS.register("liquified_coal_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_LIQUIFIED_COAL.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
 // Armor
     // Blazing gold

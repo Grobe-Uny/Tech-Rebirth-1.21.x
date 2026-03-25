@@ -3,6 +3,8 @@ package com.grobe.techrebirth;
 import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.block.ModBlocks;
 import com.grobe.techrebirth.enchantment.ModEnchantmentEffects;
+import com.grobe.techrebirth.fluid.ModFluidTypes;
+import com.grobe.techrebirth.fluid.ModFluids;
 import com.grobe.techrebirth.gui.ModMenuTypes;
 import com.grobe.techrebirth.gui.alloy_smelter.AlloySmelterScreen;
 import com.grobe.techrebirth.gui.electric_centrifuge.ElectricCentrifugeScreen;
@@ -59,6 +61,8 @@ public class TechRebirth {
         ModMenuTypes.register(modEventBus);
         ModDataComponents.DATA_COMPONENTS.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
+        ModFluids.register(modEventBus);
+        ModFluidTypes.register(modEventBus);
 
 
         ModEnchantmentEffects.register(modEventBus);
