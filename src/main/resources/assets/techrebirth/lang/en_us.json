@@ -162,5 +162,6 @@
   "tooltip.techrebirth.tin_armor.effect": "+5% Movement Speed",
   "block.techrebirth.electric_purifier": "Electric Purifier",
   "advancements.techrebirth.more_less.title": "Getting more from less!",
-  "advancements.techrebirth.more_less.description": "Create a Electric Purifier to triple or even quadruple your ore proccesing!"
+  "advancements.techrebirth.more_less.description": "Create a Electric Purifier to triple or even quadruple your ore proccesing!",
+  "block.techrebirth.fluid_infuser": "Fluid Infuser"
 }
