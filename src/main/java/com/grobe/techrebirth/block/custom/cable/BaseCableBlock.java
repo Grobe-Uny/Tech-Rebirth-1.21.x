@@ -121,7 +121,7 @@ public abstract class BaseCableBlock extends BaseEntityBlock implements EntityBl
             if (shouldConnect) connectionCount++;
         }
         
-        boolean renderCore = connectionCount <= 1;
+        boolean renderCore = connectionCount != 2;
         newState = newState.setValue(RENDER_CORE, renderCore);
 
         if (!state.equals(newState)) {

@@ -1,6 +1,5 @@
 package com.grobe.techrebirth.fluid.types;
 
-import com.grobe.techrebirth.TechRebirth;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidType;
