@@ -1,5 +1,6 @@
 package com.grobe.techrebirth.block.custom.entity;
 
+import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.sound.ClientSoundHelper;
 import com.grobe.techrebirth.util.MachineTier;
 import net.minecraft.core.BlockPos;
@@ -9,6 +10,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -135,6 +137,11 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
 
     public float getProgressPercent() {
         return maxProgress > 0 ? (float) progress / maxProgress : 0;
+    }
+
+    protected boolean isValidUpgradeForThisMachine(ItemStack stack) {
+        Item item = stack.getItem();
+        return item == ModItems.SPEED_UPGRADE.get() || item == ModItems.EFFICIENCY_UPGRADE.get();
     }
 
     protected void increaseProgress() {

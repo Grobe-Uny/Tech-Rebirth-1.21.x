@@ -78,11 +78,11 @@ public class ElectricPurifierBlockEntity extends BaseMachineBlockEntity {
             default -> false;
         };
     }
-
-    private boolean isValidUpgradeForThisMachine(ItemStack stack) {
-        Item item = stack.getItem();
-        return item == ModItems.SPEED_UPGRADE.get() || item == ModItems.EFFICIENCY_UPGRADE.get();
-    }
+//
+//    private boolean isValidUpgradeForThisMachine(ItemStack stack) {
+//        Item item = stack.getItem();
+//        return item == ModItems.SPEED_UPGRADE.get() || item == ModItems.EFFICIENCY_UPGRADE.get();
+//    }
 
     @Override
     protected boolean hasRecipe() {

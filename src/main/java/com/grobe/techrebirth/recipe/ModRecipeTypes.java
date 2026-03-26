@@ -19,6 +19,8 @@ public class ModRecipeTypes {
 
     public static final ResourceLocation ALLOY_SMELTER_ID = ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "alloy_smelting");
 
+    public static final ResourceLocation FLUID_INFUSER_ID = ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "fluid_infuser");
+
     public static final DeferredHolder<RecipeType<?>, RecipeType<GeneratorFuelRecipe>> GENERATOR_FUEL_TYPE =
             TYPES.register("generator_fuel", () -> new RecipeType<GeneratorFuelRecipe>() {
                 public String toString() { return GENERATOR_FUEL_ID.toString(); }
@@ -62,6 +64,14 @@ public class ModRecipeTypes {
             });
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PurifierRecipe>> PURIFIER_SERIALIZER =
             SERIALIZERS.register("purifying", PurifierRecipe.Serializer::new);
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<FluidInfuserRecipe>> INFUSER_TYPE =
+            TYPES.register("fluid_infusing", () ->  new RecipeType<FluidInfuserRecipe>() {
+                @Override
+                public String toString() {
+                    return FLUID_INFUSER_ID.toString();
+                }
+            })
 
     public static void register(IEventBus bus) {
         SERIALIZERS.register(bus);
