@@ -44,7 +44,8 @@ public class ModCapabilities {
                 ModBlockEntities.REINFORCED_ELECTRIC_FURNACE.get(),
                 ModBlockEntities.ELECTRIC_CENTRIFUGE_BE.get(),
                 ModBlockEntities.ELECTRIC_PURIFIER.get(),
-                ModBlockEntities.ENERGY_BANK.get()
+                ModBlockEntities.ENERGY_BANK.get(),
+                ModBlockEntities.FLUID_INFUSER.get()
         );
     }
 
@@ -65,7 +66,8 @@ public class ModCapabilities {
                 ModBlockEntities.REINFORCED_ELECTRIC_FURNACE.get(),
                 ModBlockEntities.ELECTRIC_CENTRIFUGE_BE.get(),
                 ModBlockEntities.ELECTRIC_PURIFIER.get(),
-                ModBlockEntities.ENERGY_BANK.get()
+                ModBlockEntities.ENERGY_BANK.get(),
+                ModBlockEntities.FLUID_INFUSER.get()
             );
         }
 

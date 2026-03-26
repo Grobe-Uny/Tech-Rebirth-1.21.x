@@ -66,12 +66,15 @@ public class ModRecipeTypes {
             SERIALIZERS.register("purifying", PurifierRecipe.Serializer::new);
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<FluidInfuserRecipe>> INFUSER_TYPE =
-            TYPES.register("fluid_infusing", () ->  new RecipeType<FluidInfuserRecipe>() {
+            TYPES.register("fluid_infuser", () ->  new RecipeType<FluidInfuserRecipe>() {
                 @Override
                 public String toString() {
                     return FLUID_INFUSER_ID.toString();
                 }
-            })
+            });
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<FluidInfuserRecipe>> INFUSER_SERIALIZER =
+            SERIALIZERS.register("fluid_infuser", FluidInfuserRecipe.Serializer::new);
 
     public static void register(IEventBus bus) {
         SERIALIZERS.register(bus);

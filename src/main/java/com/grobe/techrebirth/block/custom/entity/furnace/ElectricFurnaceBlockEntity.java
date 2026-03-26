@@ -74,7 +74,7 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity implement
         return opt.isPresent();
     }
 
-    private boolean isValidUpgradeForThisMachine(ItemStack stack) {
+    protected boolean isValidUpgradeForThisMachine(ItemStack stack) {
         Item item = stack.getItem();
         return item == ModItems.SPEED_UPGRADE.get() ||item == ModItems.EFFICIENCY_UPGRADE.get();
     }

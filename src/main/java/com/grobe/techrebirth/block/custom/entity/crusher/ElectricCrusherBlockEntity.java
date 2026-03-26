@@ -108,7 +108,7 @@ public class ElectricCrusherBlockEntity extends BaseMachineBlockEntity implement
         };
     }
 
-    private boolean isValidUpgradeForThisMachine(ItemStack stack) {
+    protected boolean isValidUpgradeForThisMachine(ItemStack stack) {
         var item = stack.getItem();
         return item == ModItems.SPEED_UPGRADE.get() || item == ModItems.EFFICIENCY_UPGRADE.get();
     }

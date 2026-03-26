@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.recipe;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -10,28 +11,25 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class FluidInfuserRecipe implements Recipe<SingleRecipeInput> {
     private final Ingredient ingredient;
+    private final FluidStack fluidInput;
     private final ItemStack result;
     private final int time;
-    private final ItemStack chanceOutput;
-    private final float chanceRate;
 
-    public FluidInfuserRecipe(Ingredient ingredient, ItemStack result, int time, ItemStack chanceOutput, float chanceRate) {
+    public FluidInfuserRecipe(Ingredient ingredient, FluidStack fluidInput, ItemStack result, int time) {
         this.ingredient = ingredient;
+        this.fluidInput = fluidInput;
         this.result = result;
         this.time = time;
-        this.chanceOutput = (chanceOutput == null || chanceOutput.isEmpty()) ? ItemStack.EMPTY : chanceOutput;
-        this.chanceRate = chanceRate;
     }
 
     public Ingredient getIngredient() { return ingredient; }
+    public FluidStack getFluidInput() { return fluidInput; }
     public ItemStack getResult() { return result; }
     public int getTime() { return time; }
-    public ItemStack getChanceOutput() { return chanceOutput; }
-    public float getChanceRate() { return chanceRate; }
-    public boolean hasChanceOutput() {return chanceOutput != null && !chanceOutput.isEmpty();}
 
     @Override
     public boolean matches(SingleRecipeInput container, Level level) {
@@ -50,10 +48,10 @@ public class FluidInfuserRecipe implements Recipe<SingleRecipeInput> {
     public ItemStack getResultItem(HolderLookup.Provider provider) { return result; }
 
     @Override
-    public RecipeSerializer<?> getSerializer() { return ModRecipeTypes.CRUSHING_SERIALIZER.get(); }
+    public RecipeSerializer<?> getSerializer() { return ModRecipeTypes.INFUSER_SERIALIZER.get(); }
 
     @Override
-    public RecipeType<?> getType() { return ModRecipeTypes.CRUSHING_TYPE.get(); }
+    public RecipeType<?> getType() { return ModRecipeTypes.INFUSER_TYPE.get(); }
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
@@ -64,25 +62,23 @@ public class FluidInfuserRecipe implements Recipe<SingleRecipeInput> {
 
     public static class Serializer implements RecipeSerializer<FluidInfuserRecipe> {
         @Override
-        public com.mojang.serialization.MapCodec<FluidInfuserRecipe> codec() {
+        public MapCodec<FluidInfuserRecipe> codec() {
             return RecordCodecBuilder.mapCodec(instance -> instance.group(
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(r -> r.ingredient),
+                    FluidStack.CODEC.fieldOf("fluid_input").forGetter(r -> r.fluidInput),
                     ItemStack.CODEC.fieldOf("result").forGetter(r -> r.result),
-                    Codec.INT.optionalFieldOf("time", 72).forGetter(r -> r.time),
-                    ItemStack.CODEC.optionalFieldOf("chance_output", ItemStack.EMPTY).forGetter(r -> r.chanceOutput),
-                    Codec.FLOAT.optionalFieldOf("chance_rate", 0.0f).forGetter(r -> r.chanceRate)
-            ).apply(instance, CrushingRecipe::new));
+                    Codec.INT.optionalFieldOf("time", 100).forGetter(r -> r.time)
+            ).apply(instance, FluidInfuserRecipe::new));
         }
 
         @Override
         public StreamCodec<RegistryFriendlyByteBuf, FluidInfuserRecipe> streamCodec() {
             return StreamCodec.composite(
-                    Ingredient.CONTENTS_STREAM_CODEC, (CrushingRecipe r) -> r.ingredient,
-                    ItemStack.STREAM_CODEC, (CrushingRecipe r) -> r.result,
-                    ByteBufCodecs.VAR_INT, (CrushingRecipe r) -> r.time,
-                    ItemStack.OPTIONAL_STREAM_CODEC, (CrushingRecipe r) -> r.chanceOutput,
-                    ByteBufCodecs.FLOAT, (CrushingRecipe r) -> r.chanceRate,
-                    CrushingRecipe::new
+                    Ingredient.CONTENTS_STREAM_CODEC, (FluidInfuserRecipe r) -> r.ingredient,
+                    FluidStack.STREAM_CODEC, (FluidInfuserRecipe r) -> r.fluidInput,
+                    ItemStack.STREAM_CODEC, (FluidInfuserRecipe r) -> r.result,
+                    ByteBufCodecs.VAR_INT, (FluidInfuserRecipe r) -> r.time,
+                    FluidInfuserRecipe::new
             );
         }
     }
