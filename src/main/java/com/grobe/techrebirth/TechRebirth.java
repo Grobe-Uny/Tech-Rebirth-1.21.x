@@ -12,6 +12,7 @@ import com.grobe.techrebirth.gui.electric_crusher.ElectricCrusherScreen;
 import com.grobe.techrebirth.gui.electric_furnace.ElectricFurnaceScreen;
 import com.grobe.techrebirth.gui.electric_purifier.ElectricPurifierScreen;
 import com.grobe.techrebirth.gui.generator.GeneratorScreen;
+import com.grobe.techrebirth.gui.infuser.FluidInfuserScreen;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.sound.ModSounds;
@@ -106,6 +107,7 @@ public class TechRebirth {
             event.register(ModMenuTypes.ALLOY_SMELTER_MENU.get(), AlloySmelterScreen::new);
             event.register(ModMenuTypes.ELECTRIC_CENTRIFUGE_MENU.get(), ElectricCentrifugeScreen::new);
             event.register(ModMenuTypes.ELECTRIC_PURIFIER_MENU.get(), ElectricPurifierScreen::new);
+            event.register(ModMenuTypes.FLUID_INFUSER_MENU.get(), FluidInfuserScreen::new);
         }
     }
 }

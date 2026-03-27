@@ -35,6 +35,9 @@ import static com.grobe.techrebirth.recipe.GeneratorFuelRecipeBuilder.fuel;
 import static com.grobe.techrebirth.recipe.AlloySmeltingRecipeBuilder.alloySmelting;
 import static com.grobe.techrebirth.recipe.CentrifugeRecipeBuilder.centrifuging;
 import static com.grobe.techrebirth.recipe.PurifierRecipeBuilder.purifying;
+import static com.grobe.techrebirth.recipe.FluidInfuserRecipeBuilder.infusing;
+
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
     public ModRecipeProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pRegistries) {
@@ -43,6 +46,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput){
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FLUID_INFUSER.get())
+                .pattern(" G ")
+                .pattern("PXP")
+                .pattern("BRB")
+                .define('P', ModItems.PURIFIED_IRON_POWDER)
+                .define('X', ModBlocks.MACHINE_BASE)
+                .define('B', Items.BUCKET)
+                .define('R', ModItems.REDSTONE_RECEPTION_COIL)
+                .define('G', ModItems.IRON_GEAR)
+                .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/fluid_infuser"));
         // Helper to compute vanilla cooking time so Electric Furnace lands on target seconds
         // Electric Furnace maps vanilla cook time by MACHINE_SPEED_FACTOR (see ElectricFurnaceBlockEntity)
         final float EF_SPEED = 0.18f;
@@ -275,6 +290,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "centrifuging/refined_obsidian"));        
         //endregion
 
+
+        //region fluid infuser recipes
+        infusing(Ingredient.of(Items.IRON_INGOT), new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 1000), new ItemStack(ModItems.STEEL_INGOT.get()))
+                .unlockedBy("has_fluid_infuser", has(ModBlocks.FLUID_INFUSER.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "fluid_infusing/steel_from_iron_and_water"));
+        //endregion
 
         //region purifying recipes
         purifying(Ingredient.of(Items.RAW_IRON), new ItemStack(ModItems.PURIFIED_IRON_POWDER.get(), 4)).unlockedBy("has_electric_purifier", has(ModBlocks.ELECTRIC_PURIFIER.get())).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "purifying/purified_iron_from_raw"));
