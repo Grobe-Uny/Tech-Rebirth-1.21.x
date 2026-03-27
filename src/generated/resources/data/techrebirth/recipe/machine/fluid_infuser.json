@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "G": {
+      "item": "techrebirth:iron_gear"
+    },
+    "P": {
+      "item": "techrebirth:purified_iron_powder"
+    },
+    "R": {
+      "item": "techrebirth:redstone_reception_coil"
+    },
+    "X": {
+      "item": "techrebirth:machine_base"
+    }
+  },
+  "pattern": [
+    " G ",
+    "PXP",
+    "BRB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "techrebirth:fluid_infuser"
+  }
+}

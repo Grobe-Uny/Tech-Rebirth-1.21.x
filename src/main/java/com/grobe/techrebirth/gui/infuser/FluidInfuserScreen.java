@@ -18,7 +18,7 @@ import java.util.List;
 
 public class FluidInfuserScreen extends BaseMachineScreen<FluidInfuserMenu> {
     private static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/electric_purifier_gui.png");
+            ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "textures/gui/fluid_infuser_gui.png");
 
     private static final int FLUID_TANK_X = 26;
     private static final int FLUID_TANK_Y = 18;

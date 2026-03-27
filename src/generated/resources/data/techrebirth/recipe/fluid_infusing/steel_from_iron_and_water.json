@@ -1,0 +1,14 @@
+{
+  "type": "techrebirth:fluid_infuser",
+  "fluid_input": {
+    "amount": 1000,
+    "id": "minecraft:water"
+  },
+  "ingredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": {
+    "count": 1,
+    "id": "techrebirth:steel_ingot"
+  }
+}

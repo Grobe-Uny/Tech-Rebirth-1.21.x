@@ -35,6 +35,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.ELECTRIC_CENTRIFUGE.get());
         dropSelf(ModBlocks.CRUCIBLE.get());
         dropSelf(ModBlocks.ELECTRIC_PURIFIER.get());
+        dropSelf(ModBlocks.FLUID_INFUSER.get());
 
         dropSelf(ModBlocks.FLUID_TANK.get());
 

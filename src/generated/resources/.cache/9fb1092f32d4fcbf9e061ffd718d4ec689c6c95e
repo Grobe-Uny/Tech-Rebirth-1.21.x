@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-21T01:34:49.393536359	Recipes
+// 1.21.1	2026-03-27T03:10:08.725747589	Recipes
 cbd40f01eb786af08a8885734d29115ec8dba692 data/minecraft/advancement/recipes/food/copper_ingot_from_smelting.json
 6cffdc083761cac79abb114140ade0c743125c1e data/minecraft/advancement/recipes/food/gold_ingot_from_smelting.json
 598332e95e8e028e0610f3b0826f0b6e8b58f1cc data/minecraft/advancement/recipes/food/iron_ingot_from_smelting.json
@@ -92,6 +92,7 @@ ab35268b1f9c2191566f47390c2a09058de44e6a data/techrebirth/advancement/recipes/mi
 d157f40cdb80c7ef728dd3c9c35d0491e8bd7cdd data/techrebirth/advancement/recipes/misc/machine/electric_crusher.json
 bc185fc78c82f3a551ec302052196f652ee10ab8 data/techrebirth/advancement/recipes/misc/machine/electric_purifier.json
 a76378679cac1f62ac3d971ca8b7a80544b55014 data/techrebirth/advancement/recipes/misc/machine/energy_bank.json
+d33a76a65b3f897acd036e2915d2e5ea33415930 data/techrebirth/advancement/recipes/misc/machine/fluid_infuser.json
 96d6140674fed9845753cf8835739ecc8452cb7f data/techrebirth/advancement/recipes/misc/machine/hardened/hardened_alloy_smelter.json
 10e59833fa938d97c64e0fc21b45e2f6fd3dca74 data/techrebirth/advancement/recipes/misc/machine/hardened/hardened_electric_furnace.json
 be78ee50bba2dc61ecea17d6e87e2c5e37468184 data/techrebirth/advancement/recipes/misc/machine/reinforced/reinforced_electric_furnace.json
@@ -165,6 +166,7 @@ a4a5341b58bb9fd597cfc248aed3e1ce117991c0 data/techrebirth/recipe/diamond_ingot_f
 5c1591ed38428d7214c107bb16a2ce40369c1c1b data/techrebirth/recipe/diamond_nugget_from_ingot.json
 e59da8c51750a81dc9063a4414b1cf53fd4f76f9 data/techrebirth/recipe/efficiency_upgrade.json
 c559eb1c17f2f1e24986e1c582ca314614591878 data/techrebirth/recipe/electric_furnace.json
+ab3c5a0139542f886b7530480adad3b72cd3a98e data/techrebirth/recipe/fluid_infusing/steel_from_iron_and_water.json
 3fea04c2e0089f3d756a42225969cb9f2e847e20 data/techrebirth/recipe/gear/copper_gear.json
 38f9ef4a3ca237c6d6311c4dc4150d01e8429cae data/techrebirth/recipe/gear/invar_gear.json
 2048311c56fbe2382d30955ba61075558c7fe545 data/techrebirth/recipe/gear/iron_gear.json
@@ -189,6 +191,7 @@ dcd3f807783e47b1862fa3dac5d85d3392593474 data/techrebirth/recipe/machine/alloy_s
 8dcd6ddd3322d8723c13f2b9cf72bff8a9e27659 data/techrebirth/recipe/machine/electric_crusher.json
 62cfe9c6b93bd0612145b3068aa251a0d987be44 data/techrebirth/recipe/machine/electric_purifier.json
 e113057f16a37ab592af0e35bac02d475e2b3e3b data/techrebirth/recipe/machine/energy_bank.json
+1860702bb8fdd3671d67df240feb7c7acf8f81df data/techrebirth/recipe/machine/fluid_infuser.json
 0558a4d79cb4afc1db693d62d893597fd57d1461 data/techrebirth/recipe/machine/hardened/hardened_alloy_smelter.json
 e422fa0b0556968036a6e305dd2d334663f84fb6 data/techrebirth/recipe/machine/hardened/hardened_electric_furnace.json
 4520b31d5a505ad96018ec880c09e596a418e28e data/techrebirth/recipe/machine/reinforced/reinforced_electric_furnace.json

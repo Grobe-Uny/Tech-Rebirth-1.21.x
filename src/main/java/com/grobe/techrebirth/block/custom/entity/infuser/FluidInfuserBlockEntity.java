@@ -142,7 +142,7 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
             ItemStack result = recipe.getResult();
 
             boolean hasEnoughFluid = fluidTank.getFluidAmount() >= recipe.getFluidInput().getAmount() &&
-                    fluidTank.getFluid().isFluidEqual(recipe.getFluidInput());
+                    fluidTank.getFluid().is(recipe.getFluidInput().getFluid());
 
             return hasEnoughFluid && canInsertAmountIntoOutputSlot() && canInsertItemIntoOutputSlot(result.getItem());
         }).orElse(false);
