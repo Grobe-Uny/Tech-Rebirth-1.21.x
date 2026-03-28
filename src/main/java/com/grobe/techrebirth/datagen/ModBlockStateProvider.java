@@ -6,8 +6,6 @@ import com.grobe.techrebirth.block.custom.cable.EnergyCableBlock;
 import com.grobe.techrebirth.util.MetalType;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.models.blockstates.Variant;
-import net.minecraft.data.models.blockstates.VariantProperty;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;

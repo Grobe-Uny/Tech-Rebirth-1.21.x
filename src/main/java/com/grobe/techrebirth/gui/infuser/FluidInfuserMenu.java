@@ -17,7 +17,7 @@ public class FluidInfuserMenu extends BaseMachineMenu {
     public final FluidInfuserBlockEntity blockEntity;
 
     public FluidInfuserMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, (FluidInfuserBlockEntity) inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(5));
+        this(pContainerId, inv, (FluidInfuserBlockEntity) inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(6));
     }
 
     public FluidInfuserMenu(int pContainerId, Inventory inv, FluidInfuserBlockEntity entity, ContainerData data) {

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "facing=north,lit=false": { "model": "techrebirth:block/machine/fluid_infuser" },
+    "facing=south,lit=false": { "model": "techrebirth:block/machine/fluid_infuser", "y": 180 },
+    "facing=west,lit=false":  { "model": "techrebirth:block/machine/fluid_infuser", "y": 270 },
+    "facing=east,lit=false":  { "model": "techrebirth:block/machine/fluid_infuser", "y": 90 },
+
+    "facing=north,lit=true": { "model": "techrebirth:block/machine/fluid_infuser" },
+    "facing=south,lit=true": { "model": "techrebirth:block/machine/fluid_infuser", "y": 180 },
+    "facing=west,lit=true":  { "model": "techrebirth:block/machine/fluid_infuser", "y": 270 },
+    "facing=east,lit=true":  { "model": "techrebirth:block/machine/fluid_infuser", "y": 90 }
+  }
+}

@@ -12,7 +12,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -25,6 +29,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.fluids.FluidActionResult;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -197,21 +202,10 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
         ItemStack stack = itemHandler.getStackInSlot(FLUID_INPUT_SLOT);
         if (stack.isEmpty()) return;
 
-        FluidUtil.getFluidHandler(stack).ifPresent(handler -> {
-            FluidStack fluidInItem = handler.getFluidInTank(0);
-            if (!fluidInItem.isEmpty()) {
-                int amountToFill = Math.min(fluidInItem.getAmount(), fluidTank.getCapacity() - fluidTank.getFluidAmount());
-                if (amountToFill > 0) {
-                    FluidStack fluidToFill = fluidInItem.copy();
-                    fluidToFill.setAmount(amountToFill);
-                    int filled = fluidTank.fill(fluidToFill, IFluidHandler.FluidAction.EXECUTE);
-                    if (filled > 0) {
-                        handler.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-                        itemHandler.setStackInSlot(FLUID_INPUT_SLOT, handler.getContainer());
-                    }
-                }
-            }
-        });
+        FluidActionResult result = FluidUtil.tryEmptyContainer(stack, fluidTank, FLUID_CAPACITY, null, true);
+        if (result.isSuccess()) {
+            itemHandler.setStackInSlot(FLUID_INPUT_SLOT, result.getResult());
+        }
     }
 
     public FluidTank getFluidTank() {
@@ -237,6 +231,17 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
         if (tag.contains(getFluidTagName())) {
             fluidTank.readFromNBT(provider, tag.getCompound(getFluidTagName()));
         }
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
+        super.onDataPacket(net, pkt, lookupProvider);
     }
 
     public void drops() {

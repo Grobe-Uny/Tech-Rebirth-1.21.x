@@ -242,11 +242,16 @@ public class EnergyCableBlockEntity extends BlockEntity {
             BlockEntity cableBE = level.getBlockEntity(cablePos);
             if (!(cableBE instanceof EnergyCableBlockEntity cable)) continue;
 
+
             for (Direction dir : Direction.values()) {
                 BlockPos neighborPos = cablePos.relative(dir);
 
                 // Preskoči druge kablove
                 if (level.getBlockEntity(neighborPos) instanceof EnergyCableBlockEntity) {
+                    continue;
+                }
+                BlockEntity neighborBE = level.getBlockEntity(neighborPos);
+                if (neighborBE instanceof BaseMachineBlockEntity) {
                     continue;
                 }
 
