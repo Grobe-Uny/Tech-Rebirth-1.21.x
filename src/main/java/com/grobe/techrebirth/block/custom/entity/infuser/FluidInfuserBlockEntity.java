@@ -51,19 +51,57 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
     private static final float POWER_COST_PER_SPEED_UPGRADE = 0.5f;
     private static final float EFFICIENCY_FACTOR = 0.1f;
 
-    public static final int FLUID_CAPACITY = 10000;
-    private final FluidTank fluidTank = new FluidTank(FLUID_CAPACITY) {
+//    public static final int FLUID_CAPACITY = 10000;
+
+    protected final FluidTank fluidTank = new FluidTank(10000){
         @Override
         protected void onContentsChanged() {
             setChanged();
             if (level != null && !level.isClientSide) {
+                // Ovo šalje paket klijentu da se vizualno osvježi (za GUI i render)
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
             }
         }
     };
 
     public FluidInfuserBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-        super(type, pos, state, 5, MachineTier.BASIC, 5); // 5 slots, 5 data values
+        super(type, pos, state, 5, MachineTier.BASIC, 6); // 5 slots, 5 data values
+    }
+    @Override
+    public ContainerData getContainerData() {
+        return new ContainerData() {
+            @Override
+            public int get(int index) {
+                return switch (index) {
+                    case 0 -> progress;
+                    case 1 -> maxProgress;
+                    case 2 -> energyHandler.getEnergyStored();
+                    case 3 -> energyHandler.getMaxEnergyStored();
+                    case 4 -> energyCostPerTick;
+                    case 5 -> fluidTank.getFluidAmount(); // NOVO: Količina tekućine
+                    default -> 0;
+                };
+            }
+
+            @Override
+            public void set(int index, int value) {
+                switch (index) {
+                    case 0 -> progress = value;
+                    case 1 -> maxProgress = value;
+                    case 2 -> energyHandler.setEnergy(value);
+                    case 4 -> energyCostPerTick = value;
+                    case 5 -> {
+                        if (!fluidTank.getFluid().isEmpty()) {
+                            fluidTank.getFluid().setAmount(value);
+                        }
+                    }
+                }
+            }
+            @Override
+            public int getCount() {
+                return 6;
+            }
+        };
     }
 
     public FluidInfuserBlockEntity(BlockPos pos, BlockState state) {
@@ -79,10 +117,13 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
     protected String getInventoryTagName() {
         return "fluid_infuser_inventory";
     }
-
+    @Override
     protected String getFluidTagName() {
         return "fluid_infuser_fluid";
     }
+
+    @Override
+    public IFluidHandler getFluidHandler() { return fluidTank; }
 
     @Override
     protected boolean isItemValid(int slot, ItemStack stack) {
@@ -202,18 +243,13 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
         ItemStack stack = itemHandler.getStackInSlot(FLUID_INPUT_SLOT);
         if (stack.isEmpty()) return;
 
-        FluidActionResult result = FluidUtil.tryEmptyContainer(stack, fluidTank, FLUID_CAPACITY, null, true);
+        FluidActionResult result = FluidUtil.tryEmptyContainer(stack, fluidTank, 10000, null, true);
         if (result.isSuccess()) {
             itemHandler.setStackInSlot(FLUID_INPUT_SLOT, result.getResult());
         }
     }
 
     public FluidTank getFluidTank() {
-        return fluidTank;
-    }
-
-    @Override
-    public IFluidHandler getFluidHandler() {
         return fluidTank;
     }
 

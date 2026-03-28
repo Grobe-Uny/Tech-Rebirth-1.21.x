@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -47,6 +48,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     protected ContainerData data;
 
     protected MachineTier machineTier = MachineTier.BASIC;
+
 
     protected ContainerData createContainerData(int size) {
         return new ContainerData() {
@@ -307,6 +309,10 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         return itemHandler;
     }
 
+    protected String getFluidTagName() {
+        return null;
+    }
+
     // Dodaj fluid support (opcionalno)
     public IFluidHandler getFluidHandler() {
         return null; // Po defaultu nema fluid support
@@ -345,6 +351,14 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         super.saveAdditional(tag, provider);
         tag.put(getEnergyTagName(), energyHandler.serializeNBT(provider));
         tag.put(getInventoryTagName(), getItemHandler().serializeNBT(provider));
+        IFluidHandler fluid = getFluidHandler();
+        String fluidTag = getFluidTagName();
+        if (fluid != null && fluidTag != null) {
+            // NeoForge FluidTank ima serializeNBT metodu
+            if (fluid instanceof net.neoforged.neoforge.fluids.capability.templates.FluidTank tank) {
+                tag.put(fluidTag, tank.writeToNBT(provider, new CompoundTag()));
+            }
+        }
     }
 
     @Override
@@ -357,6 +371,14 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         }
         if(tag.contains(inventoryTag)){
             getItemHandler().deserializeNBT(provider, tag.getCompound(inventoryTag));
+        }
+
+        IFluidHandler fluid = getFluidHandler();
+        String fluidTag = getFluidTagName();
+        if (fluid != null && fluidTag != null && tag.contains(fluidTag)) {
+            if (fluid instanceof net.neoforged.neoforge.fluids.capability.templates.FluidTank tank) {
+                tank.readFromNBT(provider, tag.getCompound(fluidTag));
+            }
         }
     }
 }

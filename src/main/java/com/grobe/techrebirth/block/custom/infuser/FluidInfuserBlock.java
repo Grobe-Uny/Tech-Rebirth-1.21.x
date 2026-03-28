@@ -1,5 +1,6 @@
 package com.grobe.techrebirth.block.custom.infuser;
 
+import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.block.custom.BaseMachineBlock;
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.infuser.FluidInfuserBlockEntity;
@@ -28,7 +29,7 @@ public class FluidInfuserBlock extends BaseMachineBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return super.getTicker(level, state, blockEntityType);
+        return createTicker(level, blockEntityType, ModBlockEntities.FLUID_INFUSER.get());
     }
 
     @Override
