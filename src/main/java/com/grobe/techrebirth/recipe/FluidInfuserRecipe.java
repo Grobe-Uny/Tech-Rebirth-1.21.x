@@ -13,7 +13,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 
-public class FluidInfuserRecipe implements Recipe<SingleRecipeInput> {
+public class FluidInfuserRecipe implements Recipe<FluidInfuserRecipeInput> {
     private final Ingredient ingredient;
     private final FluidStack fluidInput;
     private final ItemStack result;
@@ -32,12 +32,17 @@ public class FluidInfuserRecipe implements Recipe<SingleRecipeInput> {
     public int getTime() { return time; }
 
     @Override
-    public boolean matches(SingleRecipeInput container, Level level) {
-        return ingredient.test(container.item());
+    public boolean matches(FluidInfuserRecipeInput input, Level level) {
+        boolean itemMatches = ingredient.test(input.getItemStack());
+        boolean fluidMatches = !input.getFluidStack().isEmpty() &&
+                input.getFluidStack().is(fluidInput.getFluid()) &&
+                input.getFluidStack().getAmount() >= fluidInput.getAmount();
+
+        return itemMatches && fluidMatches;
     }
 
     @Override
-    public ItemStack assemble(SingleRecipeInput container, HolderLookup.Provider provider) {
+    public ItemStack assemble(FluidInfuserRecipeInput input, HolderLookup.Provider provider) {
         return result.copy();
     }
 

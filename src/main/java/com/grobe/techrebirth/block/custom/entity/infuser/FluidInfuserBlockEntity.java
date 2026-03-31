@@ -6,6 +6,7 @@ import com.grobe.techrebirth.gui.infuser.FluidInfuserMenu;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
 import com.grobe.techrebirth.recipe.FluidInfuserRecipe;
+import com.grobe.techrebirth.recipe.FluidInfuserRecipeInput;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.util.MachineTier;
 import net.minecraft.core.BlockPos;
@@ -129,7 +130,7 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
     protected boolean isItemValid(int slot, ItemStack stack) {
         return switch (slot) {
             case INPUT_SLOT -> true;
-            case OUTPUT_SLOT -> false;
+            case OUTPUT_SLOT -> true;
             case UPGRADE_SLOT_1, UPGRADE_SLOT_2 -> isValidUpgradeForThisMachine(stack);
             case FLUID_INPUT_SLOT -> true; // Allow buckets/fluid containers
             default -> false;
@@ -141,25 +142,75 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
         return getCurrentRecipe().isPresent();
     }
 
-    @Override
-    protected void finishProcessing() {
-        Optional<RecipeHolder<FluidInfuserRecipe>> recipeHolder = getCurrentRecipe();
-        if (recipeHolder.isEmpty()) return;
+//    @Override
+//    protected void finishProcessing() {
+////        Optional<RecipeHolder<FluidInfuserRecipe>> recipeHolder = getCurrentRecipe();
+////        if (recipeHolder.isEmpty()) return;
+////
+////        FluidInfuserRecipe recipe = recipeHolder.get().value();
+////        ItemStack result = recipe.getResult();
+////
+////        // Consume item
+////        this.itemHandler.extractItem(INPUT_SLOT, 1, false);
+////        // Consume fluid
+////        this.fluidTank.drain(recipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE);
+////
+////        // Add result
+////        this.itemHandler.insertItem(OUTPUT_SLOT, result.copy(), false);
+////
+////        resetProgress();
+//
+//        Optional<RecipeHolder<FluidInfuserRecipe>> recipeHolder = getCurrentRecipe();
+//        if (recipeHolder.isEmpty()) return;
+//
+//        FluidInfuserRecipe recipe = recipeHolder.get().value();
+//        ItemStack result = recipe.getResult().copy();
+//
+//        // Provjeri može li se ubaciti PRIJE nego konzumiramo inpute
+//        ItemStack remainder = this.itemHandler.insertItem(OUTPUT_SLOT, result, true); // simulate!
+//        if (!remainder.isEmpty()) return; // nema mjesta, ne radi ništa
+//
+//        // Sad stvarno konzumiraj
+//        this.itemHandler.extractItem(INPUT_SLOT, 1, false);
+//        this.fluidTank.drain(recipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE);
+//        this.itemHandler.insertItem(OUTPUT_SLOT, result.copy(), false); // stvarno ubaci
+//
+//        resetProgress();
+//    }
+@Override
+protected void finishProcessing() {
+    Optional<RecipeHolder<FluidInfuserRecipe>> recipeHolder = getCurrentRecipe();
 
-        FluidInfuserRecipe recipe = recipeHolder.get().value();
-        ItemStack result = recipe.getResult();
+    // DEBUG
+    System.out.println("=== finishProcessing called ===");
+    System.out.println("Recipe present: " + recipeHolder.isPresent());
+    System.out.println("Input slot: " + this.itemHandler.getStackInSlot(INPUT_SLOT));
+    System.out.println("Output slot: " + this.itemHandler.getStackInSlot(OUTPUT_SLOT));
+    System.out.println("Fluid: " + this.fluidTank.getFluidAmount() + "mb");
 
-        // Consume item
-        this.itemHandler.extractItem(INPUT_SLOT, 1, false);
-        // Consume fluid
-        this.fluidTank.drain(recipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE);
-
-        // Add result
-        this.itemHandler.insertItem(OUTPUT_SLOT, result.copy(), false);
-
-        resetProgress();
+    if (recipeHolder.isEmpty()) {
+        System.out.println("EARLY RETURN - no recipe!");
+        return;
     }
 
+    FluidInfuserRecipe recipe = recipeHolder.get().value();
+    ItemStack result = recipe.getResult().copy();
+
+    ItemStack remainder = this.itemHandler.insertItem(OUTPUT_SLOT, result, true);
+    System.out.println("Simulate remainder empty: " + remainder.isEmpty());
+
+    if (!remainder.isEmpty()) {
+        System.out.println("EARLY RETURN - no space!");
+        return;
+    }
+
+    this.itemHandler.extractItem(INPUT_SLOT, 1, false);
+    this.fluidTank.drain(recipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE);
+    ItemStack insertRemainder = this.itemHandler.insertItem(OUTPUT_SLOT, result, false);
+    System.out.println("Insert remainder empty: " + insertRemainder.isEmpty());
+
+    resetProgress();
+}
     @Override
     protected void initProgressData() {
         getCurrentRecipe().ifPresent(recipe -> {
@@ -184,19 +235,16 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
     @Override
     protected boolean canContinueProcessing() {
         return getCurrentRecipe().map(recipeHolder -> {
-            FluidInfuserRecipe recipe = recipeHolder.value();
-            ItemStack result = recipe.getResult();
-
-            boolean hasEnoughFluid = fluidTank.getFluidAmount() >= recipe.getFluidInput().getAmount() &&
-                    fluidTank.getFluid().is(recipe.getFluidInput().getFluid());
-
-            return hasEnoughFluid && canInsertAmountIntoOutputSlot() && canInsertItemIntoOutputSlot(result.getItem());
+            ItemStack result = recipeHolder.value().getResult();
+            return canInsertAmountIntoOutputSlot() &&
+                    canInsertItemIntoOutputSlot(result.getItem());
         }).orElse(false);
     }
 
     private Optional<RecipeHolder<FluidInfuserRecipe>> getCurrentRecipe() {
         if (this.level == null) return Optional.empty();
-        SingleRecipeInput input = new SingleRecipeInput(this.itemHandler.getStackInSlot(INPUT_SLOT));
+        FluidInfuserRecipeInput input = new FluidInfuserRecipeInput(this.itemHandler.getStackInSlot(INPUT_SLOT),
+                this.fluidTank.getFluid());
         return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.INFUSER_TYPE.get(), input, this.level);
     }
 
@@ -240,13 +288,27 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
     }
 
     private void fillTankFromItem() {
+
         ItemStack stack = itemHandler.getStackInSlot(FLUID_INPUT_SLOT);
         if (stack.isEmpty()) return;
 
-        FluidActionResult result = FluidUtil.tryEmptyContainer(stack, fluidTank, 10000, null, true);
-        if (result.isSuccess()) {
-            itemHandler.setStackInSlot(FLUID_INPUT_SLOT, result.getResult());
-        }
+        // Pokušaj izvući fluid iz containera (null player je ok za simulate)
+        FluidUtil.getFluidHandler(stack).ifPresent(handler -> {
+            FluidStack available = handler.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
+            if (available.isEmpty()) return;
+
+            int filled = fluidTank.fill(available, IFluidHandler.FluidAction.SIMULATE);
+            if (filled <= 0) return;
+
+            // Stvarno izvrši
+            FluidStack toDrain = handler.drain(filled, IFluidHandler.FluidAction.EXECUTE);
+            fluidTank.fill(toDrain, IFluidHandler.FluidAction.EXECUTE);
+
+            // Zamijeni kanticu s praznom kanticom
+            ItemStack emptyContainer = stack.getCraftingRemainingItem();
+            itemHandler.setStackInSlot(FLUID_INPUT_SLOT, emptyContainer);
+            setChanged();
+        });
     }
 
     public FluidTank getFluidTank() {
