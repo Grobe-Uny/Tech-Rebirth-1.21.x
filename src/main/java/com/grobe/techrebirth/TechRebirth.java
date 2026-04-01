@@ -16,7 +16,6 @@ import com.grobe.techrebirth.gui.infuser.FluidInfuserScreen;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.sound.ModSounds;
-import com.grobe.techrebirth.util.ModDataComponents;
 import com.grobe.techrebirth.util.TooltipModifier;
 import net.neoforged.fml.common.EventBusSubscriber;
 import org.slf4j.Logger;
@@ -60,7 +59,6 @@ public class TechRebirth {
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
-        ModDataComponents.DATA_COMPONENTS.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
         ModFluids.register(modEventBus);
         ModFluidTypes.register(modEventBus);

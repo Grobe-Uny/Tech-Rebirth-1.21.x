@@ -2,7 +2,6 @@ package com.grobe.techrebirth.block.custom;
 
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.util.MachineTier;
-import com.grobe.techrebirth.util.ModDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
