@@ -7,6 +7,7 @@
     "techrebirth:machine_base",
     "techrebirth:energy_bank",
     "techrebirth:generator",
+    "techrebirth:solar_generator",
     "techrebirth:alloy_smelter",
     "techrebirth:hardened_alloy_smelter",
     "techrebirth:electric_crusher",

@@ -2,7 +2,8 @@ package com.grobe.techrebirth.event;
 
 import com.grobe.techrebirth.Config;
 import com.grobe.techrebirth.TechRebirth;
-import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.item.ModArmorItems;
+import com.grobe.techrebirth.item.ModToolItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -16,7 +17,7 @@ public class TooltipEvents {
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
         // Pickaxe tooltip
-        if (event.getItemStack().is(ModItems.BLAZING_GOLD_PICKAXE.get())) {
+        if (event.getItemStack().is(ModToolItems.BLAZING_GOLD_PICKAXE.get())) {
             if (Config.AUTO_SMELT_ENABLED.get()) {
                 event.getToolTip().add(Component.translatable("tooltip.techrebirth.blazing_gold_pickaxe.auto_smelt")
                         .withStyle(ChatFormatting.GOLD));
@@ -29,10 +30,10 @@ public class TooltipEvents {
         }
 
         // Armor tooltips
-        if (event.getItemStack().is(ModItems.BLAZING_GOLD_HELMET.get()) ||
-                event.getItemStack().is(ModItems.BLAZING_GOLD_CHESTPLATE.get()) ||
-                event.getItemStack().is(ModItems.BLAZING_GOLD_LEGGINGS.get()) ||
-                event.getItemStack().is(ModItems.BLAZING_GOLD_BOOTS.get())) {
+        if (event.getItemStack().is(ModArmorItems.BLAZING_GOLD_HELMET.get()) ||
+                event.getItemStack().is(ModArmorItems.BLAZING_GOLD_CHESTPLATE.get()) ||
+                event.getItemStack().is(ModArmorItems.BLAZING_GOLD_LEGGINGS.get()) ||
+                event.getItemStack().is(ModArmorItems.BLAZING_GOLD_BOOTS.get())) {
 
             event.getToolTip().add(Component.translatable("tooltip.techrebirth.blazing_gold_armor.set_bonus")
                     .withStyle(ChatFormatting.GOLD));
@@ -41,10 +42,10 @@ public class TooltipEvents {
                     .withStyle(ChatFormatting.GRAY));
         }
 
-        if (event.getItemStack().is(ModItems.TIN_HELMET.get()) ||
-                event.getItemStack().is(ModItems.TIN_CHESTPLATE.get()) ||
-                event.getItemStack().is(ModItems.TIN_LEGGINGS.get()) ||
-                event.getItemStack().is(ModItems.TIN_BOOTS.get())) {
+        if (event.getItemStack().is(ModArmorItems.TIN_HELMET.get()) ||
+                event.getItemStack().is(ModArmorItems.TIN_CHESTPLATE.get()) ||
+                event.getItemStack().is(ModArmorItems.TIN_LEGGINGS.get()) ||
+                event.getItemStack().is(ModArmorItems.TIN_BOOTS.get())) {
 
             event.getToolTip().add(Component.translatable("tooltip.techrebirth.tin_armor.set_bonus")
                     .withStyle(ChatFormatting.GRAY));

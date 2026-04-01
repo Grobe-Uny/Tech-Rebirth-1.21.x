@@ -2,7 +2,9 @@ package com.grobe.techrebirth.datagen;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlocks;
+import com.grobe.techrebirth.item.ModArmorItems;
 import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.item.ModToolItems;
 import com.grobe.techrebirth.util.MetalType;
 import com.grobe.techrebirth.util.ModTags;
 import net.minecraft.core.HolderLookup;
@@ -25,6 +27,7 @@ import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -217,8 +220,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                         .define('X', ModItems.LEAD_INGOT.get()).define('Y', Items.IRON_INGOT)
                         .unlockedBy("has_lead", has(ModItems.LEAD_INGOT)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "lead_wrench"));
 
-
-
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SOLAR_GENERATOR.get())
+                .pattern("GGG")
+                .pattern("LCL")
+                .pattern("RIR")
+                .define('G',Items.GLASS_PANE)
+                .define('L',Items.LAPIS_LAZULI)
+                .define('C', ModItems.CONDUCTIUM_INGOT)
+                .define('R',Items.REDSTONE)
+                .define('I',Items.IRON_INGOT)
+                .unlockedBy("has_conductium", has(ModItems.CONDUCTIUM_INGOT)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "solar_generator"));
         //region upgrades
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EFFICIENCY_UPGRADE.get())
                 .pattern("IRI").pattern("RDR").pattern("IRI")
@@ -330,12 +341,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         buildFoodCookingRecipe(Items.CARROT, ModItems.COOKED_CARROT, 2, 160, recipeOutput, "has_carrot", Items.CARROT);
 
         // armor and tool sets
-        buildArmorSetRecipes(ModItems.BLAZING_GOLD_INGOT.asItem(), ModItems.BLAZING_GOLD_HELMET.asItem(), ModItems.BLAZING_GOLD_CHESTPLATE.asItem(), ModItems.BLAZING_GOLD_LEGGINGS.asItem(),ModItems.BLAZING_GOLD_BOOTS.asItem(),"has_blazing_gold", recipeOutput);
-        buildToolRecipes(ModItems.BLAZING_GOLD_INGOT.asItem(), Items.STICK, ModItems.BLAZING_GOLD_SWORD.asItem(), ModItems.BLAZING_GOLD_AXE.asItem(), ModItems.BLAZING_GOLD_PICKAXE.asItem(), ModItems.BLAZING_GOLD_SHOVEL.asItem(), ModItems.BLAZING_GOLD_HOE.asItem(), "has_blazing_gold", recipeOutput);
+        buildArmorSetRecipes(ModItems.BLAZING_GOLD_INGOT.asItem(), ModArmorItems.BLAZING_GOLD_HELMET.asItem(), ModArmorItems.BLAZING_GOLD_CHESTPLATE.asItem(), ModArmorItems.BLAZING_GOLD_LEGGINGS.asItem(),ModArmorItems.BLAZING_GOLD_BOOTS.asItem(),"has_blazing_gold", recipeOutput);
+        buildToolRecipes(ModItems.BLAZING_GOLD_INGOT.asItem(), Items.STICK, ModToolItems.BLAZING_GOLD_SWORD.asItem(), ModToolItems.BLAZING_GOLD_AXE.asItem(), ModToolItems.BLAZING_GOLD_PICKAXE.asItem(), ModToolItems.BLAZING_GOLD_SHOVEL.asItem(), ModToolItems.BLAZING_GOLD_HOE.asItem(), "has_blazing_gold", recipeOutput);
 
 
-        buildToolRecipes(ModItems.TIN_INGOT.asItem(), Items.STICK, ModItems.TIN_SWORD.asItem(), ModItems.TIN_AXE.asItem(), ModItems.TIN_PICKAXE.asItem(), ModItems.TIN_SHOVEL.asItem(), ModItems.TIN_HOE.asItem(), "has_tin", recipeOutput);
-        buildArmorSetRecipes(Ingredient.of(ModTags.Items.INGOTS_TIN_D.common()), ModItems.TIN_HELMET.asItem(), ModItems.TIN_CHESTPLATE.asItem(), ModItems.TIN_LEGGINGS.asItem(),ModItems.TIN_BOOTS.asItem(),"has_tin", recipeOutput);
+        buildToolRecipes(ModItems.TIN_INGOT.asItem(), Items.STICK, ModToolItems.TIN_SWORD.asItem(), ModToolItems.TIN_AXE.asItem(), ModToolItems.TIN_PICKAXE.asItem(), ModToolItems.TIN_SHOVEL.asItem(), ModToolItems.TIN_HOE.asItem(), "has_tin", recipeOutput);
+        buildArmorSetRecipes(Ingredient.of(ModTags.Items.INGOTS_TIN_D.common()), ModArmorItems.TIN_HELMET.asItem(), ModArmorItems.TIN_CHESTPLATE.asItem(), ModArmorItems.TIN_LEGGINGS.asItem(),ModArmorItems.TIN_BOOTS.asItem(),"has_tin", recipeOutput);
 
         
         // Automatic Nugget Recipes

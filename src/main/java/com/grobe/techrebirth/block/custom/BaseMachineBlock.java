@@ -37,7 +37,7 @@ import java.util.List;
 
 public abstract class BaseMachineBlock extends BaseEntityBlock implements EntityBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
 
     private final int maxEnergy;

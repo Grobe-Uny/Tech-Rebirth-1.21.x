@@ -1,7 +1,7 @@
 package com.grobe.techrebirth.event;
 
 import com.grobe.techrebirth.TechRebirth;
-import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.item.ModArmorItems;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -30,10 +30,10 @@ public class ModEvents {
         ItemStack chestplate = player.getInventory().getArmor(2);
         ItemStack helmet = player.getInventory().getArmor(3);
 
-        return !helmet.isEmpty() && helmet.getItem() == ModItems.BLAZING_GOLD_HELMET.get()
-                && !chestplate.isEmpty() && chestplate.getItem() == ModItems.BLAZING_GOLD_CHESTPLATE.get()
-                && !leggings.isEmpty() && leggings.getItem() == ModItems.BLAZING_GOLD_LEGGINGS.get()
-                && !boots.isEmpty() && boots.getItem() == ModItems.BLAZING_GOLD_BOOTS.get();
+        return !helmet.isEmpty() && helmet.getItem() == ModArmorItems.BLAZING_GOLD_HELMET.get()
+                && !chestplate.isEmpty() && chestplate.getItem() == ModArmorItems.BLAZING_GOLD_CHESTPLATE.get()
+                && !leggings.isEmpty() && leggings.getItem() == ModArmorItems.BLAZING_GOLD_LEGGINGS.get()
+                && !boots.isEmpty() && boots.getItem() == ModArmorItems.BLAZING_GOLD_BOOTS.get();
 
     }
 

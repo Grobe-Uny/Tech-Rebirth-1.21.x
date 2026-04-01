@@ -7,10 +7,10 @@ import com.grobe.techrebirth.util.MetalType;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ModelBuilder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.client.model.generators.*;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
@@ -53,6 +53,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         // Add Electric Purifier
         //directionalMachineBlock(ModBlocks.ELECTRIC_PURIFIER.get(), "electric_purifier");
+
+        directionalMachineBlock(ModBlocks.FLUID_INFUSER.get(), "fluid_infuser", "/infuser/");
     }
 
     private void blockWithItem(DeferredBlock<Block> deferredBlock){
@@ -76,42 +78,48 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(deferredBlock.get(), model);
     }
 
-//    private void directionalMachineBlock(Block block, String name) {
-//        ResourceLocation offTexture = modLoc("block/" + name + "_front_off");
-//        ResourceLocation onTexture = modLoc("block/" + name + "_front_on");
-//        ResourceLocation sideTexture = modLoc("block/" + name + "_side");
-//        ResourceLocation topTexture = modLoc("block/" + name + "_top");
-//
-//        ModelFile modelOff = models().cube(name,
-//                        sideTexture, // down
-//                        topTexture,  // up
-//                        offTexture,  // north
-//                        sideTexture, // south
-//                        sideTexture, // east
-//                        sideTexture  // west
-//                )
-//                .texture("particle", offTexture);
-//
-//        ModelFile modelOn = models().cube(name + "_on",
-//                        sideTexture, // down
-//                        topTexture,  // up
-//                        onTexture,   // north
-//                        sideTexture, // south
-//                        sideTexture, // east
-//                        sideTexture  // west
-//                )
-//                .texture("particle", onTexture);
-//
-//        getVariantBuilder(block)
-//                .forAllStates(state -> {
-//                    // Check if LIT property exists, otherwise default to off (or on)
-//                    boolean lit = state.hasProperty(BlockStateProperties.LIT) && state.getValue(BlockStateProperties.LIT);
-//                    return net.minecraft.client.renderer.block.model.Variant.variant()
-//                            .with(net.minecraft.client.renderer.block.model.VariantProperty.MODEL, lit ? modelOn : modelOff)
-//                            .with(net.minecraft.client.renderer.block.model.VariantProperty.Y_ROT, (int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot())
-//                            .build();
-//                });
-//    }
+    private void directionalMachineBlock(Block block, String name, String folder) {
+        ResourceLocation offTexture = modLoc("block/machine" + folder + name + "_front");
+        ResourceLocation onTexture = modLoc("block/machine" + folder + name + "_front_on");
+        //ResourceLocation sideTexture = modLoc("block/" + name + "_side");
+        ResourceLocation sideTexture = modLoc("block/machine/machine_side");
+        //ResourceLocation topTexture = modLoc("block/" + name + "_top");
+        ResourceLocation topTexture = modLoc("block/machine/machine_top");
+
+        ModelFile modelOff = models().cube(name,
+                        sideTexture, // down
+                        topTexture,  // up
+                        offTexture,  // north
+                        sideTexture, // south
+                        sideTexture, // east
+                        sideTexture  // west
+                )
+                .texture("particle", offTexture);
+
+        ModelFile modelOn = models().cube(name + "_on",
+                        sideTexture, // down
+                        topTexture,  // up
+                        onTexture,   // north
+                        sideTexture, // south
+                        sideTexture, // east
+                        sideTexture  // west
+                )
+                .texture("particle", onTexture);
+
+        getVariantBuilder(block)
+                .forAllStates(state -> {
+                    // Check if LIT property exists, otherwise default to off (or on)
+                    boolean lit = state.hasProperty(BlockStateProperties.LIT) && state.getValue(BlockStateProperties.LIT);
+
+                    int rotationY = (((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360);
+
+                    return ConfiguredModel.builder()
+                            .modelFile(lit ? modelOn : modelOff)
+                            .rotationY(rotationY)
+                            .build();
+                     });
+        simpleBlockItem(block, modelOff);
+    }
 
     private void cableBlock(DeferredBlock<Block> deferredBlock) {
         String name = deferredBlock.getId().getPath();
@@ -154,6 +162,25 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .part().modelFile(partModel).rotationY(270).addModel().condition(EnergyCableBlock.WEST, true).end()
                 .part().modelFile(partModel).rotationX(270).addModel().condition(EnergyCableBlock.UP, true).end()
                 .part().modelFile(partModel).rotationX(90).addModel().condition(EnergyCableBlock.DOWN, true).end();
+
+
+        // --- DODATAK ZA ITEM MODEL ---
+        // Ovo kreira JSON u assets/modid/models/item/ime_kabela.json
+        // koji pokazuje na model jezgre (core)
+        itemModels().withExistingParent(name, modLoc("block/" + name + "_core"))
+                .transforms()
+                // Postavke za prikaz u GUI-u (inventar)
+                .transform(ItemDisplayContext.GUI)
+                .rotation(30, 225, 0) // Standardni kosi kut za blokove
+                .translation(0, 0, 0)
+                .scale(2f, 2f, 2f) // POVEĆAJ OVDIJE (npr. 2.5 puta)
+                .end()
+                // Postavke kad ga držiš u ruci (First Person)
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
+                .rotation(0, 45, 0)
+                .scale(1.1f, 1.1f, 1.1f)
+                .end()
+                .end();
     }
 
     private void fluidBlock(DeferredBlock<?> deferredBlock) {

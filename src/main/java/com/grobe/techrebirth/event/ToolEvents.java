@@ -3,6 +3,7 @@ package com.grobe.techrebirth.event;
 import com.grobe.techrebirth.Config;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.item.ModToolItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -35,7 +36,7 @@ public class ToolEvents {
         if (level.isClientSide()) return;
 
         ItemStack heldItem = player.getMainHandItem();
-        if (!heldItem.is(ModItems.BLAZING_GOLD_PICKAXE.get())) return;
+        if (!heldItem.is(ModToolItems.BLAZING_GOLD_PICKAXE.get())) return;
 
         BlockPos pos = event.getPos();
         BlockState state = event.getState();

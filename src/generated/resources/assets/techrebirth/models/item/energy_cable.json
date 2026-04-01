@@ -1,0 +1,29 @@
+{
+  "parent": "techrebirth:block/energy_cable_core",
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "scale": [
+        1.1,
+        1.1,
+        1.1
+      ]
+    },
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "scale": [
+        2,
+        2,
+        2
+      ]
+    }
+  }
+}

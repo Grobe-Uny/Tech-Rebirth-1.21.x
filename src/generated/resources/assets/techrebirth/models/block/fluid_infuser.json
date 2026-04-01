@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "techrebirth:block/machine/machine_side",
+    "east": "techrebirth:block/machine/machine_side",
+    "north": "techrebirth:block/machine/infuser/fluid_infuser_front",
+    "particle": "techrebirth:block/machine/infuser/fluid_infuser_front",
+    "south": "techrebirth:block/machine/machine_side",
+    "up": "techrebirth:block/machine/machine_top",
+    "west": "techrebirth:block/machine/machine_side"
+  }
+}

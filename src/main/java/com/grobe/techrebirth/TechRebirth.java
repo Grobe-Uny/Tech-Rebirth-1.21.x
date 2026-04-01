@@ -14,6 +14,7 @@ import com.grobe.techrebirth.gui.electric_purifier.ElectricPurifierScreen;
 import com.grobe.techrebirth.gui.generator.GeneratorScreen;
 import com.grobe.techrebirth.gui.infuser.FluidInfuserScreen;
 import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.item.ModToolItems;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
 import com.grobe.techrebirth.sound.ModSounds;
 import com.grobe.techrebirth.util.TooltipModifier;
@@ -56,6 +57,7 @@ public class TechRebirth {
         ModCreativeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
+        ModToolItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);

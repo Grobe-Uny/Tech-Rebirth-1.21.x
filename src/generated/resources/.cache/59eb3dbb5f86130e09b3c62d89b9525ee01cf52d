@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-27T03:10:08.721032472	Loot Tables
+// 1.21.1	2026-04-01T15:15:37.185453447	Loot Tables
 ef43043d63231c016daedea52a90bb4a5f943881 data/techrebirth/loot_table/blocks/alloy_smelter.json
 9c8744ec6d81b097f9eba4b2b6b8011d321e6dd4 data/techrebirth/loot_table/blocks/blazing_gold_block.json
 388e60989fb33c249d0f56037fad3f1662326de9 data/techrebirth/loot_table/blocks/creative_electric_furnace.json
@@ -24,6 +24,7 @@ f19d78cea33a22c88551c6f20f712e84f092c4b9 data/techrebirth/loot_table/blocks/mach
 523bd9ce45ee54ade9f31556f9877e6b3543b66b data/techrebirth/loot_table/blocks/nickel_deepslate_ore.json
 097604464b6e860b3dc06d68a0c14a5868ee5cb0 data/techrebirth/loot_table/blocks/nickel_ore.json
 651f98639db846b7712cda4cd1f8fc8410bf007e data/techrebirth/loot_table/blocks/reinforced_electric_furnace.json
+35ff862de889fa6bfd1f6317cd69d193c6bb8b59 data/techrebirth/loot_table/blocks/solar_generator.json
 b7164899af3d00265036364992fede8be7f0d042 data/techrebirth/loot_table/blocks/steel_block.json
 86705539b1a6eab69f65e0de32a595a70206bd06 data/techrebirth/loot_table/blocks/tin_block.json
 4d55458300034ef70e54a0da05d2c939162a2a52 data/techrebirth/loot_table/blocks/tin_deepslate_ore.json

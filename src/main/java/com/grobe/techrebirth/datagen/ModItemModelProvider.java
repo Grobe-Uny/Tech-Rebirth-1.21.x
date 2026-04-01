@@ -2,7 +2,9 @@ package com.grobe.techrebirth.datagen;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlocks;
+import com.grobe.techrebirth.item.ModArmorItems;
 import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.item.ModToolItems;
 import com.grobe.techrebirth.util.MetalType;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -49,25 +51,25 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
 
-       trimmedArmorItem(ModItems.BLAZING_GOLD_HELMET);
-       trimmedArmorItem(ModItems.BLAZING_GOLD_CHESTPLATE);
-       trimmedArmorItem(ModItems.BLAZING_GOLD_LEGGINGS);
-       trimmedArmorItem(ModItems.BLAZING_GOLD_BOOTS);
-       trimmedArmorItem(ModItems.TIN_HELMET);
-       trimmedArmorItem(ModItems.TIN_CHESTPLATE);
-       trimmedArmorItem(ModItems.TIN_LEGGINGS);
-       trimmedArmorItem(ModItems.TIN_BOOTS);
+       trimmedArmorItem(ModArmorItems.BLAZING_GOLD_HELMET);
+       trimmedArmorItem(ModArmorItems.BLAZING_GOLD_CHESTPLATE);
+       trimmedArmorItem(ModArmorItems.BLAZING_GOLD_LEGGINGS);
+       trimmedArmorItem(ModArmorItems.BLAZING_GOLD_BOOTS);
+       trimmedArmorItem(ModArmorItems.TIN_HELMET);
+       trimmedArmorItem(ModArmorItems.TIN_CHESTPLATE);
+       trimmedArmorItem(ModArmorItems.TIN_LEGGINGS);
+       trimmedArmorItem(ModArmorItems.TIN_BOOTS);
 
-       handheldItem(ModItems.BLAZING_GOLD_SWORD);
-       handheldItem(ModItems.BLAZING_GOLD_AXE);
-       handheldItem(ModItems.BLAZING_GOLD_PICKAXE);
-       handheldItem(ModItems.BLAZING_GOLD_SHOVEL);
-       handheldItem(ModItems.BLAZING_GOLD_HOE);
-       handheldItem(ModItems.TIN_PICKAXE);
-       handheldItem(ModItems.TIN_AXE);
-       handheldItem(ModItems.TIN_HOE);
-       handheldItem(ModItems.TIN_SHOVEL);
-       handheldItem(ModItems.TIN_SWORD);
+       handheldItem(ModToolItems.BLAZING_GOLD_SWORD);
+       handheldItem(ModToolItems.BLAZING_GOLD_AXE);
+       handheldItem(ModToolItems.BLAZING_GOLD_PICKAXE);
+       handheldItem(ModToolItems.BLAZING_GOLD_SHOVEL);
+       handheldItem(ModToolItems.BLAZING_GOLD_HOE);
+       handheldItem(ModToolItems.TIN_PICKAXE);
+       handheldItem(ModToolItems.TIN_AXE);
+       handheldItem(ModToolItems.TIN_HOE);
+       handheldItem(ModToolItems.TIN_SHOVEL);
+       handheldItem(ModToolItems.TIN_SWORD);
 
        powderHandheldItem(ModItems.GOLD_POWDER);
        powderHandheldItem(ModItems.PURIFIED_IRON_POWDER);

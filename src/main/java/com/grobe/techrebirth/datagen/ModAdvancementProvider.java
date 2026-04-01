@@ -3,6 +3,7 @@ package com.grobe.techrebirth.datagen;
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlocks;
 import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.item.ModToolItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
@@ -98,13 +99,13 @@ public class ModAdvancementProvider extends AdvancementProvider {
 
             AdvancementHolder get_tooled = Advancement.Builder.advancement()
                     .display(
-                            ModItems.BLAZING_GOLD_PICKAXE,
+                            ModToolItems.BLAZING_GOLD_PICKAXE,
                             Component.translatable("advancements.techrebirth.get_tooled.title"),
                             Component.translatable("advancements.techrebirth.get_tooled.description"),
                             ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
                             AdvancementType.TASK,
                             true, true,isHidden
-                    ).addCriterion("has_blazing_gold_tools", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.BLAZING_GOLD_PICKAXE))
+                    ).addCriterion("has_blazing_gold_tools", InventoryChangeTrigger.TriggerInstance.hasItems(ModToolItems.BLAZING_GOLD_PICKAXE))
                     .parent(get_blazed)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "get_blazed_tools"), existingFileHelper);
 
