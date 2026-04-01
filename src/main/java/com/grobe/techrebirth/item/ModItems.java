@@ -2,19 +2,11 @@ package com.grobe.techrebirth.item;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.fluid.ModFluids;
-import com.grobe.techrebirth.item.custom.TinArmorItem;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
 import com.grobe.techrebirth.item.custom.WrenchItem;
 import com.grobe.techrebirth.util.MetalType;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -156,35 +148,13 @@ public class ModItems {
             () -> new WrenchItem(new Item.Properties()
                     .stacksTo(1)
             ));
-    public static final DeferredItem<EnchantedBookItem> LIGHTNING_STRIKER_ENCHANTED_BOOK = ITEMS.register("lightning_striker_enchanted_book",
-            () -> new EnchantedBookItem(new Item.Properties()));
 
     public static final DeferredItem<Item> LIQUIFIED_COAL_BUCKET = ITEMS.register("liquified_coal_bucket",
             () -> new BucketItem(ModFluids.SOURCE_LIQUIFIED_COAL.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
-// Armor
-
-
-// Tools
-
     //Food Items
     public static final DeferredItem<Item> COOKED_CARROT = ITEMS.register("cooked_carrot",
             () -> new Item(new Item.Properties().food(ModFoodProperties.COOKED_CARROT)));
-
-
-
-    private static ItemAttributeModifiers createNewTinAttributes(){
-        PickaxeItem.createAttributes(
-                ModToolTiers.TIN,
-                3f,
-                -2.8f
-        ).withModifierAdded(
-                Attributes.MINING_EFFICIENCY, new AttributeModifier(
-                        ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "tin_mining_bonus"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE), EquipmentSlotGroup.MAINHAND
-        );
-        return ItemAttributeModifiers.builder().build();
-    }
-
 
     public static void register(IEventBus eventbus){
         ITEMS.register(eventbus);

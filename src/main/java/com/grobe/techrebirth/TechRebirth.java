@@ -13,6 +13,7 @@ import com.grobe.techrebirth.gui.electric_furnace.ElectricFurnaceScreen;
 import com.grobe.techrebirth.gui.electric_purifier.ElectricPurifierScreen;
 import com.grobe.techrebirth.gui.generator.GeneratorScreen;
 import com.grobe.techrebirth.gui.infuser.FluidInfuserScreen;
+import com.grobe.techrebirth.item.ModArmorItems;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.item.ModToolItems;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
@@ -58,6 +59,7 @@ public class TechRebirth {
 
         ModItems.register(modEventBus);
         ModToolItems.register(modEventBus);
+        ModArmorItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
