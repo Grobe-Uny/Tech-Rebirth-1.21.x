@@ -10,6 +10,7 @@ import com.grobe.techrebirth.block.custom.entity.furnace.CreativeElectricFurnace
 import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.furnace.HardenedElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.furnace.ReinforcedElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.generators.solar.SolarGeneratorBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.infuser.FluidInfuserBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.purifier.ElectricPurifierBlockEntity;
 import net.minecraft.core.registries.Registries;
@@ -81,6 +82,10 @@ public class ModBlockEntities {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidInfuserBlockEntity>> FLUID_INFUSER = register(
             "fluid_infuser", () -> BlockEntityType.Builder.of(FluidInfuserBlockEntity::new, ModBlocks.FLUID_INFUSER.get())
+    );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarGeneratorBlockEntity>> SOLAR_GENERATOR = register(
+            "solar_generator", () -> BlockEntityType.Builder.of(SolarGeneratorBlockEntity::new, ModBlocks.SOLAR_GENERATOR.get())
     );
 
     private static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> register(String name, Supplier<BlockEntityType.Builder<T>> builder) {

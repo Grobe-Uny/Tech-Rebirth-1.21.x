@@ -13,6 +13,7 @@ import com.grobe.techrebirth.block.custom.furnace.HardenedElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.FluidTankBlock;
 import com.grobe.techrebirth.block.custom.furnace.ReinforcedElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.generator.GeneratorBlock;
+import com.grobe.techrebirth.block.custom.generators.solar.SolarGeneratorBlock;
 import com.grobe.techrebirth.block.custom.infuser.FluidInfuserBlock;
 import com.grobe.techrebirth.block.custom.purifier.ElectricPurifierBlock;
 import com.grobe.techrebirth.fluid.ModFluids;
@@ -167,6 +168,14 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
             ));
+    public static final DeferredBlock<Block> SOLAR_GENERATOR = registerBlock("solar_generator",
+            () -> new SolarGeneratorBlock(BlockBehaviour.Properties.of()
+                    .strength(3.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+                    .noOcclusion()
+                    ));
+
 
     public static final DeferredBlock<Block> ENERGY_CABLE = registerBlock("energy_cable",
             () -> new EnergyCableBlock(BlockBehaviour.Properties.of()

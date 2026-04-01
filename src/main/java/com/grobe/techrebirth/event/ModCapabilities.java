@@ -2,6 +2,7 @@ package com.grobe.techrebirth.event;
 
 import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.block.custom.entity.BaseGeneratorBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.EnergyCableBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.FluidTankBlockEntity;
@@ -44,7 +45,8 @@ public class ModCapabilities {
                 ModBlockEntities.REINFORCED_ELECTRIC_FURNACE.get(),
                 ModBlockEntities.ELECTRIC_CENTRIFUGE_BE.get(),
                 ModBlockEntities.ELECTRIC_PURIFIER.get(),
-                ModBlockEntities.FLUID_INFUSER.get()
+                ModBlockEntities.FLUID_INFUSER.get(),
+                ModBlockEntities.SOLAR_GENERATOR.get()
         );
     }
 
@@ -57,7 +59,6 @@ public class ModCapabilities {
                 ModBlockEntities.CREATIVE_ELECTRIC_FURNACE.get(),
                 ModBlockEntities.ELECTRIC_CRUSHER.get(),
                 ModBlockEntities.GENERATOR.get(),
-                ModBlockEntities.ENERGY_BANK.get(),
                 ModBlockEntities.ALLOY_SMELTER.get(),
                 ModBlockEntities.HARDENED_ALLOY_SMELTER.get(),
                 ModBlockEntities.ENERGY_CABLE.get(),
@@ -66,7 +67,8 @@ public class ModCapabilities {
                 ModBlockEntities.ELECTRIC_CENTRIFUGE_BE.get(),
                 ModBlockEntities.ELECTRIC_PURIFIER.get(),
                 ModBlockEntities.ENERGY_BANK.get(),
-                ModBlockEntities.FLUID_INFUSER.get()
+                ModBlockEntities.FLUID_INFUSER.get(),
+                ModBlockEntities.SOLAR_GENERATOR.get()
             );
         }
 
@@ -101,6 +103,10 @@ public class ModCapabilities {
                     }
                     if (be instanceof EnergyBankBlockEntity bank) {
                         return bank.getEnergyStorageForSide(side);
+                    }
+                    if(be instanceof BaseGeneratorBlockEntity generator)
+                    {
+                        return generator.getEnergyStorage();
                     }
                     return null;
                 }

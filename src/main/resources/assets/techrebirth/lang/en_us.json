@@ -164,5 +164,6 @@
   "advancements.techrebirth.more_less.title": "Getting more from less!",
   "advancements.techrebirth.more_less.description": "Create a Electric Purifier to triple or even quadruple your ore proccesing!",
   "block.techrebirth.fluid_infuser": "Fluid Infuser",
-  "gui.techrebirth.empty": "Empty"
+  "gui.techrebirth.empty": "Empty",
+  "block.techrebirth.solar_generator": "Solar Generator"
 }
