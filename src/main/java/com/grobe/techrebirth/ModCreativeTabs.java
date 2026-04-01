@@ -1,7 +1,9 @@
 package com.grobe.techrebirth;
 
 import com.grobe.techrebirth.block.ModBlocks;
+import com.grobe.techrebirth.item.ModArmorItems;
 import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.item.ModToolItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -42,26 +44,26 @@ public class ModCreativeTabs {
                         output.accept(ModItems.COOKED_CARROT);
                         output.accept(ModItems.EFFICIENCY_UPGRADE);
                         output.accept(ModItems.SPEED_UPGRADE);
-                        output.accept(ModItems.BLAZING_GOLD_HELMET);
-                        output.accept(ModItems.BLAZING_GOLD_CHESTPLATE);
-                        output.accept(ModItems.BLAZING_GOLD_LEGGINGS);
-                        output.accept(ModItems.BLAZING_GOLD_BOOTS);
+                        output.accept(ModArmorItems.BLAZING_GOLD_HELMET);
+                        output.accept(ModArmorItems.BLAZING_GOLD_CHESTPLATE);
+                        output.accept(ModArmorItems.BLAZING_GOLD_LEGGINGS);
+                        output.accept(ModArmorItems.BLAZING_GOLD_BOOTS);
 
-                        output.accept(ModItems.BLAZING_GOLD_SWORD);
-                        output.accept(ModItems.BLAZING_GOLD_AXE);
-                        output.accept(ModItems.BLAZING_GOLD_PICKAXE);
-                        output.accept(ModItems.BLAZING_GOLD_SHOVEL);
-                        output.accept(ModItems.BLAZING_GOLD_HOE);
+                        output.accept(ModToolItems.BLAZING_GOLD_SWORD);
+                        output.accept(ModToolItems.BLAZING_GOLD_AXE);
+                        output.accept(ModToolItems.BLAZING_GOLD_PICKAXE);
+                        output.accept(ModToolItems.BLAZING_GOLD_SHOVEL);
+                        output.accept(ModToolItems.BLAZING_GOLD_HOE);
 
-                        output.accept(ModItems.TIN_HELMET);
-                        output.accept(ModItems.TIN_CHESTPLATE);
-                        output.accept(ModItems.TIN_LEGGINGS);
-                        output.accept(ModItems.TIN_BOOTS);
-                        output.accept(ModItems.TIN_SWORD);
-                        output.accept(ModItems.TIN_AXE);
-                        output.accept(ModItems.TIN_PICKAXE);
-                        output.accept(ModItems.TIN_SHOVEL);
-                        output.accept(ModItems.TIN_HOE);
+                        output.accept(ModArmorItems.TIN_HELMET);
+                        output.accept(ModArmorItems.TIN_CHESTPLATE);
+                        output.accept(ModArmorItems.TIN_LEGGINGS);
+                        output.accept(ModArmorItems.TIN_BOOTS);
+                        output.accept(ModToolItems.TIN_SWORD);
+                        output.accept(ModToolItems.TIN_AXE);
+                        output.accept(ModToolItems.TIN_PICKAXE);
+                        output.accept(ModToolItems.TIN_SHOVEL);
+                        output.accept(ModToolItems.TIN_HOE);
 
 
                     })
@@ -78,6 +80,7 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.REINFORCED_ELECTRIC_FURNACE);
                         output.accept(ModBlocks.CREATIVE_ELECTRIC_FURNACE);
                         output.accept(ModBlocks.GENERATOR);
+                        output.accept(ModBlocks.SOLAR_GENERATOR);
                         output.accept(ModBlocks.ELECTRIC_CRUSHER);
                         output.accept(ModBlocks.ENERGY_BANK);
                         output.accept(ModBlocks.ALLOY_SMELTER);

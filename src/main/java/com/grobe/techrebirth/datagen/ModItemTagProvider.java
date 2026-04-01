@@ -1,7 +1,9 @@
 package com.grobe.techrebirth.datagen;
 
 import com.grobe.techrebirth.TechRebirth;
+import com.grobe.techrebirth.item.ModArmorItems;
 import com.grobe.techrebirth.item.ModItems;
+import com.grobe.techrebirth.item.ModToolItems;
 import com.grobe.techrebirth.util.ModTags;
 import com.grobe.techrebirth.block.ModBlocks;
 import net.minecraft.core.HolderLookup;
@@ -25,30 +27,30 @@ public class ModItemTagProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider provider){
 
         tag(ItemTags.TRIMMABLE_ARMOR)
-                .add(ModItems.BLAZING_GOLD_HELMET.get())
-                .add(ModItems.BLAZING_GOLD_CHESTPLATE.get())
-                .add(ModItems.BLAZING_GOLD_LEGGINGS.get())
-                .add(ModItems.BLAZING_GOLD_BOOTS.get())
-                .add(ModItems.TIN_HELMET.get())
-                .add(ModItems.TIN_CHESTPLATE.get())
-                .add(ModItems.TIN_LEGGINGS.get())
-                .add(ModItems.TIN_BOOTS.get());
+                .add(ModArmorItems.BLAZING_GOLD_HELMET.get())
+                .add(ModArmorItems.BLAZING_GOLD_CHESTPLATE.get())
+                .add(ModArmorItems.BLAZING_GOLD_LEGGINGS.get())
+                .add(ModArmorItems.BLAZING_GOLD_BOOTS.get())
+                .add(ModArmorItems.TIN_HELMET.get())
+                .add(ModArmorItems.TIN_CHESTPLATE.get())
+                .add(ModArmorItems.TIN_LEGGINGS.get())
+                .add(ModArmorItems.TIN_BOOTS.get());
 
         tag(ItemTags.SWORDS)
-                .add(ModItems.BLAZING_GOLD_SWORD.get())
-                .add(ModItems.TIN_SWORD.get());
+                .add(ModToolItems.BLAZING_GOLD_SWORD.get())
+                .add(ModToolItems.TIN_SWORD.get());
         tag(ItemTags.AXES)
-                .add(ModItems.BLAZING_GOLD_AXE.get())
-                .add(ModItems.TIN_AXE.get());
+                .add(ModToolItems.BLAZING_GOLD_AXE.get())
+                .add(ModToolItems.TIN_AXE.get());
         tag(ItemTags.PICKAXES)
-                .add(ModItems.BLAZING_GOLD_PICKAXE.get())
-                .add(ModItems.TIN_PICKAXE.get());
+                .add(ModToolItems.BLAZING_GOLD_PICKAXE.get())
+                .add(ModToolItems.TIN_PICKAXE.get());
         tag(ItemTags.SHOVELS)
-                .add(ModItems.BLAZING_GOLD_SHOVEL.get())
-                .add(ModItems.TIN_SHOVEL.get());
+                .add(ModToolItems.BLAZING_GOLD_SHOVEL.get())
+                .add(ModToolItems.TIN_SHOVEL.get());
         tag(ItemTags.HOES)
-                .add(ModItems.BLAZING_GOLD_HOE.get())
-                .add(ModItems.TIN_HOE.get());
+                .add(ModToolItems.BLAZING_GOLD_HOE.get())
+                .add(ModToolItems.TIN_HOE.get());
 
 
 

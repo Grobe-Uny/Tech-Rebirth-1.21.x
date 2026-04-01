@@ -163,109 +163,10 @@ public class ModItems {
             () -> new BucketItem(ModFluids.SOURCE_LIQUIFIED_COAL.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
 // Armor
-    // Blazing gold
-    public static final DeferredItem<ArmorItem> BLAZING_GOLD_HELMET = ITEMS.register("blazing_gold_helmet",
-            ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
-
-    public static final DeferredItem<ArmorItem> BLAZING_GOLD_CHESTPLATE = ITEMS.register("blazing_gold_chestplate",
-            ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
-
-    public static final DeferredItem<ArmorItem> BLAZING_GOLD_LEGGINGS = ITEMS.register("blazing_gold_leggings",
-            ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
-
-    public static final DeferredItem<ArmorItem> BLAZING_GOLD_BOOTS = ITEMS.register("blazing_gold_boots",
-            ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
-    //Tin
-    public static DeferredItem<ArmorItem> TIN_HELMET = ITEMS.register("tin_helmet",
-            ()-> new TinArmorItem(ModArmorMaterials.TIN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
-
-    public static final DeferredItem<ArmorItem> TIN_CHESTPLATE = ITEMS.register("tin_chestplate",
-            ()-> new TinArmorItem(ModArmorMaterials.TIN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
-
-    public static final DeferredItem<ArmorItem> TIN_LEGGINGS = ITEMS.register("tin_leggings",
-            ()-> new TinArmorItem(ModArmorMaterials.TIN_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
-
-    public static final DeferredItem<ArmorItem> TIN_BOOTS = ITEMS.register("tin_boots",
-            ()-> new TinArmorItem(ModArmorMaterials.TIN_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
 
 
 // Tools
 
-    // Blazing Gold
-    public static final DeferredItem<SwordItem> BLAZING_GOLD_SWORD = ITEMS.register("blazing_gold_sword",
-            ()-> new SwordItem(ModToolTiers.BLAZING_GOLD, new Item.Properties()
-                    .attributes(SwordItem.createAttributes(ModToolTiers.BLAZING_GOLD, 10.5f, -2.3f))));
-
-    public static final DeferredItem<AxeItem> BLAZING_GOLD_AXE = ITEMS.register("blazing_gold_axe",
-            ()-> new AxeItem(ModToolTiers.BLAZING_GOLD, new Item.Properties()
-                    .attributes(AxeItem.createAttributes(ModToolTiers.BLAZING_GOLD, 10.5f, -3f))));
-
-    public static final DeferredItem<PickaxeItem> BLAZING_GOLD_PICKAXE = ITEMS.register("blazing_gold_pickaxe",
-            ()-> new PickaxeItem(ModToolTiers.BLAZING_GOLD, new Item.Properties()
-                    .attributes(PickaxeItem.createAttributes(ModToolTiers.BLAZING_GOLD, 3f, -2.8f))));
-
-    public static final DeferredItem<ShovelItem> BLAZING_GOLD_SHOVEL = ITEMS.register("blazing_gold_shovel",
-            ()-> new ShovelItem(ModToolTiers.BLAZING_GOLD, new Item.Properties()
-                    .attributes(ShovelItem.createAttributes(ModToolTiers.BLAZING_GOLD, 12f, -3.2f))));
-
-    public static final DeferredItem<HoeItem> BLAZING_GOLD_HOE = ITEMS.register("blazing_gold_hoe",
-            ()-> new HoeItem(ModToolTiers.BLAZING_GOLD, new Item.Properties()
-                    .attributes(HoeItem.createAttributes(ModToolTiers.BLAZING_GOLD, 0f, -3f))));
-
-    //Tin
-    public static final DeferredItem<SwordItem> TIN_SWORD = ITEMS.register("tin_sword",
-            () -> new SwordItem(ModToolTiers.TIN, new Item.Properties()
-                    .attributes(SwordItem.createAttributes(ModToolTiers.TIN, 6f, -2.5f))));
-    public static final DeferredItem<AxeItem> TIN_AXE = ITEMS.register("tin_axe",
-            () -> new AxeItem(ModToolTiers.TIN, new Item.Properties()
-                    .attributes(createNewTinAttributes())){
-                @Override
-                public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-                    pTooltipComponents.add(Component.translatable("tooltip.techrebirth.tin_pickaxe.detailed")
-                            .withStyle(ChatFormatting.GREEN));
-                    if(Screen.hasShiftDown()){
-                        pTooltipComponents.add(Component.translatable("tooltip.techrebirth.tin_pickaxe_bonus"));
-                    }
-                    super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
-                }
-            });
-    public static final DeferredItem<PickaxeItem> TIN_PICKAXE = ITEMS.register("tin_pickaxe",
-            ()-> new PickaxeItem(ModToolTiers.TIN, new Item.Properties()
-                    .attributes(createNewTinAttributes())){
-    @Override
-    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-        pTooltipComponents.add(Component.translatable("tooltip.techrebirth.tin_pickaxe.detailed")
-                .withStyle(ChatFormatting.GREEN));
-        if(Screen.hasShiftDown()){
-            pTooltipComponents.add(Component.translatable("tooltip.techrebirth.tin_pickaxe_bonus"));
-        }
-        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
-    }
-});
-    public static final DeferredItem<ShovelItem> TIN_SHOVEL = ITEMS.register("tin_shovel",
-            ()-> new ShovelItem(ModToolTiers.TIN, new Item.Properties()
-                    .attributes(createNewTinAttributes())){
-                @Override
-                public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-                    pTooltipComponents.add(Component.translatable("tooltip.techrebirth.tin_pickaxe.detailed")
-                            .withStyle(ChatFormatting.GREEN));
-                    if(Screen.hasShiftDown()){
-                        pTooltipComponents.add(Component.translatable("tooltip.techrebirth.tin_pickaxe_bonus"));
-                    }
-                    super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
-                }
-            });
-    public static final DeferredItem<HoeItem> TIN_HOE = ITEMS.register("tin_hoe",
-            () -> new HoeItem(ModToolTiers.TIN, new Item.Properties()
-                    .attributes(HoeItem.createAttributes(ModToolTiers.TIN, 0f, -3f))));
     //Food Items
     public static final DeferredItem<Item> COOKED_CARROT = ITEMS.register("cooked_carrot",
             () -> new Item(new Item.Properties().food(ModFoodProperties.COOKED_CARROT)));

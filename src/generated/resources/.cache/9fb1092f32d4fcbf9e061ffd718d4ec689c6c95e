@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-27T03:10:08.725747589	Recipes
+// 1.21.1	2026-04-01T15:15:37.190550265	Recipes
 cbd40f01eb786af08a8885734d29115ec8dba692 data/minecraft/advancement/recipes/food/copper_ingot_from_smelting.json
 6cffdc083761cac79abb114140ade0c743125c1e data/minecraft/advancement/recipes/food/gold_ingot_from_smelting.json
 598332e95e8e028e0610f3b0826f0b6e8b58f1cc data/minecraft/advancement/recipes/food/iron_ingot_from_smelting.json
@@ -103,6 +103,7 @@ e924ee5bfa2da6bce29fed8cba3689123c324ab0 data/techrebirth/advancement/recipes/mi
 d7a20fe1198c16bdaff221261521de5f5cacd719 data/techrebirth/advancement/recipes/misc/nickel_ingot_from_nugget.json
 3661152c3a0fc94500ffa16cb262b24169fcdf53 data/techrebirth/advancement/recipes/misc/nickel_nugget_from_ingot.json
 016b804510773d5067983c5127a7bf673538494e data/techrebirth/advancement/recipes/misc/redstone_reception_coil.json
+cba80c2377edf7b78b60c37419f9298298e5f284 data/techrebirth/advancement/recipes/misc/solar_generator.json
 bf6b5cb868d16e39da482bcf4018d61db2afa3d0 data/techrebirth/advancement/recipes/misc/speed_upgrade.json
 f3812d94bc0582b43bee1f5da45748fe039a1f7b data/techrebirth/advancement/recipes/misc/steel_block_from_ingot.json
 db9594c1167dfcf5650ec5c4e7f0e6407b5c976d data/techrebirth/advancement/recipes/misc/steel_ingot_from_block.json
@@ -207,6 +208,7 @@ ce9f48b6447ca8941fc9b12a9d2f5f6611996e0d data/techrebirth/recipe/purifying/purif
 560fab9a2f3c640f27378a695486407e86e461ee data/techrebirth/recipe/purifying/purified_nickel_from_raw.json
 0f7ad03dead197c9b3e22732976e675cf7b5ecb4 data/techrebirth/recipe/purifying/purified_tin_from_raw.json
 7a838ac36d3e628b6eb24cdaf434c912d5b76ce3 data/techrebirth/recipe/redstone_reception_coil.json
+32baaf6afe90892c70badb8a954ad43c8bc92e78 data/techrebirth/recipe/solar_generator.json
 61c68ff5e41dddf2b98bf73085c9a7c87af7f31c data/techrebirth/recipe/speed_upgrade.json
 5d71dffd703a3aa85ad734732e6a5a4e2ad2dfd4 data/techrebirth/recipe/steel_block_from_ingot.json
 9e5eae0854c65f9413434f682097ea18c85e9a6e data/techrebirth/recipe/steel_ingot_from_block.json
