@@ -165,5 +165,11 @@
   "advancements.techrebirth.more_less.description": "Create a Electric Purifier to triple or even quadruple your ore proccesing!",
   "block.techrebirth.fluid_infuser": "Fluid Infuser",
   "gui.techrebirth.empty": "Empty",
-  "block.techrebirth.solar_generator": "Solar Generator"
+  "block.techrebirth.solar_generator": "Solar Generator",
+
+
+  "crop.techrebirth.conductium_essence": "Conductium Essence",
+  "crop.techrebirth.conductium_seeds": "Conductium Seeds",
+  "crop.techrebirth.conductium": "Conductium Crop"
+
 }

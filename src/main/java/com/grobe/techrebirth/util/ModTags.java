@@ -59,6 +59,7 @@ public final class ModTags {
         public static final Dual BASE_OBSIDIAN_INGOT_D = dual("ingots/base_obsidian");
         public static final Dual REFINED_OBSIDIAN_INGOT = dual("ingots/refined_obsidian");
         public static final Dual LITHIUM_INGOT_D = dual("ingots/lithium");
+        public static final Dual CONDUCTIUM_INGOT_D = dual ("ingots/conductium");
 
         // Duals for catalysts in electric centrifuge
         public static final Dual CATALYSTS_D = dual("catalyst");

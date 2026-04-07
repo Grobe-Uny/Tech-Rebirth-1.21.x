@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-20T02:37:08.884014816	Tags for minecraft:item mod id techrebirth
+// 1.21.1	2026-04-07T02:21:55.66617319	Tags for minecraft:item mod id techrebirth
 86f74b328955e884fe09aa76c00513b7751f47da data/c/tags/item/catalyst.json
 9798d67e68f1fc1fcbc41d664432a3a37ba63beb data/c/tags/item/catalyst/blaze.json
 d70dddb0a0ffbecf849c00185eb6a4a9d4da94d8 data/c/tags/item/catalyst/diamond.json
@@ -11,9 +11,10 @@ bc6765c4ecc73720c3d3f942b77deed42375eb01 data/c/tags/item/dusts/gold.json
 af367d735d6af335ce16d097599cf44090d5d549 data/c/tags/item/dusts/nickel.json
 1646d82c484f1473d8f433fdacaed62c38390355 data/c/tags/item/dusts/obsidian.json
 cfba751096d7428a1838362a7bf316cc755154b5 data/c/tags/item/dusts/tin.json
-fc2996fea78d314b849e0a7a86904c468f219a01 data/c/tags/item/ingots.json
+44e65387ab2066d1a092f5cb754e0199dbf7cd38 data/c/tags/item/ingots.json
 98824af15f701172cf63274c97961b5205797349 data/c/tags/item/ingots/base_obsidian.json
 83bf11b574296e8a5a84c7102d9544ff1f9d490d data/c/tags/item/ingots/blazing_gold.json
+0c3b6f5c85af96e8059f0cc06bf6fb7910360fd6 data/c/tags/item/ingots/conductium.json
 993680dd13691865eec028ea586e03d322e3e717 data/c/tags/item/ingots/invar.json
 d72968fe141b03f19c3270ebcd9b5039704bd1e8 data/c/tags/item/ingots/lead.json
 2c09f0c8eab7f4e5ca7d49c8f49d41efcb402650 data/c/tags/item/ingots/lithium.json
@@ -45,9 +46,10 @@ bc6765c4ecc73720c3d3f942b77deed42375eb01 data/neoforge/tags/item/dusts/gold.json
 af367d735d6af335ce16d097599cf44090d5d549 data/neoforge/tags/item/dusts/nickel.json
 1646d82c484f1473d8f433fdacaed62c38390355 data/neoforge/tags/item/dusts/obsidian.json
 cfba751096d7428a1838362a7bf316cc755154b5 data/neoforge/tags/item/dusts/tin.json
-84b6e75838dfad7f158c4844569227e6fcffdd2d data/neoforge/tags/item/ingots.json
+9b4e27f513c18edbba249b5923592837c11f9fc7 data/neoforge/tags/item/ingots.json
 98824af15f701172cf63274c97961b5205797349 data/neoforge/tags/item/ingots/base_obsidian.json
 83bf11b574296e8a5a84c7102d9544ff1f9d490d data/neoforge/tags/item/ingots/blazing_gold.json
+0c3b6f5c85af96e8059f0cc06bf6fb7910360fd6 data/neoforge/tags/item/ingots/conductium.json
 993680dd13691865eec028ea586e03d322e3e717 data/neoforge/tags/item/ingots/invar.json
 d72968fe141b03f19c3270ebcd9b5039704bd1e8 data/neoforge/tags/item/ingots/lead.json
 2c09f0c8eab7f4e5ca7d49c8f49d41efcb402650 data/neoforge/tags/item/ingots/lithium.json
