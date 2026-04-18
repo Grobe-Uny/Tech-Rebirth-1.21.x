@@ -44,6 +44,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.COOKED_CARROT);
                         output.accept(ModItems.EFFICIENCY_UPGRADE);
                         output.accept(ModItems.SPEED_UPGRADE);
+                        output.accept(ModItems.ENERGY_INFORMATOR);
                         output.accept(ModArmorItems.BLAZING_GOLD_HELMET);
                         output.accept(ModArmorItems.BLAZING_GOLD_CHESTPLATE);
                         output.accept(ModArmorItems.BLAZING_GOLD_LEGGINGS);

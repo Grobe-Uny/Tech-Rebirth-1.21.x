@@ -1,4 +1,4 @@
-// 1.21.1	2026-04-01T15:15:37.190550265	Recipes
+// 1.21.1	2026-04-18T23:27:52.048995478	Recipes
 cbd40f01eb786af08a8885734d29115ec8dba692 data/minecraft/advancement/recipes/food/copper_ingot_from_smelting.json
 6cffdc083761cac79abb114140ade0c743125c1e data/minecraft/advancement/recipes/food/gold_ingot_from_smelting.json
 598332e95e8e028e0610f3b0826f0b6e8b58f1cc data/minecraft/advancement/recipes/food/iron_ingot_from_smelting.json
@@ -71,6 +71,7 @@ e6d4c81c72d435497cade1aa8c0e5d2137627b9c data/techrebirth/advancement/recipes/mi
 594b36d77e68d0d7a1f896be83c38f5cc3a069e0 data/techrebirth/advancement/recipes/misc/diamond_nugget_from_ingot.json
 c2940de29476fd45a265e0e43ad8dba831fb7e83 data/techrebirth/advancement/recipes/misc/efficiency_upgrade.json
 fb0f77071bfd2a1698be44fb6d29dd9f73036de5 data/techrebirth/advancement/recipes/misc/electric_furnace.json
+dff8d177460f378eda43576f2f0b1883068741ee data/techrebirth/advancement/recipes/misc/energy_informator.json
 ecaf1d11f25e748b783f081d529aee667076df16 data/techrebirth/advancement/recipes/misc/gear/copper_gear.json
 b438370ca4d2a6760fe5167824d20563fefde927 data/techrebirth/advancement/recipes/misc/gear/invar_gear.json
 7cfe166aba80b93503780f0fa50b2c1744919a9b data/techrebirth/advancement/recipes/misc/gear/iron_gear.json
@@ -167,6 +168,7 @@ a4a5341b58bb9fd597cfc248aed3e1ce117991c0 data/techrebirth/recipe/diamond_ingot_f
 5c1591ed38428d7214c107bb16a2ce40369c1c1b data/techrebirth/recipe/diamond_nugget_from_ingot.json
 e59da8c51750a81dc9063a4414b1cf53fd4f76f9 data/techrebirth/recipe/efficiency_upgrade.json
 c559eb1c17f2f1e24986e1c582ca314614591878 data/techrebirth/recipe/electric_furnace.json
+fa8de135600ddb999ae91c791b1800a8725162fd data/techrebirth/recipe/energy_informator.json
 ab3c5a0139542f886b7530480adad3b72cd3a98e data/techrebirth/recipe/fluid_infusing/steel_from_iron_and_water.json
 3fea04c2e0089f3d756a42225969cb9f2e847e20 data/techrebirth/recipe/gear/copper_gear.json
 38f9ef4a3ca237c6d6311c4dc4150d01e8429cae data/techrebirth/recipe/gear/invar_gear.json

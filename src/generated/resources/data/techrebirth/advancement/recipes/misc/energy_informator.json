@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_conductium": {
+      "conditions": {
+        "items": [
+          {
+            "items": "techrebirth:conductium_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "techrebirth:energy_informator"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_conductium"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "techrebirth:energy_informator"
+    ]
+  }
+}

@@ -230,6 +230,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('R',Items.REDSTONE)
                 .define('I',Items.IRON_INGOT)
                 .unlockedBy("has_conductium", has(ModItems.CONDUCTIUM_INGOT)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "solar_generator"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.ENERGY_INFORMATOR.get())
+                .pattern("IRI")
+                .pattern("RCR")
+                .pattern("IRI")
+                .define('I', Items.IRON_INGOT)
+                .define('R', Items.REDSTONE)
+                .define('C', ModItems.CONDUCTIUM_INGOT)
+                .unlockedBy("has_conductium", has(ModItems.CONDUCTIUM_INGOT)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID,"energy_informator"));
+
         //region upgrades
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EFFICIENCY_UPGRADE.get())
                 .pattern("IRI").pattern("RDR").pattern("IRI")
