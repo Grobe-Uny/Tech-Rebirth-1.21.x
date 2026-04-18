@@ -170,6 +170,12 @@
 
   "crop.techrebirth.conductium_essence": "Conductium Essence",
   "crop.techrebirth.conductium_seeds": "Conductium Seeds",
-  "crop.techrebirth.conductium": "Conductium Crop"
+  "crop.techrebirth.conductium": "Conductium Crop",
+
+  "item.techrebirth.energy_informator": "Energy Informator",
+
+
+  "curios.identifier.belt": "Belt"
+
 
 }

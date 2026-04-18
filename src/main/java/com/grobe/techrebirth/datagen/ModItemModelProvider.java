@@ -90,6 +90,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         generalItem(ModItems.ISOLATUM_COMPOSITE);
         generalItem(ModItems.LIQUIFIED_COAL_BUCKET);
 
+        customItem(ModItems.ENERGY_INFORMATOR, "util/");
+
 
        // Generate models for all nuggets using a single base texture
        for (Map.Entry<MetalType, DeferredItem<Item>> entry : ModItems.NUGGETS.entrySet()) {
@@ -171,6 +173,12 @@ public class ModItemModelProvider extends ItemModelProvider {
        return withExistingParent(item.getId().getPath(),
                ResourceLocation.parse("item/generated")).texture("layer0",
                ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID,  "item/" + item.getId().getPath()));
+    }
+
+    private ItemModelBuilder customItem(DeferredItem<?> item, String loc){
+        return withExistingParent(item.getId().getPath(),
+                ResourceLocation.parse("item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID,  "item/" + loc + item.getId().getPath()));
     }
 
     private ItemModelBuilder powderHandheldItem(DeferredItem<?> item){

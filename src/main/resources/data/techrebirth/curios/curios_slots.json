@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "slots": [
+    {
+      "name": "belt",
+      "size": 1,
+      "icon": "curios:slot/empty_belt_slot"
+    }
+  ]
+}

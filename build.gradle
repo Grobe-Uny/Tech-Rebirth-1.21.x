@@ -28,6 +28,10 @@ repositories {
         name = "BlakesMods"
         url = "https://maven.blakesmods.com"
     }
+    maven {
+        name = "Curios"
+        url = uri("https://maven.theillusivec4.top/")
+    }
 }
 
 base {
@@ -117,10 +121,12 @@ dependencies {
     compileOnly ("curse.maven:jade-324717:6853386")
     compileOnly ("com.blakebr0.cucumber:Cucumber:1.21.1-8.0.15")
     compileOnly ("com.blakebr0.mysticalagriculture:MysticalAgriculture:1.21.1-8.0.22")
+    compileOnly ("top.theillusivec4.curios:curios-neoforge:${curios_version}:api")
     runtimeOnly ("curse.maven:jei-238222:7057366")
     runtimeOnly ("curse.maven:jade-324717:6853386")
     runtimeOnly ("com.blakebr0.cucumber:Cucumber:1.21.1-8.0.15")
     runtimeOnly ("com.blakebr0.mysticalagriculture:MysticalAgriculture:1.21.1-8.0.22")
+    runtimeOnly ("top.theillusivec4.curios:curios-neoforge:${curios_version}")
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar

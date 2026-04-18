@@ -2,6 +2,7 @@ package com.grobe.techrebirth;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.block.ModBlocks;
+import com.grobe.techrebirth.client.ClientPacketHandler;
 import com.grobe.techrebirth.enchantment.ModEnchantmentEffects;
 import com.grobe.techrebirth.fluid.ModFluidTypes;
 import com.grobe.techrebirth.fluid.ModFluids;
@@ -16,10 +17,14 @@ import com.grobe.techrebirth.gui.infuser.FluidInfuserScreen;
 import com.grobe.techrebirth.item.ModArmorItems;
 import com.grobe.techrebirth.item.ModItems;
 import com.grobe.techrebirth.item.ModToolItems;
+import com.grobe.techrebirth.network.EnergyDataPayload;
 import com.grobe.techrebirth.recipe.ModRecipeTypes;
+import com.grobe.techrebirth.registration.ModComponents;
 import com.grobe.techrebirth.sound.ModSounds;
 import com.grobe.techrebirth.util.TooltipModifier;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -58,6 +63,7 @@ public class TechRebirth {
         ModCreativeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
+        ModComponents.COMPONENTS.register(modEventBus);
         ModToolItems.register(modEventBus);
         ModArmorItems.register(modEventBus);
         ModBlocks.register(modEventBus);
@@ -72,7 +78,7 @@ public class TechRebirth {
         ModSounds.register(modEventBus);
 
         modEventBus.addListener(this::addCreativeTab);
-        //modEventBus.addListener(ModCreativeTabs::addCreative);
+        modEventBus.addListener(this::registerNetworking);
 
         NeoForge.EVENT_BUS.addListener(TooltipModifier::onItemTooltip);
 
@@ -89,11 +95,23 @@ public class TechRebirth {
 
     }
 
+    public void registerNetworking(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar("1"); // verzija protokola
+        registrar.playToClient(
+                EnergyDataPayload.TYPE,
+                EnergyDataPayload.STREAM_CODEC,
+                (payload, context) -> {
+                    // Ovdje podaci stižu na tvoj HUD (Klijent)
+                    ClientPacketHandler.handleEnergyData(payload);
+                }
+        );
+    }
+
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
+        //LOGGER.info("HELLO from server starting");
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

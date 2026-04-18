@@ -4,6 +4,7 @@ import com.grobe.techrebirth.TechRebirth;
 import com.grobe.techrebirth.fluid.ModFluids;
 import com.grobe.techrebirth.item.custom.UpgradeItem;
 import com.grobe.techrebirth.item.custom.WrenchItem;
+import com.grobe.techrebirth.item.custom.util.EnergyInformatorItem;
 import com.grobe.techrebirth.util.MetalType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
@@ -148,6 +149,9 @@ public class ModItems {
             () -> new WrenchItem(new Item.Properties()
                     .stacksTo(1)
             ));
+    public static final DeferredItem<Item> ENERGY_INFORMATOR = ITEMS.register("energy_informator",
+            ()-> new EnergyInformatorItem(new Item.Properties()
+                    .stacksTo(1)));
 
     public static final DeferredItem<Item> LIQUIFIED_COAL_BUCKET = ITEMS.register("liquified_coal_bucket",
             () -> new BucketItem(ModFluids.SOURCE_LIQUIFIED_COAL.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
