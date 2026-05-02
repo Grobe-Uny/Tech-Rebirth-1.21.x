@@ -30,10 +30,10 @@ public class EnergyInformatorItem extends Item {
 
             if (currentPos.contains(pos)) {
                 currentPos.remove(pos); // Toggle: makni ako već postoji
-                context.getPlayer().displayClientMessage(Component.literal("Blok uklonjen!"), true);
+                context.getPlayer().displayClientMessage(Component.literal("Block removed!"), true);
             } else {
                 currentPos.add(pos); // Dodaj novi
-                context.getPlayer().displayClientMessage(Component.literal("Blok dodan!"), true);
+                context.getPlayer().displayClientMessage(Component.literal("Block added!"), true);
             }
 
             // Spremi novu listu u item
