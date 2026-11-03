@@ -68,8 +68,6 @@ public abstract class BaseMachineMenu extends AbstractContainerMenu {
         int max = getMaxEnergy();
         return max > 0 ? (energy * height) / max : 0;
     }
-
-
     public int getVerticalScaledProgress(int height) {
         int progress = getProgress();
         int max = getMaxProgress();

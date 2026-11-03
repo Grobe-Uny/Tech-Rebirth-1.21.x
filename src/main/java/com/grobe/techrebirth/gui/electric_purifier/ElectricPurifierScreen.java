@@ -25,7 +25,6 @@ public class ElectricPurifierScreen extends BaseMachineScreen<ElectricPurifierMe
     private static final int PROGRESS_BAR_WIDTH = 20;
     private static final int PROGRESS_BAR_HEIGHT = 8;
 
-
     public ElectricPurifierScreen(ElectricPurifierMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle, TEXTURE, PROGRESS_BAR_X, PROGRESS_BAR_Y, PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT, false, true);
         this.imageWidth = TEX_W;
@@ -76,59 +75,6 @@ public class ElectricPurifierScreen extends BaseMachineScreen<ElectricPurifierMe
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         renderBackground(guiGraphics, mouseX, mouseY, delta);
         super.render(guiGraphics, mouseX, mouseY, delta);
-
-//        int x = (width - imageWidth) / 2;
-//        int y = (height - imageHeight) / 2;
-//
-//
-//        // Progress bar tooltip
-//        int px = x + PROGRESS_BAR_X;
-//        int py = y + PROGRESS_BAR_Y;
-//        if (mouseX >= px && mouseX < px + PROGRESS_BAR_WIDTH && mouseY >= py && mouseY < py + PROGRESS_BAR_HEIGHT) {
-//            String status = getProgressStatus();
-//            Component tooltip = Component.literal(status + "\n§aClick to view recipes in JEI");
-//            guiGraphics.renderTooltip(this.font, tooltip, mouseX, mouseY);
-//        }
-//
-//        // Energy bar tooltip with usage
-//        int ex = x + ENERGY_BAR_X;
-//        int ey = y + ENERGY_BAR_Y;
-//        if (mouseX >= ex && mouseX < ex + ENERGY_BAR_WIDTH && mouseY >= ey && mouseY < ey + ENERGY_BAR_HEIGHT) {
-//            int energy = menu.getEnergy();
-//            int max = menu.getMaxEnergy();
-//
-//            List<Component> tooltip = new ArrayList<>();
-//            tooltip.add(Component.literal(energy + " / " + max + " RF"));
-//
-//            // Calculate estimated usage
-//            int speedUpgrades = 0;
-//            int efficiencyUpgrades = 0;
-//
-//            // Check slots 2 and 3 (upgrade slots for purifier)
-//            for (int i = 36 + 2; i <= 36 + 3; i++) {
-//                if (i < menu.slots.size()) {
-//                    ItemStack stack = menu.slots.get(i).getItem();
-//                    if (!stack.isEmpty()) {
-//                        if (stack.is(ModItems.SPEED_UPGRADE.get())) {
-//                            speedUpgrades += stack.getCount();
-//                        } else if (stack.is(ModItems.EFFICIENCY_UPGRADE.get())) {
-//                            efficiencyUpgrades += stack.getCount();
-//                        }
-//                    }
-//                }
-//            }
-//
-//            float speedMultiplier = 1.0f + (0.5f * speedUpgrades);
-//            float efficiencyMultiplier = 1.0f / (1.0f + (0.1f * efficiencyUpgrades));
-//            int baseCost = 40;
-//            int estimatedCost = Math.max(1, (int) (baseCost * speedMultiplier * efficiencyMultiplier));
-//
-//            tooltip.add(Component.literal("Usage: " + estimatedCost + " RF/t").withStyle(net.minecraft.ChatFormatting.GRAY));
-//
-//            guiGraphics.renderTooltip(this.font, tooltip, java.util.Optional.empty(), mouseX, mouseY);
-//        }
-//
-//        renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
 }

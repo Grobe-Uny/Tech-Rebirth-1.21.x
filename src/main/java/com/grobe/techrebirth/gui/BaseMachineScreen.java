@@ -116,8 +116,9 @@ public class BaseMachineScreen<T extends BaseMachineMenu> extends AbstractContai
             }else{
                 int progressWidth = menu.getHorizontalScaledProgress(PROGRESS_BAR_WIDTH);
                 if (progressWidth > 0) {
-                    int fillX = px + (PROGRESS_BAR_WIDTH - progressWidth);
-                    gg.fill(fillX, py, px + progressWidth, py + PROGRESS_BAR_HEIGHT, 0xFF2B93CC);
+                    //int fillX = px + (PROGRESS_BAR_WIDTH - progressWidth);
+                    //gg.fill(fillX, py, px + progressWidth, py + PROGRESS_BAR_HEIGHT, 0xFF2B93CC);
+                    gg.fill(px, py, px + progressWidth, py + PROGRESS_BAR_HEIGHT, 0xFF2B93CC);
                 }
             }
         }
