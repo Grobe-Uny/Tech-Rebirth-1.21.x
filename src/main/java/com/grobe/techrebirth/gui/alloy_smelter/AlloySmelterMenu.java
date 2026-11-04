@@ -98,8 +98,7 @@ public class AlloySmelterMenu extends BaseMachineMenu {
 
         return itemstack;
     }
-
-    // 💡 GETTERI ZA GUI RENDERING
+    
     public int getProgress() {
         return data.get(0); // Trenutni progress
     }
