@@ -40,7 +40,7 @@ public class ElectricCentrifugeBlock extends BaseMachineBlock {
         return InteractionResult.sidedSuccess(pLevel.isClientSide());
     }
 
-    
+
 
     @Nullable
     @Override

@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.block.custom.bank;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
+import com.grobe.techrebirth.block.custom.entity.BaseMachineBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.bank.EnergyBankBlockEntity;
 import com.grobe.techrebirth.util.EnergySideConfig;
 import com.mojang.serialization.MapCodec;
@@ -13,6 +14,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
@@ -62,7 +64,7 @@ public class EnergyBankBlock extends BaseEntityBlock {
             
             CompoundTag configTag = new CompoundTag();
             for (Direction dir : Direction.values()) {
-                configTag.putString(dir.name(), bank.getSideConfig(dir).getSerializedName());
+                configTag.putString(dir.getName(), bank.getSideConfig(dir).name());
             }
             customData.put("side_configs", configTag);
 
@@ -88,5 +90,46 @@ public class EnergyBankBlock extends BaseEntityBlock {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+
+        if (level.isClientSide) return;
+
+        // Čitanje iz CUSTOM_DATA
+        CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
+        if (customData != null) {
+            CompoundTag tag = customData.copyTag();
+            if (tag.contains("StoredEnergy")) {
+                BlockEntity blockEntity = level.getBlockEntity(pos);
+                if (blockEntity instanceof EnergyBankBlockEntity bank) {
+                    int savedEnergy = tag.getInt("StoredEnergy");
+                    bank.setStoredEnergy(savedEnergy);
+                    if (tag.contains("side_configs")) {
+                        CompoundTag configTag = tag.getCompound("side_configs");
+
+                        for (Direction dir : Direction.values()) {
+                            if (configTag.contains(dir.getName())) {
+                                try {
+                                    EnergySideConfig config = EnergySideConfig.valueOf(
+                                            configTag.getString(dir.getName())
+                                    );
+
+                                    bank.setSideConfigs(dir, config);
+                                } catch (IllegalArgumentException e) {
+                                    // Zadrži default konfiguraciju ako je podatak neispravan.
+                                }
+                            }
+                        }
+                    }
+                    bank.setChanged();
+
+                    System.out.println(this.getClass().getSimpleName() + " ENERGY LOADED: " + savedEnergy + " RF");
+                }
+            }
+
+        }
     }
 }

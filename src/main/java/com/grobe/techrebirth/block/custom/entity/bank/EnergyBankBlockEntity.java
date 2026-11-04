@@ -38,7 +38,13 @@ public class EnergyBankBlockEntity extends BlockEntity {
     public EnergySideConfig getSideConfig(Direction side) {
         return sideConfigs.getOrDefault(side, EnergySideConfig.NONE);
     }
-
+    public void setStoredEnergy(int energy){
+        localEnergy.setEnergy(energy);
+    }
+    public void setSideConfigs(Direction side, EnergySideConfig config){
+        sideConfigs.put(side , config);
+        setChanged();
+    }
     public void cycleSideConfig(Direction side) {
         sideConfigs.compute(side, (dir, config) -> (config == null) ? EnergySideConfig.INPUT : config.next());
         setChanged();
