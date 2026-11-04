@@ -43,11 +43,11 @@ public class ModToolTiers {
     };
    public static final Tier TIN = new Tier(){
        @Override
-       public int getUses() {return 300;}
+       public int getUses() {return 240;}
        @Override
        public float getSpeed() {return 8.0f;}
        @Override
-       public float getAttackDamageBonus() {return 2.0f;}
+       public float getAttackDamageBonus() {return 1.0f;}
        @Override
        public int getEnchantmentValue() {return 10;}
        @Override

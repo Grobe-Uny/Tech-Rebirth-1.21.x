@@ -28,7 +28,7 @@ public class Config {
                 .comment("Progress bar highlight color in hex format (e.g. #FFD700 for gold)"
                 , "Popular colors: #FFD700 (Gold), #00FF00 (Green), #FF4500 (Orange Red),"
                 ,"#1E90FF (Dodger Blue), #FF69B4 (Hot Pink), #32CD32 (Lime Green)")
-                .define("progressBarHighlightColor", "#FFD7000");
+                .define("progressBarHighlightColor", "#FFD700");
 
         BUILDER.pop();
         //SPEC = BUILDER.build();

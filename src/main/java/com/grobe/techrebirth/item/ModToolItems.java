@@ -90,7 +90,7 @@ public class ModToolItems {
 
 
     private static ItemAttributeModifiers createNewTinAttributes(){
-        PickaxeItem.createAttributes(
+        return PickaxeItem.createAttributes(
                 ModToolTiers.TIN,
                 3f,
                 -2.8f
@@ -98,7 +98,6 @@ public class ModToolItems {
                 Attributes.MINING_EFFICIENCY, new AttributeModifier(
                         ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "tin_mining_bonus"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_BASE), EquipmentSlotGroup.MAINHAND
         );
-        return ItemAttributeModifiers.builder().build();
     }
 
     public static void register(IEventBus eventbus){
