@@ -44,29 +44,13 @@ public class FluidInfuserMenu extends BaseMachineMenu {
         return blockEntity.getFluidTank().getCapacity();
     }
 
+
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int pIndex) {
-        Slot sourceSlot = slots.get(pIndex);
-        if (sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;
-        ItemStack sourceStack = sourceSlot.getItem();
-        ItemStack copyOfSourceStack = sourceStack.copy();
-
-        if (pIndex < 36) {
-            if (!moveItemStackTo(sourceStack, 36, 41, false)) {
-                return ItemStack.EMPTY;
-            }
-        } else {
-            if (!moveItemStackTo(sourceStack, 0, 36, false)) {
-                return ItemStack.EMPTY;
-            }
-        }
-
-        if (sourceStack.isEmpty()) {
-            sourceSlot.set(ItemStack.EMPTY);
-        } else {
-            sourceSlot.setChanged();
-        }
-        sourceSlot.onTake(playerIn, sourceStack);
-        return copyOfSourceStack;
+    protected boolean isInputSlot(int machineSlot, ItemStack itemStack) {
+        return switch (machineSlot) {
+            case FluidInfuserBlockEntity.INPUT_SLOT -> true;
+            case FluidInfuserBlockEntity.UPGRADE_SLOT_1, FluidInfuserBlockEntity.UPGRADE_SLOT_2, FluidInfuserBlockEntity.FLUID_INPUT_SLOT -> blockEntity.getItemHandler().isItemValid(machineSlot, itemStack);
+            default -> false;
+        };
     }
 }

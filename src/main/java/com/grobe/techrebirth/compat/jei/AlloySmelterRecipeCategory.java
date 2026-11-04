@@ -39,7 +39,7 @@ public class AlloySmelterRecipeCategory implements IRecipeCategory<AlloySmelting
     private static final int ENERGY_BAR_HEIGHT = 50;
 
     // Progress bar position - DODANO
-    private static final int PROGRESS_BAR_X = 72;
+    private static final int PROGRESS_BAR_X = 76;
     private static final int PROGRESS_BAR_Y = 45;
     private static final int PROGRESS_BAR_WIDTH = 8;
     private static final int PROGRESS_BAR_HEIGHT = 16;

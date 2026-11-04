@@ -53,52 +53,15 @@ public class AlloySmelterMenu extends BaseMachineMenu {
         addDataSlots(this.data);
     }
 
-
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
-
-        if (slot != null && slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
-
-            // 💡 Ako je kliknuo slot u mašini (slotovi 0-5)
-            if (index < 6) {
-                // 💡 Premjesti iz mašine u player inventory
-                if (!this.moveItemStackTo(itemstack1, 6, 42, true)) {
-                    return ItemStack.EMPTY;
-                }
-            }
-            // 💡 Ako je kliknuo slot u player inventoryu
-            else {
-                // 💡 Pokušaj staviti u INPUT slotove (0-2) prvo
-                if (!this.moveItemStackTo(itemstack1, 0, 3, false)) {
-                    // 💡 Ako ne može u input, pokušaj u UPGRADE slotove (4-5)
-                    if (!this.moveItemStackTo(itemstack1, 4, 6, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                }
-            }
-
-            // 💡 Ako je slot ostao prazan nakon premještanja
-            if (itemstack1.isEmpty()) {
-                slot.set(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
-            }
-
-            // 💡 Ako se količina nije promijenila, vrati prazno
-            if (itemstack1.getCount() == itemstack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-
-            slot.onTake(player, itemstack1);
-        }
-
-        return itemstack;
+    protected boolean isInputSlot(int machineSlot, ItemStack itemStack) {
+        return switch (machineSlot) {
+            case 0, 1, 2 -> true;
+            case 4, 5 -> blockEntity.getItemHandler().isItemValid(machineSlot, itemStack);
+            default -> false;
+        };
     }
-    
+
     public int getProgress() {
         return data.get(0); // Trenutni progress
     }
@@ -116,15 +79,12 @@ public class AlloySmelterMenu extends BaseMachineMenu {
     }
 
     public int getProgressScaled(int height) {
-        // 💡 Izračunaj postotak progressa za progress bar
         int progress = getProgress();
         int maxProgress = getMaxProgress();
-        //return maxProgress > 0 ? (float) progress / maxProgress : 0;
         return maxProgress > 0 ? (progress * height) / maxProgress : 0;
     }
 
     public int getEnergyScaled(int height) {
-        // 💡 Izračunaj postotak energy za energy bar
         int energy = getEnergy();
         int maxEnergy = getMaxEnergy();
         return maxEnergy > 0 ?  (energy * height) / maxEnergy : 0;

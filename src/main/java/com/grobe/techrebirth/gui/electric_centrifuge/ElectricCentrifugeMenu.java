@@ -40,6 +40,14 @@ public class ElectricCentrifugeMenu extends BaseMachineMenu {
         addDataSlots(data);
     }
 
+    @Override
+    protected boolean isInputSlot(int machineSlot, ItemStack itemStack) {
+        return switch (machineSlot) {
+            case ElectricCentrifugeBlockEntity.INPUT_SLOT -> true;
+            case ElectricCentrifugeBlockEntity.CATALYST_FILL_SLOT -> blockEntity.getItemHandler().isItemValid(ElectricCentrifugeBlockEntity.CATALYST_FILL_SLOT, itemStack);
+            default -> false;
+        };
+    }
     public boolean isCrafting() {
         return data.get(0) > 0;
     }
@@ -87,36 +95,7 @@ public class ElectricCentrifugeMenu extends BaseMachineMenu {
         return maxCatalyst > 0 ? (catalyst * height) / maxCatalyst : 0;
     }
 
-    @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
-        Slot sourceSlot = this.slots.get(index);
-        if (sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;
-        ItemStack sourceStack = sourceSlot.getItem();
-        ItemStack copyOfSourceStack = sourceStack.copy();
 
-        if (index < 36) {
-            // Player inventory to machine
-            if (!this.moveItemStackTo(sourceStack, 36, 39, false)) {
-                return ItemStack.EMPTY;
-            }
-        } else if (index < 39) {
-            // Machine to player inventory
-            if (!this.moveItemStackTo(sourceStack, 0, 36, false)) {
-                return ItemStack.EMPTY;
-            }
-        } else {
-            return ItemStack.EMPTY;
-        }
-
-        if (sourceStack.getCount() == 0) {
-            sourceSlot.set(ItemStack.EMPTY);
-        } else {
-            sourceSlot.setChanged();
-        }
-
-        sourceSlot.onTake(playerIn, sourceStack);
-        return copyOfSourceStack;
-    }
 
     @Override
     public boolean stillValid(Player pPlayer) {
@@ -124,17 +103,4 @@ public class ElectricCentrifugeMenu extends BaseMachineMenu {
                 pPlayer, ModBlocks.ELECTRIC_CENTRIFUGE.get());
     }
 
-//    private void addPlayerInventory(Inventory playerInventory) {
-//        for (int i = 0; i < 3; ++i) {
-//            for (int l = 0; l < 9; ++l) {
-//                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
-//            }
-//        }
-//    }
-//
-//    private void addPlayerHotbar(Inventory playerInventory) {
-//        for (int i = 0; i < 9; ++i) {
-//            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-//        }
-//    }
 }
