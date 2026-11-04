@@ -23,11 +23,53 @@ public class AlloySmeltingRecipe implements Recipe<MultiItemRecipeInput> {
         this.result = result;
         this.cookingTime = cookingTime;
     }
+    public static int[] getIngredientAllocation(List<Ingredient> ingredients, ItemStack[] stacks){
+        int[] remaining = new int[stacks.length];
+        int[] allocation = new int[stacks.length];
+
+        for(int i = 0; i < stacks.length; i++){
+            remaining[i] = stacks[i].getCount();
+        }
+        if(matchIngredients(ingredients, stacks, remaining, allocation, 0)){
+            return allocation;
+        }
+        return null;
+    }
+
+    private static boolean matchIngredients(List<Ingredient> ingredients, ItemStack[] stacks, int[]remaining, int[] allocation, int ingredientIndex){
+        if(ingredientIndex >= ingredients.size())
+            return true;
+
+        Ingredient ingredient = ingredients.get(ingredientIndex);
+
+        for (int slot = 0; slot < stacks.length; slot++) {
+            if (remaining[slot] <= 0 || stacks[slot].isEmpty()) {
+                continue;
+            }
+
+            if (!ingredient.test(stacks[slot])) {
+                continue;
+            }
+
+            remaining[slot]--;
+            allocation[slot]++;
+
+            if (matchIngredients(ingredients, stacks, remaining, allocation, ingredientIndex + 1)) {
+                return true;
+            }
+
+            remaining[slot]++;
+            allocation[slot]--;
+        }
+
+        return false;
+    }
+
 
     @Override
     public boolean matches(MultiItemRecipeInput input, Level level) {
 
-        // Prebroji potrebne ingrediente
+        /*// Prebroji potrebne ingrediente
         Map<Ingredient, Integer> requiredIngredients = new HashMap<>();
         for (Ingredient ingredient : ingredients) {
             requiredIngredients.put(ingredient, requiredIngredients.getOrDefault(ingredient, 0) + 1);
@@ -59,7 +101,15 @@ public class AlloySmeltingRecipe implements Recipe<MultiItemRecipeInput> {
             }
         }
 
-        return true;
+        return true;*/
+
+        ItemStack[] stacks = new ItemStack[input.size()];
+
+        for (int i = 0; i < input.size(); i++) {
+            stacks[i] = input.getItem(i);
+        }
+
+        return getIngredientAllocation(ingredients, stacks) != null;
     }
 
     @Override

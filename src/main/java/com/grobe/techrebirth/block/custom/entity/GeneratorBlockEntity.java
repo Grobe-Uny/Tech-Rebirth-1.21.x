@@ -229,12 +229,10 @@ public class GeneratorBlockEntity extends BaseMachineBlockEntity implements Menu
                     energySent++;
                 }
             }
-//            TechRebirth.LOGGER.debug("Generator at {}: Energy = {}/{}, Sending to {} neighbors",
-//                    pos, be.getEnergyStorage().getEnergyStored(), be.getEnergyStorage().getMaxEnergyStored(), energySent);
         }
     }
     public void drops() {
-        if(level != null || level.isClientSide) return;
+        if(level == null || level.isClientSide) return;
         SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
         for(int i = 0; i < itemHandler.getSlots(); i++){
             inventory.setItem(i, itemHandler.getStackInSlot(i));

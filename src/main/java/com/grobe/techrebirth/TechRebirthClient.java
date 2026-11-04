@@ -39,9 +39,7 @@ public class TechRebirthClient {
 
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
-        // Some client setup code
-        TechRebirth.LOGGER.info("HELLO FROM CLIENT SETUP");
-        TechRebirth.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
     }
 
     @SubscribeEvent
