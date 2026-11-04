@@ -85,76 +85,14 @@ public class ElectricFurnaceMenu extends BaseMachineMenu {
         return maxProgress > 0 ? (progress * height) / maxProgress : 0;
     }
 
-    private static final int HOTBAR_SLOT_COUNT = 9;
-    private static final int PLAYER_INVENTORY_ROW_COUNT = 3;
-    private static final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
-    private static final int PLAYER_INVENTORY_SLOT_COUNT = PLAYER_INVENTORY_COLUMN_COUNT * PLAYER_INVENTORY_ROW_COUNT;
-    private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
-    private static final int VANILLA_FIRST_SLOT_INDEX = 0;
-    private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
-    private static final int TE_INVENTORY_SLOT_COUNT = 4;
+
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int pIndex) {
-        Slot sourceSlot = slots.get(pIndex);
-        if (sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;
-        ItemStack sourceStack = sourceSlot.getItem();
-        ItemStack copyOfSourceStack = sourceStack.copy();
-
-
-        // Player inventory ranges
-        final int VANILLA_START = VANILLA_FIRST_SLOT_INDEX;                  // 0
-        final int VANILLA_END = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT; // 36 (0..35)
-        final int MAIN_START = VANILLA_START;                                // 0
-        final int MAIN_END = MAIN_START + PLAYER_INVENTORY_SLOT_COUNT;       // 27 (0..26)
-        final int HOTBAR_START = MAIN_END;                                   // 27
-        final int HOTBAR_END = HOTBAR_START + HOTBAR_SLOT_COUNT;             // 36 (27..35)
-
-        // Tile inventory ranges
-        final int TE_START = TE_INVENTORY_FIRST_SLOT_INDEX;                  // 36
-        final int TE_END = TE_START + TE_INVENTORY_SLOT_COUNT;               // 40 (36..39)
-
-        boolean fromPlayer = pIndex < VANILLA_END;
-
-        if (fromPlayer) {
-            // Route upgrades first (slots 2..3)
-            if (blockEntity.getItemHandler().isItemValid(2, sourceStack)) {
-                if (!this.moveItemStackTo(sourceStack, TE_START + 2, TE_START + 4, false)) {
-                    return ItemStack.EMPTY;
-                }
-            }
-            // Then route smeltable input (slot 0)
-            else if (blockEntity.getItemHandler().isItemValid(0, sourceStack)) {
-                if (!this.moveItemStackTo(sourceStack, TE_START + 0, TE_START + 1, false)) {
-                    return ItemStack.EMPTY;
-                }
-            }
-            // Otherwise shuffle within player inventory (hotbar <-> main)
-            else if (pIndex >= MAIN_START && pIndex < MAIN_END) {
-                // main -> hotbar
-                if (!this.moveItemStackTo(sourceStack, HOTBAR_START, HOTBAR_END, false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (pIndex >= HOTBAR_START && pIndex < HOTBAR_END) {
-                // hotbar -> main
-                if (!this.moveItemStackTo(sourceStack, MAIN_START, MAIN_END, false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else {
-                return ItemStack.EMPTY; // should not happen
-            }
-        } else if (pIndex >= TE_START && pIndex < TE_END) {
-            // From tile to player: move to full player inventory
-            if (!this.moveItemStackTo(sourceStack, VANILLA_START, VANILLA_END, false)) {
-                return ItemStack.EMPTY;
-            }
-        } else {
-            return ItemStack.EMPTY; // invalid index
-        }
-
-        if (sourceStack.isEmpty()) sourceSlot.set(ItemStack.EMPTY); else sourceSlot.setChanged();
-        sourceSlot.onTake(playerIn, sourceStack);
-        return copyOfSourceStack;
-
+    protected boolean isInputSlot(int machineSlot, ItemStack itemStack) {
+        return switch (machineSlot) {
+            case 0 -> true;
+            case 2, 3 -> blockEntity.getItemHandler().isItemValid(machineSlot, itemStack);
+            default -> false;
+        };
     }
 
     @Override
