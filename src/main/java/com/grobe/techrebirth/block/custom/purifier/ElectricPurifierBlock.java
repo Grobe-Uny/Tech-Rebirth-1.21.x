@@ -20,9 +20,7 @@ import org.jetbrains.annotations.Nullable;
 public class ElectricPurifierBlock extends BaseMachineBlock {
 
     public ElectricPurifierBlock(Properties pProperties){ super(pProperties, MachineTier.BASIC);}
-    public ElectricPurifierBlock(Properties pProperties, MachineTier tier) {
-        super(pProperties, tier);
-    }
+    //public ElectricPurifierBlock(Properties pProperties, MachineTier tier) {super(pProperties, tier);}
 
 
     @Override
@@ -51,7 +49,9 @@ public class ElectricPurifierBlock extends BaseMachineBlock {
 
     @Override
     protected void handleMachineSpecificDrops(BaseMachineBlockEntity machine, Level level, BlockPos pos) {
-
+        if(machine instanceof ElectricPurifierBlockEntity purifier){
+            purifier.drops();
+        }
     }
 
 

@@ -34,7 +34,9 @@ public class FluidInfuserBlock extends BaseMachineBlock {
 
     @Override
     protected void handleMachineSpecificDrops(BaseMachineBlockEntity machine, Level level, BlockPos pos) {
-
+        if(machine instanceof FluidInfuserBlockEntity infuser){
+            infuser.drops();
+        }
     }
 
 

@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -112,6 +113,15 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
                 hasEnoughCatalyst(centrifugeRecipe);
     }
 
+    public void drops() {
+        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        }
+        catalystAmount = 0;
+        Containers.dropContents(this.level, this.worldPosition, inventory);
+    }
+
     @Override
     protected void finishProcessing() {
         craftItem();
@@ -198,17 +208,6 @@ public class ElectricCentrifugeBlockEntity extends BaseMachineBlockEntity {
             int neededAmount = CATALYST_CAPACITY - this.catalystAmount;
             int itemsNeeded = (int)Math.ceil((double) neededAmount / catalystValue);
             int itemsToUse = Math.min(itemsNeeded, catalystFillStack.getCount());
-
-//            if(itemsToUse > 0){
-//                int amountToAdd = itemsToUse * catalystValue;
-//                this.catalystAmount += amountToAdd;
-//                catalystFillStack.shrink(itemsToUse);
-//
-//            int amountToAdd = Math.min(catalystValue, CATALYST_CAPACITY - this.catalystAmount);
-//            if (amountToAdd > 0) {
-//                this.catalystAmount += amountToAdd;
-//                catalystFillStack.shrink(1);
-//            }
             // UZIMAJ 1 PO 1 ITEM DOK NE NAPUNIŠ KAPACITET
             while (catalystFillStack.getCount() > 0 && this.catalystAmount < CATALYST_CAPACITY) {
                 this.catalystAmount += catalystValue;

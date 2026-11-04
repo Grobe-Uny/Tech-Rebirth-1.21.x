@@ -40,6 +40,8 @@ public class ElectricCentrifugeBlock extends BaseMachineBlock {
         return InteractionResult.sidedSuccess(pLevel.isClientSide());
     }
 
+    
+
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
@@ -48,7 +50,9 @@ public class ElectricCentrifugeBlock extends BaseMachineBlock {
 
     @Override
     protected void handleMachineSpecificDrops(BaseMachineBlockEntity machine, Level level, BlockPos pos) {
-        // No specific drops to handle for this machine
+        if(machine instanceof ElectricCentrifugeBlockEntity centrifuge){
+            centrifuge.drops();
+        }
     }
 
     public static final MapCodec<ElectricCentrifugeBlock> CODEC = simpleCodec(ElectricCentrifugeBlock::new);
