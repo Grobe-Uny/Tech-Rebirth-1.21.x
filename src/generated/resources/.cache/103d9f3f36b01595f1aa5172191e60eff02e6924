@@ -1,6 +1,7 @@
-// 1.21.1	2026-03-20T00:48:49.231689764	Registries
+// 1.21.1	2026-11-03T11:46:02.6852809	Registries
 7b0a0269413f329c8aa2b8371c07929de4f18aec data/techrebirth/enchantment/lightning_strike.json
 4e37e1e37f3a2573023ffd4f091716e7dea0fd9c data/techrebirth/neoforge/biome_modifier/add_lead_ore.json
+fcbff0098ace924df74e7b1efae00541ef9e2091 data/techrebirth/neoforge/biome_modifier/add_lithium_ore.json
 d9d2d9c95110c197a3de40213fe9d25f84e2c299 data/techrebirth/neoforge/biome_modifier/add_nickel_ore.json
 537241403adfe5d67b4a1c2b68a814b15ffd0949 data/techrebirth/neoforge/biome_modifier/add_tin_ore.json
 f14a1dc74d4641dd8d7be4f897530307046d81f6 data/techrebirth/worldgen/configured_feature/lead_ore.json

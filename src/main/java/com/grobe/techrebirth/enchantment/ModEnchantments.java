@@ -11,7 +11,6 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentTarget;
-import org.openjdk.nashorn.internal.runtime.linker.Bootstrap;
 
 public class ModEnchantments {
     public static final ResourceKey<Enchantment> LIGHTNING_STRIKE = ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "lightning_strike"));

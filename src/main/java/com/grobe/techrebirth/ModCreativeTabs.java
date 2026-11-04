@@ -45,6 +45,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.EFFICIENCY_UPGRADE);
                         output.accept(ModItems.SPEED_UPGRADE);
                         output.accept(ModItems.ENERGY_INFORMATOR);
+                        output.accept(ModItems.LEAD_WRENCH);
                         output.accept(ModArmorItems.BLAZING_GOLD_HELMET);
                         output.accept(ModArmorItems.BLAZING_GOLD_CHESTPLATE);
                         output.accept(ModArmorItems.BLAZING_GOLD_LEGGINGS);

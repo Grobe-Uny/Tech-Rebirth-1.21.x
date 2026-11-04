@@ -19,15 +19,15 @@ public class ModArmorItems {
 
     public static final DeferredItem<ArmorItem> BLAZING_GOLD_CHESTPLATE = ARMOR_ITEMS.register("blazing_gold_chestplate",
             ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+                    new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(40))));
 
     public static final DeferredItem<ArmorItem> BLAZING_GOLD_LEGGINGS = ARMOR_ITEMS.register("blazing_gold_leggings",
             ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+                    new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(40))));
 
     public static final DeferredItem<ArmorItem> BLAZING_GOLD_BOOTS = ARMOR_ITEMS.register("blazing_gold_boots",
             ()-> new ArmorItem(ModArmorMaterials.BLAZING_GOLD_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+                    new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(40))));
     //Tin
     public static DeferredItem<ArmorItem> TIN_HELMET = ARMOR_ITEMS.register("tin_helmet",
             ()-> new TinArmorItem(ModArmorMaterials.TIN_ARMOR_MATERIAL, ArmorItem.Type.HELMET,
@@ -35,15 +35,15 @@ public class ModArmorItems {
 
     public static final DeferredItem<ArmorItem> TIN_CHESTPLATE = ARMOR_ITEMS.register("tin_chestplate",
             ()-> new TinArmorItem(ModArmorMaterials.TIN_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+                    new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(40))));
 
     public static final DeferredItem<ArmorItem> TIN_LEGGINGS = ARMOR_ITEMS.register("tin_leggings",
             ()-> new TinArmorItem(ModArmorMaterials.TIN_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+                    new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(40))));
 
     public static final DeferredItem<ArmorItem> TIN_BOOTS = ARMOR_ITEMS.register("tin_boots",
             ()-> new TinArmorItem(ModArmorMaterials.TIN_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
-                    new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(40))));
+                    new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(40))));
 
 
     public static void register(IEventBus eventbus){
