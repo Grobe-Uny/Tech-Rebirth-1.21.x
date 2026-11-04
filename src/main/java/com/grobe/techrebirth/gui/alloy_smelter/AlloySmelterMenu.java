@@ -15,7 +15,7 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 public class AlloySmelterMenu extends BaseMachineMenu {
     public final AlloySmelterBlockEntity blockEntity;
     private final Level level;
-    final ContainerData data;
+    //final ContainerData data;
 
     public AlloySmelterMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
@@ -25,12 +25,12 @@ public class AlloySmelterMenu extends BaseMachineMenu {
         checkContainerSize(inv, 4);
         blockEntity = ((AlloySmelterBlockEntity) entity);
         this.level = inv.player.level();
-        // Always prefer the BE's own ContainerData if available
+        /*// Always prefer the BE's own ContainerData if available
         if (entity instanceof AlloySmelterBlockEntity as) {
             this.data = as.getContainerData();
         } else {
             this.data = data;
-        }
+        }*/
         
 
         addPlayerInventory(inv);
@@ -50,7 +50,7 @@ public class AlloySmelterMenu extends BaseMachineMenu {
         this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 4, 134, 60));
         this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 5, 153, 60));
 
-        addDataSlots(this.data);
+        //addDataSlots(this.data);
     }
 
     @Override

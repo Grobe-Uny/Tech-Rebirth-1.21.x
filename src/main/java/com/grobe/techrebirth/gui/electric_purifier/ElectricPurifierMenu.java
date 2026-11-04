@@ -42,7 +42,7 @@ public class ElectricPurifierMenu extends BaseMachineMenu {
         this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 2, 107, 62));
         this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 3, 125, 62));
 
-        addDataSlots(data);
+        //addDataSlots(data);
     }
 
     public boolean isCrafting(){

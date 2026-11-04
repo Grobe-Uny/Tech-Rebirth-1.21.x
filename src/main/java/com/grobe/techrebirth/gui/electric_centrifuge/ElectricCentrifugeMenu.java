@@ -37,7 +37,7 @@ public class ElectricCentrifugeMenu extends BaseMachineMenu {
         this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), ElectricCentrifugeBlockEntity.CATALYST_FILL_SLOT, 26, 58));
         this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), ElectricCentrifugeBlockEntity.OUTPUT_SLOT, 116, 35));
 
-        addDataSlots(data);
+        //addDataSlots(data);
     }
 
     @Override

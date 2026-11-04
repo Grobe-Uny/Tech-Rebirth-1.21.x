@@ -46,7 +46,7 @@ public class ElectricCrusherMenu extends BaseMachineMenu {
         this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 4, 134, 61));
         this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 5, 152, 61));
 
-        addDataSlots(data);
+        //addDataSlots(data);
     }
 
     public boolean isCrafting(){

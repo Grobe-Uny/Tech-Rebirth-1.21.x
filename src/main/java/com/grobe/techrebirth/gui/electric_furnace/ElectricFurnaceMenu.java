@@ -16,7 +16,7 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 public class ElectricFurnaceMenu extends BaseMachineMenu {
     public final ElectricFurnaceBlockEntity blockEntity;
     private final Level level;
-    final ContainerData data;
+    //final ContainerData data;
 
     public ElectricFurnaceMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData){
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
@@ -27,11 +27,11 @@ public class ElectricFurnaceMenu extends BaseMachineMenu {
         blockEntity = ((ElectricFurnaceBlockEntity) entity);
         this.level = inv.player.level();
         // Always prefer the BE's own ContainerData if available
-        if (entity instanceof ElectricFurnaceBlockEntity ef) {
+        /* if (entity instanceof ElectricFurnaceBlockEntity ef) {
             this.data = ef.getContainerData();
         } else {
             this.data = data;
-        }
+        }*/
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
@@ -71,7 +71,7 @@ public class ElectricFurnaceMenu extends BaseMachineMenu {
             }
         });
 
-        addDataSlots(this.data);
+        //addDataSlots(this.data);
     }
 
     public boolean isCrafting(){
