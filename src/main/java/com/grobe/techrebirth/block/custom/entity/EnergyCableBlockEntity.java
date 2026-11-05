@@ -68,6 +68,14 @@ public class EnergyCableBlockEntity extends BlockEntity {
             be.needsDistribution = false;
         }
 
+        BlockPos networkLeader =be.networkMembers.stream()
+                .min(BlockPos::compareTo)
+                .orElse(pos);
+
+        if(!pos.equals(networkLeader)){
+            return;
+        }
+
         // Pull iz generatora PRVO
         if (be.tickCounter % 5 == 0) {
             be.pullEnergyFromGenerators(level);
@@ -152,9 +160,6 @@ public class EnergyCableBlockEntity extends BlockEntity {
                 cable.energyStorage.extractEnergy(-difference, false);
             }
         }
-
-        // Push energy ka mašinama
-        pushEnergyToMachines(level);
     }
 
     /**
@@ -281,9 +286,12 @@ public class EnergyCableBlockEntity extends BlockEntity {
                 int toReceive = energyPerCable + (i < remainder ? 1 : 0);
 
                 if (toReceive > 0 && targetCable.energyStorage.getEnergyStored() < targetCable.energyStorage.getMaxEnergyStored()) {
-                    int actuallyExtracted = source.storage.extractEnergy(toReceive, false);
-                    if (actuallyExtracted > 0) {
-                        targetCable.energyStorage.receiveEnergy(actuallyExtracted, false);
+                    int canRecieve = targetCable.energyStorage.receiveEnergy(toReceive, true);
+                    if(canRecieve>0){
+                        int actuallyExtracted = source.storage.extractEnergy(toReceive, false);
+                        if (actuallyExtracted > 0) {
+                            targetCable.energyStorage.receiveEnergy(actuallyExtracted, false);
+                        }
                     }
                 }
             }

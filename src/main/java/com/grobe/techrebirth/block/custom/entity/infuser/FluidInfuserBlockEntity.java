@@ -28,6 +28,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidActionResult;
@@ -130,7 +131,7 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
     protected boolean isItemValid(int slot, ItemStack stack) {
         return switch (slot) {
             case INPUT_SLOT -> true;
-            case OUTPUT_SLOT -> true;
+            case OUTPUT_SLOT -> false;
             case UPGRADE_SLOT_1, UPGRADE_SLOT_2 -> isValidUpgradeForThisMachine(stack);
             case FLUID_INPUT_SLOT -> true; // Allow buckets/fluid containers
             default -> false;
@@ -151,7 +152,7 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
 
     ItemStack remainder = this.itemHandler.insertItem(OUTPUT_SLOT, result, true);
 
-    if(remainder.isEmpty()) return;
+    if(!remainder.isEmpty()) return;
 
 
     this.itemHandler.extractItem(INPUT_SLOT, 1, false);
@@ -236,7 +237,7 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
     }
 
     @Override
-    public void tick(net.minecraft.world.level.Level level, BlockPos pos, BlockState state) {
+    public void tick(Level level, BlockPos pos, BlockState state) {
         if (!level.isClientSide) {
             fillTankFromItem();
         }
