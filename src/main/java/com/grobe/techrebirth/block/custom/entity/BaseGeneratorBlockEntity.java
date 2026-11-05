@@ -97,7 +97,7 @@ public abstract class BaseGeneratorBlockEntity extends BlockEntity implements Me
     // Interna klasa za energiju (slična tvojoj DirtyEnergyStorage)
     protected class GeneratorEnergyStorage extends EnergyStorage {
         public GeneratorEnergyStorage(int cap, int rec, int ext, int energy) { super(cap, rec, ext, energy); }
-        public void setEnergy(int energy) { this.energy = energy; setChanged(); }
+        public void setEnergy(int energy) { this.energy = Math.clamp(energy, 0, this.capacity); setChanged(); }
         public void receiveInternal(int amount) { this.energy = Math.min(this.capacity, this.energy + amount); setChanged(); }
         @Override public int extractEnergy(int maxExtract, boolean simulate) {
             int extracted = super.extractEnergy(maxExtract, simulate);

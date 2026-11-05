@@ -176,7 +176,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
         }
 
         public void setEnergy(int energy) {
-            this.energy = Math.min(energy, this.capacity);
+            this.energy = Math.clamp(energy, 0, this.capacity);
             BaseMachineBlockEntity.this.setChanged();
         }
 

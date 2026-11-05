@@ -290,7 +290,7 @@ public class EnergyCableBlockEntity extends BlockEntity {
                     if(canRecieve>0){
                         int actuallyExtracted = source.storage.extractEnergy(toReceive, false);
                         if (actuallyExtracted > 0) {
-                            targetCable.energyStorage.receiveEnergy(actuallyExtracted, false);
+                            targetCable.energyStorage.receiveEnergy(canRecieve, false);
                         }
                     }
                 }
