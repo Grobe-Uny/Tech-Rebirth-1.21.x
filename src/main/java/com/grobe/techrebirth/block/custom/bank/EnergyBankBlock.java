@@ -93,25 +93,26 @@ public class EnergyBankBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!level.isClientSide() && state.getBlock() != newState.getBlock()) {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof EnergyBankBlockEntity bank) {
-                ItemStack machineStack = new ItemStack(this);
-                CompoundTag customData = new CompoundTag();
-                customData.putInt("StoredEnergy", bank.getLocalEnergy().getEnergyStored());
+    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+        if (!level.isClientSide && blockEntity instanceof EnergyBankBlockEntity bank) {
+            ItemStack bankStack = new ItemStack(this);
+            CompoundTag customData = new CompoundTag();
+            customData.putInt("StoredEnergy", bank.getLocalEnergy().getEnergyStored());
 
-                CompoundTag configTag = new CompoundTag();
-                for (Direction dir : Direction.values()) {
-                    configTag.putString(dir.getName(), bank.getSideConfig(dir).name());
-                }
-                customData.put("side_configs", configTag);
-
-                CustomData dataComponent = CustomData.of(customData);
-                machineStack.set(DataComponents.CUSTOM_DATA, dataComponent);
+            CompoundTag configTag = new CompoundTag();
+            for (Direction dir : Direction.values()) {
+                configTag.putString(dir.getName(), bank.getSideConfig(dir).name());
             }
+            customData.put("side_configs", configTag);
+
+            CustomData dataComponent = CustomData.of(customData);
+            bankStack.set(DataComponents.CUSTOM_DATA, dataComponent);
+
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), bankStack);
+            return;
         }
-        super.onRemove(state, level, pos, newState, isMoving);
+
+        super.playerDestroy(level, player, pos, state, blockEntity, tool);
     }
 
 
