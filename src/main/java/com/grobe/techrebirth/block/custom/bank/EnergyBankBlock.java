@@ -96,6 +96,20 @@ public class EnergyBankBlock extends BaseEntityBlock {
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!level.isClientSide() && state.getBlock() != newState.getBlock()) {
             BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof EnergyBankBlockEntity bank) {
+                ItemStack machineStack = new ItemStack(this);
+                CompoundTag customData = new CompoundTag();
+                customData.putInt("StoredEnergy", bank.getLocalEnergy().getEnergyStored());
+
+                CompoundTag configTag = new CompoundTag();
+                for (Direction dir : Direction.values()) {
+                    configTag.putString(dir.getName(), bank.getSideConfig(dir).name());
+                }
+                customData.put("side_configs", configTag);
+
+                CustomData dataComponent = CustomData.of(customData);
+                machineStack.set(DataComponents.CUSTOM_DATA, dataComponent);
+            }
         }
         super.onRemove(state, level, pos, newState, isMoving);
     }
