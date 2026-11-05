@@ -46,7 +46,8 @@ public class ModCapabilities {
                 ModBlockEntities.ELECTRIC_CENTRIFUGE_BE.get(),
                 ModBlockEntities.ELECTRIC_PURIFIER.get(),
                 ModBlockEntities.FLUID_INFUSER.get(),
-                ModBlockEntities.SOLAR_GENERATOR.get()
+                ModBlockEntities.SOLAR_GENERATOR.get(),
+                ModBlockEntities.SOLAR_GENERATOR_TIER_2.get()
         );
     }
 
@@ -68,7 +69,8 @@ public class ModCapabilities {
                 ModBlockEntities.ELECTRIC_PURIFIER.get(),
                 ModBlockEntities.ENERGY_BANK.get(),
                 ModBlockEntities.FLUID_INFUSER.get(),
-                ModBlockEntities.SOLAR_GENERATOR.get()
+                ModBlockEntities.SOLAR_GENERATOR.get(),
+                ModBlockEntities.SOLAR_GENERATOR_TIER_2.get()
             );
         }
 

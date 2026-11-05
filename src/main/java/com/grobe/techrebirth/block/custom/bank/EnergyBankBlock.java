@@ -93,6 +93,15 @@ public class EnergyBankBlock extends BaseEntityBlock {
     }
 
     @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!level.isClientSide() && state.getBlock() != newState.getBlock()) {
+            BlockEntity be = level.getBlockEntity(pos);
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
+    }
+
+
+    @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
 
