@@ -49,7 +49,11 @@ public class ModEvents {
             // 2. Ako smo našli item, kreni s izračunom
             if (stack.getItem() instanceof EnergyInformatorItem informator) {
                 List<BlockPos> positions = informator.getSavedPositions(stack);
-                if (positions.isEmpty()) return;
+                if (positions.isEmpty()) {
+                    HISTORY.remove(player.getUUID());
+                    PacketDistributor.sendToPlayer(player, new EnergyDataPayload(0,0,0,0));
+                    return;
+                }
 
                 long totalStored = 0;
                 long totalMax = 0;
@@ -77,6 +81,8 @@ public class ModEvents {
                         }
 
                         playerHistory.put(pos, current);
+                    }else{
+                        playerHistory.remove(pos);
                     }
                 }
 

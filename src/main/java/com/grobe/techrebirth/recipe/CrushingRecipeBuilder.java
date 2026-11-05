@@ -1,6 +1,7 @@
 package com.grobe.techrebirth.recipe;
 
-import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.*;
+import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -54,12 +55,15 @@ public class CrushingRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput output, ResourceLocation id){
-        // Construct the concrete recipe instance (uses your codec serializer)
+        Advancement.Builder advancement = output.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
+                .rewards(AdvancementRewards.Builder.recipe(id))
+                .requirements(AdvancementRequirements.Strategy.OR);
+        this.criteria.forEach(advancement::addCriterion);
 
         ItemStack finalChanceOutput = (chanceOutput == null || chanceOutput.isEmpty()) ? ItemStack.EMPTY : chanceOutput.copy();
         CrushingRecipe recipe = new CrushingRecipe(ingredient, result.copy(), time, finalChanceOutput, chanceRate);
         // Publish the recipe without an advancement (keep simple/minimal)
-        output.accept(id, recipe, null);
+        output.accept(id, recipe, advancement.build(id.withPrefix("recipes/")));
     }
 
     // Optional grouping API required by RecipeBuilder in 1.21

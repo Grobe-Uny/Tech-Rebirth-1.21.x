@@ -151,6 +151,8 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
 
     ItemStack remainder = this.itemHandler.insertItem(OUTPUT_SLOT, result, true);
 
+    if(remainder.isEmpty()) return;
+
 
     this.itemHandler.extractItem(INPUT_SLOT, 1, false);
     this.fluidTank.drain(recipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE);
@@ -224,7 +226,13 @@ public class FluidInfuserBlockEntity extends BaseMachineBlockEntity {
 
     private boolean canInsertAmountIntoOutputSlot() {
         ItemStack outputStack = this.itemHandler.getStackInSlot(OUTPUT_SLOT);
-        return outputStack.getCount() < outputStack.getMaxStackSize();
+        Optional<RecipeHolder<FluidInfuserRecipe>> recipeHolder = getCurrentRecipe();
+        if(recipeHolder.isEmpty()) return false;
+
+        int resultCount = recipeHolder.get().value().getResult().copy().getCount();
+
+
+        return (outputStack.getCount() + resultCount) <= outputStack.getMaxStackSize();
     }
 
     @Override
