@@ -143,7 +143,7 @@ public class ModItems {
 
 
     //miscellaneous items
-    public static final DeferredItem<Item> REDSTONE_RECEPTION_COIL = ITEMS.register("redstone_reception_coil",
+    public static final DeferredItem<Item> REDSTONE_ENERGY_RECEPTOR = ITEMS.register("redstone_energy_receptor",
             ()-> new Item(new Item.Properties()));
     public static final DeferredItem<Item> LEAD_WRENCH = ITEMS.register("lead_wrench",
             () -> new WrenchItem(new Item.Properties()

@@ -15,7 +15,7 @@
       "item": "techrebirth:fluid_tank"
     },
     "Z": {
-      "item": "techrebirth:redstone_reception_coil"
+      "item": "techrebirth:redstone_energy_receptor"
     }
   },
   "pattern": [

@@ -15,7 +15,7 @@
       "item": "techrebirth:machine_base"
     },
     "X": {
-      "item": "techrebirth:redstone_reception_coil"
+      "item": "techrebirth:redstone_energy_receptor"
     }
   },
   "pattern": [

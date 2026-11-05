@@ -15,7 +15,7 @@
       "item": "minecraft:stonecutter"
     },
     "X": {
-      "item": "techrebirth:redstone_reception_coil"
+      "item": "techrebirth:redstone_energy_receptor"
     }
   },
   "pattern": [

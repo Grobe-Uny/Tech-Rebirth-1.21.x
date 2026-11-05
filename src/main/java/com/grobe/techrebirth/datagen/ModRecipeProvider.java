@@ -26,7 +26,6 @@ import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -56,7 +55,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('P', ModItems.PURIFIED_IRON_POWDER)
                 .define('X', ModBlocks.MACHINE_BASE)
                 .define('B', Items.BUCKET)
-                .define('R', ModItems.REDSTONE_RECEPTION_COIL)
+                .define('R', ModItems.REDSTONE_ENERGY_RECEPTOR)
                 .define('G', ModItems.IRON_GEAR)
                 .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/fluid_infuser"));
@@ -125,7 +124,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("ZGZ")
                 .define('I', Items.IRON_INGOT)
                 .define('G', ModItems.LEAD_GEAR)
-                .define('Z', ModItems.REDSTONE_RECEPTION_COIL)
+                .define('Z', ModItems.REDSTONE_ENERGY_RECEPTOR)
                 .define('Y', ModBlocks.FLUID_TANK)
                 .define('X', ModBlocks.MACHINE_BASE)
                 .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE.get()))
@@ -138,7 +137,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('N', ModItems.NICKEL_INGOT)
                 .define('X', ModBlocks.MACHINE_BASE)
                 .define('B', Items.BUCKET)
-                .define('R', ModItems.REDSTONE_RECEPTION_COIL)
+                .define('R', ModItems.REDSTONE_ENERGY_RECEPTOR)
                 .define('G', ModItems.TIN_GEAR)
                 .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/electric_purifier"));
@@ -183,17 +182,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('X', ModBlocks.MACHINE_BASE.get())
                 .define('Y', ModItems.IRON_GEAR.get())
                 .define('Z', Items.REDSTONE.asItem()).unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE)).save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.REDSTONE_RECEPTION_COIL.get())
-                .pattern("  Y")
-                .pattern(" X ")
-                .pattern("Y  ")
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.REDSTONE_ENERGY_RECEPTOR.get())
+                .pattern(" Y ")
+                .pattern("NXN")
+                .pattern(" Y ")
                 .define('X', Items.GOLD_INGOT.asItem())
                 .define('Y', Items.REDSTONE.asItem())
+                .define('N', Items.IRON_NUGGET.asItem())
                 .unlockedBy("has_gold", has(Items.GOLD_INGOT)).save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GENERATOR.get())
                 .pattern("III").pattern("GMG").pattern("XFX")
                 .define('M', ModBlocks.MACHINE_BASE.get())
-                .define('X', ModItems.REDSTONE_RECEPTION_COIL.get())
+                .define('X', ModItems.REDSTONE_ENERGY_RECEPTOR.get())
                 .define('F', Items.FURNACE.asItem())
                 .define('G', ModItems.IRON_GEAR.get())
                 .define('I', Items.IRON_INGOT.asItem())
@@ -201,7 +201,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ELECTRIC_CRUSHER.get())
                 .pattern(" I ").pattern("GMG").pattern("XSX")
                 .define('M', ModBlocks.MACHINE_BASE.get())
-                .define('X', ModItems.REDSTONE_RECEPTION_COIL.get())
+                .define('X', ModItems.REDSTONE_ENERGY_RECEPTOR.get())
                 .define('S', Items.STONECUTTER.asItem())
                 .define('G', ModItems.IRON_GEAR.get())
                 .define('I', ModTags.Items.INGOTS_INVAR_D.common())
@@ -210,7 +210,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("III").pattern("GMG").pattern("XFX")
                 .define('M', ModBlocks.MACHINE_BASE.get())
                 .define('X', Items.FURNACE.asItem())
-                .define('F', ModItems.REDSTONE_RECEPTION_COIL.get())
+                .define('F', ModItems.REDSTONE_ENERGY_RECEPTOR.get())
                 .define('G', ModItems.IRON_GEAR.get())
                 .define('I', Items.IRON_INGOT.asItem())
                 .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE)).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "machine/alloy_smelter"));

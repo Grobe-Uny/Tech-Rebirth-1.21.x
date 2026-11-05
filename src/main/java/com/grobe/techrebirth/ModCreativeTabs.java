@@ -40,7 +40,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.ISOLATUM_BLEND);
                         output.accept(ModItems.ISOLATUM_COMPOSITE);
                         output.accept(ModItems.CONDUCTIUM_INGOT);
-                        output.accept(ModItems.REDSTONE_RECEPTION_COIL);
+                        output.accept(ModItems.REDSTONE_ENERGY_RECEPTOR);
                         output.accept(ModItems.COOKED_CARROT);
                         output.accept(ModItems.EFFICIENCY_UPGRADE);
                         output.accept(ModItems.SPEED_UPGRADE);
