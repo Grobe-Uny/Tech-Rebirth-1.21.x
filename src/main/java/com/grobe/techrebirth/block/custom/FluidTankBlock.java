@@ -4,10 +4,15 @@ import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.block.custom.entity.FluidTankBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -52,6 +57,53 @@ public class FluidTankBlock extends BaseEntityBlock {
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool){
+        if (!level.isClientSide && blockEntity instanceof FluidTankBlockEntity tank) {
+            ItemStack tankStack = new ItemStack(this);
+
+            CompoundTag customData = new CompoundTag();
+            CompoundTag fluidTag = new CompoundTag();
+
+            tank.getFluidTank().writeToNBT(level.registryAccess(), fluidTag);
+            customData.put("FluidTank", fluidTag);
+
+            tankStack.set(DataComponents.CUSTOM_DATA, CustomData.of(customData));
+
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), tankStack);
+            return;
+        }
+
+        super.playerDestroy(level, player, pos, state, blockEntity, tool);
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack){
+
+        super.setPlacedBy(level, pos, state, placer, stack);
+
+        if (level.isClientSide) return;
+
+        CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
+
+        if (customData != null) {
+            CompoundTag tag = customData.copyTag();
+
+            if (tag.contains("FluidTank")) {
+                BlockEntity blockEntity = level.getBlockEntity(pos);
+
+                if (blockEntity instanceof FluidTankBlockEntity tank) {
+                    tank.getFluidTank().readFromNBT(
+                            level.registryAccess(),
+                            tag.getCompound("FluidTank")
+                    );
+
+                    tank.setChanged();
+                }
+            }
+        }
     }
 
     @Override

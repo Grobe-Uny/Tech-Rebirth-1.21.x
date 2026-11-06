@@ -48,17 +48,9 @@ public class FluidTankBER implements BlockEntityRenderer<FluidTankBlockEntity> {
         float x1 = 0.125f + shrink;    // 2/16 = 0.125
         float x2 = 0.875f - shrink;    // 14/16 = 0.875
         float y1 = 0.0f + shrink;      // 0/16 = 0.0
-        float y2 = y1 + (1.0f * fluidLevel) - shrink; // Puni visinu bloka
+        float y2 = Math.min(0.99f, y1 + fluidLevel * (1.0f - 2.0f * shrink)); // Puni visinu bloka
         float z1 = 0.125f + shrink;    // 2/16 = 0.125
         float z2 = 0.875f - shrink;    // 14/16 = 0.875
-
-        
-//        float x1 = 0.0625f + shrink;  // 1/16
-//        float x2 = 0.9375f - shrink;  // 15/16
-//        float y1 = 0.0625f + shrink;
-//        float y2 = y1 + (0.875f * fluidLevel) - shrink; // Fluid raste od dna prema gore
-//        float z1 = 0.0625f + shrink;
-//        float z2 = 0.9375f - shrink;
 
         // Izračunaj boje za svaki kanal
         float r = (float)(fluidTint >> 16 & 255) / 255.0F;
