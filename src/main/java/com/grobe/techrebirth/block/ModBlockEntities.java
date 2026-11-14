@@ -44,8 +44,8 @@ public class ModBlockEntities {
             "creative_electric_furnace", () -> BlockEntityType.Builder.of(CreativeElectricFurnaceBlockEntity::new,ModBlocks.CREATIVE_ELECTRIC_FURNACE.get())
     );
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GeneratorBlockEntity>> GENERATOR = register(
-            "generator", () -> BlockEntityType.Builder.of(GeneratorBlockEntity::new, ModBlocks.GENERATOR.get(), ModBlocks.COAL_GENERATOR.get())
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GeneratorBlockEntity>> COAL_GENERATOR = register(
+            "coal_generator", () -> BlockEntityType.Builder.of(GeneratorBlockEntity::new, ModBlocks.COAL_GENERATOR.get(), ModBlocks.COAL_GENERATOR.get())
     );
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EnergyCableBlockEntity>> ENERGY_CABLE = register(
