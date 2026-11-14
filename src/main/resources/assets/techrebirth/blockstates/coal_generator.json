@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "techrebirth:block/coal_generator" },
+    "facing=south": { "model": "techrebirth:block/coal_generator", "y": 180 },
+    "facing=west":  { "model": "techrebirth:block/coal_generator", "y": 270 },
+    "facing=east":  { "model": "techrebirth:block/coal_generator", "y": 90 }
+  }
+}
