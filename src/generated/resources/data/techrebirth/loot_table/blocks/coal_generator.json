@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "techrebirth:generator"
+          "name": "techrebirth:coal_generator"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "techrebirth:blocks/generator"
+  "random_sequence": "techrebirth:blocks/coal_generator"
 }

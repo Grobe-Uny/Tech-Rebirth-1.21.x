@@ -1,4 +1,4 @@
-// 1.21.1	2026-11-05T21:27:35.2313872	Recipes
+// 1.21.1	2026-11-15T11:44:25.1512331	Recipes
 cbd40f01eb786af08a8885734d29115ec8dba692 data/minecraft/advancement/recipes/food/copper_ingot_from_smelting.json
 6cffdc083761cac79abb114140ade0c743125c1e data/minecraft/advancement/recipes/food/gold_ingot_from_smelting.json
 598332e95e8e028e0610f3b0826f0b6e8b58f1cc data/minecraft/advancement/recipes/food/iron_ingot_from_smelting.json
@@ -83,6 +83,7 @@ f0db6f1043b48cf86c8764ac6425c3a026b6ac69 data/techrebirth/advancement/recipes/mi
 3032f9713ece5c6edddf43304532ebf0e0a4f50d data/techrebirth/advancement/recipes/misc/blazing_gold_nugget_from_ingot.json
 752fb4e3f3a8cd5c185f74323e985b29364d5bf1 data/techrebirth/advancement/recipes/misc/cable/energy_cable.json
 e974df104ae3c4b6d69ad72e67c24adb523bfb45 data/techrebirth/advancement/recipes/misc/cable/isolatum_blend.json
+e65223694f1bcd8e868915ad9ef7d9c2136020f2 data/techrebirth/advancement/recipes/misc/coal_generator.json
 e6d4c81c72d435497cade1aa8c0e5d2137627b9c data/techrebirth/advancement/recipes/misc/diamond_ingot_from_nugget.json
 594b36d77e68d0d7a1f896be83c38f5cc3a069e0 data/techrebirth/advancement/recipes/misc/diamond_nugget_from_ingot.json
 c2940de29476fd45a265e0e43ad8dba831fb7e83 data/techrebirth/advancement/recipes/misc/efficiency_upgrade.json
@@ -94,7 +95,6 @@ b438370ca4d2a6760fe5167824d20563fefde927 data/techrebirth/advancement/recipes/mi
 232330173e00cdd8482e549ab791bbaf08e3fa9a data/techrebirth/advancement/recipes/misc/gear/lead_gear.json
 c22a27405064a569c6bb4ae8109d7a481503404d data/techrebirth/advancement/recipes/misc/gear/steel_gear.json
 1df9a10fb67ab8854be08d4d2d28cd722faa18d8 data/techrebirth/advancement/recipes/misc/gear/tin_gear.json
-ef26dba3d9a415ee2c8205ccd03f73044b2fa115 data/techrebirth/advancement/recipes/misc/generator.json
 bc12edfbd4ad84ccf11bfc6dd54324828b5d2346 data/techrebirth/advancement/recipes/misc/invar_block_from_ingot.json
 53116082a17bca34203fbd47d2c0d6a871ddd5f6 data/techrebirth/advancement/recipes/misc/invar_ingot_from_block.json
 46a5c498c66fb0ae13673145dc6ffba9ac7717a3 data/techrebirth/advancement/recipes/misc/invar_ingot_from_nugget.json
@@ -164,6 +164,7 @@ f444d0df5d70054af4e071d5a9a37703c75e03b6 data/techrebirth/recipe/cable/energy_ca
 82d878186632e97874df923d9b172e6316f2014c data/techrebirth/recipe/centrifuging/blazing_gold.json
 6dffca0bec4f87b860b90c455271ea9e953d65d7 data/techrebirth/recipe/centrifuging/blazing_gold_alternate.json
 20fe12e2d4210799ca5803b9a6e95ec84866f5e9 data/techrebirth/recipe/centrifuging/refined_obsidian.json
+0ed049cd8505f3efabbd39c19f54639b49245999 data/techrebirth/recipe/coal_generator.json
 9502931723616de5cd8ff776c80ba6a4e7c80eb6 data/techrebirth/recipe/cooked_carrot.json
 2c269581cdcc0ac324646fed9b3f212d4e09738e data/techrebirth/recipe/crushing/copper_powder_from_ingot.json
 133a6e6cb7aa66a52bbf556d315707c95205a159 data/techrebirth/recipe/crushing/copper_powder_from_raw_and_ores.json
@@ -193,7 +194,6 @@ ab3c5a0139542f886b7530480adad3b72cd3a98e data/techrebirth/recipe/fluid_infusing/
 852decc7735b992873417b470026310311fb8839 data/techrebirth/recipe/gear/lead_gear.json
 9b72ff5c34048588a457348cb4a2addf28ac41d8 data/techrebirth/recipe/gear/steel_gear.json
 b06c4c10bd22006c9b77f61175fbef7db92ee7af data/techrebirth/recipe/gear/tin_gear.json
-526442862cac2fb83e16f32ecaabc99c563c18bc data/techrebirth/recipe/generator.json
 fde59c93f0f857a6885bc3186e37dbcbf50cdf4b data/techrebirth/recipe/generator_fuel/coal_fuels.json
 916045b2997895455bef5bdbb5c33de3ea51f560 data/techrebirth/recipe/generator_fuel/lava_bucket.json
 62485bfb4d439fefd3a7b20637c7b94498bb32ea data/techrebirth/recipe/generator_fuel/low_level_fuels.json

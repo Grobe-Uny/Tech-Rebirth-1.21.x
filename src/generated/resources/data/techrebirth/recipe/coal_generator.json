@@ -5,14 +5,11 @@
     "F": {
       "item": "minecraft:furnace"
     },
-    "G": {
-      "item": "techrebirth:iron_gear"
-    },
     "I": {
       "item": "minecraft:iron_ingot"
     },
-    "M": {
-      "item": "techrebirth:machine_base"
+    "R": {
+      "item": "minecraft:redstone"
     },
     "X": {
       "item": "techrebirth:redstone_energy_receptor"
@@ -20,11 +17,11 @@
   },
   "pattern": [
     "III",
-    "GMG",
-    "XFX"
+    "IFI",
+    "RXR"
   ],
   "result": {
     "count": 1,
-    "id": "techrebirth:generator"
+    "id": "techrebirth:coal_generator"
   }
 }

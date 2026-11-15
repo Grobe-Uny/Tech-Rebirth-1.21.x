@@ -6,7 +6,6 @@ import com.grobe.techrebirth.gui.electric_centrifuge.ElectricCentrifugeMenu;
 import com.grobe.techrebirth.gui.electric_crusher.ElectricCrusherMenu;
 import com.grobe.techrebirth.gui.electric_furnace.ElectricFurnaceMenu;
 import com.grobe.techrebirth.gui.electric_purifier.ElectricPurifierMenu;
-import com.grobe.techrebirth.gui.generator.GeneratorMenu;
 import com.grobe.techrebirth.gui.infuser.FluidInfuserMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
@@ -27,9 +26,6 @@ public class ModMenuTypes {
 
     public static final DeferredHolder<MenuType<?>, MenuType<ElectricCrusherMenu>> ELECTRIC_CRUSHER_MENU =
             MENUS.register("electric_crusher_menu", () -> IMenuTypeExtension.create((windowId, inv, buf) -> new ElectricCrusherMenu(windowId, inv, buf)));
-
-    public static final DeferredHolder<MenuType<?>, MenuType<GeneratorMenu>> GENERATOR_MENU =
-            MENUS.register("generator_menu", () -> IMenuTypeExtension.create((windowId, inv, buf) -> new GeneratorMenu(windowId, inv, buf)));
 
     public static final DeferredHolder<MenuType<?>, MenuType<ElectricCentrifugeMenu>> ELECTRIC_CENTRIFUGE_MENU =
             MENUS.register("electric_centrifuge_menu", () -> IMenuTypeExtension.create((windowId, inv, buf) -> new ElectricCentrifugeMenu(windowId, inv, buf)));

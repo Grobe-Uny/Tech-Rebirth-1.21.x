@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "techrebirth:generator"
+            "items": "techrebirth:coal_generator"
           }
         ]
       },
@@ -19,7 +19,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "techrebirth:generator"
+      "id": "techrebirth:coal_generator"
     },
     "title": {
       "translate": "advancements.techrebirth.first_sparks.title"

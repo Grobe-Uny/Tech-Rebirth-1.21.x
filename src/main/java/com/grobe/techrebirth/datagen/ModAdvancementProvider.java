@@ -63,13 +63,13 @@ public class ModAdvancementProvider extends AdvancementProvider {
 
             AdvancementHolder generating_electricity = Advancement.Builder.advancement()
                     .display(
-                            ModBlocks.GENERATOR.get(),
+                            ModBlocks.COAL_GENERATOR.get(),
                             Component.translatable("advancements.techrebirth.first_sparks.title"),
                             Component.translatable("advancements.techrebirth.first_sparks.description"),
                             ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
                             AdvancementType.TASK,
                             true,true,false
-                    ).addCriterion("has_generator", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.GENERATOR))
+                    ).addCriterion("has_generator", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.COAL_GENERATOR))
                     .parent(beginning)
                     .save(saver, ResourceLocation.fromNamespaceAndPath(TechRebirth.MODID, "sparks_of_electricity"), existingFileHelper);
 

@@ -1,6 +1,7 @@
-// 1.21.1	2026-11-05T12:38:00.7816299	Loot Tables
+// 1.21.1	2026-11-15T11:44:25.1488852	Loot Tables
 ef43043d63231c016daedea52a90bb4a5f943881 data/techrebirth/loot_table/blocks/alloy_smelter.json
 9c8744ec6d81b097f9eba4b2b6b8011d321e6dd4 data/techrebirth/loot_table/blocks/blazing_gold_block.json
+d9ebdf8c2441df5ec770a8ccd92c05d4a52acede data/techrebirth/loot_table/blocks/coal_generator.json
 388e60989fb33c249d0f56037fad3f1662326de9 data/techrebirth/loot_table/blocks/creative_electric_furnace.json
 27264c1e0f1c6e3bc811844cb0208eb54f10c4b8 data/techrebirth/loot_table/blocks/crucible.json
 e879b9021d13f49bfcb0f81a6543f31d4867da62 data/techrebirth/loot_table/blocks/electric_centrifuge.json
@@ -11,7 +12,6 @@ e879b9021d13f49bfcb0f81a6543f31d4867da62 data/techrebirth/loot_table/blocks/elec
 403316b0cfd254831aa76084752fdf70a41762e6 data/techrebirth/loot_table/blocks/energy_cable.json
 98e8d9e93ba89712ea9d1d50fdf92d79b534c50e data/techrebirth/loot_table/blocks/fluid_infuser.json
 118895a1ccbc0ca200e7b45caa07621e23ddb4ed data/techrebirth/loot_table/blocks/fluid_tank.json
-3de72cfbc65a2d2c6e57a2a4b4adb333ede12837 data/techrebirth/loot_table/blocks/generator.json
 f0fef3b6124eb85c2dd81755e5fe480100f1b148 data/techrebirth/loot_table/blocks/hardened_alloy_smelter.json
 a2cb853ea8896c61d33aa4560a5659cd74ff419d data/techrebirth/loot_table/blocks/hardened_electric_furnace.json
 57c75cb0616b77a1eb666b13907621d2c4aad590 data/techrebirth/loot_table/blocks/invar_block.json

@@ -12,7 +12,6 @@ import com.grobe.techrebirth.block.custom.furnace.ElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.furnace.HardenedElectricFurnaceBlock;
 import com.grobe.techrebirth.block.custom.FluidTankBlock;
 import com.grobe.techrebirth.block.custom.furnace.ReinforcedElectricFurnaceBlock;
-import com.grobe.techrebirth.block.custom.generator.GeneratorBlock;
 import com.grobe.techrebirth.block.custom.generators.fuel.CoalGeneratorBlock;
 import com.grobe.techrebirth.block.custom.generators.solar.SolarGeneratorBlock;
 import com.grobe.techrebirth.block.custom.generators.solar.SolarGeneratorTier2Block;
@@ -159,13 +158,6 @@ public class ModBlocks {
             ));
     public static final DeferredBlock<Block> FLUID_INFUSER = registerBlock("fluid_infuser",
             () -> new FluidInfuserBlock(BlockBehaviour.Properties.of()
-                    .strength(3.0f)
-                    .requiresCorrectToolForDrops()
-                    .sound(SoundType.METAL)
-            ));
-
-    public static final DeferredBlock<Block> GENERATOR = registerBlock("generator",
-            () -> new GeneratorBlock(BlockBehaviour.Properties.of()
                     .strength(3.0f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)

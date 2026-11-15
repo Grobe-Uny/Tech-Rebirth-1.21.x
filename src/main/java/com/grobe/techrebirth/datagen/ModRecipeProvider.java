@@ -190,14 +190,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('Y', Items.REDSTONE.asItem())
                 .define('N', Items.IRON_NUGGET.asItem())
                 .unlockedBy("has_gold", has(Items.GOLD_INGOT)).save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GENERATOR.get())
-                .pattern("III").pattern("GMG").pattern("XFX")
-                .define('M', ModBlocks.MACHINE_BASE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.COAL_GENERATOR.get())
+                .pattern("III").pattern("IFI").pattern("RXR")
+                .define('R', Items.REDSTONE)
                 .define('X', ModItems.REDSTONE_ENERGY_RECEPTOR.get())
                 .define('F', Items.FURNACE.asItem())
-                .define('G', ModItems.IRON_GEAR.get())
                 .define('I', Items.IRON_INGOT.asItem())
-                .unlockedBy("has_machine_base", has(ModBlocks.MACHINE_BASE)).save(recipeOutput);
+                .unlockedBy("has_redstone", has(ModBlocks.MACHINE_BASE)).save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ELECTRIC_CRUSHER.get())
                 .pattern(" I ").pattern("GMG").pattern("XSX")
                 .define('M', ModBlocks.MACHINE_BASE.get())
@@ -490,7 +489,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         crushing(ingredient, output).time(length).unlockedBy(Criteria, has(criteria)).save(rOutput,  resourceLocation);
     }
     public static void addGeneratorFuels(Ingredient ingredient, int burnTime, int powerPerTick, RecipeOutput recipeOutput, ResourceLocation resourceLocation){
-        fuel(ingredient, burnTime, powerPerTick).unlockedBy("has_generator", has(ModBlocks.GENERATOR.get())).save(recipeOutput, resourceLocation);
+        fuel(ingredient, burnTime, powerPerTick).unlockedBy("has_generator", has(ModBlocks.COAL_GENERATOR.get())).save(recipeOutput, resourceLocation);
     }
     public static void buildAlloyRecipesD(NonNullList<Ingredient> ingredients, ItemStack output, int ticks, String Criteria, ModTags.Items.Dual criteria, RecipeOutput recipeOutput, ResourceLocation resourceLocation){
         alloySmelting(ingredients, output).time(ticks).unlockedBy(Criteria, has(criteria.neoforge())).save(recipeOutput, resourceLocation);

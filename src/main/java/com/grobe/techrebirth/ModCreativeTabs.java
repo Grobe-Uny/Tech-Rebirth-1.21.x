@@ -81,7 +81,6 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.HARDENED_ELECTRIC_FURNACE);
                         output.accept(ModBlocks.REINFORCED_ELECTRIC_FURNACE);
                         output.accept(ModBlocks.CREATIVE_ELECTRIC_FURNACE);
-                        output.accept(ModBlocks.GENERATOR);
                         output.accept(ModBlocks.COAL_GENERATOR);
                         output.accept(ModBlocks.SOLAR_GENERATOR);
                         output.accept(ModBlocks.SOLAR_GENERATOR_TIER_2);

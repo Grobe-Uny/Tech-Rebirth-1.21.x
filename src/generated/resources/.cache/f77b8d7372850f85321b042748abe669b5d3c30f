@@ -1,6 +1,6 @@
-// 1.21.1	2026-11-05T12:38:00.7986104	Tags for minecraft:block mod id techrebirth
+// 1.21.1	2026-11-15T11:44:25.1584462	Tags for minecraft:block mod id techrebirth
 042c41390402b0b03fe3b5f22df1fdfad6c912b3 data/c/tags/block/ores/lead.json
-e0fdbd40dd8beb62725c0cbab5f604b4c13a39ea data/minecraft/tags/block/mineable/pickaxe.json
-6b15e10c19d671e1d3d3507759651417c39a0714 data/minecraft/tags/block/needs_iron_tool.json
+e3a5adde0f33c2d4482520964e765d8eafb10aa9 data/minecraft/tags/block/mineable/pickaxe.json
+dfc427acabab0307fd7368f0d91c69bd570cf4ce data/minecraft/tags/block/needs_iron_tool.json
 59aee81744eb00bb94b4e42cb327c7e683accf94 data/minecraft/tags/block/needs_stone_tool.json
 042c41390402b0b03fe3b5f22df1fdfad6c912b3 data/neoforge/tags/block/ores/lead.json

@@ -10,6 +10,7 @@ import com.grobe.techrebirth.block.custom.entity.furnace.CreativeElectricFurnace
 import com.grobe.techrebirth.block.custom.entity.furnace.ElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.furnace.HardenedElectricFurnaceBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.furnace.ReinforcedElectricFurnaceBlockEntity;
+import com.grobe.techrebirth.block.custom.entity.generators.fuel.CoalGeneratorBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.generators.solar.SolarGeneratorBlockEntity;
 import com.grobe.techrebirth.block.custom.entity.generators.solar.SolarGeneratorTier2BlockEntity;
 import com.grobe.techrebirth.block.custom.entity.infuser.FluidInfuserBlockEntity;
@@ -44,8 +45,8 @@ public class ModBlockEntities {
             "creative_electric_furnace", () -> BlockEntityType.Builder.of(CreativeElectricFurnaceBlockEntity::new,ModBlocks.CREATIVE_ELECTRIC_FURNACE.get())
     );
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GeneratorBlockEntity>> COAL_GENERATOR = register(
-            "coal_generator", () -> BlockEntityType.Builder.of(GeneratorBlockEntity::new, ModBlocks.COAL_GENERATOR.get(), ModBlocks.COAL_GENERATOR.get())
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CoalGeneratorBlockEntity>> COAL_GENERATOR = register(
+            "coal_generator", () -> BlockEntityType.Builder.of(CoalGeneratorBlockEntity::new, ModBlocks.COAL_GENERATOR.get(), ModBlocks.COAL_GENERATOR.get())
     );
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EnergyCableBlockEntity>> ENERGY_CABLE = register(

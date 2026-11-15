@@ -12,7 +12,6 @@ import com.grobe.techrebirth.gui.electric_centrifuge.ElectricCentrifugeScreen;
 import com.grobe.techrebirth.gui.electric_crusher.ElectricCrusherScreen;
 import com.grobe.techrebirth.gui.electric_furnace.ElectricFurnaceScreen;
 import com.grobe.techrebirth.gui.electric_purifier.ElectricPurifierScreen;
-import com.grobe.techrebirth.gui.generator.GeneratorScreen;
 import com.grobe.techrebirth.gui.infuser.FluidInfuserScreen;
 import com.grobe.techrebirth.item.ModArmorItems;
 import com.grobe.techrebirth.item.ModItems;
@@ -122,7 +121,6 @@ public class TechRebirth {
         public static void onRegisterMenuScreens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event)
         {
             event.register(ModMenuTypes.ELECTRIC_FURNACE_MENU.get(), ElectricFurnaceScreen::new);
-            event.register(ModMenuTypes.GENERATOR_MENU.get(), GeneratorScreen::new);
             event.register(ModMenuTypes.ELECTRIC_CRUSHER_MENU.get(), ElectricCrusherScreen::new);
             event.register(ModMenuTypes.ALLOY_SMELTER_MENU.get(), AlloySmelterScreen::new);
             event.register(ModMenuTypes.ELECTRIC_CENTRIFUGE_MENU.get(), ElectricCentrifugeScreen::new);

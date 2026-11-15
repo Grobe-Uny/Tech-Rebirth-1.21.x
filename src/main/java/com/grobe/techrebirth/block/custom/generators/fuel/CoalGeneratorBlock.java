@@ -2,8 +2,6 @@ package com.grobe.techrebirth.block.custom.generators.fuel;
 
 import com.grobe.techrebirth.block.ModBlockEntities;
 import com.grobe.techrebirth.block.custom.entity.generators.fuel.CoalGeneratorBlockEntity;
-import com.grobe.techrebirth.block.custom.entity.generators.solar.SolarGeneratorBlockEntity;
-import com.grobe.techrebirth.block.custom.generator.GeneratorBlock;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
